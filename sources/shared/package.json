@@ -1,0 +1,12 @@
+{
+  "name": "@street-of-age/shared",
+  "version": "1.0.0",
+  "private": true,
+  "license": "MIT",
+  "dependencies": {
+    "phaser": "^3.16.2"
+  },
+  "devDependencies": {
+    "phaser3-docs": "github:photonstorm/phaser3-docs"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "street-of-age",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently 'yarn dev:server' 'yarn dev:client'",
+    "dev:client": "yarn --cwd sources/client serve",
+    "dev:server": "yarn --cwd sources/server dev",
+    "bootstrap": "lerna bootstrap"
+  },
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "lerna": "^3.13.4"
+  }
+}

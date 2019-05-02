@@ -1,0 +1,22 @@
+{
+  "game": {
+    "files": [
+      {
+        "type": "image",
+        "key": "ground",
+        "url": "img/platform.png"
+      },
+      {
+        "type": "atlas",
+        "key": "main",
+        "textureURL": "atlases/main.png",
+        "atlasURL": "atlases/main.json"
+      },
+      {
+        "type": "json",
+        "key": "animations",
+        "url": "animations.json"
+      }
+    ]
+  }
+}
