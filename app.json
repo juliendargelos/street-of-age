@@ -1,7 +1,4 @@
 {
-  "env": {
-    "NODE_ENV": "production"
-  },
   "buildpacks": [
     {
       "url": "heroku/nodejs"
