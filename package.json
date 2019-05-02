@@ -2,10 +2,15 @@
   "name": "street-of-age",
   "private": true,
   "scripts": {
+    "start": "yarn --cwd sources/server start",
     "dev": "concurrently 'yarn dev:server' 'yarn dev:client'",
-    "dev:client": "yarn --cwd sources/client serve",
+    "dev:client": "yarn --cwd sources/client dev",
     "dev:server": "yarn --cwd sources/server dev",
-    "bootstrap": "lerna bootstrap"
+    "build": "yarn build:server",
+    "build:client": "yarn --cwd sources/client build",
+    "build:server": "yarn --cwd sources/server build",
+    "bootstrap": "lerna bootstrap",
+    "postinstall": "yarn bootstrap"
   },
   "devDependencies": {
     "concurrently": "^4.1.0",

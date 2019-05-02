@@ -1,7 +1,6 @@
 [build]
-  base = "sources/client"
   publish = "sources/client/dist"
-  command = "yarn build"
+  command = "yarn build:client"
 
 [build.environment]
   VUE_APP_SOCKET_ENDPOINT = ""

@@ -8,16 +8,10 @@ Clone the repository:
 git clone git@github.com:juliendargelos/street-of-age.git
 ```
 
-Install root dependencies:
+Install and bootstrap dependencies:
 
 ```
 yarn
-```
-
-Bootstrap packages:
-
-```
-yarn bootstrap
 ```
 
 ## Development
