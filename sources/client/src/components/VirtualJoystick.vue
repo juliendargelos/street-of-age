@@ -3,40 +3,40 @@
 </template>
 
 <style lang="sass">
-  .virtual-joystick
-    position: fixed
-    left: 0
-    top: 0
-    right: 0
-    bottom: 0
-    width: 100%
-    height: 100%
-
+.virtual-joystick
+  position: fixed
+  pointer-events: none
+  left: 0
+  top: 0
+  right: 0
+  bottom: 0
+  width: 100%
+  height: 100%
+  .nipple
+    pointer-events: all
 </style>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import nipplejs, { EventData, JoystickManager, JoystickOutputData } from 'nipplejs'
 
-@Component({
+@Component<VirtualJoystick>({
   mounted (): void {
-    const self = (this as VirtualJoystick)
-    self.joystick = nipplejs.create({
+    this.joystick = nipplejs.create({
       lockX: true,
-      zone: (this as VirtualJoystick).$refs.joystick,
+      zone: this.$refs.joystick,
       mode: 'static',
       position: { left: '50%', top: '50%' },
       color: 'red'
     })
-    self.joystick.on('move', self.onJoystickMove)
-    self.joystick.on('start', self.onJoystickStart)
-    self.joystick.on('end', self.onJoystickEnd)
+    this.joystick.on('move', this.onJoystickMove)
+    this.joystick.on('start', this.onJoystickStart)
+    this.joystick.on('end', this.onJoystickEnd)
   },
   beforeDestroy (): void {
-    const self = (this as VirtualJoystick)
-    self.joystick.off('move', self.onJoystickMove)
-    self.joystick.off('start', self.onJoystickStart)
-    self.joystick.off('end', self.onJoystickEnd)
+    this.joystick.off('move', this.onJoystickMove)
+    this.joystick.off('start', this.onJoystickStart)
+    this.joystick.off('end', this.onJoystickEnd)
   }
 })
 export default class VirtualJoystick extends Vue {

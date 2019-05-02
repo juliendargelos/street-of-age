@@ -23,9 +23,18 @@ import VirtualJoystick from '@/components/VirtualJoystick.vue'
 import { Emitter } from '@/main'
 import { UIEvents } from '@/enums'
 
-  @Component({
-    components: { VirtualJoystick }
-  })
+@Component<RoomGame>({
+  components: { VirtualJoystick },
+  mounted () {
+    this.game = new Phaser.Game(this.config)
+    this.mobile = !this.game.device.os.desktop &&
+      (this.game.device.os.android || this.game.device.os.iOS || this.game.device.os.windowsPhone)
+  },
+  beforeDestroy () {
+    this.game.destroy(false)
+    delete this.game
+  }
+})
 export default class RoomGame extends Vue {
     $el!: HTMLDivElement
     private game!: Phaser.Game
@@ -73,17 +82,6 @@ export default class RoomGame extends Vue {
           this.debug ? GameDebugScene : GameScene
         ]
       }
-    }
-
-    mounted () {
-      this.game = new Phaser.Game(this.config)
-      this.mobile = !this.game.device.os.desktop &&
-        (this.game.device.os.android || this.game.device.os.iOS || this.game.device.os.windowsPhone)
-    }
-
-    beforeDestroy () {
-      this.game.destroy(false)
-      delete this.game
     }
 }
 </script>
