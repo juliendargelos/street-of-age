@@ -1,0 +1,14 @@
+{
+  "env": {
+    "APP_BASE": "sources/server",
+    "NODE_ENV": "production"
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/lstoll/heroku-buildpack-monorepo"
+    },
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
