@@ -9,7 +9,7 @@
     "build": "yarn build:server",
     "build:client": "yarn --cwd sources/client build",
     "build:server": "yarn --cwd sources/server build",
-    "bootstrap": "lerna bootstrap",
+    "bootstrap": "NODE_ENV=development lerna bootstrap",
     "postinstall": "yarn bootstrap"
   },
   "devDependencies": {
