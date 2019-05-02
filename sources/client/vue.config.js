@@ -23,15 +23,17 @@ module.exports = {
         }])
     })
 
-    config
-      .plugin('exit-process')
-      .use({
-        apply(compiler) {
-          compiler.hooks.done.tap('exit-process', () => {
-            setTimeout(() => process.exit(), 500)
-          })
-        }
-      })
+    if (process.env.NODE_ENV === 'production') {
+      config
+        .plugin('exit-process')
+        .use({
+          apply(compiler) {
+            compiler.hooks.done.tap('exit-process', () => {
+              setTimeout(() => process.exit(), 500)
+            })
+          }
+        })
+    }
   },
 
   css: {
