@@ -3,10 +3,13 @@ import Vue from 'vue'
 import VueSocketIO from 'vue-socket.io'
 // @ts-ignore
 import VueGlobalEvents from 'vue-global-events'
+import { EventEmitter } from 'events'
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
+
+export const Emitter = new EventEmitter()
 
 Vue.config.productionTip = false
 

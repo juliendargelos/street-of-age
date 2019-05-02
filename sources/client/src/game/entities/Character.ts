@@ -1,5 +1,7 @@
 import { SpriteConstructor } from '@/@types/game'
 import { GRAVITY } from '@/game/entities/constants'
+import { Emitter } from '@/main'
+import { UIEvents } from '@/enums'
 
 const MASS = 1
 const JUMP_FORCE = 1.8
@@ -17,6 +19,7 @@ enum State {
 export class Character extends Phaser.Physics.Arcade.Sprite {
   public state: State = State.Idleing
   private cursorKeys!: Phaser.Input.Keyboard.CursorKeys
+  private lastVelocityX = 0
 
   constructor (params: SpriteConstructor) {
     super(params.scene, params.x, params.y, params.texture, params.frame)
@@ -33,6 +36,32 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
 
     params.scene.add.existing(this)
+    this.addJoystickEvents()
+  }
+
+  private addJoystickEvents = () => {
+    Emitter.on(UIEvents.JoystickStart, this.onJoystickStart)
+    Emitter.on(UIEvents.JoystickEnd, this.onJoystickEnd)
+    Emitter.on(UIEvents.JoystickMove, this.onJoystickMove)
+  }
+
+  private removeJoystickEvents = () => {
+    Emitter.off(UIEvents.JoystickStart, this.onJoystickStart)
+    Emitter.off(UIEvents.JoystickEnd, this.onJoystickEnd)
+    Emitter.off(UIEvents.JoystickMove, this.onJoystickMove)
+  }
+
+  private onJoystickEnd = (): void => {
+    this.changeState(State.Idleing)
+    this.lastVelocityX = 0
+  }
+  private onJoystickStart = (): void => {
+    this.changeState(State.Moving)
+  }
+
+  protected onJoystickMove = (delta: number): void => {
+    this.flipX = delta < 0
+    this.lastVelocityX = delta * 70
   }
 
   public update = () => {
@@ -41,8 +70,25 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.handleAnimations()
   }
 
+  public destroy (fromScene?: boolean): void {
+    super.destroy(fromScene)
+    this.removeJoystickEvents()
+  }
+
   private handleMovements = () => {
-    if (this.cursorKeys.space!.isDown && this.body.blocked.down) {
+    if (this.scene.game.device.os.desktop) {
+      this.handleDesktopMovements()
+    } else {
+      this.handleMobileMovements()
+    }
+  }
+
+  private handleMobileMovements = () => {
+    this.setVelocityX(this.lastVelocityX)
+  }
+
+  private handleDesktopMovements = () => {
+    if (this.cursorKeys.up!.isDown && this.body.blocked.down) {
       this.body.velocity.y = -350 * JUMP_FORCE
     }
 
