@@ -5,6 +5,7 @@
   "license": "MIT",
   "main": "index.ts",
   "scripts": {
+    "start": "node dist/index",
     "clean": "rm -rf dist",
     "build": "yarn clean && tsc",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
