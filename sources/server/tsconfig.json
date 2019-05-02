@@ -11,12 +11,12 @@
     "baseUrl": ".",
     "typeRoots" : ["./node_modules/@types"],
     "paths": {
+      "~shared/*": [
+        "../shared/*"
+      ],
       "*": [
         "node_modules/",
         "src/types/*"
-      ],
-      "~shared/*": [
-        "../shared/*"
       ]
     }
   },
