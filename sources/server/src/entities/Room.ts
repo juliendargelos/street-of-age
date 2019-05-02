@@ -4,11 +4,11 @@ import Logger, {red} from "../services/Logger"
 import {OnRoomJoined, Serializable} from "../@types"
 import {action, autorun, observable} from "mobx"
 import RoomManager from "../managers/RoomManager"
-import {RoomEvents} from "../enums"
+import {RoomEvents} from "~shared/socket/events"
 
 export interface RoomSerialized {
   id: string,
-  players: { id: string }[]
+  players: Array<{ id: string }>
 }
 
 export class Room implements Serializable {

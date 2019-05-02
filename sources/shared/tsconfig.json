@@ -1,0 +1,9 @@
+{
+  "files": [
+    "game/**/*.ts",
+    "socket/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

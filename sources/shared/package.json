@@ -6,6 +6,9 @@
   "dependencies": {
     "phaser": "^3.16.2"
   },
+  "eslintConfig": {
+    "root": false
+  },
   "devDependencies": {
     "phaser3-docs": "github:photonstorm/phaser3-docs"
   }

@@ -1,4 +1,3 @@
-import { Scenes } from '@/enums'
 import BaseScene from '@/game/scenes/BaseScene'
 import { Character } from '@/game/entities/Character'
 
@@ -7,7 +6,7 @@ export class GameDebugScene extends BaseScene {
 
   constructor () {
     super({
-      key: Scenes.GameDebug
+      key: 'GAME_DEBUG_SCENE'
     })
   }
 

@@ -24,7 +24,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { RoomEvents, PlayerEvents } from '@/enums'
+import { RoomEvents, PlayerEvents } from '~shared/socket/events'
 import RoomModule from '@/store/modules/room'
 import AppModule from '@/store/modules/app'
 

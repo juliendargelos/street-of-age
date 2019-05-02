@@ -3,7 +3,7 @@ import {Express} from "express"
 import * as socketio from "socket.io"
 import {Server as HttpServer} from 'http'
 import PlayerManager from "./managers/PlayerManager";
-import {SocketEvents} from "./enums";
+import {SocketEvents} from "~shared/socket/events";
 import SocketRoom from "./handlers/SocketRoom";
 import Logger from "./services/Logger";
 import SocketPlayer from "./handlers/SocketPlayer";

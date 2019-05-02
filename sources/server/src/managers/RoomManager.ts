@@ -2,7 +2,7 @@ import {Room, RoomSerialized} from "../entities/Room";
 import {Player} from "../entities/Player";
 import {action, computed, observable} from "mobx";
 import Logger from "../services/Logger";
-import {RoomEvents} from "../enums";
+import {RoomEvents} from "~shared/socket/events";
 
 class RoomManager {
 

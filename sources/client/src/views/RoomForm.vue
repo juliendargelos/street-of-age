@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { RoomEvents } from '@/enums'
+import { RoomEvents } from '~shared/socket/events'
 import { Room } from '@/@types'
 
 @Component({
