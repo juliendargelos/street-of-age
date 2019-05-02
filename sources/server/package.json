@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node dist/index",
     "clean": "rm -rf dist",
-    "build": "yarn clean && tsc",
+    "build": "yarn clean && node_modules/typescript/bin/tsc",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
     "dev": "nodemon"
   },
