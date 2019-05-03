@@ -1,9 +1,26 @@
 {
+  "compilerOptions": {
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "esModuleInterop": false,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "baseUrl": ".",
+    "typeRoots" : [
+      "./node_modules/@types"
+    ],
+    "paths": {
+      "*": [
+        "node_modules/"
+      ]
+    }
+  },
   "files": [
-    "game/**/*.ts",
-    "socket/**/*.ts"
+    "node_modules/phaser3-docs/typescript/phaser.d.ts"
   ],
-  "exclude": [
-    "node_modules"
+  "include": [
+    "**/*.ts"
   ]
 }
