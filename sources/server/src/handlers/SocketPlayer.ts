@@ -1,4 +1,4 @@
-import {PlayerEvents} from "../enums";
+import {PlayerEvents} from "@street-of-age/shared/socket/events";
 import PlayerManager from "../managers/PlayerManager";
 
 class SocketPlayer {

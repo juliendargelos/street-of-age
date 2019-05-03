@@ -27,7 +27,7 @@ module.exports = {
       config
         .plugin('exit-process')
         .use({
-          apply(compiler) {
+          apply (compiler) {
             compiler.hooks.done.tap('exit-process', () => {
               setTimeout(() => process.exit(), 500)
             })
@@ -35,7 +35,6 @@ module.exports = {
         })
     }
   },
-
   css: {
     loaderOptions: {
       sass: {

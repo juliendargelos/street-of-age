@@ -3,10 +3,18 @@
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc -w"
+  },
   "dependencies": {
     "phaser": "^3.16.2"
   },
+  "eslintConfig": {
+    "root": false
+  },
   "devDependencies": {
+    "typescript": "^3.3.3333",
     "phaser3-docs": "github:photonstorm/phaser3-docs"
   }
 }

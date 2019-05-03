@@ -17,14 +17,14 @@ import RoomCharacter from '@/components/RoomCharacter.vue'
 import RoomLobby from '@/components/RoomLobby.vue'
 import RoomGame from '@/components/RoomGame.vue'
 import RoomScore from '@/components/RoomScore.vue'
-import { RoomEvents } from '@/enums'
+import { RoomEvents } from '@street-of-age/shared/socket/events'
 import { Room as RoomType } from '@/@types'
 import RoomModule from '@/store/modules/room'
 
-@Component({
+@Component<Room>({
   sockets: {
     [RoomEvents.RoomDefined] () {
-      (this as Room).isDefined = true
+      this.isDefined = true
     },
     [RoomEvents.RoomUndefined] () {
       this.$router.replace({ name: 'room-list' })
