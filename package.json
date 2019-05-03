@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "yarn --cwd sources/server start",
-    "dev": "concurrently 'yarn dev:server' 'yarn dev:client' 'yarn dev:shared'",
+    "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\" \"yarn dev:shared\"",
     "dev:client": "yarn --cwd sources/client dev",
     "dev:server": "yarn --cwd sources/server dev",
     "dev:shared": "yarn --cwd sources/shared dev",
