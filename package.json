@@ -3,14 +3,14 @@
   "private": true,
   "scripts": {
     "start": "yarn --cwd sources/server start",
-    "dev": "concurrently 'yarn dev:server' 'yarn dev:shared' 'yarn dev:client'",
+    "dev": "concurrently 'yarn dev:server' 'yarn dev:client' 'yarn dev:shared'",
     "dev:client": "yarn --cwd sources/client dev",
-    "dev:shared": "yarn --cwd sources/shared dev",
     "dev:server": "yarn --cwd sources/server dev",
+    "dev:shared": "yarn --cwd sources/shared dev",
     "build": "yarn build:server",
     "build:client": "yarn build:shared && yarn --cwd sources/client build",
-    "build:shared": "yarn --cwd sources/shared build",
     "build:server": "yarn build:shared && yarn --cwd sources/server build",
+    "build:shared": "yarn --cwd sources/shared build",
     "bootstrap": "cross-env NODE_ENV=development lerna bootstrap",
     "postinstall": "yarn bootstrap"
   },
