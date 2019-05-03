@@ -5,15 +5,7 @@ const WebpackFreeTexPacker = require('webpack-free-tex-packer')
 const atlases = path.join(__dirname, 'atlases')
 
 module.exports = {
-  configureWebpack: {
-    resolve: {
-      alias: {
-        '~shared': path.resolve(__dirname, '../shared/')
-      }
-    }
-  },
   chainWebpack: config => {
-    config.resolve.symlinks(false)
     config.module
       .rule('url-loader')
       .test(/(?:\/assets\/.+\.json|\.(?:png|jpe?g|gif|webp)(?:\?.*)?)$/i)

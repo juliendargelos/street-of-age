@@ -11,8 +11,8 @@
     "baseUrl": ".",
     "typeRoots" : ["./node_modules/@types"],
     "paths": {
-      "~shared/*": [
-        "../shared/*"
+      "@street-of-age/*": [
+        "../*"
       ],
       "*": [
         "node_modules/",

@@ -17,7 +17,7 @@ import RoomCharacter from '@/components/RoomCharacter.vue'
 import RoomLobby from '@/components/RoomLobby.vue'
 import RoomGame from '@/components/RoomGame.vue'
 import RoomScore from '@/components/RoomScore.vue'
-import { RoomEvents } from '~shared/socket/events'
+import { RoomEvents } from '@street-of-age/shared/socket/events'
 import { Room as RoomType } from '@/@types'
 import RoomModule from '@/store/modules/room'
 

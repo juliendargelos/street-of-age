@@ -1,4 +1,4 @@
-import {RoomEvents} from "~shared/socket/events";
+import {RoomEvents} from "@street-of-age/shared/socket/events";
 import RoomManager from "../managers/RoomManager";
 import Logger from "../services/Logger";
 import PlayerManager from "../managers/PlayerManager";
