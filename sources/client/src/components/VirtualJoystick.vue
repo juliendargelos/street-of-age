@@ -18,47 +18,36 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import nipplejs, { EventData, JoystickManager, JoystickOutputData } from 'nipplejs'
+import InputManager, { JoystickMoveEvent } from '@/game/manager/InputManager'
 
 @Component<VirtualJoystick>({
   mounted (): void {
-    this.joystick = nipplejs.create({
-      lockX: true,
-      zone: this.$refs.joystick,
-      mode: 'static',
-      position: { left: '50%', top: '50%' },
-      color: 'red'
-    })
-    this.joystick.on('move', this.onJoystickMove)
-    this.joystick.on('start', this.onJoystickStart)
-    this.joystick.on('end', this.onJoystickEnd)
+    InputManager.attachElement(this.$refs.joystick)
+    InputManager.addEventListener('start', this.onJoystickStart)
+    InputManager.addEventListener('end', this.onJoystickEnd)
+    InputManager.addEventListener('move', this.onJoystickMove)
   },
   beforeDestroy (): void {
-    this.joystick.off('move', this.onJoystickMove)
-    this.joystick.off('start', this.onJoystickStart)
-    this.joystick.off('end', this.onJoystickEnd)
+    InputManager.removeEventListener('move', this.onJoystickMove)
+    InputManager.removeEventListener('start', this.onJoystickStart)
+    InputManager.removeEventListener('end', this.onJoystickEnd)
+    InputManager.detachElement()
   }
 })
 export default class VirtualJoystick extends Vue {
-    private joystick!: JoystickManager
     $refs!: {
       joystick: HTMLDivElement
     }
 
-    private onJoystickMove (evt: EventData, data: JoystickOutputData) {
-      if (data && data.direction && data.distance) {
-        const delta = (data.direction.x === 'right'
-          ? data.distance
-          : -data.distance) / 10
-        this.$emit('move', delta)
-      }
+    private onJoystickMove (evt: JoystickMoveEvent) {
+      this.$emit('move', evt.detail.delta)
     }
 
-    private onJoystickStart (evt: EventData, data: JoystickOutputData) {
+    private onJoystickStart () {
       this.$emit('start')
     }
 
-    private onJoystickEnd (evt: EventData, data: JoystickOutputData) {
+    private onJoystickEnd () {
       this.$emit('end')
     }
 }
