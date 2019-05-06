@@ -1,1 +1,2 @@
-export { default as Game } from './game'
+export { Game } from './game'
+export { Character } from './character'
