@@ -1,7 +1,6 @@
 import { SpriteConstructor } from '@/@types/game'
 import { GRAVITY } from '@/game/entities/constants'
-import { Emitter } from '@/main'
-import { UIEvents } from '@street-of-age/shared/game/events'
+import InputManager from '@/game/manager/InputManager'
 
 const MASS = 1
 const JUMP_FORCE = 1.8
@@ -19,7 +18,6 @@ enum State {
 export class Character extends Phaser.Physics.Arcade.Sprite {
   public state: State = State.Idleing
   private cursorKeys!: Phaser.Input.Keyboard.CursorKeys
-  private lastVelocityX = 0
 
   constructor (params: SpriteConstructor) {
     super(params.scene, params.x, params.y, params.texture, params.frame)
@@ -36,32 +34,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
 
     params.scene.add.existing(this)
-    this.addJoystickEvents()
-  }
-
-  private addJoystickEvents = () => {
-    Emitter.on(UIEvents.JoystickStart, this.onJoystickStart)
-    Emitter.on(UIEvents.JoystickEnd, this.onJoystickEnd)
-    Emitter.on(UIEvents.JoystickMove, this.onJoystickMove)
-  }
-
-  private removeJoystickEvents = () => {
-    Emitter.off(UIEvents.JoystickStart, this.onJoystickStart)
-    Emitter.off(UIEvents.JoystickEnd, this.onJoystickEnd)
-    Emitter.off(UIEvents.JoystickMove, this.onJoystickMove)
-  }
-
-  private onJoystickEnd = (): void => {
-    this.changeState(State.Idleing)
-    this.lastVelocityX = 0
-  }
-  private onJoystickStart = (): void => {
-    this.changeState(State.Moving)
-  }
-
-  protected onJoystickMove = (delta: number): void => {
-    this.flipX = delta < 0
-    this.lastVelocityX = delta * 70
   }
 
   public update = () => {
@@ -72,7 +44,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   public destroy (fromScene?: boolean): void {
     super.destroy(fromScene)
-    this.removeJoystickEvents()
   }
 
   private handleMovements = () => {
@@ -84,7 +55,17 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private handleMobileMovements = () => {
-    this.setVelocityX(this.lastVelocityX)
+    const velocity = InputManager.getAxis('horizontal') * 70
+    if (velocity < 0) {
+      this.changeState(State.Moving)
+      this.flipX = true
+    } else if (velocity > 0) {
+      this.changeState(State.Moving)
+      this.flipX = false
+    } else {
+      this.changeState(State.Idleing)
+    }
+    this.setVelocityX(velocity)
   }
 
   private handleDesktopMovements = () => {

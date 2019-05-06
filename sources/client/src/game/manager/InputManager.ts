@@ -11,6 +11,10 @@ export type JoystickMoveEvent = CustomEvent<{
   delta: number
 }>
 
+interface Axis {
+  horizontal: number
+}
+
 interface JoystickEventsMap {
   'start': Event,
   'move': JoystickMoveEvent,
@@ -19,10 +23,13 @@ interface JoystickEventsMap {
 
 class InputManager implements EventTarget {
   private delegate = document.createDocumentFragment()
-  private joystick!: JoystickManager
+  private joystick: JoystickManager | null = null
+  private axis: Axis = { horizontal: 0 }
 
   public detachElement = (): void => {
-    this.joystick.destroy()
+    if (this.joystick) {
+      this.joystick.destroy()
+    }
   }
 
   public attachElement = (element: HTMLElement): void => {
@@ -31,9 +38,11 @@ class InputManager implements EventTarget {
       zone: element
     })
     this.joystick.on('start', () => {
+      this.axis.horizontal = 0
       this.dispatchEvent(new Event('start'))
     })
     this.joystick.on('end', () => {
+      this.axis.horizontal = 0
       this.dispatchEvent(new Event('end'))
     })
     this.joystick.on('move', (evt, data) => {
@@ -41,9 +50,14 @@ class InputManager implements EventTarget {
         const delta = (data.direction.x === 'right'
           ? data.distance
           : -data.distance) / 10
+        this.axis.horizontal = delta
         this.dispatchEvent(new CustomEvent('move', { detail: { delta } }))
       }
     })
+  }
+
+  public getAxis = (axis: keyof Axis): number => {
+    return this.axis[axis]
   }
 
   public addEventListener<K extends keyof JoystickEventsMap> (type: K, listener: (evt: JoystickEventsMap[K]) => void, options?: boolean | AddEventListenerOptions): void {

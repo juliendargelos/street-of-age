@@ -1,6 +1,6 @@
 <template>
   <div class="room-game">
-    <virtual-joystick v-if="mobile" @move="onJoystickMove" @start="onJoystickStart" @end="onJoystickEnd"/>
+    <virtual-joystick v-if="mobile"/>
   </div>
 </template>
 
@@ -20,8 +20,6 @@ import { GameScene } from '@/game/scenes/GameScene'
 import { GameDebugScene } from '@/game/scenes/GameDebugScene'
 import { Player } from '@/@types/'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
-import { Emitter } from '@/main'
-import { UIEvents } from '@street-of-age/shared/game/events'
 
 @Component<RoomGame>({
   components: { VirtualJoystick },
@@ -44,18 +42,6 @@ export default class RoomGame extends Vue {
 
     @Watch('players', { deep: true, immediate: true })
     private onPlayersChanged (val: Player[], oldVal: Player[]) {
-    }
-
-    private onJoystickMove (delta: number) {
-      Emitter.emit(UIEvents.JoystickMove, delta)
-    }
-
-    private onJoystickStart () {
-      Emitter.emit(UIEvents.JoystickStart)
-    }
-
-    private onJoystickEnd () {
-      Emitter.emit(UIEvents.JoystickEnd)
     }
 
     get config (): GameConfig {
