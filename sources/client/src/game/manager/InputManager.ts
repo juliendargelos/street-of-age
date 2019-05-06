@@ -3,7 +3,7 @@ import nipplejs, { JoystickManager, JoystickManagerOptions } from 'nipplejs'
 const DEFAULTS: JoystickManagerOptions = {
   lockX: true,
   mode: 'static',
-  position: { left: '50%', top: '50%' },
+  position: { left: '80px', bottom: '80px' },
   color: 'red'
 }
 
