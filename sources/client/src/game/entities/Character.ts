@@ -1,9 +1,11 @@
 import { SpriteConstructor } from '@/@types/game'
 import { GRAVITY } from '@/game/entities/constants'
+import InputManager from '@/game/manager/InputManager'
 
 const MASS = 1
 const JUMP_FORCE = 1.8
 const BOUNCE = 0.2
+const SPEED = 70
 const WIDTH = 54
 const HEIGHT = 96
 const OFFSET_X = 40
@@ -41,18 +43,44 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.handleAnimations()
   }
 
+  public destroy (fromScene?: boolean): void {
+    super.destroy(fromScene)
+  }
+
   private handleMovements = () => {
-    if (this.cursorKeys.space!.isDown && this.body.blocked.down) {
+    if (this.scene.game.device.os.desktop) {
+      this.handleDesktopMovements()
+    } else {
+      this.handleMobileMovements()
+    }
+  }
+
+  private handleMobileMovements = () => {
+    const velocity = InputManager.getAxis('horizontal') * SPEED
+    if (velocity < 0) {
+      this.changeState(State.Moving)
+      this.flipX = true
+    } else if (velocity > 0) {
+      this.changeState(State.Moving)
+      this.flipX = false
+    } else {
+      this.changeState(State.Idleing)
+    }
+    this.setVelocityX(velocity)
+  }
+
+  private handleDesktopMovements = () => {
+    if (this.cursorKeys.up!.isDown && this.body.blocked.down) {
       this.body.velocity.y = -350 * JUMP_FORCE
     }
 
     if (this.cursorKeys.left!.isDown) {
       this.changeState(State.Moving)
-      this.setVelocityX(-300)
+      this.setVelocityX(-5 * SPEED)
       this.flipX = true
     } else if (this.cursorKeys.right!.isDown) {
       this.changeState(State.Moving)
-      this.setVelocityX(300)
+      this.setVelocityX(5 * SPEED)
       this.flipX = false
     } else {
       this.changeState(State.Idleing)
