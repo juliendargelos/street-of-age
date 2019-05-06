@@ -21,7 +21,7 @@ import { GameDebugScene } from '@/game/scenes/GameDebugScene'
 import { Player } from '@/@types/'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
 import { Emitter } from '@/main'
-import { UIEvents } from '@/enums'
+import { UIEvents } from '@street-of-age/shared/game/events'
 
 @Component<RoomGame>({
   components: { VirtualJoystick },

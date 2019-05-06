@@ -1,7 +1,7 @@
 import { SpriteConstructor } from '@/@types/game'
 import { GRAVITY } from '@/game/entities/constants'
 import { Emitter } from '@/main'
-import { UIEvents } from '@/enums'
+import { UIEvents } from '@street-of-age/shared/game/events'
 
 const MASS = 1
 const JUMP_FORCE = 1.8
