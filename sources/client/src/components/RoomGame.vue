@@ -11,6 +11,12 @@
 
   &__renderer
     height: 100%
+  canvas
+    position: fixed
+    top: 0
+    bottom: 0
+    right: 0
+    left: 0
 </style>
 
 <script lang="ts">
@@ -48,7 +54,10 @@ export default class RoomGame extends Vue {
       return {
         parent: this.$el,
         scale: {
-          mode: Phaser.Scale.RESIZE
+          mode: Phaser.Scale.FIT,
+          autoCenter: Phaser.Scale.CENTER_BOTH,
+          width: 736,
+          height: 414
         },
         input: {
           gamepad: false,
