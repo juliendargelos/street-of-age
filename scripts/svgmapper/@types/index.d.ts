@@ -8,7 +8,8 @@ export interface Sprite {
   y: number,
   width: number,
   height: number,
-  sprite: string
+  texture: string,
+  frame?: string
 }
 
 export interface Body {
@@ -16,7 +17,7 @@ export interface Body {
   y: number,
   width: number,
   height: number,
-  sprite: string
+  texture?: string
 }
 
 export interface Level {
