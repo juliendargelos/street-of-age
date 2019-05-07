@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "start": "yarn --cwd sources/server start",
+    "shared:svgmapper": "yarn --cwd sources/shared svgmapper",
     "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\" \"yarn dev:shared\"",
     "dev:client": "yarn --cwd sources/client dev",
     "dev:server": "yarn --cwd sources/server dev",
