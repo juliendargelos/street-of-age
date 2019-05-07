@@ -29,6 +29,7 @@ export class Player implements Serializable<SerializedPlayer> {
   public readonly id: string
   public readonly team: PlayerTeam
   public readonly characterKind: CharacterKind
+  public room: Room
 
   constructor(attributes: SerializedPlayer) {
     if (!PlayerTeamKinds[attributes.team].includes(attributes.characterKind)) {
@@ -46,5 +47,19 @@ export class Player implements Serializable<SerializedPlayer> {
       team: this.team,
       characterKind: this.characterKind
     }
+  }
+
+  public leaveRoom() {
+    this.room && this.room.removePlayer(this)
+  }
+
+  public joinRoom(room: Room) {
+    !this.isInRoom(room) && room.addPlayer(this)
+  }
+
+  public isInRoom(room: Room): boolean {
+    return this.room
+      ? this.room.id === room.id
+      : false
   }
 }

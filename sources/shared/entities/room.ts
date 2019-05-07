@@ -18,6 +18,7 @@ export class Room implements Serializable<SerializedRoom> {
   }
 
   public addPlayer(player: Player) {
+    player.room = this
     this.players.push(player)
   }
 
