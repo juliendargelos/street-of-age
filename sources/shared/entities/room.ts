@@ -17,14 +17,20 @@ export class Room implements Serializable<SerializedRoom> {
     }
   }
 
-  public addPlayer(player: Player) {
+  public async addPlayer(player: Player): Promise<Player> {
     player.room = this
     this.players.push(player)
+    return player
   }
 
-  public removePlayer(player: Player) {
+  public async removePlayer(player: Player): Promise<Player> {
     const index = this.players.indexOf(player)
-    if (index !== -1) this.players.splice(index, 1)
+    if (index !== -1) {
+      this.players.splice(index, 1)
+      player.room = null
+    }
+
+    return player
   }
 
   public clearPlayers() {
