@@ -2,7 +2,7 @@ import { Player, SerializedPlayer } from './player'
 
 export interface SerializedRoom extends Serialized {
   id: string,
-  players: SerializedPlayer[]
+  players?: SerializedPlayer[]
 }
 
 export class Room implements Serializable<SerializedRoom> {
@@ -11,7 +11,10 @@ export class Room implements Serializable<SerializedRoom> {
 
   constructor(attributes: SerializedRoom) {
     this.id = attributes.id
-    attributes.players.forEach(player => this.addPlayer(new Player(player)))
+
+    if (attributes.player) {
+      attributes.players.forEach(player => this.addPlayer(new Player(player)))
+    }
   }
 
   public addPlayer(player: Player) {
