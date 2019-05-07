@@ -1,5 +1,5 @@
 import { parseSync } from 'svgson'
-import {Level, Sprite, Sprites, Body} from './@types'
+import {Level, Sprite, Sprites, Body} from '../../sources/shared/@types'
 
 const COLLIDERS_GROUP = ['colliders', 'Colliders', 'Bodies', 'bodies']
 
