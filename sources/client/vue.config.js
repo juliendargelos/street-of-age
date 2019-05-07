@@ -18,6 +18,7 @@ module.exports = {
         .plugin('free-tex-packer-' + name)
         .use(WebpackFreeTexPacker, [atlas, 'atlases', {
           exporter: 'PhaserArray',
+          allowRotation: false,
           textureName: path.basename(atlas),
           removeFileExtension: true
         }])
