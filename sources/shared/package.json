@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc",
+    "svgmapper": "yarn --cwd scripts/svgmapper start",
     "dev": "tsc -w"
   },
   "dependencies": {
