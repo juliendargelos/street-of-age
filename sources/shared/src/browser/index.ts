@@ -1,10 +1,3 @@
-declare function require(name: string): any
-declare const global: {
-  Element: object,
-  Image: object,
-  HTMLCanvasElement: object
-}
-
 if (typeof window === 'undefined') {
   const path = require('path')
   const Datauri = require('datauri')
