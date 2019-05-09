@@ -1,5 +1,5 @@
 import { parseSync } from 'svgson'
-import {Level, Sprite, Sprites, Body} from './@types'
+import {Level, Sprite, Sprites, Body} from '../../sources/shared/@types'
 
 const COLLIDERS_GROUP = ['colliders', 'Colliders', 'Bodies', 'bodies']
 
@@ -30,14 +30,20 @@ export const parseSvg = (svgContent: string): Level => {
     const translate = parseTransform(value.attributes.transform).translate
     acc[value.attributes.id] = value.children
       .filter((node: any) => node.name === 'image')
-      .map((node: any) => ({
-        id: node.attributes.id,
-        x: parseFloat(node.attributes.x) + translate[0],
-        y: parseFloat(node.attributes.y) + translate[1],
-        sprite: node.attributes.id,
-        width: parseFloat(node.attributes.width),
-        height: parseFloat(node.attributes.height),
-      }) as Sprite)
+      .map((node: any) => {
+        const texture = node.attributes.id.includes('/') ?
+          node.attributes.id.split('/')[0] :
+          node.attributes.id
+        return ({
+          id: node.attributes.id,
+          x: parseFloat(node.attributes.x) + translate[0],
+          y: parseFloat(node.attributes.y) + translate[1],
+          texture: texture,
+          frame: node.attributes.id.includes('/') ? node.attributes.id : null,
+          width: parseFloat(node.attributes.width),
+          height: parseFloat(node.attributes.height),
+        }) as Sprite
+      })
     return acc
   }, {})
 

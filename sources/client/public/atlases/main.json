@@ -1,0 +1,715 @@
+{
+  "frames": [
+    {
+      "filename": "main/fx/lightning/2",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 334,
+        "h": 700
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 185,
+        "y": 0,
+        "w": 334,
+        "h": 700
+      },
+      "sourceSize": {
+        "w": 700,
+        "h": 700
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/fx/lightning/1",
+      "frame": {
+        "x": 0,
+        "y": 700,
+        "w": 326,
+        "h": 699
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 196,
+        "y": 0,
+        "w": 326,
+        "h": 699
+      },
+      "sourceSize": {
+        "w": 700,
+        "h": 700
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/fx/fireball/5",
+      "frame": {
+        "x": 0,
+        "y": 1399,
+        "w": 433,
+        "h": 386
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 6,
+        "y": 75,
+        "w": 433,
+        "h": 386
+      },
+      "sourceSize": {
+        "w": 512,
+        "h": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/fx/lightning/0",
+      "frame": {
+        "x": 326,
+        "y": 700,
+        "w": 325,
+        "h": 687
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 172,
+        "y": 0,
+        "w": 325,
+        "h": 687
+      },
+      "sourceSize": {
+        "w": 700,
+        "h": 700
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/marco/walking-3",
+      "frame": {
+        "x": 0,
+        "y": 1832,
+        "w": 50,
+        "h": 98
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 35,
+        "y": 27,
+        "w": 50,
+        "h": 98
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/marco/walking-5",
+      "frame": {
+        "x": 0,
+        "y": 1930,
+        "w": 50,
+        "h": 98
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 35,
+        "y": 27,
+        "w": 50,
+        "h": 98
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/polo/walking-3",
+      "frame": {
+        "x": 50,
+        "y": 1832,
+        "w": 50,
+        "h": 98
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 35,
+        "y": 27,
+        "w": 50,
+        "h": 98
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/polo/walking-5",
+      "frame": {
+        "x": 50,
+        "y": 1930,
+        "w": 50,
+        "h": 98
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 35,
+        "y": 27,
+        "w": 50,
+        "h": 98
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/marco/walking-6",
+      "frame": {
+        "x": 100,
+        "y": 1832,
+        "w": 48,
+        "h": 98
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 37,
+        "y": 27,
+        "w": 48,
+        "h": 98
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/marco/walking-7",
+      "frame": {
+        "x": 100,
+        "y": 1930,
+        "w": 48,
+        "h": 98
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 39,
+        "y": 27,
+        "w": 48,
+        "h": 98
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/polo/walking-6",
+      "frame": {
+        "x": 148,
+        "y": 1832,
+        "w": 48,
+        "h": 98
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 37,
+        "y": 27,
+        "w": 48,
+        "h": 98
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/polo/walking-7",
+      "frame": {
+        "x": 148,
+        "y": 1930,
+        "w": 48,
+        "h": 98
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 39,
+        "y": 27,
+        "w": 48,
+        "h": 98
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/marco/standing",
+      "frame": {
+        "x": 196,
+        "y": 1832,
+        "w": 44,
+        "h": 98
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 41,
+        "y": 27,
+        "w": 44,
+        "h": 98
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/polo/standing",
+      "frame": {
+        "x": 196,
+        "y": 1930,
+        "w": 44,
+        "h": 98
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 41,
+        "y": 27,
+        "w": 44,
+        "h": 98
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/marco/walking-4",
+      "frame": {
+        "x": 240,
+        "y": 1832,
+        "w": 58,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 31,
+        "y": 29,
+        "w": 58,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/polo/walking-4",
+      "frame": {
+        "x": 240,
+        "y": 1928,
+        "w": 58,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 31,
+        "y": 29,
+        "w": 58,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/marco/walking-0",
+      "frame": {
+        "x": 298,
+        "y": 1832,
+        "w": 54,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 39,
+        "y": 29,
+        "w": 54,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/polo/walking-0",
+      "frame": {
+        "x": 298,
+        "y": 1928,
+        "w": 54,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 39,
+        "y": 29,
+        "w": 54,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/marco/walking-1",
+      "frame": {
+        "x": 352,
+        "y": 1832,
+        "w": 50,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 41,
+        "y": 27,
+        "w": 50,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/fx/fireball/4",
+      "frame": {
+        "x": 386,
+        "y": 1387,
+        "w": 432,
+        "h": 389
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 10,
+        "y": 73,
+        "w": 432,
+        "h": 389
+      },
+      "sourceSize": {
+        "w": 512,
+        "h": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/fx/lightning/3",
+      "frame": {
+        "x": 402,
+        "y": 1819,
+        "w": 277,
+        "h": 223
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 207,
+        "y": 452,
+        "w": 277,
+        "h": 223
+      },
+      "sourceSize": {
+        "w": 700,
+        "h": 700
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/marco/walking-2",
+      "frame": {
+        "x": 352,
+        "y": 1928,
+        "w": 50,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 35,
+        "y": 27,
+        "w": 50,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/polo/walking-1",
+      "frame": {
+        "x": 679,
+        "y": 1819,
+        "w": 50,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 41,
+        "y": 27,
+        "w": 50,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/characters/polo/walking-2",
+      "frame": {
+        "x": 679,
+        "y": 1915,
+        "w": 50,
+        "h": 96
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 35,
+        "y": 27,
+        "w": 50,
+        "h": 96
+      },
+      "sourceSize": {
+        "w": 128,
+        "h": 128
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/fx/fireball/2",
+      "frame": {
+        "x": 334,
+        "y": 0,
+        "w": 424,
+        "h": 390
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 19,
+        "y": 71,
+        "w": 424,
+        "h": 390
+      },
+      "sourceSize": {
+        "w": 512,
+        "h": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/fx/fireball/3",
+      "frame": {
+        "x": 651,
+        "y": 424,
+        "w": 421,
+        "h": 391
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 23,
+        "y": 71,
+        "w": 421,
+        "h": 391
+      },
+      "sourceSize": {
+        "w": 512,
+        "h": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/fx/fireball/1",
+      "frame": {
+        "x": 724,
+        "y": 0,
+        "w": 414,
+        "h": 386
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 25,
+        "y": 73,
+        "w": 414,
+        "h": 386
+      },
+      "sourceSize": {
+        "w": 512,
+        "h": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "main/fx/fireball/0",
+      "frame": {
+        "x": 651,
+        "y": 845,
+        "w": 393,
+        "h": 374
+      },
+      "rotated": true,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 41,
+        "y": 76,
+        "w": 393,
+        "h": 374
+      },
+      "sourceSize": {
+        "w": 512,
+        "h": 512
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  ],
+  "meta": {
+    "app": "https://github.com/odrick/webpack-free-tex-packer",
+    "version": "0.2.0",
+    "image": "main.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1110,
+      "h": 2042
+    },
+    "scale": 1
+  }
+}
