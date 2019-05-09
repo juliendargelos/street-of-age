@@ -23,7 +23,6 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import Phaser from 'phaser'
 import { GameScene } from '@/game/scenes/GameScene'
-import { GameDebugScene } from '@/game/scenes/GameDebugScene'
 import { Player } from '@/@types/'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
 import { REGISTRY_LEVEL_KEY } from '@/constants'
@@ -78,7 +77,7 @@ export default class RoomGame extends Vue {
         },
         disableContextMenu: true,
         scene: [
-          this.debug ? GameDebugScene : GameScene
+          GameScene
         ]
       }
     }

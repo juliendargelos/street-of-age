@@ -10,16 +10,15 @@ export class GameScene extends BaseScene {
 
   public create = () => {
     super.create()
-
     this.character = new Character({
       scene: this,
       texture: 'character',
       x: 120,
       y: 200
     })
-    const platforms = this.physics.add.staticGroup()
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody()
-    this.physics.add.collider(this.character, platforms)
+    this.physics.add.collider(this.character, this.level.floors)
+    this.cameras.main.setBounds(0, 0, 1800, this.game.scale.height)
+    this.cameras.main.startFollow(this.character)
   }
 
   public update = (time: number, delta: number) => {
