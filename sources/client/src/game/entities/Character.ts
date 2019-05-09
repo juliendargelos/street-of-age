@@ -1,5 +1,5 @@
 import { SpriteConstructor } from '@/@types/game'
-import { GRAVITY } from '@/game/entities/constants'
+import { GRAVITY } from '@/constants'
 import InputManager from '@/game/manager/InputManager'
 
 const MASS = 1

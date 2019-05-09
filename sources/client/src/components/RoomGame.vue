@@ -26,11 +26,15 @@ import { GameScene } from '@/game/scenes/GameScene'
 import { GameDebugScene } from '@/game/scenes/GameDebugScene'
 import { Player } from '@/@types/'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
+import { REGISTRY_LEVEL_KEY } from '@/constants'
+// TODO: The level should be fetched from the server. Meanwhile, it's hard-fetched for testing purposes
+import level from '@/assets/levels/Street.level.json'
 
 @Component<RoomGame>({
   components: { VirtualJoystick },
   mounted () {
     this.game = new Phaser.Game(this.config)
+    this.game.registry.set(REGISTRY_LEVEL_KEY, level)
     this.mobile = !this.game.device.os.desktop &&
       (this.game.device.os.android || this.game.device.os.iOS || this.game.device.os.windowsPhone)
   },
