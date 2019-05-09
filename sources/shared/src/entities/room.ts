@@ -19,7 +19,7 @@ export class Room implements Serializable<SerializedRoom> {
 
   public async addPlayer(player: Player): Promise<Player> {
     player.room = this
-    this.players.push(player)
+    this.players = [...this.players, player]
     return player
   }
 
