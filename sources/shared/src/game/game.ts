@@ -12,8 +12,8 @@ export interface SerializedGame extends Serialized {
 export class Game extends Phaser.Game implements Serializable<SerializedGame> {
   private characters: Character[]
 
-  constructor(attributes: SerializedGame) {
-    super()
+  constructor(config, attributes: SerializedGame) {
+    super(config)
 
     this.characters = attributes.characters.map(character => (
       new Character(this.mainScene, character)
