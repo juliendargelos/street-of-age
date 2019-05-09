@@ -1,4 +1,4 @@
-import Phaser from './phaser'
+import * as Phaser from 'phaser'
 import { Room } from '../entities/room'
 import { Character, SerializedCharacter } from './character'
 
