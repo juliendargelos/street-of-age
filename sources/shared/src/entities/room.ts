@@ -33,7 +33,7 @@ export class Room implements Serializable<SerializedRoom> {
     return player
   }
 
-  public clearPlayers() {
+  public removeAllPlayers() {
     this.players.forEach(player => this.removePlayer(player))
   }
 
