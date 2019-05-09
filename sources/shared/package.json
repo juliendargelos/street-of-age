@@ -10,6 +10,9 @@
     "dev": "tsc -w"
   },
   "dependencies": {
+    "canvas": "^2.5.0",
+    "datauri": "^2.0.0",
+    "jsdom": "^15.0.0",
     "phaser": "^3.16.2"
   },
   "eslintConfig": {

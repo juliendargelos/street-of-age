@@ -20,6 +20,9 @@
       ]
     }
   },
+  "files": [
+    "src/game/environment.ts"
+  ],
   "include": [
     "index.ts",
     "src/**/*"
