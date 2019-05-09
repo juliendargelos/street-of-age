@@ -10,7 +10,7 @@
       {
         "id": "level/buildings/Batiment1",
         "x": 71,
-        "y": 45,
+        "y": 16,
         "texture": "level",
         "frame": "level/buildings/Batiment1",
         "width": 369,
@@ -23,7 +23,7 @@
       {
         "id": "level/buildings/Batiment1",
         "x": 759,
-        "y": 45,
+        "y": 16,
         "texture": "level",
         "frame": "level/buildings/Batiment1",
         "width": 369,
@@ -36,7 +36,7 @@
       {
         "id": "level/buildings/Batiment1",
         "x": 1431,
-        "y": 45,
+        "y": 16,
         "texture": "level",
         "frame": "level/buildings/Batiment1",
         "width": 369,
@@ -49,7 +49,7 @@
       {
         "id": "level/buildings/Batiment1",
         "x": 1235,
-        "y": 45,
+        "y": 16,
         "texture": "level",
         "frame": "level/buildings/Batiment1",
         "width": 369,
@@ -64,7 +64,7 @@
       {
         "id": "level/props/Lampadaire",
         "x": 479,
-        "y": 118,
+        "y": 89,
         "texture": "level",
         "frame": "level/props/Lampadaire",
         "width": 63,
@@ -79,7 +79,7 @@
       {
         "id": "level/lights/LigthtBatiment1",
         "x": -22,
-        "y": -43,
+        "y": -72,
         "texture": "level",
         "frame": "level/lights/LigthtBatiment1",
         "width": 555,
@@ -92,7 +92,7 @@
       {
         "id": "level/lights/LigthtBatiment1",
         "x": 666,
-        "y": -43,
+        "y": -72,
         "texture": "level",
         "frame": "level/lights/LigthtBatiment1",
         "width": 555,
@@ -105,7 +105,7 @@
       {
         "id": "level/lights/LigthtBatiment1",
         "x": 1142,
-        "y": -43,
+        "y": -72,
         "texture": "level",
         "frame": "level/lights/LigthtBatiment1",
         "width": 555,
@@ -118,7 +118,7 @@
       {
         "id": "level/lights/LightLampadaire",
         "x": 169,
-        "y": -201,
+        "y": -230,
         "texture": "level",
         "frame": "level/lights/LightLampadaire",
         "width": 712,
@@ -131,7 +131,7 @@
       {
         "id": "level/props/Lampadaire",
         "x": 1414,
-        "y": 118,
+        "y": 89,
         "texture": "level",
         "frame": "level/props/Lampadaire",
         "width": 63,
@@ -144,7 +144,7 @@
       {
         "id": "level/lights/LightLampadaire",
         "x": 1104,
-        "y": -201,
+        "y": -230,
         "texture": "level",
         "frame": "level/lights/LightLampadaire",
         "width": 712,
@@ -155,5 +155,40 @@
         }
       }
     ]
-  }
+  },
+  "floors": [
+    {
+      "x": 0,
+      "y": 346,
+      "width": 598,
+      "height": 29,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 677,
+      "y": 346,
+      "width": 1154,
+      "height": 29,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 1891,
+      "y": 346,
+      "width": 109,
+      "height": 29,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ]
 }

@@ -1,11 +1,13 @@
 import AnimationHelper from '../manager/AnimationManager'
 import GameLevel from '@/game/entities/GameLevel'
-import { REGISTRY_LEVEL_KEY } from '@/constants'
+import { Character } from '@/game/entities/Character'
 import GameLevelBuilder from '@/game/GameLevelBuilder'
+import { REGISTRY_LEVEL_KEY } from '@/constants'
 
 export default class BaseScene extends Phaser.Scene {
   protected animationHelper?: AnimationHelper
   protected level!: GameLevel
+  protected character!: Character
 
   public init (): void {
     this.game.scene.dump()

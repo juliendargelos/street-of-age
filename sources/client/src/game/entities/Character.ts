@@ -27,7 +27,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     this.setSize(WIDTH, HEIGHT)
     this.setBounce(BOUNCE)
-    this.setCollideWorldBounds(true)
 
     this.body.setOffset(OFFSET_X, OFFSET_Y)
     this.body.setMass(MASS)

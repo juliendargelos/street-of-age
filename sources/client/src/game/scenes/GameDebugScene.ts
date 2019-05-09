@@ -2,8 +2,6 @@ import BaseScene from '@/game/scenes/BaseScene'
 import { Character } from '@/game/entities/Character'
 
 export class GameDebugScene extends BaseScene {
-  private character!: Character
-
   constructor () {
     super({
       key: 'GAME_DEBUG_SCENE'
@@ -18,10 +16,9 @@ export class GameDebugScene extends BaseScene {
       x: 120,
       y: 200
     })
-    const platforms = this.physics.add.staticGroup()
-    platforms.create(100, 600, 'ground').setScale(2).refreshBody()
-    platforms.create(700, 800, 'ground').setScale(2).refreshBody()
-    this.physics.add.collider(this.character, platforms)
+    this.physics.add.collider(this.character, this.level.floors)
+    this.cameras.main.setBounds(0, 0, 1800, this.game.scale.height)
+    this.cameras.main.startFollow(this.character)
   }
 
   public update = (time: number, delta: number) => {

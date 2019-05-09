@@ -2,8 +2,6 @@ import BaseScene from '@/game/scenes/BaseScene'
 import { Character } from '@/game/entities/Character'
 
 export class GameScene extends BaseScene {
-  private character!: Character
-
   constructor () {
     super({
       key: 'GAME_SCENE'
