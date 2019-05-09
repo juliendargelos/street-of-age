@@ -8,7 +8,9 @@
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "declaration": true,
     "baseUrl": ".",
+    "outDir": ".",
     "typeRoots" : [
       "./node_modules/@types"
     ],
@@ -22,7 +24,7 @@
     "node_modules/phaser3-docs/typescript/phaser.d.ts"
   ],
   "include": [
-    "**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "**/*.js"
