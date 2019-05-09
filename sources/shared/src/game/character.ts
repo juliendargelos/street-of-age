@@ -1,4 +1,4 @@
-import * as Phaser from 'phaser'
+import Phaser from './phaser'
 import { GRAVITY } from './game'
 import { PlayerTeam } from '../entities/player'
 
