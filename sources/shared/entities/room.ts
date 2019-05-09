@@ -7,7 +7,7 @@ export interface SerializedRoom extends Serialized {
 
 export class Room implements Serializable<SerializedRoom> {
   public readonly id: string
-  private players: Player[] = []
+  public players: Player[] = []
 
   constructor(attributes: SerializedRoom) {
     this.id = attributes.id

@@ -49,12 +49,15 @@ export class Player implements Serializable<SerializedPlayer> {
     }
   }
 
-  public leaveRoom() {
-    this.room && this.room.removePlayer(this)
+  public async leaveRoom(): Promise<Room> {
+    const room = this.room
+    room && await room.removePlayer(this)
+    return room
   }
 
-  public joinRoom(room: Room) {
-    !this.isInRoom(room) && room.addPlayer(this)
+  public async joinRoom(room: Room): Promise<Room> {
+    !this.isInRoom(room) && await room.addPlayer(this)
+    return room
   }
 
   public isInRoom(room: Room): boolean {
