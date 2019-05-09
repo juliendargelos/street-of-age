@@ -56,8 +56,8 @@ export default class RoomGame extends Vue {
         scale: {
           mode: Phaser.Scale.FIT,
           autoCenter: Phaser.Scale.CENTER_BOTH,
-          width: 736,
-          height: 414
+          width: 667,
+          height: 375
         },
         input: {
           gamepad: false,
