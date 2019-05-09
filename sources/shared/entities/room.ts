@@ -12,7 +12,7 @@ export class Room implements Serializable<SerializedRoom> {
   constructor(attributes: SerializedRoom) {
     this.id = attributes.id
 
-    if (attributes.player) {
+    if (attributes.players) {
       attributes.players.forEach(player => this.addPlayer(new Player(player)))
     }
   }
