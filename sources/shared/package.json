@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
+  "types": "src/@types",
   "scripts": {
     "build": "tsc",
     "svgmapper": "yarn --cwd scripts/svgmapper start",
@@ -15,7 +16,7 @@
     "root": false
   },
   "devDependencies": {
-    "typescript": "^3.3.3333",
-    "phaser3-docs": "github:photonstorm/phaser3-docs"
+    "phaser3-docs": "github:photonstorm/phaser3-docs",
+    "typescript": "^3.3.3333"
   }
 }
