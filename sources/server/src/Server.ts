@@ -1,15 +1,14 @@
-import * as express from "express"
-import {Express} from "express"
-import * as socketio from "socket.io"
-import {Server as HttpServer} from 'http'
-import PlayerManager from "./managers/PlayerManager";
-import {SocketEvents} from "@street-of-age/shared/socket/events";
-import SocketRoom from "./handlers/SocketRoom";
-import Logger from "./services/Logger";
-import SocketPlayer from "./handlers/SocketPlayer";
+import * as socketio from 'socket.io'
+import * as express from 'express'
+import { Express } from 'express'
+import { Server as HttpServer } from 'http'
+import { SocketEvents } from '@street-of-age/shared/socket/events'
+import PlayerManager from './managers/PlayerManager'
+import SocketRoom from './handlers/SocketRoom'
+import SocketPlayer from './handlers/SocketPlayer'
+import Logger from './services/Logger'
 
 export default new class Server {
-
   public port: number = Number(process.env.PORT) || 4444
   private app: Express
   private http: HttpServer
@@ -17,7 +16,7 @@ export default new class Server {
 
   public init = (): this => {
     this.app = express()
-    this.app.set("port", this.port)
+    this.app.set('port', this.port)
     this.http = new HttpServer(this.app)
     this.io = socketio(this.http)
     Logger.info('Initialized server')
@@ -46,5 +45,4 @@ export default new class Server {
 
     return this
   }
-
 }

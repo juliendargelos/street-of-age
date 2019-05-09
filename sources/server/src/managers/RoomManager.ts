@@ -1,14 +1,13 @@
-import {Room, RoomSerialized} from "../entities/Room";
-import {Player} from "../entities/Player";
-import {action, computed, observable} from "mobx";
-import Logger from "../services/Logger";
-import {RoomEvents} from '@street-of-age/shared/socket/events'
+import { action, computed, observable } from 'mobx'
+import { RoomEvents } from '@street-of-age/shared/socket/events'
+import { Room, SerializedRoom } from '../entities/Room'
+import { Player } from '../entities/Player'
+import Logger from '../services/Logger'
 
 class RoomManager {
-
   @observable private rooms: Room[] = []
 
-  @computed get serializedRooms(): RoomSerialized[] {
+  @computed get serializedRooms(): SerializedRoom[] {
     return this.rooms.map(room => room.serialize())
   }
 
@@ -30,11 +29,10 @@ class RoomManager {
 
   @action public deleteRoom = (room: Room): void => {
     room.io.sockets.emit(RoomEvents.RoomDeleted, room.serialize())
-    room.removeAllPlayers()
+    room.clearPlayers()
     this.rooms = this.rooms.filter(r => r.id !== room.id)
-    Logger.success(`deleted ${room.toString()}`)
+    Logger.success(`deleted ${room}`)
   }
-
 }
 
 export default new RoomManager()

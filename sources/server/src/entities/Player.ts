@@ -1,50 +1,34 @@
-import {Socket} from "socket.io";
-import {Serializable} from "../@types";
-import {red} from "../services/Logger";
-import {Room, RoomSerialized} from "./Room";
+import { Socket } from 'socket.io'
+import { Player as BasePlayer, SerializedPlayer, PlayerTeam } from '@street-of-age/shared/entities/player'
+import { CharacterKind } from '@street-of-age/shared/game/character'
+import { Room } from './Room'
+import { red } from '../services/Logger'
 
-export interface PlayerSerialized {
-  id: string,
-  room: RoomSerialized | null
-}
-
-export class Player implements Serializable {
-
-  public id: string
-  public room: Room
-
-  constructor(public readonly socket: Socket) {
-    this.id = socket.id
+class Player extends BasePlayer {
+  constructor(
+    public readonly socket: Socket,
+    team: PlayerTeam,
+    characterKind: CharacterKind
+   ) {
+    super({
+      id: socket.id,
+      team,
+      characterKind
+    })
   }
 
   get io() {
     return this.socket.server
   }
 
-  public leaveRoom = (): void => {
-    if (this.room) {
-      this.room.removePlayer(this)
-    }
-  }
-
-  public connectToRoom = (room: Room): void => {
-    if (!this.isInRoom(room)) {
-      room.addPlayer(this)
-    }
-  }
-
-  public isInRoom = (room: Room): boolean => {
-    return this.room ?
-      this.room.id === room.id :
-      false
-  }
-
-  public serialize = (): PlayerSerialized => {
-    return {id: this.id, room: this.room ? this.room.serialize() : null}
-  }
-
-  public toString = (): string => {
+  public toString(): string {
     return `Player(id: ${red(this.id)})`
   }
+}
 
+export {
+  Player,
+  SerializedPlayer,
+  PlayerTeam,
+  CharacterKind
 }

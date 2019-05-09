@@ -1,15 +1,14 @@
-import {Player} from "../entities/Player";
-import {Socket} from "socket.io";
-import Logger, {red} from "../services/Logger";
-import {action, observable} from "mobx";
+import { Socket } from 'socket.io'
+import { action, observable } from 'mobx'
+import { Player, PlayerTeam, CharacterKind } from '../entities/Player'
+import Logger, { red } from '../services/Logger'
 
 class PlayerManager {
-
   @observable private players: Player[] = []
 
   @action public connect = (socket: Socket): Player => {
     Logger.info(`socket with id ${red(socket.id)} has been connected`)
-    const player = new Player(socket);
+    const player = new Player(socket, PlayerTeam.Young, CharacterKind.Egocentric)
     this.players = [...this.players, player]
     return player
   }
@@ -25,7 +24,6 @@ class PlayerManager {
   public find = (socket: Socket): Player | undefined => {
     return this.players.find(player => player.id === socket.id)
   }
-
 }
 
 export default new PlayerManager()

@@ -1,31 +1,25 @@
-import {randomBytes} from 'crypto'
-import {Player} from "./Player"
-import Logger, {red} from "../services/Logger"
-import {OnRoomJoined, Serializable} from "../@types"
-import {action, autorun, observable} from "mobx"
-import RoomManager from "../managers/RoomManager"
-import {RoomEvents} from "@street-of-age/shared/socket/events"
+import { randomBytes } from 'crypto'
+import { action, autorun, observable, decorate } from 'mobx'
+import { RoomEvents } from '@street-of-age/shared/socket/events'
+import { Room as BaseRoom, SerializedRoom } from '@street-of-age/shared/entities/room'
+import { Player } from './Player'
+import RoomManager from '../managers/RoomManager'
+import Logger, { red } from '../services/Logger'
 
-export interface RoomSerialized {
-  id: string,
-  players: Array<{ id: string }>
-}
-
-export class Room implements Serializable {
-  public readonly id: string
-  @observable private players: Player[] = []
-
+class Room extends BaseRoom {
   constructor(private readonly owner: Player) {
-    this.id = randomBytes(20).toString('hex')
+    super({ id: randomBytes(20).toString('hex') })
 
-    this.addPlayer(owner)
-    owner.io.sockets.emit(RoomEvents.RoomCreated, this.serialize())
-    Logger.success(`created room ${red(this.id)} with owner ${red(owner.id)}`)
+    this.addPlayer(owner).then(() => {
+      owner.io.sockets.emit(RoomEvents.RoomCreated, this.serialize())
+    })
 
-    Logger.info(`setup autorun for ${this.toString()}`)
+    Logger.success(`created ${this} with owner ${owner}`)
+    Logger.info(`setup autorun for ${this}`)
+
     autorun(() => {
       if (this.players.length === 0) {
-        Logger.info(`deleting ${this.toString()} because all players left`)
+        Logger.info(`deleting ${this} because all players left`)
         RoomManager.deleteRoom(this)
       }
     })
@@ -35,35 +29,44 @@ export class Room implements Serializable {
     return this.owner.socket.server
   }
 
-  public serialize = (): RoomSerialized => ({id: this.id, players: this.players.map(u => ({id: u.id}))})
-
-  public toString = (): string => {
+  public toString(): string {
     return `Room(id: ${red(this.id)})`
   }
 
-  @action public addPlayer = (player: Player, onJoin?: OnRoomJoined): void => {
-    player.room = this
+  @action public async addPlayer(player: Player): Promise<Player> {
     player.socket.leaveAll()
-    player.socket.join(this.id, () => {
-      player.io.sockets.in(this.id).emit(RoomEvents.RoomJoined, this.serialize())
-      player.io.sockets.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
-      Logger.success(`${player.toString()} joined ${this.toString()}`)
-      if (onJoin) onJoin(player)
-    })
-    this.players = [...this.players, player]
+
+    return new Promise(resolve => player.socket.join(this.id, () => {
+      super.addPlayer(player).then(() => {
+        player.io.sockets.in(this.id).emit(RoomEvents.RoomJoined, this.serialize())
+        player.io.sockets.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
+        Logger.success(`${player} joined ${this}`)
+        resolve(player)
+      })
+    }))
   }
 
-  @action public removePlayer = (player: Player): void => {
-    player.room = null
-    player.socket.leave(this.id, () => {
-      player.io.sockets.in(this.id).emit(RoomEvents.RoomLeft, {room: this.serialize(), player: player.serialize()})
-      this.players = this.players.filter(u => u.id !== player.id)
-      player.io.sockets.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
-    })
-    Logger.info(`${player.toString()} left ${this.toString()}`)
+  @action public async removePlayer(player: Player): Promise<Player> {
+    return new Promise(resolve => player.socket.leave(this.id, () => {
+      super.removePlayer(player).then(() => {
+        player.io.sockets.in(this.id).emit(RoomEvents.RoomLeft, {room: this.serialize(), player: player.serialize()})
+        player.io.sockets.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
+        Logger.info(`${player.toString()} left ${this}`)
+        resolve(player)
+      })
+    }))
   }
 
-  @action public removeAllPlayers = (): void => {
+  @action public clearPlayers = (): void => {
     this.players.forEach(this.removePlayer)
   }
+}
+
+decorate(Room, {
+  players: observable
+})
+
+export {
+  Room,
+  SerializedRoom
 }
