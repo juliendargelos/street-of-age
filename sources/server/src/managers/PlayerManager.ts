@@ -1,6 +1,7 @@
 import { Socket } from 'socket.io'
 import { action, observable } from 'mobx'
-import { Player, PlayerTeam, CharacterKind } from '../entities/Player'
+import { Player, PlayerTeam } from '../entities/Player'
+import { CharacterKind } from '../game/character'
 import Logger, { red } from '../services/Logger'
 
 class PlayerManager {
