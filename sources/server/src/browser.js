@@ -21,5 +21,5 @@ Object.entries(Object.getOwnPropertyDescriptors(window)).forEach(([property, des
 
 global.Element = window.Element
 global.Image = window.Image
-global.HTMLCanvasElement= window.HTMLCanvasElement
+global.HTMLCanvasElement = window.HTMLCanvasElement
 
