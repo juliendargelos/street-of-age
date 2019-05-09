@@ -17,7 +17,10 @@ if (typeof window === 'undefined') {
 
   window.URL.revokeObjectURL = (objectURL: any) => {}
 
-  Object.assign(global, window)
+  Object.entries(Object.getOwnPropertyDescriptors(window)).forEach(([property, descriptor]) => {
+    property in global || Object.defineProperty(global, property, descriptor)
+  })
+
   global.Element = window.Element
   global.Image = window.Image
   global.HTMLCanvasElement= window.HTMLCanvasElement
