@@ -21,7 +21,7 @@ class RoomManager {
 
   @action public createRoom = (owner: Player): Room => {
     owner.leaveRoom()
-    const room = new Room(owner);
+    const room = new Room(owner)
     this.rooms = [...this.rooms, room]
 
     return room
@@ -29,9 +29,10 @@ class RoomManager {
 
   @action public deleteRoom = (room: Room): void => {
     room.io.sockets.emit(RoomEvents.RoomDeleted, room.serialize())
-    room.clearPlayers()
-    this.rooms = this.rooms.filter(r => r.id !== room.id)
-    Logger.success(`deleted ${room}`)
+    room.removeAllPlayers().then(() => {
+      this.rooms = this.rooms.filter(r => r.id !== room.id)
+      Logger.success(`deleted ${room}`)
+    })
   }
 }
 

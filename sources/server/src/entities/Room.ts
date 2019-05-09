@@ -10,18 +10,19 @@ class Room extends BaseRoom {
   constructor(private readonly owner: Player) {
     super({ id: randomBytes(20).toString('hex') })
 
-    this.addPlayer(owner).then(() => {
-      owner.io.sockets.emit(RoomEvents.RoomCreated, this.serialize())
-    })
+    owner.io.sockets.emit(RoomEvents.RoomCreated, this.serialize())
 
     Logger.success(`created ${this} with owner ${owner}`)
-    Logger.info(`setup autorun for ${this}`)
 
-    autorun(() => {
-      if (this.players.length === 0) {
-        Logger.info(`deleting ${this} because all players left`)
-        RoomManager.deleteRoom(this)
-      }
+    this.addPlayer(owner).then(() => {
+      Logger.info(`setup autorun for ${this}`)
+
+      autorun(() => {
+        if (this.players.length === 0) {
+          Logger.info(`deleting ${this} because all players left`)
+          RoomManager.deleteRoom(this)
+        }
+      })
     })
   }
 
@@ -57,8 +58,8 @@ class Room extends BaseRoom {
     }))
   }
 
-  @action public clearPlayers = (): void => {
-    this.players.forEach(this.removePlayer)
+  @action public async removeAllPlayers() {
+    return Promise.all(this.players.map((player: Player) => this.removePlayer(player)))
   }
 }
 
