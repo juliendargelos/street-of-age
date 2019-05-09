@@ -17,15 +17,17 @@ export enum CharacterKind {
 
 export interface SerializedCharacter extends Serialized {
   id: string
+  playerId: string
   kind: CharacterKind
-  x: number
-  y: number
-  velocityX: number
-  velocityY: number
+  x?: number
+  y?: number
+  velocityX?: number
+  velocityY?: number
 }
 
 export class Character extends Phaser.Physics.Arcade.Sprite implements Serializable<SerializedCharacter> {
   public readonly id: string
+  public readonly playerId: string
   public readonly kind: CharacterKind
 
   constructor(
@@ -34,14 +36,23 @@ export class Character extends Phaser.Physics.Arcade.Sprite implements Serializa
   ) {
     super(scene, 0, 0, `characters/${attributes.kind}`)
     this.id = attributes.id
+    this.playerId = attributes.playerId
     this.kind = attributes.kind
 
     scene.physics.world.enable(this)
     this.setBounce(BOUNCE)
     this.setCollideWorldBounds(true)
     this.body.setMass(MASS)
-    this.setPosition(attributes.x, attributes.y)
-    this.setVelocity(attributes.velocityX, attributes.velocityY)
+
+    this.setPosition(
+      attributes.x || 0,
+      attributes.y || 0
+    )
+
+    this.setVelocity(
+      attributes.velocityX || 0,
+      attributes.velocityY || 0
+    )
 
     scene.add.existing(this)
   }
@@ -53,6 +64,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite implements Serializa
   public serialize(): SerializedCharacter {
     return {
       id: this.id,
+      playerId: this.playerId,
       kind: this.kind,
       x: this.x,
       y: this.y,

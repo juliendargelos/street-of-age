@@ -1,5 +1,5 @@
 import { Room, SerializedRoom } from './room'
-import { CharacterKind } from '../game/character'
+import { Character, CharacterKind } from '../game/character'
 
 export enum PlayerTeam {
   Young = 'young',
