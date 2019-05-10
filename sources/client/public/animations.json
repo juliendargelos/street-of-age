@@ -15,6 +15,20 @@
       "frameRate": 12
     },
     {
+      "key": "fraicheur_walking",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 15,
+        "zeroPad": 5,
+        "prefix": "main/characters/fraicheur/walking_"
+      },
+      "showOnStart": true,
+      "repeat": -1,
+      "frameRate": 15
+    },
+    {
       "key": "character_idle",
       "frames": {
         "key": "main",

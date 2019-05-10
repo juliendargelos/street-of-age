@@ -5,11 +5,11 @@ import InputManager from '@/game/manager/InputManager'
 const MASS = 1
 const JUMP_FORCE = 1.8
 const BOUNCE = 0.2
-const SPEED = 70
-const WIDTH = 54
-const HEIGHT = 96
-const OFFSET_X = 40
-const OFFSET_Y = 28
+const SPEED = 20
+const WIDTH = 63
+const HEIGHT = 90
+const OFFSET_X = 0
+const OFFSET_Y = 0
 
 enum State {
   Moving = 'Moving',
@@ -27,7 +27,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     this.setSize(WIDTH, HEIGHT)
     this.setBounce(BOUNCE)
-    this.setCollideWorldBounds(true)
+    this.setOrigin(0, 0)
 
     this.body.setOffset(OFFSET_X, OFFSET_Y)
     this.body.setMass(MASS)
@@ -91,10 +91,10 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private handleAnimations = () => {
     switch (this.state) {
       case State.Moving:
-        this.play('character_walking', true)
+        this.play('fraicheur_walking', true)
         break
       case State.Idleing:
-        this.play('character_idle', true)
+        this.play('fraicheur_walking', true)
         break
     }
   }
