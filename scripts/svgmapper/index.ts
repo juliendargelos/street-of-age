@@ -2,6 +2,8 @@ import { readdirSync, readFileSync, writeFileSync } from 'fs'
 import * as path from 'path'
 import {parseSvg} from './parser'
 
+const FILE_SUFFIX = 'level'
+
 const sources = path.join(__dirname, 'sources')
 const out = path.join(__dirname, 'out')
 
@@ -17,7 +19,8 @@ if (svgs.length === 0) {
 svgs
   .map(parseSvg)
   .forEach(level => {
-    writeFileSync(`${out}/${level.title}.json`, JSON.stringify(level))
-    console.info(`Successfully exported ${level.title}`)
+    const filename = `${level.title}.${FILE_SUFFIX}.json`
+    writeFileSync(`${out}/${filename}`, JSON.stringify(level))
+    console.info(`Successfully exported ${filename}`)
   })
 

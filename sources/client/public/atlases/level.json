@@ -1,0 +1,165 @@
+{
+  "frames": [
+    {
+      "filename": "level/props/Lampadaire-",
+      "frame": {
+        "x": 0,
+        "y": 0,
+        "w": 691,
+        "h": 414
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 23,
+        "y": 0,
+        "w": 691,
+        "h": 414
+      },
+      "sourceSize": {
+        "w": 736,
+        "h": 414
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "level/buildings/Batiment2",
+      "frame": {
+        "x": 691,
+        "y": 0,
+        "w": 565,
+        "h": 403
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 86,
+        "y": 11,
+        "w": 565,
+        "h": 403
+      },
+      "sourceSize": {
+        "w": 736,
+        "h": 414
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "level/buildings/Batiment1",
+      "frame": {
+        "x": 1256,
+        "y": 0,
+        "w": 550,
+        "h": 414
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 93,
+        "y": 0,
+        "w": 550,
+        "h": 414
+      },
+      "sourceSize": {
+        "w": 736,
+        "h": 414
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "level/props/Poubelle",
+      "frame": {
+        "x": 1806,
+        "y": 0,
+        "w": 65,
+        "h": 60
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 336,
+        "y": 354,
+        "w": 65,
+        "h": 60
+      },
+      "sourceSize": {
+        "w": 736,
+        "h": 414
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "level/props/PanneauSansIssue",
+      "frame": {
+        "x": 1871,
+        "y": 0,
+        "w": 26,
+        "h": 104
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 342,
+        "y": 217,
+        "w": 26,
+        "h": 104
+      },
+      "sourceSize": {
+        "w": 736,
+        "h": 414
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "level/buildings/Batiment3",
+      "frame": {
+        "x": 691,
+        "y": 403,
+        "w": 381,
+        "h": 377
+      },
+      "rotated": false,
+      "trimmed": true,
+      "spriteSourceSize": {
+        "x": 178,
+        "y": 37,
+        "w": 381,
+        "h": 377
+      },
+      "sourceSize": {
+        "w": 736,
+        "h": 414
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    }
+  ],
+  "meta": {
+    "app": "https://github.com/odrick/webpack-free-tex-packer",
+    "version": "0.2.0",
+    "image": "level.png",
+    "format": "RGBA8888",
+    "size": {
+      "w": 1897,
+      "h": 780
+    },
+    "scale": 1
+  }
+}
