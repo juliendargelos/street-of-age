@@ -1,6 +1,6 @@
 import { readdirSync, readFileSync, writeFileSync } from 'fs'
 import * as path from 'path'
-import {parseSvg} from './parser'
+import { parseSvg } from './parser'
 
 const FILE_SUFFIX = 'level'
 
