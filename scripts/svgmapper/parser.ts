@@ -1,7 +1,7 @@
 import { parseSync } from 'svgson'
 import { Level, Sprite, Sprites, Body, Floor } from '../../sources/shared/src/@types'
 
-const COLLIDERS_GROUP = ['colliders', 'Colliders', 'Bodies', 'serializedBodies']
+const COLLIDERS_GROUP = ['colliders', 'Colliders', 'Bodies', 'bodies']
 const FLOOR_GROUP = ['floors', 'Floor', 'floors', 'Floors', 'ground', 'Ground']
 const LAYER_MASK_EXCLUDE = [...COLLIDERS_GROUP, ...FLOOR_GROUP]
 

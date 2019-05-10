@@ -4,7 +4,88 @@
     "from": "#4C86B0",
     "to": "#2F1C66"
   },
-  "bodies": [],
+  "bodies": [
+    {
+      "x": -57.5,
+      "y": 0.5,
+      "width": 62,
+      "height": 374,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 1994.5,
+      "y": 0.5,
+      "width": 62,
+      "height": 374,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 71.5,
+      "y": 172.5,
+      "width": 368,
+      "height": 12,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 71.5,
+      "y": 45.5,
+      "width": 368,
+      "height": 12,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 759.5,
+      "y": 46.5,
+      "width": 368,
+      "height": 12,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 1234.5,
+      "y": 46.5,
+      "width": 368,
+      "height": 12,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 1234.5,
+      "y": 172.5,
+      "width": 368,
+      "height": 12,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 759.5,
+      "y": 172.5,
+      "width": 368,
+      "height": 12,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
   "sprites": {
     "Buildings": [
       {
@@ -23,19 +104,6 @@
       {
         "id": "level/buildings/Batiment1",
         "x": 759,
-        "y": 16,
-        "texture": "level",
-        "frame": "level/buildings/Batiment1",
-        "width": 369,
-        "height": 330,
-        "pivot": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      {
-        "id": "level/buildings/Batiment1",
-        "x": 1431,
         "y": 16,
         "texture": "level",
         "frame": "level/buildings/Batiment1",

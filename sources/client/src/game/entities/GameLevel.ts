@@ -2,7 +2,7 @@ import { Body, Floor, LevelBackground, Sprites } from '@street-of-age/shared/@ty
 
 export default class GameLevel {
   public floors!: Phaser.Physics.Arcade.StaticGroup
-  public bodies: Body[]
+  public bodies!: Phaser.Physics.Arcade.StaticGroup
   public sprites: Sprites
 
   constructor (
@@ -13,7 +13,6 @@ export default class GameLevel {
     private serializedFloors: Floor[]
   ) {
     this.sprites = serializedSprites
-    this.bodies = serializedBodies
   }
 
   public init = (scene: Phaser.Scene): void => {
@@ -31,7 +30,15 @@ export default class GameLevel {
       })
     this.floors = scene.physics.add.staticGroup()
     this.floors.addMultiple(
-      this.serializedFloors.map(floor => scene.add.rectangle(floor.x, floor.y, floor.width, floor.height, floor.color).setOrigin(floor.pivot.x, floor.pivot.y))
+      this.serializedFloors.map(floor =>
+        scene.add.rectangle(floor.x, floor.y, floor.width, floor.height, floor.color).setOrigin(floor.pivot.x, floor.pivot.y)
+      )
+    )
+    this.bodies = scene.physics.add.staticGroup()
+    this.bodies.addMultiple(
+      this.serializedBodies.map(body =>
+        scene.add.rectangle(body.x, body.y, body.width, body.height, 0xff0000, 0).setOrigin(body.pivot.x, body.pivot.y)
+      )
     )
   }
 }
