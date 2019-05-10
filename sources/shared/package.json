@@ -3,19 +3,23 @@
   "version": "1.0.0",
   "private": true,
   "license": "MIT",
+  "types": "src/@types",
   "scripts": {
     "build": "tsc",
     "svgmapper": "yarn --cwd scripts/svgmapper start",
     "dev": "tsc -w"
   },
   "dependencies": {
+    "canvas": "^2.5.0",
+    "datauri": "^2.0.0",
+    "jsdom": "^15.0.0",
     "phaser": "^3.16.2"
   },
   "eslintConfig": {
     "root": false
   },
   "devDependencies": {
-    "typescript": "^3.3.3333",
-    "phaser3-docs": "github:photonstorm/phaser3-docs"
+    "phaser3-docs": "github:photonstorm/phaser3-docs",
+    "typescript": "^3.3.3333"
   }
 }

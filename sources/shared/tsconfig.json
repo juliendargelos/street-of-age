@@ -4,10 +4,13 @@
     "experimentalDecorators": true,
     "esModuleInterop": false,
     "target": "es6",
+    "lib": ["es2017", "dom","es6", "dom.iterable", "scripthost"],
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
+    "declaration": true,
     "baseUrl": ".",
+    "outDir": ".",
     "typeRoots" : [
       "./node_modules/@types"
     ],
@@ -21,7 +24,7 @@
     "node_modules/phaser3-docs/typescript/phaser.d.ts"
   ],
   "include": [
-    "**/*.ts"
+    "src/**/*.ts"
   ],
   "exclude": [
     "**/*.js"

@@ -1,10 +1,9 @@
-import {RoomEvents} from "@street-of-age/shared/socket/events";
-import RoomManager from "../managers/RoomManager";
-import Logger from "../services/Logger";
-import PlayerManager from "../managers/PlayerManager";
+import { RoomEvents } from '@street-of-age/shared/socket/events'
+import RoomManager from '../managers/RoomManager'
+import PlayerManager from '../managers/PlayerManager'
+import Logger from '../services/Logger'
 
 class SocketRoom {
-
   public static handle = (socket: SocketIO.Socket) => {
     const player = PlayerManager.find(socket)
 
@@ -14,9 +13,9 @@ class SocketRoom {
       const room = RoomManager.find(id)
       if (room) {
         socket.emit(RoomEvents.RoomDefined)
-        player.connectToRoom(room)
+        player.joinRoom(room)
       } else {
-        Logger.warn(`${player.toString()} tried to join a non existent room`)
+        Logger.warn(`${player} tried to join a non existent room`)
         socket.emit(RoomEvents.RoomUndefined)
       }
     })
@@ -36,7 +35,6 @@ class SocketRoom {
       socket.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
     })
   }
-
 }
 
 export default SocketRoom
