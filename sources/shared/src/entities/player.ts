@@ -1,5 +1,5 @@
-import { Room, SerializedRoom } from './room'
-import { Character, CharacterKind } from '../game/character'
+import { Room } from './room'
+import { Character as BaseCharacter, CharacterKind } from '../game/character'
 
 export enum PlayerTeam {
   Young = 'young',
@@ -25,11 +25,12 @@ export interface SerializedPlayer extends Serialized {
   characterKind: CharacterKind
 }
 
-export class Player implements Serializable<SerializedPlayer> {
+export class Player<Character extends BaseCharacter = BaseCharacter> implements Serializable<SerializedPlayer> {
   public readonly id: string
   public readonly team: PlayerTeam
   public readonly characterKind: CharacterKind
   public room: Room
+  public characters: Character[] = []
 
   constructor(attributes: SerializedPlayer) {
     if (!PlayerTeamKinds[attributes.team].includes(attributes.characterKind)) {

@@ -1,39 +1,36 @@
 import { randomBytes } from 'crypto'
 import * as Phaser from 'phaser'
-import { Game as BaseGame, CHARACTERS_PER_PLAYER } from '@street-of-age/shared/game/game'
+import { Character } from './character'
+import { Game as BaseGame, SerializedGame, CHARACTERS_PER_PLAYER } from '@street-of-age/shared/game/game'
 import { Room } from '../entities/room'
 
-export class Game extends BaseGame {
+class Game extends BaseGame<Character> {
   constructor(room: Room) {
-    super(
-      {
-        type: Phaser.HEADLESS,
-        autoFocus: false,
-        width: 800,
-        height: 600,
-        physics: {
-          default: 'arcade'
-        }
-      },
-      {
-        characters: room.players.reduce((characters, player) => {
-          for (var i = CHARACTERS_PER_PLAYER; i > 0; --i) {
-            characters.push({
-              id: randomBytes(20).toString('hex'),
-              playerId: player.id,
-              kind: player.characterKind
-            })
-          }
-
-          return characters
-        }, [])
+    super({
+      type: Phaser.HEADLESS,
+      autoFocus: false,
+      width: 800,
+      height: 600,
+      physics: {
+        default: 'arcade'
       }
-    )
+    })
 
-    this.characters.forEach(character => room.players
-      .find(({ id }) => id === character.playerId)
-      .characters
-      .push(character)
-    )
+    room.players.forEach(player => {
+      for (var i = CHARACTERS_PER_PLAYER; i > 0; --i) {
+        const character = new Character(this.mainScene, {
+          id: randomBytes(20).toString('hex'),
+          kind: player.characterKind
+        })
+
+        this.characters.push(character)
+        player.characters.push(character)
+      }
+    })
   }
+}
+
+export {
+  Game,
+  SerializedGame
 }

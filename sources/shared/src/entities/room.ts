@@ -1,20 +1,16 @@
-import { Player, SerializedPlayer } from './player'
+import { Player as BasePlayer, SerializedPlayer } from './player'
 
 export interface SerializedRoom extends Serialized {
   id: string,
   players?: SerializedPlayer[]
 }
 
-export class Room implements Serializable<SerializedRoom> {
+export class Room<Player extends BasePlayer = BasePlayer> implements Serializable<SerializedRoom> {
   public readonly id: string
   public players: Player[] = []
 
   constructor(attributes: SerializedRoom) {
     this.id = attributes.id
-
-    if (attributes.players) {
-      attributes.players.forEach(player => this.addPlayer(new Player(player)))
-    }
   }
 
   public async addPlayer(player: Player): Promise<Player> {

@@ -17,7 +17,6 @@ export enum CharacterKind {
 
 export interface SerializedCharacter extends Serialized {
   id: string
-  playerId: string
   kind: CharacterKind
   x?: number
   y?: number
@@ -27,7 +26,6 @@ export interface SerializedCharacter extends Serialized {
 
 export class Character extends Phaser.Physics.Arcade.Sprite implements Serializable<SerializedCharacter> {
   public readonly id: string
-  public readonly playerId: string
   public readonly kind: CharacterKind
 
   constructor(
@@ -36,7 +34,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite implements Serializa
   ) {
     super(scene, 0, 0, `characters/${attributes.kind}`)
     this.id = attributes.id
-    this.playerId = attributes.playerId
     this.kind = attributes.kind
 
     scene.physics.world.enable(this)
@@ -64,7 +61,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite implements Serializa
   public serialize(): SerializedCharacter {
     return {
       id: this.id,
-      playerId: this.playerId,
       kind: this.kind,
       x: this.x,
       y: this.y,

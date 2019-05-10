@@ -1,10 +1,9 @@
 import { Socket } from 'socket.io'
 import { Player as BasePlayer, SerializedPlayer, PlayerTeam } from '@street-of-age/shared/entities/player'
 import { Character, CharacterKind } from '../game/character'
-import { Room } from './Room'
 import { red } from '../services/Logger'
 
-class Player extends BasePlayer {
+class Player extends BasePlayer<Character> {
   public characters: Character[] = []
 
   constructor(
