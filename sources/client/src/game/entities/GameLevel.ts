@@ -1,4 +1,35 @@
-import { Body, Floor, LevelBackground, Sprites } from '@street-of-age/shared/@types'
+import {Body, Floor, LevelBackground, Sprite, Sprites} from '@street-of-age/shared/@types'
+
+interface Bounds {
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+}
+
+const getMinXSprites = (sprites: Sprite[]) =>
+  sprites.reduce((acc, value) => value.x < acc ? value.x : acc, sprites[0].x)
+
+const getMinYSprites = (sprites: Sprite[]) =>
+  sprites.reduce((acc, value) => value.y < acc ? value.y : acc, sprites[0].y)
+
+const getMaxXSprites = (sprites: Sprite[]) =>
+  sprites.reduce((acc, value) => value.x > acc ? value.x : acc, sprites[0].x)
+
+const getMaxYSprites = (sprites: Sprite[]) =>
+  sprites.reduce((acc, value) => value.y > acc ? value.y : acc, sprites[0].y)
+
+const getMinWidthSprites = (sprites: Sprite[]) =>
+  sprites.reduce((acc, value) => value.width < acc ? value.width : acc, sprites[0].width)
+
+const getMinHeightSprites = (sprites: Sprite[]) =>
+  sprites.reduce((acc, value) => value.height < acc ? value.height : acc, sprites[0].height)
+
+const getMaxWidthSprites = (sprites: Sprite[]) =>
+  sprites.reduce((acc, value) => value.width > acc ? value.width : acc, sprites[0].width)
+
+const getMaxHeightSprites = (sprites: Sprite[]) =>
+  sprites.reduce((acc, value) => value.height > acc ? value.height : acc, sprites[0].height)
 
 export default class GameLevel {
   public floors!: Phaser.Physics.Arcade.StaticGroup
@@ -13,6 +44,19 @@ export default class GameLevel {
     private serializedFloors: Floor[]
   ) {
     this.sprites = serializedSprites
+  }
+
+  public get bounds (): Bounds {
+    const sprites = Object.entries(this.serializedSprites)
+      .map(value => value[1])
+      .flat()
+
+    return {
+      x: getMinXSprites(sprites),
+      y: getMinYSprites(sprites),
+      width: getMaxXSprites(sprites) + getMaxWidthSprites(sprites),
+      height: getMaxYSprites(sprites) + getMaxHeightSprites(sprites)
+    }
   }
 
   public init = (scene: Phaser.Scene): void => {

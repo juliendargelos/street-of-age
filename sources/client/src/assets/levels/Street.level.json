@@ -16,7 +16,7 @@
       }
     },
     {
-      "x": 1994.5,
+      "x": 2978.5,
       "y": 0.5,
       "width": 62,
       "height": 374,
@@ -122,6 +122,19 @@
         "frame": "level/buildings/Batiment1",
         "width": 369,
         "height": 330,
+        "pivot": {
+          "x": 0,
+          "y": 0
+        }
+      },
+      {
+        "id": "level/buildings/Batiment2",
+        "x": 1974,
+        "y": -137,
+        "texture": "level",
+        "frame": "level/buildings/Batiment2",
+        "width": 675,
+        "height": 483,
         "pivot": {
           "x": 0,
           "y": 0
@@ -250,7 +263,7 @@
     {
       "x": 1891,
       "y": 346,
-      "width": 109,
+      "width": 1092,
       "height": 29,
       "color": 262928,
       "pivot": {
