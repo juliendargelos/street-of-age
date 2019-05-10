@@ -27,10 +27,10 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     this.setSize(WIDTH, HEIGHT)
     this.setBounce(BOUNCE)
-    this.setOrigin(0, 0)
 
     this.body.setOffset(OFFSET_X, OFFSET_Y)
     this.body.setMass(MASS)
+    this.setCollideWorldBounds(true)
 
     this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
 
@@ -58,15 +58,25 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private handleMobileMovements = () => {
     const velocity = InputManager.getAxis('horizontal') * SPEED
     if (velocity < 0) {
+      this.turn('left')
       this.changeState(State.Moving)
-      this.flipX = true
     } else if (velocity > 0) {
+      this.turn('right')
       this.changeState(State.Moving)
-      this.flipX = false
     } else {
       this.changeState(State.Idleing)
     }
     this.setVelocityX(velocity)
+  }
+
+  private turn = (direction: 'left' | 'right') => {
+    if (direction === 'left') {
+      this.scaleX = -1
+      this.setOffset(WIDTH, OFFSET_Y)
+    } else {
+      this.setOffset(OFFSET_X, OFFSET_Y)
+      this.scaleX = 1
+    }
   }
 
   private handleDesktopMovements = () => {
@@ -77,11 +87,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     if (this.cursorKeys.left!.isDown) {
       this.changeState(State.Moving)
       this.setVelocityX(-5 * SPEED)
-      this.flipX = true
+      this.turn('left')
     } else if (this.cursorKeys.right!.isDown) {
       this.changeState(State.Moving)
       this.setVelocityX(5 * SPEED)
-      this.flipX = false
+      this.turn('right')
     } else {
       this.changeState(State.Idleing)
       this.setVelocityX(0)
