@@ -1,8 +1,8 @@
 import { randomBytes } from 'crypto'
 import * as Phaser from 'phaser'
-import { Character } from './character'
+import { Character } from './Character'
 import { Game as BaseGame, SerializedGame, CHARACTERS_PER_PLAYER } from '@street-of-age/shared/game/game'
-import { Room } from '../entities/room'
+import { Room } from '../entities/Room'
 
 class Game extends BaseGame<Character> {
   constructor(room: Room) {
