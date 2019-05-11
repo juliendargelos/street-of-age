@@ -7,5 +7,9 @@ export interface Sprite {
   width: number,
   height: number,
   texture: string,
-  frame?: string
+  frame?: string,
+  pivot: {
+    x: number,
+    y: number
+  }
 }

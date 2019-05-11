@@ -1,4 +1,4 @@
-import {Body, Floor, LevelBackground, Sprite, Sprites} from '@street-of-age/shared/@types'
+import { Body, Floor, LevelBackground, Sprite, Sprites } from '@street-of-age/shared/src/@types'
 
 interface Bounds {
   x: number,
