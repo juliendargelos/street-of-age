@@ -12,7 +12,11 @@ export interface Body {
   y: number,
   width: number,
   height: number,
-  texture?: string
+  texture?: string,
+  pivot: {
+    x: number,
+    y: number
+  }
 }
 
 export interface Level {

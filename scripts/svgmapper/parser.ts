@@ -21,10 +21,26 @@ const parseTransform = (transform: string): ParseTransformResult =>  {
 export const parseSvg = (svgContent: string): Level => {
   const root = parseSync(svgContent)
   const title = root.children.find((node: any) => node.name === 'title')!.children[0].value
-  const rootGroup = root.children.find((node: any) => node.name === 'g' && node.attributes.id === title)!
+  // If we have a whitespace in the title, Sketch converts all whitespace with '-' character.
+  const rootGroup = root.children.find((node: any) => node.name === 'g' && node.attributes.id === title.replace(' ', '-'))!
   const layers: any[] = rootGroup.children.filter((node: any) => node.name === 'g' && !COLLIDERS_GROUP.includes(node.attributes.id))
   const colliderLayer: any = rootGroup.children.find((node: any) => node.name === 'g' && COLLIDERS_GROUP.includes(node.attributes.id))!
-  const colliderTranslate = parseTransform(colliderLayer.attributes.transform).translate
+  let bodies: Body[] = []
+  if (colliderLayer) {
+    const colliderTranslate = parseTransform(colliderLayer.attributes.transform).translate
+    bodies = colliderLayer.children
+      .filter((node: any) => node.name === 'rect')
+      .map((node: any) => ({
+        x: parseFloat(node.attributes.x) + colliderTranslate[0],
+        y: parseFloat(node.attributes.y) + colliderTranslate[1],
+        width: parseFloat(node.attributes.width),
+        height: parseFloat(node.attributes.height),
+        pivot: {
+          x: 0,
+          y: 0
+        }
+      }) as Body)
+  }
 
   const sprites: Sprites = layers.reduce((acc, value) => {
     const translate = parseTransform(value.attributes.transform).translate
@@ -34,27 +50,26 @@ export const parseSvg = (svgContent: string): Level => {
         const texture = node.attributes.id.includes('/') ?
           node.attributes.id.split('/')[0] :
           node.attributes.id
+        // used to allow duplicate element in Sketch but always return the good atlas name by removing -Copy-xxx
+        // suffix that sketch puts in id
+        const id = (node.attributes.id as string)
+          .replace(/-Copy(\S|)+/, '')
         return ({
-          id: node.attributes.id,
+          id,
           x: parseFloat(node.attributes.x) + translate[0],
           y: parseFloat(node.attributes.y) + translate[1],
           texture: texture,
-          frame: node.attributes.id.includes('/') ? node.attributes.id : null,
+          frame: id.includes('/') ? id : null,
           width: parseFloat(node.attributes.width),
           height: parseFloat(node.attributes.height),
+          pivot: {
+            x: 0,
+            y: 0
+          }
         }) as Sprite
       })
     return acc
   }, {})
-
-  const bodies: Body[] = colliderLayer.children
-    .filter((node: any) => node.name === 'rect')
-    .map((node: any) => ({
-      x: parseFloat(node.attributes.x) + colliderTranslate[0],
-      y: parseFloat(node.attributes.y) + colliderTranslate[1],
-      width: parseFloat(node.attributes.width),
-      height: parseFloat(node.attributes.height),
-    }) as Body)
 
   return {
     title,
