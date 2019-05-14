@@ -1,5 +1,7 @@
 import Phaser from 'phaser'
 import AnimationHelper from '../manager/AnimationManager'
+import { Emitter } from '@/main'
+import { GameEvents } from '@street-of-age/shared/src/game/events'
 
 export default class BaseScene extends Phaser.Scene {
   protected animationHelper?: AnimationHelper
@@ -16,6 +18,7 @@ export default class BaseScene extends Phaser.Scene {
       'game'
     )
     this.load.on('complete', () => {
+      Emitter.emit(GameEvents.GameLoaded)
       this.animationHelper = new AnimationHelper(
         this,
         this.cache.json.get('animations')

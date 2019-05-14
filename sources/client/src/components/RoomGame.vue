@@ -26,16 +26,19 @@ import { GameScene } from '@/game/scenes/GameScene'
 import { GameDebugScene } from '@/game/scenes/GameDebugScene'
 import { Player } from '@/@types/'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
+import GameManager from '@/game/manager/GameManager'
 
 @Component<RoomGame>({
   components: { VirtualJoystick },
   mounted () {
     this.game = new Phaser.Game(this.config)
+    GameManager.init(this.game)
     this.mobile = !this.game.device.os.desktop &&
       (this.game.device.os.android || this.game.device.os.iOS || this.game.device.os.windowsPhone)
   },
   beforeDestroy () {
     this.game.destroy(false)
+    GameManager.destroy()
     delete this.game
   }
 })
