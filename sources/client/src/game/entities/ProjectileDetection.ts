@@ -28,14 +28,15 @@ class ProjectileDetection implements EventTarget {
   private lastTappedPosition = new Phaser.Math.Vector2({ x: 0, y: 0 })
 
   constructor (private readonly input: Phaser.Input.InputPlugin) {
+    this.initEventListeners()
+  }
+
+  private initEventListeners = (): void => {
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer, currentlyOver: any[]) => {
       this.lastTappedPosition = pointer.position.clone()
-      if (currentlyOver.some(object => object instanceof Character)) {
-        this.playerTapped = true
-      } else {
-        this.playerTapped = false
-      }
+      this.playerTapped = currentlyOver.some(object => object instanceof Character)
     })
+
     this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
       this.dispatchEvent(new Event('player:untap'))
       if (this.playerTapped) {
@@ -50,6 +51,7 @@ class ProjectileDetection implements EventTarget {
       }
       this.playerTapped = false
     })
+
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
       if (this.playerTapped && pointer.getDistance() > DISTANCE_TAP_THRESHOLD) {
         this.dispatchEvent(new CustomEvent<ProjectileMoveEvent>('projectile:move', { detail: { pointer } }))

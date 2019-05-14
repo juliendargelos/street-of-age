@@ -1,5 +1,5 @@
 import { SpriteConstructor } from '@/@types/game'
-import { GRAVITY } from '@/game/entities/constants'
+import { GRAVITY, scale } from '@/game/entities/constants'
 import InputManager from '@/game/manager/InputManager'
 import Projectile from '@/game/entities/Projectile'
 import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/ProjectileDetection'
@@ -72,11 +72,19 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private onProjectileMove: ProjectileMoveEventHandler = (evt): void => {
-    const { position } = evt.detail.pointer
+    const position = evt.detail.pointer.position.clone()
     this.projectileDir.clear()
     this.projectileDir.lineBetween(this.x, this.y, position.x, position.y)
     const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
     this.flipX = x > 0
+    const force = Math.round(scale(
+      Phaser.Math.Clamp(Math.abs(x), 0, 500),
+      0,
+      500,
+      0,
+      100
+    ))
+    console.log('Throwing force:', force)
   }
 
   private onTap = (): void => {
