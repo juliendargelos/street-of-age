@@ -20,7 +20,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   public update (): void {
   }
 
-  public applyImpulseForce (force: Phaser.Math.Vector2, duration: number = 1) {
+  public applyImpulseForce (force: Phaser.Math.Vector2, duration: number = 0.1) {
     this.setAcceleration(force.x, force.y)
     this.scene.time.delayedCall(
       duration * 1000,
@@ -31,7 +31,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   }
 
   public launch = (forceAmount: number, direction: Vector2Like) => {
-    this.setGravityY(20)
+    this.setGravityY(500)
 
     const force = new Phaser.Math.Vector2(direction)
     force.scale(forceAmount)
