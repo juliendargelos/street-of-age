@@ -1,6 +1,7 @@
 import { SpriteConstructor } from '@/@types/game'
 import { GRAVITY } from '@/game/entities/constants'
 import InputManager from '@/game/manager/InputManager'
+import Projectile from '@/game/entities/Projectile'
 
 const MASS = 1
 const JUMP_FORCE = 1.8
@@ -48,8 +49,20 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
       const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
       this.flipX = x > 0
     })
-    InputManager.projectile.addEventListener('projectile:launch', () => {
-      console.log('launching projectile')
+    InputManager.projectile.addEventListener('projectile:launch', (evt) => {
+      const { distance, angle, position } = evt.detail
+      const projectile = new Projectile({
+        scene: this.scene,
+        texture: 'main',
+        frame: 'main/fx/fireball/4',
+        angle,
+        distance,
+        x: this.x,
+        y: this.y
+      })
+      const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
+      projectile.launch(10, { x: -x, y: -angle })
+      console.log('Projectile launched at ', angle, 'degrees and with a distance of ', distance)
     })
 
     params.scene.add.existing(this)
