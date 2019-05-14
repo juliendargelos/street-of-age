@@ -25,6 +25,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   constructor (params: SpriteConstructor) {
     super(params.scene, params.x, params.y, params.texture, params.frame)
     params.scene.physics.world.enable(this)
+    const projectileDir = params.scene.add.graphics()
 
     this.setInteractive()
     this.setSize(WIDTH, HEIGHT)
@@ -37,12 +38,16 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     this.projectileDetection = new ProjectileDetection(params.scene.input)
     this.projectileDetection.addEventListener('player:tap', () => {
+      projectileDir.clear()
       console.log('player tapped')
     })
-    this.projectileDetection.addEventListener('projectile:move', () => {
-      console.log('moving projectile')
+    this.projectileDetection.addEventListener('projectile:move', evt => {
+      const { position } = evt.detail.pointer
+      projectileDir.clear()
+      projectileDir.lineBetween(this.x, this.y, position.x, position.y)
     })
     this.projectileDetection.addEventListener('projectile:launch', () => {
+      projectileDir.clear()
       console.log('launching projectile')
     })
 

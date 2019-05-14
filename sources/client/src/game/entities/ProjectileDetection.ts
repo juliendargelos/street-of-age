@@ -1,9 +1,13 @@
 import { Character } from '@/game/entities/Character'
 
+interface ProjectileMoveEvent {
+  pointer: Phaser.Input.Pointer
+}
+
 interface ProjectileDetectionEventsMap {
   'player:tap': Event,
   'projectile:launch': Event
-  'projectile:move': Event
+  'projectile:move': CustomEvent<ProjectileMoveEvent>
 }
 
 class ProjectileDetection implements EventTarget {
@@ -27,7 +31,7 @@ class ProjectileDetection implements EventTarget {
     })
     this.input.on('pointermove', (pointer: Phaser.Input.Pointer) => {
       if (this.playerTapped) {
-        this.dispatchEvent(new Event('projectile:move'))
+        this.dispatchEvent(new CustomEvent<ProjectileMoveEvent>('projectile:move', { detail: { pointer } }))
       }
     })
   }
