@@ -1,3 +1,4 @@
+import Phaser from 'phaser'
 import AnimationHelper from '../manager/AnimationManager'
 import GameLevel from '@/game/entities/GameLevel'
 import { Character } from '@/game/entities/Character'
