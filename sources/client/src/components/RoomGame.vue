@@ -25,7 +25,7 @@ import Phaser from 'phaser'
 import { GameScene } from '@/game/scenes/GameScene'
 import { Player } from '@/@types/'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
-import {REGISTRY_LEVEL_KEY} from '@/constants'
+import { REGISTRY_LEVEL_KEY } from '@/constants'
 // TODO: The level should be fetched from the server. Meanwhile, it's hard-fetched for testing purposes
 import level from '@/assets/levels/Street.level.json'
 
