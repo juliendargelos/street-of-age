@@ -41,13 +41,15 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
       projectileDir.clear()
       console.log('player tapped')
     })
+    this.projectileDetection.addEventListener('player:untap', () => {
+      projectileDir.clear()
+    })
     this.projectileDetection.addEventListener('projectile:move', evt => {
       const { position } = evt.detail.pointer
       projectileDir.clear()
       projectileDir.lineBetween(this.x, this.y, position.x, position.y)
     })
     this.projectileDetection.addEventListener('projectile:launch', () => {
-      projectileDir.clear()
       console.log('launching projectile')
     })
 

@@ -1,11 +1,14 @@
 import { Character } from '@/game/entities/Character'
 
+const DISTANCE_TAP_THRESHOLD = 30
+
 interface ProjectileMoveEvent {
   pointer: Phaser.Input.Pointer
 }
 
 interface ProjectileDetectionEventsMap {
   'player:tap': Event,
+  'player:untap': Event,
   'projectile:launch': Event
   'projectile:move': CustomEvent<ProjectileMoveEvent>
 }
@@ -13,19 +16,26 @@ interface ProjectileDetectionEventsMap {
 class ProjectileDetection implements EventTarget {
   private delegate = document.createDocumentFragment()
   private playerTapped = false
+  private lastTappedPosition = new Phaser.Math.Vector2({ x: 0, y: 0 })
 
   constructor (private readonly input: Phaser.Input.InputPlugin) {
-    this.input.on('pointerdown', (_: Phaser.Input.Pointer, currentlyOver: any[]) => {
+    this.input.on('pointerdown', (pointer: Phaser.Input.Pointer, currentlyOver: any[]) => {
+      this.lastTappedPosition = pointer.position.clone()
       if (currentlyOver.some(object => object instanceof Character)) {
         this.playerTapped = true
-        this.dispatchEvent(new Event('player:tap'))
       } else {
         this.playerTapped = false
       }
     })
-    this.input.on('pointerup', () => {
+    this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
+      const { position } = pointer
+      this.dispatchEvent(new Event('player:untap'))
       if (this.playerTapped) {
-        this.dispatchEvent(new Event('projectile:launch'))
+        if (position.clone().distance(this.lastTappedPosition) > DISTANCE_TAP_THRESHOLD) {
+          this.dispatchEvent(new Event('projectile:launch'))
+        } else {
+          this.dispatchEvent(new Event('player:tap'))
+        }
       }
       this.playerTapped = false
     })
