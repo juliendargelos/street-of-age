@@ -45,6 +45,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
       const { position } = evt.detail.pointer
       projectileDir.clear()
       projectileDir.lineBetween(this.x, this.y, position.x, position.y)
+      const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
+      this.flipX = x > 0
     })
     InputManager.projectile.addEventListener('projectile:launch', () => {
       console.log('launching projectile')
