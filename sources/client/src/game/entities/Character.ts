@@ -2,6 +2,7 @@ import { SpriteConstructor } from '@/@types/game'
 import { GRAVITY } from '@/game/entities/constants'
 import InputManager from '@/game/manager/InputManager'
 import Projectile from '@/game/entities/Projectile'
+import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/ProjectileDetection'
 
 const MASS = 1
 const JUMP_FORCE = 1.8
@@ -19,12 +20,13 @@ enum State {
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
   public state: State = State.Idleing
+  public projectileDir: Phaser.GameObjects.Graphics
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
 
   constructor (params: SpriteConstructor) {
     super(params.scene, params.x, params.y, params.texture, params.frame)
     params.scene.physics.world.enable(this)
-    const projectileDir = params.scene.add.graphics()
+    this.projectileDir = params.scene.add.graphics()
 
     this.setInteractive()
     this.setSize(WIDTH, HEIGHT)
@@ -35,34 +37,10 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.body.setMass(MASS)
     this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
 
-    InputManager.projectile.addEventListener('player:tap', () => {
-      projectileDir.clear()
-      console.log('player tapped')
-    })
-    InputManager.projectile.addEventListener('player:untap', () => {
-      projectileDir.clear()
-    })
-    InputManager.projectile.addEventListener('projectile:move', evt => {
-      const { position } = evt.detail.pointer
-      projectileDir.clear()
-      projectileDir.lineBetween(this.x, this.y, position.x, position.y)
-      const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
-      this.flipX = x > 0
-    })
-    InputManager.projectile.addEventListener('projectile:launch', (evt) => {
-      const { distance, angle, position } = evt.detail
-      const projectile = new Projectile({
-        scene: this.scene,
-        texture: 'main',
-        frame: 'main/fx/fireball/4',
-        angle,
-        distance,
-        x: this.x,
-        y: this.y
-      })
-      const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
-      projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
-    })
+    InputManager.projectile.addEventListener('player:tap', this.onTap)
+    InputManager.projectile.addEventListener('player:untap', () => this.projectileDir.clear())
+    InputManager.projectile.addEventListener('projectile:move', this.onProjectileMove)
+    InputManager.projectile.addEventListener('projectile:launch', this.onProjectileLaunch)
 
     params.scene.add.existing(this)
   }
@@ -74,7 +52,36 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   public destroy (fromScene?: boolean): void {
+    InputManager.projectile.removeEventListeners()
     super.destroy(fromScene)
+  }
+
+  private onProjectileLaunch: ProjectileLaunchEventHandler = (evt): void => {
+    const { distance, angle, position } = evt.detail
+    const projectile = new Projectile({
+      scene: this.scene,
+      texture: 'main',
+      frame: 'main/fx/fireball/4',
+      angle,
+      distance,
+      x: this.x,
+      y: this.y
+    })
+    const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
+    projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
+  }
+
+  private onProjectileMove: ProjectileMoveEventHandler = (evt): void => {
+    const { position } = evt.detail.pointer
+    this.projectileDir.clear()
+    this.projectileDir.lineBetween(this.x, this.y, position.x, position.y)
+    const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
+    this.flipX = x > 0
+  }
+
+  private onTap = (): void => {
+    this.projectileDir.clear()
+    console.log('player tapped')
   }
 
   private handleMovements = () => {

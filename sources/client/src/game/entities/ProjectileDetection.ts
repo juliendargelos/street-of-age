@@ -12,6 +12,9 @@ interface ProjectileLaunchEvent {
   position: Phaser.Math.Vector2
 }
 
+export type ProjectileLaunchEventHandler = (evt: ProjectileDetectionEventsMap['projectile:launch']) => void
+export type ProjectileMoveEventHandler = (evt: ProjectileDetectionEventsMap['projectile:move']) => void
+
 interface ProjectileDetectionEventsMap {
   'player:tap': Event,
   'player:untap': Event,
@@ -54,6 +57,10 @@ class ProjectileDetection implements EventTarget {
         this.dispatchEvent(new Event('player:untap'))
       }
     })
+  }
+
+  public removeEventListeners = (): void => {
+    this.delegate = document.createDocumentFragment()
   }
 
   public addEventListener<K extends keyof ProjectileDetectionEventsMap> (type: K, listener: (evt: ProjectileDetectionEventsMap[K]) => void, options?: boolean | AddEventListenerOptions): void {
