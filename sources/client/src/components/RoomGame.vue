@@ -50,7 +50,7 @@ export default class RoomGame extends Vue {
     private onPlayersChanged (val: Player[], oldVal: Player[]) {
     }
 
-    get config (): GameConfig {
+    get config (): Phaser.Types.Core.GameConfig {
       return {
         parent: this.$el,
         scale: {
@@ -73,9 +73,7 @@ export default class RoomGame extends Vue {
           default: 'arcade'
         },
         disableContextMenu: true,
-        scene: [
-          this.debug ? GameDebugScene : GameScene
-        ]
+        scene: this.debug ? GameDebugScene : GameScene
       }
     }
 }

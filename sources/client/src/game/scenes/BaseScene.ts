@@ -1,3 +1,4 @@
+import Phaser from 'phaser'
 import AnimationHelper from '../manager/AnimationManager'
 
 export default class BaseScene extends Phaser.Scene {
