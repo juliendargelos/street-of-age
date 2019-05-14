@@ -30,7 +30,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     )
   }
 
-  public launch = (forceAmount: number, direction: Vector2Like) => {
+  public launch = (forceAmount: number, direction: Phaser.Types.Math.Vector2Like) => {
     this.setGravityY(500)
 
     const force = new Phaser.Math.Vector2(direction)
