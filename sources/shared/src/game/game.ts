@@ -11,7 +11,7 @@ export interface SerializedGame extends Serialized {
 export class Game<Character extends BaseCharacter = BaseCharacter> extends Phaser.Game implements Serializable<SerializedGame> {
   protected characters: Character[]
 
-  constructor(config: GameConfig) {
+  constructor(config: Phaser.Types.Core.GameConfig) {
     super(config)
   }
 

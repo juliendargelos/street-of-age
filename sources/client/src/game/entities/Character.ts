@@ -18,7 +18,7 @@ enum State {
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
   public state: State = State.Idleing
-  private cursorKeys!: Phaser.Input.Keyboard.CursorKeys
+  private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
 
   constructor (params: SpriteConstructor) {
     super(params.scene, params.x, params.y, params.texture, params.frame)
