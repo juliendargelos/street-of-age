@@ -60,9 +60,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         x: this.x,
         y: this.y
       })
-      const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
-      projectile.launch(10, { x: -x, y: -angle })
-      console.log('Projectile launched at ', angle, 'degrees and with a distance of ', distance)
+      const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
+      projectile.launch(Phaser.Math.Clamp(distance / 10, 3, 10), { x: -x, y: -y })
     })
 
     params.scene.add.existing(this)
