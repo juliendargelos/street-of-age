@@ -1,6 +1,7 @@
 import { SpriteConstructor } from '@/@types/game'
 import { GRAVITY } from '@/game/entities/constants'
 import InputManager from '@/game/manager/InputManager'
+import ProjectileDetection from '@/game/entities/ProjectileDetection'
 
 const MASS = 1
 const JUMP_FORCE = 1.8
@@ -18,21 +19,32 @@ enum State {
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
   public state: State = State.Idleing
+  private projectileDetection: ProjectileDetection
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
 
   constructor (params: SpriteConstructor) {
     super(params.scene, params.x, params.y, params.texture, params.frame)
-
     params.scene.physics.world.enable(this)
 
+    this.setInteractive()
     this.setSize(WIDTH, HEIGHT)
     this.setBounce(BOUNCE)
     this.setCollideWorldBounds(true)
-
     this.body.setOffset(OFFSET_X, OFFSET_Y)
-    this.body.setMass(MASS)
 
+    this.body.setMass(MASS)
     this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
+
+    this.projectileDetection = new ProjectileDetection(params.scene.input)
+    this.projectileDetection.addEventListener('player:tap', () => {
+      console.log('player tapped')
+    })
+    this.projectileDetection.addEventListener('projectile:move', () => {
+      console.log('moving projectile')
+    })
+    this.projectileDetection.addEventListener('projectile:launch', () => {
+      console.log('launching projectile')
+    })
 
     params.scene.add.existing(this)
   }

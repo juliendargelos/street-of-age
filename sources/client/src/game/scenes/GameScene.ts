@@ -15,7 +15,8 @@ export class GameScene extends BaseScene {
 
     this.character = new Character({
       scene: this,
-      texture: 'character',
+      texture: 'main',
+      frame: 'main/characters/marco/walking-3',
       x: 120,
       y: 200
     })
