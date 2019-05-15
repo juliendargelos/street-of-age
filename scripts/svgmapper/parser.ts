@@ -94,6 +94,8 @@ export const parseSvg = (svgContent: string): Level => {
 
   return {
     title,
+    width: Number(root.attributes!.width.match(/\d+/)[0]),
+    height: Number(root.attributes!.height.match(/\d+/)[0]),
     background: {
       from: DEFAULT_BACKGROUND_FROM,
       to: DEFAULT_BACKGROUND_TO

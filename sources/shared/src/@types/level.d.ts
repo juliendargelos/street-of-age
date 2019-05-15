@@ -27,6 +27,8 @@ export interface Body {
 
 export interface Level {
   title: string,
+  width: number,
+  height: number,
   background: LevelBackground,
   sprites: Sprites,
   bodies: Body[],

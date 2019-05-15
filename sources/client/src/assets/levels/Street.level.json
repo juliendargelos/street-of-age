@@ -1,5 +1,7 @@
 {
   "title": "Street",
+  "width": 3000,
+  "height": 375,
   "background": {
     "from": "#4C86B0",
     "to": "#2F1C66"

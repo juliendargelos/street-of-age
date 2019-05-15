@@ -13,24 +13,6 @@ const getMinXSprites = (sprites: Sprite[]) =>
 const getMinYSprites = (sprites: Sprite[]) =>
   sprites.reduce((acc, value) => value.y < acc ? value.y : acc, sprites[0].y)
 
-const getMaxXSprites = (sprites: Sprite[]) =>
-  sprites.reduce((acc, value) => value.x > acc ? value.x : acc, sprites[0].x)
-
-const getMaxYSprites = (sprites: Sprite[]) =>
-  sprites.reduce((acc, value) => value.y > acc ? value.y : acc, sprites[0].y)
-
-const getMinWidthSprites = (sprites: Sprite[]) =>
-  sprites.reduce((acc, value) => value.width < acc ? value.width : acc, sprites[0].width)
-
-const getMinHeightSprites = (sprites: Sprite[]) =>
-  sprites.reduce((acc, value) => value.height < acc ? value.height : acc, sprites[0].height)
-
-const getMaxWidthSprites = (sprites: Sprite[]) =>
-  sprites.reduce((acc, value) => value.width > acc ? value.width : acc, sprites[0].width)
-
-const getMaxHeightSprites = (sprites: Sprite[]) =>
-  sprites.reduce((acc, value) => value.height > acc ? value.height : acc, sprites[0].height)
-
 export default class GameLevel {
   public floors!: Phaser.Physics.Arcade.StaticGroup
   public bodies!: Phaser.Physics.Arcade.StaticGroup
@@ -38,6 +20,8 @@ export default class GameLevel {
 
   constructor (
     public title: string,
+    public width: number,
+    public height: number,
     public background: LevelBackground,
     private serializedSprites: Sprites,
     private serializedBodies: Body[],
@@ -54,8 +38,8 @@ export default class GameLevel {
     return {
       x: getMinXSprites(sprites),
       y: getMinYSprites(sprites),
-      width: getMaxXSprites(sprites) + getMaxWidthSprites(sprites),
-      height: getMaxYSprites(sprites) + getMaxHeightSprites(sprites)
+      width: this.width,
+      height: this.height
     }
   }
 
@@ -67,21 +51,38 @@ export default class GameLevel {
     const sprites = Object.entries(this.serializedSprites)
       .map(value => value[1])
       .flat()
+    const offset = window.innerHeight - this.height < 0 ? 0 : window.innerHeight - this.height
+    console.log(offset)
+    // TODO: Refacto this
+    const canvasTexture = scene.textures.createCanvas('buttonTexture', this.bounds.width + 500, this.bounds.height)
+    const src = canvasTexture.getSourceImage()
+    // @ts-ignore
+    const context = src.getContext('2d')
+    const gradient = context.createLinearGradient(0, offset, 0, this.bounds.height / 1.2)
+    gradient.addColorStop(0, this.background.from)
+    gradient.addColorStop(1, this.background.to)
+    context.fillStyle = gradient
+    context.fillRect(0, offset, this.bounds.width + 500, this.bounds.height + offset)
+    canvasTexture.refresh()
+    scene.add.image(-30, offset, 'buttonTexture')
+      .setDepth(-1)
+      .setOrigin(0, 0)
+    scene.cameras.main.setBackgroundColor(this.background.from)
     sprites
       .forEach(sprite => {
-        scene.add.image(sprite.x, sprite.y, sprite.texture, sprite.frame)
+        scene.add.image(sprite.x, sprite.y + offset, sprite.texture, sprite.frame)
           .setOrigin(sprite.pivot.x, sprite.pivot.y)
       })
     this.floors = scene.physics.add.staticGroup()
     this.floors.addMultiple(
       this.serializedFloors.map(floor =>
-        scene.add.rectangle(floor.x, floor.y, floor.width, floor.height, floor.color).setOrigin(floor.pivot.x, floor.pivot.y)
+        scene.add.rectangle(floor.x, floor.y + offset, floor.width, floor.height, floor.color).setOrigin(floor.pivot.x, floor.pivot.y)
       )
     )
     this.bodies = scene.physics.add.staticGroup()
     this.bodies.addMultiple(
       this.serializedBodies.map(body =>
-        scene.add.rectangle(body.x, body.y, body.width, body.height, 0xff0000, 0).setOrigin(body.pivot.x, body.pivot.y)
+        scene.add.rectangle(body.x, body.y + offset, body.width, body.height, 0xff0000, 0).setOrigin(body.pivot.x, body.pivot.y)
       )
     )
   }
