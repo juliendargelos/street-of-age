@@ -61,7 +61,7 @@ export default class RoomGame extends Vue {
         parent: this.$el,
         scale: {
           zoom: 1 / window.devicePixelRatio,
-          mode: Phaser.Scale.FIT,
+          mode: Phaser.Scale.ENVELOP,
           autoCenter: Phaser.Scale.CENTER_BOTH,
           width: 667,
           height: 375

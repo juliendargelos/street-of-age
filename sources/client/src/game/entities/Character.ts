@@ -9,9 +9,9 @@ const JUMP_FORCE = 1.7
 const BOUNCE = 0.2
 const SPEED = 32
 const WIDTH = 63
-const HEIGHT = 90
+const HEIGHT = 75
 const OFFSET_X = 0
-const OFFSET_Y = 0
+const OFFSET_Y = 15
 
 enum State {
   Moving = 'Moving',
