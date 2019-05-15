@@ -76,6 +76,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private onProjectileMove: ProjectileMoveEventHandler = (evt): void => {
     const position = new Phaser.Math.Vector2(evt.detail.pointer.worldX, evt.detail.pointer.worldY)
     this.projectileDir.clear()
+    this.projectileDir.lineStyle(4, 0xff0000)
     this.projectileDir.lineBetween(this.x, this.y, evt.detail.pointer.worldX, evt.detail.pointer.worldY)
     const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
     x < 0 ? this.turn('right') : this.turn('left')
@@ -167,5 +168,4 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private changeState = (newState: State) => {
     this.state = newState
   }
-
 }
