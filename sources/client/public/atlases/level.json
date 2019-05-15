@@ -1,24 +1,24 @@
 {
   "frames": [
     {
-      "filename": "level/props/Lampadaire-",
+      "filename": "level/lights/LightLampadaire",
       "frame": {
         "x": 0,
         "y": 0,
-        "w": 691,
-        "h": 414
+        "w": 712,
+        "h": 712
       },
       "rotated": false,
-      "trimmed": true,
+      "trimmed": false,
       "spriteSourceSize": {
-        "x": 23,
+        "x": 0,
         "y": 0,
-        "w": 691,
-        "h": 414
+        "w": 712,
+        "h": 712
       },
       "sourceSize": {
-        "w": 736,
-        "h": 414
+        "w": 712,
+        "h": 712
       },
       "pivot": {
         "x": 0.5,
@@ -28,22 +28,72 @@
     {
       "filename": "level/buildings/Batiment2",
       "frame": {
-        "x": 691,
+        "x": 712,
         "y": 0,
-        "w": 565,
-        "h": 403
+        "w": 675,
+        "h": 483
       },
       "rotated": false,
-      "trimmed": true,
+      "trimmed": false,
       "spriteSourceSize": {
-        "x": 86,
-        "y": 11,
-        "w": 565,
-        "h": 403
+        "x": 0,
+        "y": 0,
+        "w": 675,
+        "h": 483
       },
       "sourceSize": {
-        "w": 736,
-        "h": 414
+        "w": 675,
+        "h": 483
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "level/lights/LigthtBatiment1",
+      "frame": {
+        "x": 1387,
+        "y": 0,
+        "w": 555,
+        "h": 375
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 555,
+        "h": 375
+      },
+      "sourceSize": {
+        "w": 555,
+        "h": 375
+      },
+      "pivot": {
+        "x": 0.5,
+        "y": 0.5
+      }
+    },
+    {
+      "filename": "level/props/Lampadaire",
+      "frame": {
+        "x": 1942,
+        "y": 0,
+        "w": 63,
+        "h": 257
+      },
+      "rotated": false,
+      "trimmed": false,
+      "spriteSourceSize": {
+        "x": 0,
+        "y": 0,
+        "w": 63,
+        "h": 257
+      },
+      "sourceSize": {
+        "w": 63,
+        "h": 257
       },
       "pivot": {
         "x": 0.5,
@@ -53,97 +103,22 @@
     {
       "filename": "level/buildings/Batiment1",
       "frame": {
-        "x": 1256,
-        "y": 0,
-        "w": 550,
-        "h": 414
+        "x": 1387,
+        "y": 375,
+        "w": 369,
+        "h": 330
       },
       "rotated": false,
-      "trimmed": true,
+      "trimmed": false,
       "spriteSourceSize": {
-        "x": 93,
+        "x": 0,
         "y": 0,
-        "w": 550,
-        "h": 414
+        "w": 369,
+        "h": 330
       },
       "sourceSize": {
-        "w": 736,
-        "h": 414
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    {
-      "filename": "level/props/Poubelle",
-      "frame": {
-        "x": 1806,
-        "y": 0,
-        "w": 65,
-        "h": 60
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 336,
-        "y": 354,
-        "w": 65,
-        "h": 60
-      },
-      "sourceSize": {
-        "w": 736,
-        "h": 414
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    {
-      "filename": "level/props/PanneauSansIssue",
-      "frame": {
-        "x": 1871,
-        "y": 0,
-        "w": 26,
-        "h": 104
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 342,
-        "y": 217,
-        "w": 26,
-        "h": 104
-      },
-      "sourceSize": {
-        "w": 736,
-        "h": 414
-      },
-      "pivot": {
-        "x": 0.5,
-        "y": 0.5
-      }
-    },
-    {
-      "filename": "level/buildings/Batiment3",
-      "frame": {
-        "x": 691,
-        "y": 403,
-        "w": 381,
-        "h": 377
-      },
-      "rotated": false,
-      "trimmed": true,
-      "spriteSourceSize": {
-        "x": 178,
-        "y": 37,
-        "w": 381,
-        "h": 377
-      },
-      "sourceSize": {
-        "w": 736,
-        "h": 414
+        "w": 369,
+        "h": 330
       },
       "pivot": {
         "x": 0.5,
@@ -157,8 +132,8 @@
     "image": "level.png",
     "format": "RGBA8888",
     "size": {
-      "w": 1897,
-      "h": 780
+      "w": 2005,
+      "h": 712
     },
     "scale": 1
   }

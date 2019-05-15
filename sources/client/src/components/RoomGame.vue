@@ -23,9 +23,11 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import Phaser from 'phaser'
 import { GameScene } from '@/game/scenes/GameScene'
-import { GameDebugScene } from '@/game/scenes/GameDebugScene'
 import { Player } from '@/@types/'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
+import { REGISTRY_LEVEL_KEY } from '@/constants'
+// TODO: The level should be fetched from the server. Meanwhile, it's hard-fetched for testing purposes
+import level from '@/assets/levels/Street.level.json'
 import GameManager from '@/game/manager/GameManager'
 
 @Component<RoomGame>({
@@ -33,6 +35,7 @@ import GameManager from '@/game/manager/GameManager'
   mounted () {
     this.game = new Phaser.Game(this.config)
     GameManager.init(this.game)
+    this.game.registry.set(REGISTRY_LEVEL_KEY, level)
     this.mobile = !this.game.device.os.desktop &&
       (this.game.device.os.android || this.game.device.os.iOS || this.game.device.os.windowsPhone)
   },
@@ -57,6 +60,7 @@ export default class RoomGame extends Vue {
       return {
         parent: this.$el,
         scale: {
+          zoom: 1 / window.devicePixelRatio,
           mode: Phaser.Scale.FIT,
           autoCenter: Phaser.Scale.CENTER_BOTH,
           width: 667,
@@ -76,7 +80,7 @@ export default class RoomGame extends Vue {
           default: 'arcade'
         },
         disableContextMenu: true,
-        scene: this.debug ? GameDebugScene : GameScene
+        scene: GameScene
       }
     }
 }

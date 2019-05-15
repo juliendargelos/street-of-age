@@ -1,9 +1,10 @@
 import BaseScene from '@/game/scenes/BaseScene'
 import { Character } from '@/game/entities/Character'
 
-export class GameScene extends BaseScene {
-  private character!: Character
+const HEIGHT_CAMERA_OFFSET = 200
+const WIDTH_CAMERA_OFFSET = 400
 
+export class GameScene extends BaseScene {
   constructor () {
     super({
       key: 'GAME_SCENE'
@@ -12,7 +13,6 @@ export class GameScene extends BaseScene {
 
   public create = () => {
     super.create()
-
     this.character = new Character({
       scene: this,
       texture: 'main',
@@ -20,9 +20,12 @@ export class GameScene extends BaseScene {
       x: 120,
       y: 200
     })
-    const platforms = this.physics.add.staticGroup()
-    platforms.create(400, 568, 'ground').setScale(2).refreshBody()
-    this.physics.add.collider(this.character, platforms)
+    this.physics.add.collider(this.character, this.level.floors)
+    this.physics.add.collider(this.character, this.level.bodies)
+    this.cameras.main.setRoundPixels(true)
+    const { x, width } = this.level.bounds
+    this.cameras.main.setBounds(x, -HEIGHT_CAMERA_OFFSET, width + WIDTH_CAMERA_OFFSET, this.game.scale.height + HEIGHT_CAMERA_OFFSET)
+    this.cameras.main.startFollow(this.character)
   }
 
   public update = (time: number, delta: number) => {
