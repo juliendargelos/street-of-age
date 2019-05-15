@@ -1,5 +1,5 @@
 import { SpriteConstructor } from '@/@types/game'
-import { GRAVITY, scale } from '@/constants'
+import {GRAVITY, scale} from '@/constants'
 import InputManager from '@/game/manager/InputManager'
 import Projectile from '@/game/entities/Projectile'
 import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/ProjectileDetection'
@@ -35,7 +35,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.body.setOffset(OFFSET_X, OFFSET_Y)
 
     this.body.setMass(MASS)
-    this.setCollideWorldBounds(true)
 
     this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
 
@@ -78,7 +77,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.projectileDir.clear()
     this.projectileDir.lineBetween(this.x, this.y, evt.detail.pointer.worldX, evt.detail.pointer.worldY)
     const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
-    this.flipX = x > 0
+    x < 0 ? this.turn('right') : this.turn('left')
     const force = Math.round(scale(
       Phaser.Math.Clamp(Math.abs(x), 0, 500),
       0,
