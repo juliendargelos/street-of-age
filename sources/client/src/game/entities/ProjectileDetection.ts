@@ -43,7 +43,7 @@ class ProjectileDetection implements EventTarget {
         if (pointer.getDistance() > DISTANCE_TAP_THRESHOLD) {
           const angle = Phaser.Math.RadToDeg(pointer.getAngle())
           this.dispatchEvent(new CustomEvent<ProjectileLaunchEvent>('projectile:launch', {
-            detail: { angle: angle, distance: pointer.getDistance(), position: pointer.position }
+            detail: { angle: angle, distance: pointer.getDistance(), position: new Phaser.Math.Vector2(pointer.worldX, pointer.worldY) }
           }))
         } else {
           this.dispatchEvent(new Event('player:tap'))

@@ -1,4 +1,5 @@
 import { SpriteConstructor } from '@/@types/game'
+import {GameScene} from '@/game/scenes/GameScene'
 
 interface Constructor extends SpriteConstructor{
   angle: number,
@@ -10,7 +11,9 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     super(params.scene, params.x, params.y, params.texture, params.frame)
     params.scene.physics.world.enable(this)
     params.scene.add.existing(this)
-    this.setCollideWorldBounds(true)
+    const scene = params.scene as GameScene
+    scene.physics.add.collider(scene.level.bodies, this)
+    scene.physics.add.collider(scene.level.floors, this)
     this.setGravityY(0)
     this.setDisplaySize(40, 40)
     this.updateDisplayOrigin()

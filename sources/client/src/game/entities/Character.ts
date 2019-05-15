@@ -71,9 +71,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private onProjectileMove: ProjectileMoveEventHandler = (evt): void => {
-    const position = evt.detail.pointer.position.clone()
+    const position = new Phaser.Math.Vector2(evt.detail.pointer.worldX, evt.detail.pointer.worldY)
     this.projectileDir.clear()
-    this.projectileDir.lineBetween(this.x, this.y, position.x, position.y)
+    this.projectileDir.lineBetween(this.x, this.y, evt.detail.pointer.worldX, evt.detail.pointer.worldY)
     const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
     this.flipX = x > 0
     const force = Math.round(scale(
@@ -101,6 +101,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private handleMobileMovements = () => {
     const velocity = InputManager.getAxis('horizontal') * SPEED
+    if (this.cursorKeys.space!.isDown && this.body.blocked.down) {
+      this.body.velocity.y = -350 * JUMP_FORCE
+    }
     if (velocity < 0) {
       this.changeState(State.Moving)
       this.flipX = true
