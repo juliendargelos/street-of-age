@@ -74,7 +74,7 @@ export const parseSvg = (svgContent: string): Level => {
         // used to allow duplicate element in Sketch but always return the good atlas name by removing -Copy-xxx
         // suffix that sketch puts in id
         const id = (node.attributes.id as string)
-          .replace(/-Copy(\S|)+/, '')
+          .replace(/-Copy(\S|)+/i, '')
         return ({
           id,
           x: parseFloat(node.attributes.x) + translate[0],
