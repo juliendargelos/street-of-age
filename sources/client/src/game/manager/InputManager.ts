@@ -1,5 +1,5 @@
 import nipplejs, { JoystickManager, JoystickManagerOptions } from 'nipplejs'
-import ProjectileDetection from '@/game/entities/ProjectileDetection'
+import TouchDetection from '@/game/entities/TouchDetection'
 import { GameManager } from '@/game/manager/GameManager'
 
 const DEFAULTS: JoystickManagerOptions = {
@@ -28,11 +28,11 @@ class InputManager implements EventTarget {
   private joystick: JoystickManager | null = null
   private axis: Axis = { horizontal: 0 }
 
-  public projectile!: ProjectileDetection
+  public touch!: TouchDetection
 
   public init = (gm: GameManager) => {
     if (gm.currentScene) {
-      this.projectile = new ProjectileDetection(gm.currentScene.input)
+      this.touch = new TouchDetection(gm.currentScene.input)
     }
   }
 

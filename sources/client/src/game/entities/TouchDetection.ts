@@ -16,13 +16,14 @@ export type ProjectileLaunchEventHandler = (evt: ProjectileDetectionEventsMap['p
 export type ProjectileMoveEventHandler = (evt: ProjectileDetectionEventsMap['projectile:move']) => void
 
 interface ProjectileDetectionEventsMap {
+  'tap': Event,
   'player:tap': Event,
   'player:untap': Event,
   'projectile:launch': CustomEvent<ProjectileLaunchEvent>
   'projectile:move': CustomEvent<ProjectileMoveEvent>
 }
 
-class ProjectileDetection implements EventTarget {
+class TouchDetection implements EventTarget {
   private delegate = document.createDocumentFragment()
   private playerTapped = false
   private lastTappedPosition = new Phaser.Math.Vector2({ x: 0, y: 0 })
@@ -35,6 +36,9 @@ class ProjectileDetection implements EventTarget {
     this.input.on('pointerdown', (pointer: Phaser.Input.Pointer, currentlyOver: any[]) => {
       this.lastTappedPosition = pointer.position.clone()
       this.playerTapped = currentlyOver.some(object => object instanceof Character)
+      if (!this.playerTapped) {
+        this.dispatchEvent(new Event('tap'))
+      }
     })
 
     this.input.on('pointerup', (pointer: Phaser.Input.Pointer) => {
@@ -78,4 +82,4 @@ class ProjectileDetection implements EventTarget {
   }
 }
 
-export default ProjectileDetection
+export default TouchDetection

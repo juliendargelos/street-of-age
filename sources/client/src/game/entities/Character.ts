@@ -1,8 +1,8 @@
 import { SpriteConstructor } from '@/@types/game'
-import {GRAVITY, scale} from '@/constants'
+import { GRAVITY, scale } from '@/constants'
 import InputManager from '@/game/manager/InputManager'
 import Projectile from '@/game/entities/Projectile'
-import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/ProjectileDetection'
+import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/TouchDetection'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
@@ -38,10 +38,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
 
-    InputManager.projectile.addEventListener('player:tap', this.onTap)
-    InputManager.projectile.addEventListener('player:untap', () => this.projectileDir.clear())
-    InputManager.projectile.addEventListener('projectile:move', this.onProjectileMove)
-    InputManager.projectile.addEventListener('projectile:launch', this.onProjectileLaunch)
+    InputManager.touch.addEventListener('tap', this.jump)
+    InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
+    InputManager.touch.addEventListener('player:untap', () => this.projectileDir.clear())
+    InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
+    InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
 
     params.scene.add.existing(this)
   }
@@ -53,7 +54,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   public destroy (fromScene?: boolean): void {
-    InputManager.projectile.removeEventListeners()
+    InputManager.touch.removeEventListeners()
     super.destroy(fromScene)
   }
 
@@ -88,7 +89,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     console.log('Throwing force:', force)
   }
 
-  private onTap = (): void => {
+  private onPlayerTap = (): void => {
     this.projectileDir.clear()
     console.log('player tapped')
   }
@@ -128,9 +129,13 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
+  private jump = () => {
+    this.body.velocity.y = -350 * JUMP_FORCE
+  }
+
   private handleDesktopMovements = () => {
     if (this.cursorKeys.up!.isDown && this.body.blocked.down) {
-      this.body.velocity.y = -350 * JUMP_FORCE
+      this.jump()
     }
 
     if (this.cursorKeys.left!.isDown) {
@@ -162,4 +167,5 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private changeState = (newState: State) => {
     this.state = newState
   }
+
 }

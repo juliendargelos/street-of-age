@@ -52,7 +52,6 @@ export default class GameLevel {
       .map(value => value[1])
       .flat()
     const offset = window.innerHeight - this.height < 0 ? 0 : window.innerHeight - this.height
-    console.log(offset)
     // TODO: Refacto this
     const canvasTexture = scene.textures.createCanvas('buttonTexture', this.bounds.width + 500, this.bounds.height)
     const src = canvasTexture.getSourceImage()
