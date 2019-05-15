@@ -5,9 +5,9 @@ import Projectile from '@/game/entities/Projectile'
 import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/ProjectileDetection'
 
 const MASS = 1
-const JUMP_FORCE = 1.8
+const JUMP_FORCE = 1.7
 const BOUNCE = 0.2
-const SPEED = 20
+const SPEED = 32
 const WIDTH = 63
 const HEIGHT = 90
 const OFFSET_X = 0
@@ -79,9 +79,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
     x < 0 ? this.turn('right') : this.turn('left')
     const force = Math.round(scale(
-      Phaser.Math.Clamp(Math.abs(x), 0, 500),
-      0,
-      500,
+      Phaser.Math.Clamp(Math.abs(x), 50, 400),
+      50,
+      400,
       0,
       100
     ))
@@ -153,7 +153,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.play('fraicheur_walking', true)
         break
       case State.Idleing:
-        this.play('fraicheur_walking', true)
+        this.play('fraicheur_walking', true, 0)
+        this.anims.stop()
         break
     }
   }
