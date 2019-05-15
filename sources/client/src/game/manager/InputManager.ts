@@ -1,4 +1,6 @@
 import nipplejs, { JoystickManager, JoystickManagerOptions } from 'nipplejs'
+import TouchDetection from '@/game/entities/TouchDetection'
+import { GameManager } from '@/game/manager/GameManager'
 
 const DEFAULTS: JoystickManagerOptions = {
   lockX: true,
@@ -25,6 +27,14 @@ class InputManager implements EventTarget {
   private delegate = document.createDocumentFragment()
   private joystick: JoystickManager | null = null
   private axis: Axis = { horizontal: 0 }
+
+  public touch!: TouchDetection
+
+  public init = (gm: GameManager) => {
+    if (gm.currentScene) {
+      this.touch = new TouchDetection(gm.currentScene.input)
+    }
+  }
 
   public detachElement = (): void => {
     if (this.joystick) {

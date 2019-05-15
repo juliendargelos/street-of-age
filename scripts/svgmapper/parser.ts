@@ -1,9 +1,12 @@
 import { parseSync } from 'svgson'
-import { Level, Sprite, Sprites, Body } from '../../sources/shared/src/@types'
+import { Level, Sprite, Sprites, Body, Floor } from '../../sources/shared/src/@types'
 
 const COLLIDERS_GROUP = ['colliders', 'Colliders', 'Bodies', 'bodies']
+const FLOOR_GROUP = ['floors', 'Floor', 'floors', 'Floors', 'ground', 'Ground']
+const LAYER_MASK_EXCLUDE = [...COLLIDERS_GROUP, ...FLOOR_GROUP]
 
 const DEFAULT_BACKGROUND_FROM = '#4C86B0'
+const DEFAULT_FLOOR_COLOR = 0x040310
 const DEFAULT_BACKGROUND_TO = '#2F1C66'
 
 type ParseTransformResult = { [key: string]: number[] }
@@ -23,9 +26,11 @@ export const parseSvg = (svgContent: string): Level => {
   const title = root.children.find((node: any) => node.name === 'title')!.children[0].value
   // If we have a whitespace in the title, Sketch converts all whitespace with '-' character.
   const rootGroup = root.children.find((node: any) => node.name === 'g' && node.attributes.id === title.replace(' ', '-'))!
-  const layers: any[] = rootGroup.children.filter((node: any) => node.name === 'g' && !COLLIDERS_GROUP.includes(node.attributes.id))
+  const layers: any[] = rootGroup.children.filter((node: any) => node.name === 'g' && !LAYER_MASK_EXCLUDE.includes(node.attributes.id))
   const colliderLayer: any = rootGroup.children.find((node: any) => node.name === 'g' && COLLIDERS_GROUP.includes(node.attributes.id))!
+  const floorLayer: any = rootGroup.children.find((node: any) => node.name === 'g' && FLOOR_GROUP.includes(node.attributes.id))!
   let bodies: Body[] = []
+  let floors: Floor[] = []
   if (colliderLayer) {
     const colliderTranslate = parseTransform(colliderLayer.attributes.transform).translate
     bodies = colliderLayer.children
@@ -40,6 +45,22 @@ export const parseSvg = (svgContent: string): Level => {
           y: 0
         }
       }) as Body)
+  }
+  if (floorLayer) {
+    const floorTranslate = parseTransform(floorLayer.attributes.transform).translate
+    floors = floorLayer.children
+      .filter((node: any) => node.name === 'rect')
+      .map((node: any) => ({
+        x: parseFloat(node.attributes.x) + floorTranslate[0],
+        y: parseFloat(node.attributes.y) + floorTranslate[1],
+        width: parseFloat(node.attributes.width),
+        height: parseFloat(node.attributes.height),
+        color: DEFAULT_FLOOR_COLOR,
+        pivot: {
+          x: 0,
+          y: 0
+        }
+      }) as Floor)
   }
 
   const sprites: Sprites = layers.reduce((acc, value) => {
@@ -73,11 +94,14 @@ export const parseSvg = (svgContent: string): Level => {
 
   return {
     title,
+    width: Number(root.attributes!.width.match(/\d+/)[0]),
+    height: Number(root.attributes!.height.match(/\d+/)[0]),
     background: {
       from: DEFAULT_BACKGROUND_FROM,
       to: DEFAULT_BACKGROUND_TO
     },
     bodies,
-    sprites
+    sprites,
+    floors
   }
 }
