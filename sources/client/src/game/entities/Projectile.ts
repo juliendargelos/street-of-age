@@ -1,6 +1,6 @@
 import { SpriteConstructor } from '@/@types/game'
-import {GameScene} from '@/game/scenes/GameScene'
-import {PLAYER_DEPTH} from '@/constants'
+import { GameScene } from '@/game/scenes/GameScene'
+import { PLAYER_DEPTH } from '@/constants'
 
 interface Constructor extends SpriteConstructor{
   angle: number,

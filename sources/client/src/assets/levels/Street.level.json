@@ -91,7 +91,7 @@
   "layers": {
     "Background": {
       "options": {
-        "speed": 1,
+        "speed": 0.5,
         "depth": 1
       },
       "sprites": [
@@ -100,7 +100,7 @@
           "x": 14,
           "y": 61,
           "texture": "level",
-          "frame": "level/buildings/buildings_group_blurred",
+          "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
           "height": 285,
           "pivot": {
@@ -113,7 +113,7 @@
           "x": 316,
           "y": 61,
           "texture": "level",
-          "frame": "level/buildings/buildings_group_blurred",
+          "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
           "height": 285,
           "pivot": {
@@ -126,7 +126,7 @@
           "x": 69,
           "y": 41,
           "texture": "level",
-          "frame": "level/buildings/buildings_group",
+          "frame": "level/backgrounds/buildings_group",
           "width": 629,
           "height": 305,
           "pivot": {
@@ -139,7 +139,7 @@
           "x": 978,
           "y": 61,
           "texture": "level",
-          "frame": "level/buildings/buildings_group_blurred",
+          "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
           "height": 285,
           "pivot": {
@@ -152,7 +152,7 @@
           "x": 1628,
           "y": 61,
           "texture": "level",
-          "frame": "level/buildings/buildings_group_blurred",
+          "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
           "height": 285,
           "pivot": {
@@ -165,7 +165,7 @@
           "x": 924,
           "y": 42,
           "texture": "level",
-          "frame": "level/buildings/buildings_group",
+          "frame": "level/backgrounds/buildings_group",
           "width": 629,
           "height": 305,
           "pivot": {
@@ -178,7 +178,7 @@
           "x": 1574,
           "y": 41,
           "texture": "level",
-          "frame": "level/buildings/buildings_group",
+          "frame": "level/backgrounds/buildings_group",
           "width": 629,
           "height": 305,
           "pivot": {
@@ -190,7 +190,7 @@
     },
     "Buildings": {
       "options": {
-        "speed": 1,
+        "speed": 0.75,
         "depth": 2
       },
       "sprites": [

@@ -31,6 +31,5 @@ export interface Level {
   height: number,
   background: LevelBackground,
   layers: Layers,
-  bodies: Body[],
   floors: Floor[],
 }

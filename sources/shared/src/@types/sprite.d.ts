@@ -1,9 +1,12 @@
+import {Body} from '../@types/level'
+
 interface Layer {
   options: {
     speed: number,
     depth: number
   }
-  sprites: Sprite[]
+  sprites: Sprite[],
+  bodies: Body[],
 }
 
 export type Layers = {

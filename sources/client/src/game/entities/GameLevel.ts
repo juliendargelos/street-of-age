@@ -67,6 +67,7 @@ export default class GameLevel {
         layer.sprites.forEach(sprite => {
           scene.add.image(sprite.x, sprite.y + offset, sprite.texture, sprite.frame)
             .setOrigin(sprite.pivot.x, sprite.pivot.y)
+            .setScrollFactor(layer.options.speed, 1)
             .setDepth(layer.options.depth)
         })
       })

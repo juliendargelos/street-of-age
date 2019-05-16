@@ -25,7 +25,7 @@ export class GameScene extends BaseScene {
     this.cameras.main.setRoundPixels(true)
     const { x, width } = this.level.bounds
     this.cameras.main.setBounds(0, -HEIGHT_CAMERA_OFFSET, width + WIDTH_CAMERA_OFFSET, this.game.scale.height + HEIGHT_CAMERA_OFFSET)
-    this.cameras.main.startFollow(this.character)
+    this.cameras.main.startFollow(this.character, false, 0.1, 0.1)
   }
 
   public update = (time: number, delta: number) => {
