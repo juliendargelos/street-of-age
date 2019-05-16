@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <nav>
+    <!-- <nav>
       <router-link :to="{ name: 'home' }">Home</router-link>
       <router-link :to="{ name: 'debug-game' }">Debug</router-link>
       <router-link :to="{ name: 'room-list' }">Room List</router-link>
       <router-link :to="{ name: 'room-form' }">Room Create</router-link>
-    </nav>
+    </nav> -->
     <router-view :key="$route.fullPath"/>
   </div>
 </template>
@@ -14,13 +14,14 @@
 @import ~reset-css/sass/reset
 
 #app
-  @at-root html, body, &
-    height: 100%
-    overflow: hidden
-
+  background: url(~@/assets/background.jpg) no-repeat center center / cover
   font:
     family: $sans-serif
     size: 16px
+
+  @at-root html, body, &
+    height: 100%
+    overflow: hidden
 </style>
 
 <script lang="ts">

@@ -4,10 +4,12 @@ import VueSocketIO from 'vue-socket.io'
 // @ts-ignore
 import VueGlobalEvents from 'vue-global-events'
 import { EventEmitter } from 'events'
-import App from './App.vue'
 import router from './router'
 import store from './store'
 import './registerServiceWorker'
+import App from './App.vue'
+import AppButton from './components/AppButton.vue'
+import AppBlock from './components/AppBlock.vue'
 
 export const Emitter = new EventEmitter()
 
@@ -24,6 +26,8 @@ Vue.use(new VueSocketIO({
 }))
 
 Vue.component('GlobalEvents', VueGlobalEvents)
+Vue.component('AppBlock', AppBlock)
+Vue.component('AppButton', AppButton)
 
 new Vue({
   router,
