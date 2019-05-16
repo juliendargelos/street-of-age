@@ -17,6 +17,14 @@
       >
         Join game
       </AppButton>
+      <AppButton
+        class="home-menu__button"
+        secondary
+        block
+        :to="{ name: 'debug-game' }"
+      >
+        Debug
+      </AppButton>
     </AppBlock>
   </div>
 </template>
