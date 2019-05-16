@@ -78,7 +78,6 @@ export default class GameLevel {
           .setDepth(10)
       )
     )
-    console.log(layers)
     this.colliders = scene.physics.add.staticGroup()
     layers.forEach(layer => {
       this.colliders.addMultiple(
