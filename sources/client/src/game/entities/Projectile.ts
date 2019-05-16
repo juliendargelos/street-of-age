@@ -1,5 +1,6 @@
 import { SpriteConstructor } from '@/@types/game'
 import {GameScene} from '@/game/scenes/GameScene'
+import {PLAYER_DEPTH} from '@/constants'
 
 interface Constructor extends SpriteConstructor{
   angle: number,
@@ -14,10 +15,12 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     const scene = params.scene as GameScene
     scene.physics.add.collider(scene.level.bodies, this)
     scene.physics.add.collider(scene.level.floors, this)
-    this.setGravityY(0)
-    this.setDisplaySize(40, 40)
-    this.updateDisplayOrigin()
-    this.setBounce(0.3)
+    this
+      .setDepth(PLAYER_DEPTH)
+      .setGravityY(0)
+      .setBounce(0.3)
+      .setDisplaySize(40, 40)
+      .updateDisplayOrigin()
   }
 
   public update (): void {

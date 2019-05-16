@@ -1,4 +1,4 @@
-import { Sprites } from './sprite'
+import { Layers } from './sprite'
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
@@ -30,7 +30,7 @@ export interface Level {
   width: number,
   height: number,
   background: LevelBackground,
-  sprites: Sprites,
+  layers: Layers,
   bodies: Body[],
   floors: Floor[],
 }

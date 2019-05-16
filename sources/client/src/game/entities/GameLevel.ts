@@ -1,4 +1,4 @@
-import { Body, Floor, LevelBackground, Sprite, Sprites } from '@street-of-age/shared/src/@types'
+import { Body, Floor, LevelBackground, Sprite, Layers } from '@street-of-age/shared/src/@types'
 import { createPhaserGradient } from '@/constants'
 
 interface Bounds {
@@ -17,22 +17,22 @@ const getMinYSprites = (sprites: Sprite[]) =>
 export default class GameLevel {
   public floors!: Phaser.Physics.Arcade.StaticGroup
   public bodies!: Phaser.Physics.Arcade.StaticGroup
-  public sprites: Sprites
+  public layers: Layers
 
   constructor (
     public title: string,
     public width: number,
     public height: number,
     public background: LevelBackground,
-    private serializedSprites: Sprites,
+    private serializedLayers: Layers,
     private serializedBodies: Body[],
     private serializedFloors: Floor[]
   ) {
-    this.sprites = serializedSprites
+    this.layers = serializedLayers
   }
 
   public get bounds (): Bounds {
-    const sprites = Object.entries(this.serializedSprites)
+    const sprites = Object.entries(this.serializedLayers)
       .map(value => value[1])
       .flat()
 
@@ -46,12 +46,8 @@ export default class GameLevel {
 
   public init = (scene: Phaser.Scene): void => {
     console.log(`INITIALIZING ${this.title}`)
-    /* TODO: Currently we are ignoring layers and we are flattenning the array. In the future, we would use those layers
-      informations to create a parallax effect and depth effects
-    */
-    const sprites = Object.entries(this.serializedSprites)
+    const layers = Object.entries(this.layers)
       .map(value => value[1])
-      .flat()
     const offset = window.innerHeight - this.height < 0 ? 0 : window.innerHeight - this.height
     const gradient = createPhaserGradient(scene, {
       width: this.bounds.width + 500,
@@ -66,10 +62,13 @@ export default class GameLevel {
       .setDepth(-1)
       .setOrigin(0, 0)
     scene.cameras.main.setBackgroundColor(this.background.to)
-    sprites
-      .forEach(sprite => {
-        scene.add.image(sprite.x, sprite.y + offset, sprite.texture, sprite.frame)
-          .setOrigin(sprite.pivot.x, sprite.pivot.y)
+    layers
+      .forEach(layer => {
+        layer.sprites.forEach(sprite => {
+          scene.add.image(sprite.x, sprite.y + offset, sprite.texture, sprite.frame)
+            .setOrigin(sprite.pivot.x, sprite.pivot.y)
+            .setDepth(layer.options.depth)
+        })
       })
     this.floors = scene.physics.add.staticGroup()
     this.floors.addMultiple(

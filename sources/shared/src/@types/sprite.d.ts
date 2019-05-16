@@ -1,4 +1,14 @@
-export type Sprites = { [layer: string]: Sprite[] }
+interface Layer {
+  options: {
+    speed: number,
+    depth: number
+  }
+  sprites: Sprite[]
+}
+
+export type Layers = {
+  [layer: string]: Layer
+}
 
 export interface Sprite {
   id?: string

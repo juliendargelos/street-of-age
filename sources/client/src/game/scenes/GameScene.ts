@@ -24,7 +24,7 @@ export class GameScene extends BaseScene {
     this.physics.add.collider(this.character, this.level.bodies)
     this.cameras.main.setRoundPixels(true)
     const { x, width } = this.level.bounds
-    this.cameras.main.setBounds(x, -HEIGHT_CAMERA_OFFSET, width + WIDTH_CAMERA_OFFSET, this.game.scale.height + HEIGHT_CAMERA_OFFSET)
+    this.cameras.main.setBounds(0, -HEIGHT_CAMERA_OFFSET, width + WIDTH_CAMERA_OFFSET, this.game.scale.height + HEIGHT_CAMERA_OFFSET)
     this.cameras.main.startFollow(this.character)
   }
 

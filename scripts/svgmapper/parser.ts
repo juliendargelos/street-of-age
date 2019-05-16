@@ -1,5 +1,6 @@
 import { parseSync } from 'svgson'
-import { Level, Sprite, Sprites, Body, Floor } from '../../sources/shared/src/@types'
+import { Level, Sprite, Layers, Body, Floor } from '../../sources/shared/src/@types'
+import {Layer} from '../../sources/shared/src/@types/sprite'
 
 const COLLIDERS_GROUP = ['colliders', 'Colliders', 'Bodies', 'bodies']
 const FLOOR_GROUP = ['floors', 'Floor', 'floors', 'Floors', 'ground', 'Ground']
@@ -26,7 +27,7 @@ export const parseSvg = (svgContent: string): Level => {
   const title = root.children.find((node: any) => node.name === 'title')!.children[0].value
   // If we have a whitespace in the title, Sketch converts all whitespace with '-' character.
   const rootGroup = root.children.find((node: any) => node.name === 'g' && node.attributes.id === title.replace(' ', '-'))!
-  const layers: any[] = rootGroup.children.filter((node: any) => node.name === 'g' && !LAYER_MASK_EXCLUDE.includes(node.attributes.id))
+  const layersSvg: any[] = rootGroup.children.filter((node: any) => node.name === 'g' && !LAYER_MASK_EXCLUDE.includes(node.attributes.id))
   const colliderLayer: any = rootGroup.children.find((node: any) => node.name === 'g' && COLLIDERS_GROUP.includes(node.attributes.id))!
   const floorLayer: any = rootGroup.children.find((node: any) => node.name === 'g' && FLOOR_GROUP.includes(node.attributes.id))!
   let bodies: Body[] = []
@@ -63,32 +64,35 @@ export const parseSvg = (svgContent: string): Level => {
       }) as Floor)
   }
 
-  const sprites: Sprites = layers.reduce((acc, value) => {
+  const layers: Layers = layersSvg.reduce((acc, value, index) => {
     const translate = parseTransform(value.attributes.transform).translate
-    acc[value.attributes.id] = value.children
-      .filter((node: any) => node.name === 'image')
-      .map((node: any) => {
-        const texture = node.attributes.id.includes('/') ?
-          node.attributes.id.split('/')[0] :
-          node.attributes.id
-        // used to allow duplicate element in Sketch but always return the good atlas name by removing -Copy-xxx
-        // suffix that sketch puts in id
-        const id = (node.attributes.id as string)
-          .replace(/-Copy(\S|)+/i, '')
-        return ({
-          id,
-          x: parseFloat(node.attributes.x) + translate[0],
-          y: parseFloat(node.attributes.y) + translate[1],
-          texture: texture,
-          frame: id.includes('/') ? id : null,
-          width: parseFloat(node.attributes.width),
-          height: parseFloat(node.attributes.height),
-          pivot: {
-            x: 0,
-            y: 0
-          }
-        }) as Sprite
-      })
+    acc[value.attributes.id] = {
+      options: { speed: 1, depth: index + 1 },
+      sprites: value.children
+        .filter((node: any) => node.name === 'image')
+        .map((node: any) => {
+          const texture = node.attributes.id.includes('/') ?
+            node.attributes.id.split('/')[0] :
+            node.attributes.id
+          // used to allow duplicate element in Sketch but always return the good atlas name by removing -Copy-xxx
+          // suffix that sketch puts in id
+          const id = (node.attributes.id as string)
+            .replace(/-Copy(\S|)+/i, '')
+          return ({
+            id,
+            x: parseFloat(node.attributes.x) + translate[0],
+            y: parseFloat(node.attributes.y) + translate[1],
+            texture: texture,
+            frame: id.includes('/') ? id : null,
+            width: parseFloat(node.attributes.width),
+            height: parseFloat(node.attributes.height),
+            pivot: {
+              x: 0,
+              y: 0
+            }
+          }) as Sprite
+        })
+    } as Layer
     return acc
   }, {})
 
@@ -101,7 +105,7 @@ export const parseSvg = (svgContent: string): Level => {
       to: DEFAULT_BACKGROUND_TO
     },
     bodies,
-    sprites,
+    layers,
     floors
   }
 }
