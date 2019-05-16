@@ -26,7 +26,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   constructor (params: SpriteConstructor) {
     super(params.scene, params.x, params.y, params.texture, params.frame)
     params.scene.physics.world.enable(this)
-    this.projectileDir = params.scene.add.graphics()
+    this.projectileDir = params.scene.add.graphics().setDepth(10)
 
     this
       .setInteractive()

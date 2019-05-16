@@ -1,5 +1,5 @@
-import {Floor, Layers, LevelBackground, Sprite} from '@street-of-age/shared/src/@types'
-import {createPhaserGradient} from '@/constants'
+import { Floor, Layers, LevelBackground, Sprite } from '@street-of-age/shared/src/@types'
+import { createPhaserGradient } from '@/constants'
 
 interface Bounds {
   x: number,
@@ -19,7 +19,7 @@ export default class GameLevel {
   public colliders!: Phaser.Physics.Arcade.StaticGroup
   public layers: Layers
 
-  constructor(
+  constructor (
     public title: string,
     public width: number,
     public height: number,
@@ -30,7 +30,7 @@ export default class GameLevel {
     this.layers = serializedLayers
   }
 
-  public get bounds(): Bounds {
+  public get bounds (): Bounds {
     const sprites = Object.entries(this.serializedLayers)
       .map(value => value[1])
       .flat()
@@ -47,18 +47,18 @@ export default class GameLevel {
     console.log(`INITIALIZING ${this.title}`)
     const layers = Object.entries(this.layers)
       .map(value => value[1])
-    const offset = window.innerHeight - this.height < 0 ? 0 : window.innerHeight - this.height
+    const offset = window.innerHeight - this.height
     const gradient = createPhaserGradient(scene, {
       width: this.bounds.width + 500,
-      height: this.bounds.height,
+      height: this.bounds.height - offset,
       x0: 0,
       y0: 0,
       x1: 0,
-      y1: window.innerHeight,
-      colorStops: [{offset: 0, color: this.background.to}, {offset: 1, color: this.background.from}]
+      y1: this.bounds.height - offset,
+      colorStops: [{ offset: 0, color: this.background.to }, { offset: 1, color: this.background.from }]
     })
-    scene.add.image(-30, offset, gradient)
-      .setDepth(-1)
+    scene.add.image(-30, offset < 0 ? offset : offset * 2, gradient)
+      .setDepth(-10)
       .setOrigin(0, 0)
     scene.cameras.main.setBackgroundColor(this.background.to)
     layers
@@ -73,7 +73,9 @@ export default class GameLevel {
     this.floors = scene.physics.add.staticGroup()
     this.floors.addMultiple(
       this.serializedFloors.map(floor =>
-        scene.add.rectangle(floor.x, floor.y + offset, floor.width, floor.height, floor.color).setOrigin(floor.pivot.x, floor.pivot.y)
+        scene.add.rectangle(floor.x, floor.y + offset, floor.width, floor.height, floor.color)
+          .setOrigin(floor.pivot.x, floor.pivot.y)
+          .setDepth(10)
       )
     )
     console.log(layers)

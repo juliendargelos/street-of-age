@@ -47,7 +47,9 @@ export const parseSvg = (svgContent: string): Level => {
   }
 
   const layers: Layers = layersSvg.reduce((acc, value, index) => {
-    const translate = parseTransform(value.attributes.transform).translate
+    const translate = value.attributes.transform ?
+      parseTransform(value.attributes.transform).translate :
+      [0, 0]
     const colliders = value.children
       .filter((node: any) => node.name === 'rect')
       .map((node: any) => ({
@@ -84,9 +86,11 @@ export const parseSvg = (svgContent: string): Level => {
           }
         }) as Sprite
       })
-
-    acc[value.attributes.id] = {
-      options: {speed: 1, depth: index + 1},
+    // in order to allow customizing the speed of a layer in Sketch, we arbitrary choose to set the speed
+    // based on the layer name in sketch : {layer_name}-{speed}. If omitted, speed will be defaulted to 1.
+    const [name, speed] = (value.attributes.id as string).split('-').map(val => val.trim())
+    acc[name] = {
+      options: {speed: speed ? Number(speed) : 1, depth: index + 1},
       colliders,
       sprites
     } as Layer

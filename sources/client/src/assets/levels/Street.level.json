@@ -1,7 +1,7 @@
 {
   "title": "Street",
   "width": 2000,
-  "height": 375,
+  "height": 779,
   "background": {
     "from": "#4C86B0",
     "to": "#2F1C66"
@@ -9,15 +9,15 @@
   "layers": {
     "Farground": {
       "options": {
-        "speed": 0.25,
+        "speed": 0.5,
         "depth": 1
       },
       "colliders": [],
       "sprites": [
         {
           "id": "level/backgrounds/buildings_group_blurred",
-          "x": 787,
-          "y": 61,
+          "x": 859,
+          "y": 494,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
@@ -29,8 +29,8 @@
         },
         {
           "id": "level/backgrounds/buildings_group_blurred",
-          "x": 65,
-          "y": 61,
+          "x": 137,
+          "y": 494,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
@@ -44,15 +44,15 @@
     },
     "Background": {
       "options": {
-        "speed": 0.5,
+        "speed": 0.75,
         "depth": 2
       },
       "colliders": [],
       "sprites": [
         {
           "id": "level/backgrounds/buildings_group",
-          "x": 772,
-          "y": 41,
+          "x": 844,
+          "y": 474,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group",
           "width": 556,
@@ -64,8 +64,8 @@
         },
         {
           "id": "level/backgrounds/buildings_group",
-          "x": 15,
-          "y": 41,
+          "x": 87,
+          "y": 474,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group",
           "width": 556,
@@ -84,8 +84,8 @@
       },
       "colliders": [
         {
-          "x": 93.5,
-          "y": 172.5,
+          "x": 160.5,
+          "y": 576.5,
           "width": 368,
           "height": 12,
           "pivot": {
@@ -94,8 +94,8 @@
           }
         },
         {
-          "x": 797.5,
-          "y": 180.5,
+          "x": 864.5,
+          "y": 584.5,
           "width": 319,
           "height": 14,
           "pivot": {
@@ -104,8 +104,18 @@
           }
         },
         {
-          "x": 1311.5,
-          "y": 138.5,
+          "x": 953.5,
+          "y": 393.5,
+          "width": 217,
+          "height": 8,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 1378.5,
+          "y": 542.5,
           "width": 345,
           "height": 18,
           "pivot": {
@@ -114,8 +124,8 @@
           }
         },
         {
-          "x": 93.5,
-          "y": 45.5,
+          "x": 160.5,
+          "y": 449.5,
           "width": 368,
           "height": 12,
           "pivot": {
@@ -127,8 +137,8 @@
       "sprites": [
         {
           "id": "level/buildings/building_1",
-          "x": 0,
-          "y": -73,
+          "x": 67,
+          "y": 331,
           "texture": "level",
           "frame": "level/buildings/building_1",
           "width": 555,
@@ -140,8 +150,8 @@
         },
         {
           "id": "level/buildings/building_6",
-          "x": 734,
-          "y": -303,
+          "x": 801,
+          "y": 101,
           "texture": "level",
           "frame": "level/buildings/building_6",
           "width": 464,
@@ -153,8 +163,8 @@
         },
         {
           "id": "level/buildings/building_7",
-          "x": 1242,
-          "y": 57,
+          "x": 1309,
+          "y": 461,
           "texture": "level",
           "frame": "level/buildings/building_7",
           "width": 481,
@@ -175,8 +185,8 @@
       "sprites": [
         {
           "id": "level/props/car",
-          "x": 1061,
-          "y": 258,
+          "x": 1051,
+          "y": 662,
           "texture": "level",
           "frame": "level/props/car",
           "width": 363,
@@ -188,8 +198,8 @@
         },
         {
           "id": "level/props/floorlamp",
-          "x": 828,
-          "y": 89,
+          "x": 875,
+          "y": 495,
           "texture": "level",
           "frame": "level/props/floorlamp",
           "width": 63,
@@ -201,8 +211,8 @@
         },
         {
           "id": "level/props/trash",
-          "x": 1696,
-          "y": 290,
+          "x": 1763,
+          "y": 694,
           "texture": "level",
           "frame": "level/props/trash",
           "width": 60,
@@ -214,8 +224,8 @@
         },
         {
           "id": "level/props/fire_hydrant",
-          "x": 970,
-          "y": 295,
+          "x": 1037,
+          "y": 699,
           "texture": "level",
           "frame": "level/props/fire_hydrant",
           "width": 30,
@@ -236,8 +246,8 @@
       "sprites": [
         {
           "id": "level/lights/floorlamp",
-          "x": 514,
-          "y": -238,
+          "x": 581,
+          "y": 166,
           "texture": "level",
           "frame": "level/lights/floorlamp",
           "width": 712,
@@ -248,12 +258,41 @@
           }
         }
       ]
+    },
+    "Colliders": {
+      "options": {
+        "speed": 1,
+        "depth": 6
+      },
+      "colliders": [
+        {
+          "x": 0.5,
+          "y": 0.5,
+          "width": 26,
+          "height": 749,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 1973.5,
+          "y": 0.5,
+          "width": 26,
+          "height": 749,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "sprites": []
     }
   },
   "floors": [
     {
       "x": 0,
-      "y": 346,
+      "y": 750,
       "width": 598,
       "height": 29,
       "color": 262928,
@@ -264,7 +303,7 @@
     },
     {
       "x": 677,
-      "y": 346,
+      "y": 750,
       "width": 1154,
       "height": 29,
       "color": 262928,
@@ -275,7 +314,7 @@
     },
     {
       "x": 1891,
-      "y": 346,
+      "y": 750,
       "width": 109,
       "height": 29,
       "color": 262928,
