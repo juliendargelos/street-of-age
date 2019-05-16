@@ -95,7 +95,7 @@
         "x": 14,
         "y": 61,
         "texture": "level",
-        "frame": "level/buildings/buildings_group_blurred",
+        "frame": "level/backgrounds/buildings_group_blurred",
         "width": 455,
         "height": 285,
         "pivot": {
@@ -108,7 +108,7 @@
         "x": 316,
         "y": 61,
         "texture": "level",
-        "frame": "level/buildings/buildings_group_blurred",
+        "frame": "level/backgrounds/buildings_group_blurred",
         "width": 455,
         "height": 285,
         "pivot": {
@@ -121,7 +121,7 @@
         "x": 69,
         "y": 41,
         "texture": "level",
-        "frame": "level/buildings/buildings_group",
+        "frame": "level/backgrounds/buildings_group",
         "width": 629,
         "height": 305,
         "pivot": {
@@ -134,7 +134,7 @@
         "x": 978,
         "y": 61,
         "texture": "level",
-        "frame": "level/buildings/buildings_group_blurred",
+        "frame": "level/backgrounds/buildings_group_blurred",
         "width": 455,
         "height": 285,
         "pivot": {
@@ -147,7 +147,7 @@
         "x": 1628,
         "y": 61,
         "texture": "level",
-        "frame": "level/buildings/buildings_group_blurred",
+        "frame": "level/backgrounds/buildings_group_blurred",
         "width": 455,
         "height": 285,
         "pivot": {
@@ -160,7 +160,7 @@
         "x": 924,
         "y": 42,
         "texture": "level",
-        "frame": "level/buildings/buildings_group",
+        "frame": "level/backgrounds/buildings_group",
         "width": 629,
         "height": 305,
         "pivot": {
@@ -173,7 +173,7 @@
         "x": 1574,
         "y": 41,
         "texture": "level",
-        "frame": "level/buildings/buildings_group",
+        "frame": "level/backgrounds/buildings_group",
         "width": 629,
         "height": 305,
         "pivot": {
@@ -204,19 +204,6 @@
         "frame": "level/buildings/Batiment1",
         "width": 369,
         "height": 330,
-        "pivot": {
-          "x": 0,
-          "y": 0
-        }
-      },
-      {
-        "id": "Batiment2",
-        "x": 1988,
-        "y": -29,
-        "texture": "Batiment2",
-        "frame": null,
-        "width": 524.068323,
-        "height": 375,
         "pivot": {
           "x": 0,
           "y": 0

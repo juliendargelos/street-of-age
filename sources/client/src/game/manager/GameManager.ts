@@ -18,6 +18,7 @@ export class GameManager {
   }
 
   public destroy = () => {
+    Emitter.removeAllListeners(GameEvents.GameLoaded)
     delete this.game
   }
 }

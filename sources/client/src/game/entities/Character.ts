@@ -8,9 +8,9 @@ const MASS = 1
 const JUMP_FORCE = 1.7
 const BOUNCE = 0.2
 const SPEED = 32
-const WIDTH = 63
+const WIDTH = 26
 const HEIGHT = 75
-const OFFSET_X = 0
+const OFFSET_X = 18
 const OFFSET_Y = 15
 
 enum State {
@@ -123,7 +123,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private turn = (direction: 'left' | 'right') => {
     if (direction === 'left') {
       this.scaleX = -1
-      this.setOffset(WIDTH, OFFSET_Y)
+      this.setOffset(WIDTH + OFFSET_X, OFFSET_Y)
     } else {
       this.setOffset(OFFSET_X, OFFSET_Y)
       this.scaleX = 1
