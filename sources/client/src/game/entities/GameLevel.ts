@@ -1,5 +1,5 @@
-import { Body, Floor, LevelBackground, Sprite, Layers } from '@street-of-age/shared/src/@types'
-import { createPhaserGradient } from '@/constants'
+import {Floor, Layers, LevelBackground, Sprite} from '@street-of-age/shared/src/@types'
+import {createPhaserGradient} from '@/constants'
 
 interface Bounds {
   x: number,
@@ -16,22 +16,21 @@ const getMinYSprites = (sprites: Sprite[]) =>
 
 export default class GameLevel {
   public floors!: Phaser.Physics.Arcade.StaticGroup
-  public bodies!: Phaser.Physics.Arcade.StaticGroup
+  public colliders!: Phaser.Physics.Arcade.StaticGroup
   public layers: Layers
 
-  constructor (
+  constructor(
     public title: string,
     public width: number,
     public height: number,
     public background: LevelBackground,
     private serializedLayers: Layers,
-    private serializedBodies: Body[],
     private serializedFloors: Floor[]
   ) {
     this.layers = serializedLayers
   }
 
-  public get bounds (): Bounds {
+  public get bounds(): Bounds {
     const sprites = Object.entries(this.serializedLayers)
       .map(value => value[1])
       .flat()
@@ -56,7 +55,7 @@ export default class GameLevel {
       y0: 0,
       x1: 0,
       y1: window.innerHeight,
-      colorStops: [{ offset: 0, color: this.background.to }, { offset: 1, color: this.background.from }]
+      colorStops: [{offset: 0, color: this.background.to}, {offset: 1, color: this.background.from}]
     })
     scene.add.image(-30, offset, gradient)
       .setDepth(-1)
@@ -77,11 +76,17 @@ export default class GameLevel {
         scene.add.rectangle(floor.x, floor.y + offset, floor.width, floor.height, floor.color).setOrigin(floor.pivot.x, floor.pivot.y)
       )
     )
-    this.bodies = scene.physics.add.staticGroup()
-    this.bodies.addMultiple(
-      this.serializedBodies.map(body =>
-        scene.add.rectangle(body.x, body.y + offset, body.width, body.height, 0xff0000, 0).setOrigin(body.pivot.x, body.pivot.y)
+    console.log(layers)
+    this.colliders = scene.physics.add.staticGroup()
+    layers.forEach(layer => {
+      this.colliders.addMultiple(
+        layer.colliders
+          .map(collider =>
+            scene.add.rectangle(collider.x, collider.y + offset, collider.width, collider.height, 0xff0000, 0)
+              .setScrollFactor(layer.options.speed, 1)
+              .setOrigin(collider.pivot.x, collider.pivot.y)
+          )
       )
-    )
+    })
   }
 }

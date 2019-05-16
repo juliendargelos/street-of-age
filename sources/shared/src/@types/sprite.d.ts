@@ -1,4 +1,4 @@
-import {Body} from '../@types/level'
+import {Collider} from '../@types/level'
 
 interface Layer {
   options: {
@@ -6,7 +6,7 @@ interface Layer {
     depth: number
   }
   sprites: Sprite[],
-  bodies: Body[],
+  colliders: Collider[],
 }
 
 export type Layers = {

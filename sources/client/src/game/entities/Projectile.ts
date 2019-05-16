@@ -13,7 +13,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     params.scene.physics.world.enable(this)
     params.scene.add.existing(this)
     const scene = params.scene as GameScene
-    scene.physics.add.collider(scene.level.bodies, this)
+    scene.physics.add.collider(scene.level.colliders, this)
     scene.physics.add.collider(scene.level.floors, this)
     this
       .setDepth(PLAYER_DEPTH)

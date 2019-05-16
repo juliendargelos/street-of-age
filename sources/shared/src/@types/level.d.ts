@@ -9,11 +9,11 @@ export type LevelBackground = {
   to: Color
 }
 
-export interface Floor extends Omit<Body, 'texture'> {
+export interface Floor extends Omit<Collider, 'texture'> {
   color: number
 }
 
-export interface Body {
+export interface Collider {
   x: number,
   y: number,
   width: number,
