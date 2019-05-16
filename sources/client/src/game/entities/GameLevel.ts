@@ -1,4 +1,5 @@
 import { Body, Floor, LevelBackground, Sprite, Sprites } from '@street-of-age/shared/src/@types'
+import { createPhaserGradient } from '@/constants'
 
 interface Bounds {
   x: number,
@@ -52,21 +53,19 @@ export default class GameLevel {
       .map(value => value[1])
       .flat()
     const offset = window.innerHeight - this.height < 0 ? 0 : window.innerHeight - this.height
-    // TODO: Refacto this
-    const canvasTexture = scene.textures.createCanvas('buttonTexture', this.bounds.width + 500, this.bounds.height)
-    const src = canvasTexture.getSourceImage()
-    // @ts-ignore
-    const context = src.getContext('2d')
-    const gradient = context.createLinearGradient(0, offset, 0, this.bounds.height / 1.2)
-    gradient.addColorStop(0, this.background.from)
-    gradient.addColorStop(1, this.background.to)
-    context.fillStyle = gradient
-    context.fillRect(0, offset, this.bounds.width + 500, this.bounds.height + offset)
-    canvasTexture.refresh()
-    scene.add.image(-30, offset, 'buttonTexture')
+    const gradient = createPhaserGradient(scene, {
+      width: this.bounds.width + 500,
+      height: this.bounds.height,
+      x0: 0,
+      y0: 0,
+      x1: 0,
+      y1: window.innerHeight,
+      colorStops: [{ offset: 0, color: this.background.to }, { offset: 1, color: this.background.from }]
+    })
+    scene.add.image(-30, offset, gradient)
       .setDepth(-1)
       .setOrigin(0, 0)
-    scene.cameras.main.setBackgroundColor(this.background.from)
+    scene.cameras.main.setBackgroundColor(this.background.to)
     sprites
       .forEach(sprite => {
         scene.add.image(sprite.x, sprite.y + offset, sprite.texture, sprite.frame)
