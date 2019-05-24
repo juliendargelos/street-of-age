@@ -1,65 +1,71 @@
 <template>
   <form class="room-form" @submit.prevent="onSubmit">
-    <AppBlock class="room-form__content">
-      <input class="room-form__name" v-model="name" placeholder="Name" />
-      <input class="room-form__number" type="number" step="2" min="2" max="6" v-model.number="numberOfPlayers">
-
+    <AppPanel class="room-form__content">
+      <template slot="header"><h2>Configuration de la partie</h2></template>
+      <input class="room-form__name" v-model="settings.name" placeholder="Entrez le nom de la partie"/>
+      <AppPicker
+        label="Nombre de joueurs"
+        v-model="settings.numberOfPlayers"
+        class="room-form__number"
+        :choices="[{ value: 2, label: 2 }, { value: 4, label: 4 }, { value: 6, label: 6 }]"/>
+      <AppPicker
+        label="Taille de la map"
+        v-model="settings.mapSize"
+        class="room-form__mapsize"
+        :choices="[{ value: 'small', label: 'Petite'}, { value: 'medium', label: 'Moyenne'}, { value: 'large', label: 'Grande'}]"/>
       <button type="submit">
         Create room
       </button>
-    </AppBlock>
+    </AppPanel>
   </form>
 </template>
 
 <style lang="sass">
-.room-form
-  height: 100%
-  display: flex
+  .room-form
+    height: 100%
+    display: flex
 
-  &__content
-    width: 90%
-    max-width: 400px
-    margin: auto
+    &__content
+      width: 80%
+      max-width: 400px
+      margin: auto
 
-  &__number
-    margin: 20px auto 20px auto
-    display: block
+    &__number
+      align-self: center
+      width: 80%
 
-  &__name
-    background-color: transparent
-    width: 100%
-    appearance: none
-    border: none
-    margin: 0
-    display: block
-    font-size: 25px
-    color: $white
-    text-align: center
-    outline: none
+    &__mapsize
+      align-self: center
+      width: 80%
 
-    &::placeholder
-      color: rgba($white, .4)
+    &__name
+      align-self: center
+      width: 70%
+
+      &::placeholder
+        color: rgba($white, .6)
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { RoomEvents } from '@street-of-age/shared/socket/events'
-import { Room } from '@/@types'
+  import {Component, Vue} from 'vue-property-decorator'
+  import {RoomEvents} from '@street-of-age/shared/socket/events'
+  import {Room, RoomSettings} from '@/@types'
+  import AppPicker from '@/components/AppPicker.vue'
 
-@Component({
-  sockets: {
-    [RoomEvents.RoomJoined] (room: Room) {
-      const { id } = room
-      this.$router.push({ name: 'room', params: { id } })
+  @Component({
+    components: {AppPicker},
+    sockets: {
+      [RoomEvents.RoomJoined](room: Room) {
+        const {id} = room
+        this.$router.push({name: 'room', params: {id}})
+      }
+    }
+  })
+  export default class RoomForm extends Vue {
+    public settings: RoomSettings = {numberOfPlayers: 4, mapSize: 'medium', name: ''}
+
+    public onSubmit = () => {
+      this.$socket.emit(RoomEvents.RoomCreate)
     }
   }
-})
-export default class RoomForm extends Vue {
-  public numberOfPlayers: number = 2
-  public name: string = ''
-
-  public onSubmit = () => {
-    this.$socket.emit(RoomEvents.RoomCreate)
-  }
-}
 </script>

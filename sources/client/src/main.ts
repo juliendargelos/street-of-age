@@ -10,6 +10,7 @@ import './registerServiceWorker'
 import App from './App.vue'
 import AppButton from './components/AppButton.vue'
 import AppBlock from './components/AppBlock.vue'
+import AppPanel from './components/AppPanel.vue'
 
 export const Emitter = new EventEmitter()
 
@@ -27,6 +28,7 @@ Vue.use(new VueSocketIO({
 
 Vue.component('GlobalEvents', VueGlobalEvents)
 Vue.component('AppBlock', AppBlock)
+Vue.component('AppPanel', AppPanel)
 Vue.component('AppButton', AppButton)
 
 new Vue({
