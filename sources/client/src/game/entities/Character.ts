@@ -1,5 +1,5 @@
 import { SpriteConstructor } from '@/@types/game'
-import { GRAVITY, scale } from '@/constants'
+import { GRAVITY, PLAYER_DEPTH, scale } from '@/constants'
 import InputManager from '@/game/manager/InputManager'
 import Projectile from '@/game/entities/Projectile'
 import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/TouchDetection'
@@ -26,11 +26,13 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   constructor (params: SpriteConstructor) {
     super(params.scene, params.x, params.y, params.texture, params.frame)
     params.scene.physics.world.enable(this)
-    this.projectileDir = params.scene.add.graphics()
+    this.projectileDir = params.scene.add.graphics().setDepth(10)
 
-    this.setInteractive()
-    this.setSize(WIDTH, HEIGHT)
-    this.setBounce(BOUNCE)
+    this
+      .setInteractive()
+      .setDepth(PLAYER_DEPTH)
+      .setSize(WIDTH, HEIGHT)
+      .setBounce(BOUNCE)
 
     this.body.setOffset(OFFSET_X, OFFSET_Y)
 

@@ -4,6 +4,7 @@
     "experimentalDecorators": true,
     "esModuleInterop": false,
     "target": "es6",
+    "lib": ["es2017"],
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,

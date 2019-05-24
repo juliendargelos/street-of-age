@@ -1,4 +1,4 @@
-import { Body, Floor, LevelBackground, Sprite, Sprites } from '@street-of-age/shared/src/@types'
+import { Floor, Layers, LevelBackground, Sprite } from '@street-of-age/shared/src/@types'
 import { createPhaserGradient } from '@/constants'
 
 interface Bounds {
@@ -16,23 +16,22 @@ const getMinYSprites = (sprites: Sprite[]) =>
 
 export default class GameLevel {
   public floors!: Phaser.Physics.Arcade.StaticGroup
-  public bodies!: Phaser.Physics.Arcade.StaticGroup
-  public sprites: Sprites
+  public colliders!: Phaser.Physics.Arcade.StaticGroup
+  public layers: Layers
 
   constructor (
     public title: string,
     public width: number,
     public height: number,
     public background: LevelBackground,
-    private serializedSprites: Sprites,
-    private serializedBodies: Body[],
+    private serializedLayers: Layers,
     private serializedFloors: Floor[]
   ) {
-    this.sprites = serializedSprites
+    this.layers = serializedLayers
   }
 
   public get bounds (): Bounds {
-    const sprites = Object.entries(this.serializedSprites)
+    const sprites = Object.entries(this.serializedLayers)
       .map(value => value[1])
       .flat()
 
@@ -46,42 +45,49 @@ export default class GameLevel {
 
   public init = (scene: Phaser.Scene): void => {
     console.log(`INITIALIZING ${this.title}`)
-    /* TODO: Currently we are ignoring layers and we are flattenning the array. In the future, we would use those layers
-      informations to create a parallax effect and depth effects
-    */
-    const sprites = Object.entries(this.serializedSprites)
+    const layers = Object.entries(this.layers)
       .map(value => value[1])
-      .flat()
-    const offset = window.innerHeight - this.height < 0 ? 0 : window.innerHeight - this.height
+    const offset = window.innerHeight - this.height
     const gradient = createPhaserGradient(scene, {
       width: this.bounds.width + 500,
-      height: this.bounds.height,
+      height: this.bounds.height - offset,
       x0: 0,
       y0: 0,
       x1: 0,
-      y1: window.innerHeight,
+      y1: this.bounds.height - offset,
       colorStops: [{ offset: 0, color: this.background.to }, { offset: 1, color: this.background.from }]
     })
-    scene.add.image(-30, offset, gradient)
-      .setDepth(-1)
+    scene.add.image(-30, offset < 0 ? offset : offset * 2, gradient)
+      .setDepth(-10)
       .setOrigin(0, 0)
     scene.cameras.main.setBackgroundColor(this.background.to)
-    sprites
-      .forEach(sprite => {
-        scene.add.image(sprite.x, sprite.y + offset, sprite.texture, sprite.frame)
-          .setOrigin(sprite.pivot.x, sprite.pivot.y)
+    layers
+      .forEach(layer => {
+        layer.sprites.forEach(sprite => {
+          scene.add.image(sprite.x, sprite.y + offset, sprite.texture, sprite.frame)
+            .setOrigin(sprite.pivot.x, sprite.pivot.y)
+            .setScrollFactor(layer.options.speed, 1)
+            .setDepth(layer.options.depth)
+        })
       })
     this.floors = scene.physics.add.staticGroup()
     this.floors.addMultiple(
       this.serializedFloors.map(floor =>
-        scene.add.rectangle(floor.x, floor.y + offset, floor.width, floor.height, floor.color).setOrigin(floor.pivot.x, floor.pivot.y)
+        scene.add.rectangle(floor.x, floor.y + offset, floor.width, floor.height, floor.color)
+          .setOrigin(floor.pivot.x, floor.pivot.y)
+          .setDepth(10)
       )
     )
-    this.bodies = scene.physics.add.staticGroup()
-    this.bodies.addMultiple(
-      this.serializedBodies.map(body =>
-        scene.add.rectangle(body.x, body.y + offset, body.width, body.height, 0xff0000, 0).setOrigin(body.pivot.x, body.pivot.y)
+    this.colliders = scene.physics.add.staticGroup()
+    layers.forEach(layer => {
+      this.colliders.addMultiple(
+        layer.colliders
+          .map(collider =>
+            scene.add.rectangle(collider.x, collider.y + offset, collider.width, collider.height, 0xff0000, 0)
+              .setScrollFactor(layer.options.speed, 1)
+              .setOrigin(collider.pivot.x, collider.pivot.y)
+          )
       )
-    )
+    })
   }
 }

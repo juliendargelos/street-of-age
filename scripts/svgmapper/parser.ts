@@ -1,9 +1,9 @@
-import { parseSync } from 'svgson'
-import { Level, Sprite, Sprites, Body, Floor } from '../../sources/shared/src/@types'
+import {parseSync} from 'svgson'
+import {Collider, Floor, Layers, Level, Sprite} from '../../sources/shared/src/@types'
+import {Layer} from '../../sources/shared/src/@types/sprite'
 
-const COLLIDERS_GROUP = ['colliders', 'Colliders', 'Bodies', 'bodies']
 const FLOOR_GROUP = ['floors', 'Floor', 'floors', 'Floors', 'ground', 'Ground']
-const LAYER_MASK_EXCLUDE = [...COLLIDERS_GROUP, ...FLOOR_GROUP]
+const LAYER_MASK_EXCLUDE = [...FLOOR_GROUP]
 
 const DEFAULT_BACKGROUND_FROM = '#4C86B0'
 const DEFAULT_FLOOR_COLOR = 0x040310
@@ -11,7 +11,7 @@ const DEFAULT_BACKGROUND_TO = '#2F1C66'
 
 type ParseTransformResult = { [key: string]: number[] }
 
-const parseTransform = (transform: string): ParseTransformResult =>  {
+const parseTransform = (transform: string): ParseTransformResult => {
   const b: ParseTransformResult = {}
   let matched: RegExpMatchArray
   for (const i in matched = transform.match(/(\w+)\(([^,)]+),?([^)]+)?\)/gi)) {
@@ -26,26 +26,9 @@ export const parseSvg = (svgContent: string): Level => {
   const title = root.children.find((node: any) => node.name === 'title')!.children[0].value
   // If we have a whitespace in the title, Sketch converts all whitespace with '-' character.
   const rootGroup = root.children.find((node: any) => node.name === 'g' && node.attributes.id === title.replace(' ', '-'))!
-  const layers: any[] = rootGroup.children.filter((node: any) => node.name === 'g' && !LAYER_MASK_EXCLUDE.includes(node.attributes.id))
-  const colliderLayer: any = rootGroup.children.find((node: any) => node.name === 'g' && COLLIDERS_GROUP.includes(node.attributes.id))!
+  const layersSvg: any[] = rootGroup.children.filter((node: any) => node.name === 'g' && !LAYER_MASK_EXCLUDE.includes(node.attributes.id))
   const floorLayer: any = rootGroup.children.find((node: any) => node.name === 'g' && FLOOR_GROUP.includes(node.attributes.id))!
-  let bodies: Body[] = []
   let floors: Floor[] = []
-  if (colliderLayer) {
-    const colliderTranslate = parseTransform(colliderLayer.attributes.transform).translate
-    bodies = colliderLayer.children
-      .filter((node: any) => node.name === 'rect')
-      .map((node: any) => ({
-        x: parseFloat(node.attributes.x) + colliderTranslate[0],
-        y: parseFloat(node.attributes.y) + colliderTranslate[1],
-        width: parseFloat(node.attributes.width),
-        height: parseFloat(node.attributes.height),
-        pivot: {
-          x: 0,
-          y: 0
-        }
-      }) as Body)
-  }
   if (floorLayer) {
     const floorTranslate = parseTransform(floorLayer.attributes.transform).translate
     floors = floorLayer.children
@@ -63,9 +46,23 @@ export const parseSvg = (svgContent: string): Level => {
       }) as Floor)
   }
 
-  const sprites: Sprites = layers.reduce((acc, value) => {
-    const translate = parseTransform(value.attributes.transform).translate
-    acc[value.attributes.id] = value.children
+  const layers: Layers = layersSvg.reduce((acc, value, index) => {
+    const translate = value.attributes.transform ?
+      parseTransform(value.attributes.transform).translate :
+      [0, 0]
+    const colliders = value.children
+      .filter((node: any) => node.name === 'rect')
+      .map((node: any) => ({
+        x: parseFloat(node.attributes.x) + translate[0],
+        y: parseFloat(node.attributes.y) + translate[1],
+        width: parseFloat(node.attributes.width),
+        height: parseFloat(node.attributes.height),
+        pivot: {
+          x: 0,
+          y: 0
+        }
+      }) as Collider)
+    const sprites = value.children
       .filter((node: any) => node.name === 'image')
       .map((node: any) => {
         const texture = node.attributes.id.includes('/') ?
@@ -89,6 +86,14 @@ export const parseSvg = (svgContent: string): Level => {
           }
         }) as Sprite
       })
+    // in order to allow customizing the speed of a layer in Sketch, we arbitrary choose to set the speed
+    // based on the layer name in sketch : {layer_name}-{speed}. If omitted, speed will be defaulted to 1.
+    const [name, speed] = (value.attributes.id as string).split('-').map(val => val.trim())
+    acc[name] = {
+      options: {speed: speed ? Number(speed) : 1, depth: index + 1},
+      colliders,
+      sprites
+    } as Layer
     return acc
   }, {})
 
@@ -100,8 +105,7 @@ export const parseSvg = (svgContent: string): Level => {
       from: DEFAULT_BACKGROUND_FROM,
       to: DEFAULT_BACKGROUND_TO
     },
-    bodies,
-    sprites,
+    layers,
     floors
   }
 }

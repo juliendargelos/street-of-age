@@ -1,4 +1,4 @@
-import { Sprites } from './sprite'
+import { Layers } from './sprite'
 
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
 
@@ -9,11 +9,11 @@ export type LevelBackground = {
   to: Color
 }
 
-export interface Floor extends Omit<Body, 'texture'> {
+export interface Floor extends Omit<Collider, 'texture'> {
   color: number
 }
 
-export interface Body {
+export interface Collider {
   x: number,
   y: number,
   width: number,
@@ -30,7 +30,6 @@ export interface Level {
   width: number,
   height: number,
   background: LevelBackground,
-  sprites: Sprites,
-  bodies: Body[],
+  layers: Layers,
   floors: Floor[],
 }

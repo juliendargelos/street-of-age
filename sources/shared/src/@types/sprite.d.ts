@@ -1,4 +1,17 @@
-export type Sprites = { [layer: string]: Sprite[] }
+import {Collider} from '../@types/level'
+
+interface Layer {
+  options: {
+    speed: number,
+    depth: number
+  }
+  sprites: Sprite[],
+  colliders: Collider[],
+}
+
+export type Layers = {
+  [layer: string]: Layer
+}
 
 export interface Sprite {
   id?: string

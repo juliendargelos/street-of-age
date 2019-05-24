@@ -1,3 +1,3 @@
 import './serializable'
-export { Level, LevelBackground, Body, Color, Floor } from './level'
-export { Sprites, Sprite } from './sprite'
+export { Level, LevelBackground, Collider, Color, Floor } from './level'
+export { Layers, Sprite } from './sprite'
