@@ -8,11 +8,10 @@
     }"
     v-on="$listeners"
   >
-    <div class="app-button__content">
+    <button class="app-button__content">
       <slot />
-    </div>
+    </button>
 
-    <div class="app-button__border" />
   </span>
 </template>
 
@@ -21,15 +20,20 @@
   display: inline-block
   position: relative
   cursor: pointer
-  font-size: 14px
+  min-width: 140px
 
   &__content
     min-width: 100px
-    padding: 15px
+    font-size: 14px
+    font-weight: 700
+    width: 100%
+    padding: 12px 15px
+    text-transform: uppercase
     text-align: center
     z-index: 2
     position: relative
-    transform: translate(-4px, -4px)
+    border-radius: 4px
+    transform: skew(-12deg)
     transition: .2s $easeOutQuart
 
   &__border
@@ -43,21 +47,22 @@
     box-sizing: border-box
 
   &:hover &__content, &:active &__content
-    transform: translate(0, 0)
+    background: $white
+    color: $pale-blue
+    border-color: $white
+    box-shadow: none
 
   &--primary &__content
-    background-color: $green
-    color: $light-blue
-
-  &--primary &__border
-    border-color: $green
+    background-color: transparent
+    border: 2px solid $green
+    box-shadow: 0 0 10px transparentize($green, 0.4), inset 0 0 5px transparentize($green, 0.4)
+    color: $white
 
   &--secondary &__content
-    background-color: $light-blue
-    color: $green
-
-  &--secondary &__border
-    border-color: $white
+    background-color: transparent
+    border: 2px solid $pale-blue
+    box-shadow: 0 0 10px transparentize($pale-blue, 0.4), inset 0 0 5px transparentize($pale-blue, 0.4)
+    color: $white
 
   &--block
     display: block

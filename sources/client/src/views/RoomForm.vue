@@ -13,9 +13,20 @@
         v-model="settings.mapSize"
         class="room-form__mapsize"
         :choices="[{ value: 'small', label: 'Petite'}, { value: 'medium', label: 'Moyenne'}, { value: 'large', label: 'Grande'}]"/>
-      <button type="submit">
-        Create room
-      </button>
+      <div class="room-form__actions">
+        <AppButton
+          secondary
+          block>
+          Retour
+        </AppButton>
+        <AppButton
+          secondary
+          block
+          type="submit">
+          Suivant
+        </AppButton>
+      </div>
+
     </AppPanel>
   </form>
 </template>
@@ -44,28 +55,33 @@
 
       &::placeholder
         color: rgba($white, .6)
+
+    &__actions
+      margin-top: 20px
+      display: flex
+      justify-content: space-evenly
 </style>
 
 <script lang="ts">
-  import {Component, Vue} from 'vue-property-decorator'
-  import {RoomEvents} from '@street-of-age/shared/socket/events'
-  import {Room, RoomSettings} from '@/@types'
-  import AppPicker from '@/components/AppPicker.vue'
+import { Component, Vue } from 'vue-property-decorator'
+import { RoomEvents } from '@street-of-age/shared/socket/events'
+import { Room, RoomSettings } from '@/@types'
+import AppPicker from '@/components/AppPicker.vue'
 
   @Component({
-    components: {AppPicker},
+    components: { AppPicker },
     sockets: {
-      [RoomEvents.RoomJoined](room: Room) {
-        const {id} = room
-        this.$router.push({name: 'room', params: {id}})
+      [RoomEvents.RoomJoined] (room: Room) {
+        const { id } = room
+        this.$router.push({ name: 'room', params: { id } })
       }
     }
   })
-  export default class RoomForm extends Vue {
-    public settings: RoomSettings = {numberOfPlayers: 4, mapSize: 'medium', name: ''}
+export default class RoomForm extends Vue {
+    public settings: RoomSettings = { numberOfPlayers: 4, mapSize: 'medium', name: '' }
 
     public onSubmit = () => {
       this.$socket.emit(RoomEvents.RoomCreate)
     }
-  }
+}
 </script>

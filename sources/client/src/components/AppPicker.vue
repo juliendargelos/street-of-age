@@ -3,6 +3,7 @@
     <div class="app-picker__label">{{ label }}</div>
     <div class="app-picker__items">
       <div class="app-picker__item" v-for="(choice, i) in choices" :class="{selected: i === selectedIndex}"
+           :key="i"
            @click="changeItem(i)">{{ choice.label }}
       </div>
     </div>
@@ -30,6 +31,7 @@
           background: $pale-blue
 
         &:hover, &:active, &:focus
+          cursor: pointer
           background: $pale-blue
 
         &:first-of-type
