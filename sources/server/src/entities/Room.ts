@@ -47,6 +47,7 @@ class Room extends BaseRoom<Player> {
     }))
   }
 
+
   @action public async removePlayer(player: Player): Promise<Player> {
     return new Promise(resolve => player.socket.leave(this.id, () => {
       super.removePlayer(player).then(() => {

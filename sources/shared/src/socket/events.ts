@@ -21,3 +21,7 @@ export enum RoomEvents {
 export enum PlayerEvents {
   PlayerConnected = 'player:connected'
 }
+
+export enum CharacterEvents {
+  CharacterChangeTeam = 'character:change:team'
+}

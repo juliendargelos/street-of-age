@@ -27,11 +27,13 @@ import { Room as RoomType } from '@/@types'
 import RoomModule from '@/store/modules/room'
 import AppModule, { PlayerTeam } from '@/store/modules/app'
 import AppPicker from '@/components/AppPicker.vue'
+import { CharacterEvents } from '@street-of-age/shared/socket/events'
 
 @Component<RoomSetupTeam>({
   methods: {
     changePlayerCharacterTeam (team: PlayerTeam) {
       AppModule.changePlayerCharacterTeam(team)
+      this.$socket.emit(CharacterEvents.CharacterChangeTeam, team)
     }
   },
   components: {

@@ -5,6 +5,8 @@ import { red } from '../services/Logger'
 
 class Player extends BasePlayer<Character> {
   public characters: Character[] = []
+  public team: PlayerTeam
+  public characterKind: CharacterKind
 
   constructor(
     public readonly socket: Socket,
