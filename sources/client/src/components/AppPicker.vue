@@ -44,14 +44,17 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-  @Component<AppPicker>({
-    mounted (): void {
+@Component<AppPicker>({
+  mounted (): void {
+    if (!this.lazy) {
       this.$emit('input', this.choices[this.selectedIndex].value)
     }
-  })
+  }
+})
 export default class AppPicker extends Vue {
     @Prop({ type: Array, default: () => [] }) readonly choices!: Array<{ value: number | string, label: string }>
     @Prop({ type: String, required: true }) readonly label!: string
+    @Prop({ type: Boolean, default: false }) readonly lazy!: string
     @Prop() readonly value: any
 
     private selectedIndex = 0

@@ -3,6 +3,7 @@
       <h1>room setup team</h1>
     <AppPicker
       label="Votre équipe"
+      lazy
       :value="this.team"
       @input="changePlayerCharacterTeam"
       class="room-setup-team__field"
@@ -34,6 +35,7 @@ import { CharacterEvents } from '@street-of-age/shared/socket/events'
     changePlayerCharacterTeam (team: PlayerTeam) {
       AppModule.changePlayerCharacterTeam(team)
       this.$socket.emit(CharacterEvents.CharacterChangeTeam, team)
+      this.$router.push({ name: 'room-setup-character', params: { id: this.room.id } })
     }
   },
   components: {
