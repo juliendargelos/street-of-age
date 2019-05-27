@@ -73,7 +73,7 @@ import AppPicker from '@/components/AppPicker.vue'
     sockets: {
       [RoomEvents.RoomJoined] (room: Room) {
         const { id } = room
-        this.$router.push({ name: 'room', params: { id } })
+        this.$router.push({ name: 'room-setup-team', params: { id } })
       }
     }
   })

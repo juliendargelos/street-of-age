@@ -1,8 +1,7 @@
 <template>
-  <div class="room" v-if="this.isDefined">
-    {{ this.room }}
-    <router-view v-if="currentStep === 'setup'"/>
-    <RoomGame v-else :players="this.room.players"/>
+  <div class="room-setup">
+      <h1>room setup</h1>
+      <router-view/>
   </div>
 </template>
 
@@ -22,25 +21,7 @@ import { RoomEvents } from '@street-of-age/shared/socket/events'
 import { Room as RoomType } from '@/@types'
 import RoomModule from '@/store/modules/room'
 
-@Component<Room>({
-  sockets: {
-    [RoomEvents.RoomDefined] () {
-      this.isDefined = true
-    },
-    [RoomEvents.RoomUndefined] () {
-      this.$router.replace({ name: 'room-list' })
-    }
-  },
-
-  mounted () {
-    this.$socket.emit(RoomEvents.RoomVerify, this.$route.params.id)
-  },
-
-  beforeRouteLeave (to, from, next) {
-    this.$socket.emit(RoomEvents.RoomLeave, from.params.id)
-    next()
-  },
-
+@Component<RoomSetup>({
   components: {
     RoomTeam,
     RoomCharacter,
@@ -49,10 +30,7 @@ import RoomModule from '@/store/modules/room'
     RoomScore
   }
 })
-export default class Room extends Vue {
-  public isDefined: boolean = false
-  public currentStep: 'setup' | 'playing' = 'setup'
-
+export default class RoomSetup extends Vue {
   get room (): RoomType {
     return RoomModule.rooms.find(r => r.id === this.$route.params.id)!
   }

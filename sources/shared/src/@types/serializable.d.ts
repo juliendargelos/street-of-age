@@ -1,5 +1,5 @@
 interface SerializedArray extends Array<SerializedValue> {}
-type SerializedValue = null | boolean | number | string | Serialized | SerializedArray
+type SerializedValue = null | undefined | boolean | number | string | Serialized | SerializedArray
 
 declare type Serialized = {
   [key: string]: SerializedValue

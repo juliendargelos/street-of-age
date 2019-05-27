@@ -1,6 +1,12 @@
+import { CharacterKind, PlayerTeam } from '@/store/modules/app'
+
 export interface Player {
   id: string
-  isLocal: boolean
+  isLocal: boolean,
+  character: {
+    team: PlayerTeam
+    kind: CharacterKind
+  }
 }
 
 export interface Room {

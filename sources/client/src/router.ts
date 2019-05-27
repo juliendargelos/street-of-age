@@ -5,6 +5,9 @@ import Room from '@/views/Room.vue'
 import RoomForm from '@/views/RoomForm.vue'
 import RoomList from '@/views/RoomList.vue'
 import DebugGame from '@/views/DebugGame.vue'
+import RoomSetup from '@/views/RoomSetup.vue'
+import RoomSetupTeam from '@/views/RoomSetupTeam.vue'
+import RoomSetupCharacter from '@/views/RoomSetupCharacter.vue'
 
 Vue.use(Router)
 
@@ -30,7 +33,29 @@ export default new Router({
     {
       path: '/rooms/:id',
       name: 'room',
-      component: Room
+      component: Room,
+      children: [
+        {
+          path: 'setup',
+          name: 'room-setup',
+          component: RoomSetup,
+          props: true,
+          children: [
+            {
+              path: 'team',
+              name: 'room-setup-team',
+              component: RoomSetupTeam,
+              props: true
+            },
+            {
+              path: 'character',
+              name: 'room-setup-character',
+              component: RoomSetupCharacter,
+              props: true
+            }
+          ]
+        }
+      ]
     },
     {
       path: '/debug/game',
