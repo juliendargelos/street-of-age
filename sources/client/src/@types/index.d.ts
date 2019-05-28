@@ -9,6 +9,16 @@ export interface Player {
   }
 }
 
+export interface CharacterAsset {
+  name: string,
+  picture: string,
+  kind: CharacterKind,
+  stats: Array<{
+    ability: string,
+    level: number
+  }>
+}
+
 export interface Room {
   id: string,
   players: Player[]

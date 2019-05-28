@@ -13,7 +13,9 @@ export enum CharacterKind {
   Hippie = 'hippie',
   DotingGranny = 'doting-granny',
   FustyGrandpa = 'fusty-grandpa',
-  LapdogWoman = 'lapdgog-woman'
+  LapdogWoman = 'lapdgog-woman',
+  MrMuscle = 'mr-muscle',
+  Fattie = 'fattie',
 }
 
 export interface AppState {
