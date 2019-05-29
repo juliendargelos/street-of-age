@@ -24,6 +24,9 @@ import RoomModule from '@/store/modules/room'
 
 @Component<Room>({
   sockets: {
+    [RoomEvents.RoomAllPlayersReady] () {
+      this.currentStep = 'playing'
+    },
     [RoomEvents.RoomDefined] () {
       this.isDefined = true
     },

@@ -8,6 +8,7 @@ import DebugGame from '@/views/DebugGame.vue'
 import RoomSetup from '@/views/RoomSetup.vue'
 import RoomSetupTeam from '@/views/RoomSetupTeam.vue'
 import RoomSetupCharacter from '@/views/RoomSetupCharacter.vue'
+import RoomWaiting from '@/views/RoomWaiting.vue'
 
 Vue.use(Router)
 
@@ -54,6 +55,12 @@ export default new Router({
               props: true
             }
           ]
+        },
+        {
+          path: 'waiting',
+          name: 'room-waiting',
+          component: RoomWaiting,
+          props: true
         }
       ]
     },

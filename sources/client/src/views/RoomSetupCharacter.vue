@@ -54,6 +54,7 @@ export default class RoomSetupCharacter extends Vue {
     }
     AppModule.changePlayerCharacterKind(character.kind)
     this.$socket.emit(CharacterEvents.CharacterChangeKind, character.kind)
+    this.$router.replace({ name: 'room-waiting', params: { id: this.room.id } })
   }
   get room (): RoomType {
     return RoomModule.rooms.find(r => r.id === this.$route.params.id)!

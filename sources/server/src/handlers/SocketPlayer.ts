@@ -4,7 +4,7 @@ import PlayerManager from '../managers/PlayerManager'
 import Logger from '../services/Logger'
 import RoomManager from '../managers/RoomManager'
 import {CharacterKind} from '@street-of-age/shared/game/character'
-import {PlayerTeamKinds} from '@street-of-age/shared/src/entities/player'
+import {PlayerTeamKinds} from '@street-of-age/shared/entities/player'
 
 class SocketPlayer {
   public static handle = (socket: SocketIO.Socket) => {

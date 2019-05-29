@@ -1,12 +1,11 @@
 <template>
-  <div class="room-setup">
-      <h1>room setup</h1>
-      <router-view/>
+  <div class="room-waiting">
+      <h1>En attente des autres joueurs</h1>
   </div>
 </template>
 
 <style lang="sass">
-.room
+.room-waiting
   height: 100%
 </style>
 
@@ -15,8 +14,8 @@ import { Component, Vue } from 'vue-property-decorator'
 import { Room as RoomType } from '@/@types'
 import RoomModule from '@/store/modules/room'
 
-@Component<RoomSetup>({})
-export default class RoomSetup extends Vue {
+@Component<RoomWaiting>({})
+export default class RoomWaiting extends Vue {
   get room (): RoomType {
     return RoomModule.rooms.find(r => r.id === this.$route.params.id)!
   }
