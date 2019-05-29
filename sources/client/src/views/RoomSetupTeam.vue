@@ -31,6 +31,10 @@ import AppPicker from '@/components/AppPicker.vue'
 import { CharacterEvents } from '@street-of-age/shared/socket/events'
 
 @Component<RoomSetupTeam>({
+  mounted () {
+    AppModule.changePlayerCharacterKind(null)
+    this.$socket.emit(CharacterEvents.CharacterChangeKind, null)
+  },
   methods: {
     changePlayerCharacterTeam (team: PlayerTeam) {
       AppModule.changePlayerCharacterTeam(team)
@@ -52,7 +56,7 @@ export default class RoomSetupTeam extends Vue {
     return RoomModule.rooms.find(r => r.id === this.$route.params.id)!
   }
 
-  get team (): PlayerTeam {
+  get team (): PlayerTeam | null {
     return AppModule.player.team
   }
 }

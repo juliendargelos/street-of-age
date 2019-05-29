@@ -24,17 +24,17 @@ export interface AppState {
 
 @Module({ name: 'app', namespaced: true, dynamic: true, store })
 class AppStore extends VuexModule implements AppState {
-  public player: Player = { id: '', isLocal: true, characterKind: CharacterKind.Egocentric, team: PlayerTeam.Young }
+  public player: Player = { id: '', isLocal: true, characterKind: null, team: null }
 
   @Mutation public setPlayerId (playerId: string) {
     this.player.id = playerId
   }
 
-  @Mutation public changePlayerCharacterTeam (team: PlayerTeam) {
+  @Mutation public changePlayerCharacterTeam (team: PlayerTeam | null) {
     this.player.team = team
   }
 
-  @Mutation public changePlayerCharacterKind (kind: CharacterKind) {
+  @Mutation public changePlayerCharacterKind (kind: CharacterKind | null) {
     this.player.characterKind = kind
   }
 }

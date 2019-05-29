@@ -5,13 +5,13 @@ import { red } from '../services/Logger'
 
 class Player extends BasePlayer<Character> {
   public characters: Character[] = []
-  public team: PlayerTeam
-  public characterKind: CharacterKind
+  public team: PlayerTeam | null
+  public characterKind: CharacterKind | null
 
   constructor(
     public readonly socket: Socket,
-    team: PlayerTeam,
-    characterKind: CharacterKind
+    team: PlayerTeam | null,
+    characterKind: CharacterKind | null
    ) {
     super({
       id: socket.id,

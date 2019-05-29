@@ -23,22 +23,18 @@ export const PlayerTeamKinds: { [P in PlayerTeam]: CharacterKind[] } = {
 
 export interface SerializedPlayer extends Serialized {
   id: string
-  team: PlayerTeam
-  characterKind: CharacterKind
+  team: PlayerTeam | null
+  characterKind: CharacterKind | null
 }
 
 export class Player<Character extends BaseCharacter = BaseCharacter> implements Serializable<SerializedPlayer> {
   public readonly id: string
-  public readonly team: PlayerTeam
-  public readonly characterKind: CharacterKind
+  public team: PlayerTeam | null
+  public characterKind: CharacterKind | null
   public room: Room
   public characters: Character[] = []
 
   constructor(attributes: SerializedPlayer) {
-    if (!PlayerTeamKinds[attributes.team].includes(attributes.characterKind)) {
-      throw new Error(`Invalid character kind "${attributes.characterKind}" for given team "${attributes.team}"`)
-    }
-
     this.id = attributes.id
     this.team = attributes.team
     this.characterKind = attributes.characterKind

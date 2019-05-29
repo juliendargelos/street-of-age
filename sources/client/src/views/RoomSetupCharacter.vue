@@ -33,11 +33,15 @@ import { CharacterEvents } from '@street-of-age/shared/socket/events'
 
 @Component<RoomSetupCharacter>({
   mounted () {
-    const availableKinds = this.playerTeamKinds[this.player.team]
-      .filter(kind => !this.room.players.map(p => p.characterKind).includes(kind))
-    const characterKind = availableKinds[Math.floor(Math.random() * availableKinds.length)]
-    AppModule.changePlayerCharacterKind(characterKind)
-    this.$socket.emit(CharacterEvents.CharacterChangeKind, characterKind)
+    if (!this.player.team) {
+      this.$router.replace({ name: 'room-setup-team', params: { id: this.room.id } })
+    } else {
+      const availableKinds = this.playerTeamKinds[this.player.team]
+        .filter(kind => !this.room.players.map(p => p.characterKind).includes(kind))
+      const characterKind = availableKinds[Math.floor(Math.random() * availableKinds.length)]
+      AppModule.changePlayerCharacterKind(characterKind)
+      this.$socket.emit(CharacterEvents.CharacterChangeKind, characterKind)
+    }
   },
   components: { CharacterCard }
 })
