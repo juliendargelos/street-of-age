@@ -1,5 +1,5 @@
 import {CharacterAsset, CharactersAsset} from '@/@types'
-import { CharacterKind } from '@/store/modules/app'
+import {CharacterKind, PlayerTeam} from '@/store/modules/app'
 
 const egocentric = require('./pictures/egocentric.png')
 const egocentricFace = require('./pictures/egocentric_face.png')
@@ -21,6 +21,7 @@ const JUMP_ABILITY = 'Saut'
 const STRENGHT_ABILITY = 'Force'
 
 const Egocentric: CharacterAsset = {
+  team: PlayerTeam.Young,
   kind: CharacterKind.Egocentric,
   name: 'L\'influenceuse',
   picture: egocentricFace,
@@ -41,6 +42,7 @@ const Egocentric: CharacterAsset = {
 }
 
 const Fattie: CharacterAsset = {
+  team: PlayerTeam.Young,
   kind: CharacterKind.Fattie,
   name: 'La boulette',
   picture: fattieFace,
@@ -61,6 +63,7 @@ const Fattie: CharacterAsset = {
 }
 
 const FustyGrandpa: CharacterAsset = {
+  team: PlayerTeam.Old,
   kind: CharacterKind.FustyGrandpa,
   name: 'Papivresse',
   picture: fustyGrandpaFace,
@@ -81,6 +84,7 @@ const FustyGrandpa: CharacterAsset = {
 }
 
 const Geek: CharacterAsset = {
+  team: PlayerTeam.Young,
   kind: CharacterKind.Geek,
   name: 'Le geek metalleux',
   picture: geekFace,
@@ -101,6 +105,7 @@ const Geek: CharacterAsset = {
 }
 
 const Hippie: CharacterAsset = {
+  team: PlayerTeam.Young,
   kind: CharacterKind.Hippie,
   name: 'Le bobo',
   picture: hippieFace,
@@ -121,6 +126,7 @@ const Hippie: CharacterAsset = {
 }
 
 const LapdogWoman: CharacterAsset = {
+  team: PlayerTeam.Old,
   kind: CharacterKind.LapdogWoman,
   name: 'La folle aux chiens',
   picture: lapdogWomanFace,
@@ -141,6 +147,7 @@ const LapdogWoman: CharacterAsset = {
 }
 
 const MrMuscle: CharacterAsset = {
+  team: PlayerTeam.Old,
   kind: CharacterKind.MrMuscle,
   name: 'Le kéké',
   picture: mrMuscleFace,

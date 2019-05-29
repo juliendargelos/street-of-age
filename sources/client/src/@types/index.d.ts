@@ -1,18 +1,15 @@
 import { CharacterKind, PlayerTeam } from '@/store/modules/app'
+import { SerializedPlayer } from '@street-of-age/shared/entities/player'
 
-export interface Player {
-  id: string
+export interface Player extends SerializedPlayer{
   isLocal: boolean,
-  character: {
-    team: PlayerTeam
-    kind: CharacterKind
-  }
 }
 
 export interface CharacterAsset {
   name: string,
   picture: string,
   kind: CharacterKind,
+  team: PlayerTeam,
   stats: Array<{
     ability: string,
     level: number
@@ -28,7 +25,7 @@ export type CharactersAsset = { [P in CharacterKind]: CharacterAsset }
 
 export interface Room {
   id: string,
-  players: Player[]
+  players: SerializedPlayer[]
 }
 
 export interface RoomSettings {

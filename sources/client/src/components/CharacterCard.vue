@@ -1,5 +1,5 @@
 <template>
-  <div class="character-card" v-on="listeners">
+  <button class="character-card" v-on="listeners">
     <img :src="character.picture" class="character-card__background" alt="">
     <div class="character-card__informations">
       <h2>{{ character.name }}</h2>
@@ -13,7 +13,7 @@
         </li>
       </ul>
     </div>
-  </div>
+  </button>
 </template>
 
 <style lang="sass">
@@ -26,6 +26,11 @@
   transform: skew(-4deg)
   position: relative
   background: $light-blue
+  outline: none
+  border: none
+  &:disabled
+    filter: grayscale(90%)
+    cursor: not-allowed
   &__informations
     position: absolute
     bottom: 0

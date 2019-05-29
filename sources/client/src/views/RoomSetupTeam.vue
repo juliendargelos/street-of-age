@@ -53,7 +53,7 @@ export default class RoomSetupTeam extends Vue {
   }
 
   get team (): PlayerTeam {
-    return AppModule.player.character.team
+    return AppModule.player.team
   }
 }
 </script>
