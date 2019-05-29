@@ -3,6 +3,7 @@ import {PlayerTeam} from '@street-of-age/shared/entities/player'
 import PlayerManager from '../managers/PlayerManager'
 import Logger from '../services/Logger'
 import RoomManager from '../managers/RoomManager'
+import {CharacterKind} from '@street-of-age/shared/game/character'
 
 class SocketPlayer {
   public static handle = (socket: SocketIO.Socket) => {
@@ -14,6 +15,12 @@ class SocketPlayer {
       player.team = team
       socket.server.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
       Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now in ' + player.team + ' team')
+    })
+
+    socket.on(CharacterEvents.CharacterChangeKind, (kind: CharacterKind) => {
+      player.characterKind = kind
+      socket.server.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
+      Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now ' + player.characterKind)
     })
   }
 }

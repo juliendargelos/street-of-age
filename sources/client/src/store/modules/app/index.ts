@@ -11,7 +11,7 @@ export enum CharacterKind {
   Egocentric = 'egocentric',
   Geek = 'geek',
   Hippie = 'hippie',
-  DotingGranny = 'doting-granny',
+  // DotingGranny = 'doting-granny',
   FustyGrandpa = 'fusty-grandpa',
   LapdogWoman = 'lapdgog-woman',
   MrMuscle = 'mr-muscle',
@@ -24,7 +24,7 @@ export interface AppState {
 
 @Module({ name: 'app', namespaced: true, dynamic: true, store })
 class AppStore extends VuexModule implements AppState {
-  public player: Player = { id: '', isLocal: true, character: { kind: CharacterKind.DotingGranny, team: PlayerTeam.Old } }
+  public player: Player = { id: '', isLocal: true, character: { kind: CharacterKind.LapdogWoman, team: PlayerTeam.Old } }
 
   @Mutation public setPlayerId (playerId: string) {
     this.player.id = playerId

@@ -23,5 +23,6 @@ export enum PlayerEvents {
 }
 
 export enum CharacterEvents {
-  CharacterChangeTeam = 'character:change:team'
+  CharacterChangeTeam = 'character:change:team',
+  CharacterChangeKind = 'character:change:kind'
 }

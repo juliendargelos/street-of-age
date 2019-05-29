@@ -1,5 +1,5 @@
 <template>
-  <div class="character-card">
+  <div class="character-card" v-on="listeners">
     <img :src="character.picture" class="character-card__background" alt="">
     <div class="character-card__informations">
       <h2>{{ character.name }}</h2>
@@ -62,8 +62,22 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { CharacterAsset } from '@/@types'
+import characters from '@/assets/characters'
+import { CharacterKind } from '@/store/modules/app'
+
 @Component<CharacterCard>({})
 export default class CharacterCard extends Vue {
-  @Prop({ required: true }) readonly character!: CharacterAsset
+  @Prop({ required: true }) readonly characterKind!: CharacterKind
+  get character (): CharacterAsset {
+    return characters[this.characterKind]
+  }
+  get listeners () {
+    return {
+      ...this.$listeners,
+      click: (mouseEvent: MouseEvent) => {
+        this.$emit('click', { mouseEvent, character: this.character })
+      }
+    }
+  }
 }
 </script>

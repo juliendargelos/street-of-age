@@ -16,6 +16,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import RoomListItem from '@/components/RoomListItem.vue'
 import RoomModule from '@/store/modules/room'
 import CharacterCard from '@/components/CharacterCard.vue'
+import characters from '@/assets/characters'
 @Component({
   components: {
     CharacterCard,
@@ -23,6 +24,9 @@ import CharacterCard from '@/components/CharacterCard.vue'
   }
 })
 export default class RoomList extends Vue {
+  get characters () {
+    return characters
+  }
   get rooms () {
     return RoomModule.rooms
   }

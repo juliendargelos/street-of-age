@@ -1,4 +1,4 @@
-import { CharacterAsset } from '@/@types'
+import {CharacterAsset, CharactersAsset} from '@/@types'
 import { CharacterKind } from '@/store/modules/app'
 
 const egocentric = require('./pictures/egocentric.png')
@@ -160,7 +160,7 @@ const MrMuscle: CharacterAsset = {
   ]
 }
 
-export default {
+const characters: CharactersAsset = {
   [CharacterKind.Egocentric]: Egocentric,
   [CharacterKind.Fattie]: Fattie,
   [CharacterKind.FustyGrandpa]: FustyGrandpa,
@@ -169,3 +169,5 @@ export default {
   [CharacterKind.LapdogWoman]: LapdogWoman,
   [CharacterKind.MrMuscle]: MrMuscle
 }
+
+export default characters

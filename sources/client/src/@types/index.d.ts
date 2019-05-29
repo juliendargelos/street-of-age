@@ -19,6 +19,13 @@ export interface CharacterAsset {
   }>
 }
 
+export interface CharacterCardClickEvent {
+  mouseEvent: MouseEvent,
+  character: CharacterAsset
+}
+
+export type CharactersAsset = { [P in CharacterKind]: CharacterAsset }
+
 export interface Room {
   id: string,
   players: Player[]
