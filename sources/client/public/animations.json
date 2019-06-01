@@ -111,6 +111,62 @@
       "showOnStart": true,
       "repeat": 0,
       "frameRate": 18
+    },
+    {
+      "key": "fusty-grandpa_walking",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 16,
+        "zeroPad": 5,
+        "prefix": "main/characters/fusty-grandpa/walking_"
+      },
+      "showOnStart": true,
+      "repeat": -1,
+      "frameRate": 15
+    },
+    {
+      "key": "fusty-grandpa_jumping_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 5,
+        "zeroPad": 5,
+        "prefix": "main/characters/fusty-grandpa/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "fusty-grandpa_jumping_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 6,
+        "zeroPad": 5,
+        "prefix": "main/characters/fusty-grandpa/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "fusty-grandpa_jumping_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 9,
+        "zeroPad": 5,
+        "prefix": "main/characters/fusty-grandpa/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
     }
   ]
 }
