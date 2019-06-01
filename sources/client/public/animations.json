@@ -1,20 +1,6 @@
 {
   "anims": [
     {
-      "key": "character_walking",
-      "frames": {
-        "key": "main",
-        "typeOfGeneration": "generateFrameNames",
-        "start": 1,
-        "end": 7,
-        "zeroPad": 0,
-        "prefix": "main/characters/marco/walking-"
-      },
-      "showOnStart": true,
-      "repeat": -1,
-      "frameRate": 12
-    },
-    {
       "key": "egocentric_walking",
       "frames": {
         "key": "main",
@@ -71,19 +57,60 @@
       "frameRate": 18
     },
     {
-      "key": "character_idle",
+      "key": "doting-granny_walking",
       "frames": {
         "key": "main",
         "typeOfGeneration": "generateFrameNames",
         "start": 1,
-        "end": 1,
-        "zeroPad": 0,
-        "prefix": "main/characters/marco/walking-"
+        "end": 16,
+        "zeroPad": 5,
+        "prefix": "main/characters/doting-granny/walking_"
       },
       "showOnStart": true,
       "repeat": -1,
-      "frameRate": 0
+      "frameRate": 15
+    },
+    {
+      "key": "doting-granny_jumping_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 5,
+        "zeroPad": 5,
+        "prefix": "main/characters/doting-granny/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "doting-granny_jumping_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 6,
+        "zeroPad": 5,
+        "prefix": "main/characters/doting-granny/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "doting-granny_jumping_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 9,
+        "zeroPad": 5,
+        "prefix": "main/characters/doting-granny/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
     }
-
   ]
 }
