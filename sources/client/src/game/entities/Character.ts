@@ -95,7 +95,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         this.play(this.kind + '_jumping_midair', true)
         break
       case State.Falling:
-        this.play(this.kind + '_jumping_falling', true)
+        if (this.anims.currentAnim.key.includes('midair')) {
+          this.play(this.kind + '_jumping_falling', true, 1)
+        } else {
+          this.play(this.kind + '_jumping_falling', true)
+        }
         break
     }
   }
