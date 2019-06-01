@@ -1,8 +1,11 @@
-import { SpriteConstructor } from '@/@types/game'
+import { CharacterConstructor, SpriteConstructor } from '@/@types/game'
 import { GRAVITY, PLAYER_DEPTH, scale } from '@/constants'
 import InputManager from '@/game/manager/InputManager'
 import Projectile from '@/game/entities/Projectile'
 import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/TouchDetection'
+import { CharacterKind } from '@/store/modules/app'
+import { CharacterStats } from '@/@types'
+import characters from '@/assets/characters'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
@@ -22,11 +25,16 @@ enum State {
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
   private _state: State = State.Falling
-  public projectileDir: Phaser.GameObjects.Graphics
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
+  public projectileDir: Phaser.GameObjects.Graphics
+  public kind: CharacterKind
 
   get state (): State {
     return this._state
+  }
+
+  get stats (): CharacterStats {
+    return characters[this.kind].stats
   }
 
   set state (value: State) {
@@ -36,8 +44,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this._state = value
   }
 
-  constructor (params: SpriteConstructor) {
-    super(params.scene, params.x, params.y, params.texture, params.frame)
+  constructor (params: CharacterConstructor) {
+    super(params.scene, params.x, params.y, 'main', `main/characters/${params.kind}/walking_00001`)
+    this.kind = params.kind
     params.scene.physics.world.enable(this)
     this.projectileDir = params.scene.add.graphics().setDepth(10)
 
@@ -80,13 +89,13 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private onChangeState (newState: State) {
     switch (newState) {
       case State.Jumping:
-        this.play('egocentric_jumping_start', true)
+        this.play(this.kind + '_jumping_start', true)
         break
       case State.MidAir:
-        this.play('egocentric_jumping_midair', true)
+        this.play(this.kind + '_jumping_midair', true)
         break
       case State.Falling:
-        this.play('egocentric_jumping_falling', true)
+        this.play(this.kind + '_jumping_falling', true)
         break
     }
   }
@@ -197,10 +206,10 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     switch (this.state) {
       case State.Grounded:
         if (this.body.velocity.x === 0) {
-          this.play('egocentric_walking', true, 0)
+          this.play(this.kind + '_walking', true, 0)
           this.anims.stop()
         } else {
-          this.play('egocentric_walking', true)
+          this.play(this.kind + '_walking', true)
         }
         break
     }

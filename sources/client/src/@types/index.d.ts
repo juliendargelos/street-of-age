@@ -6,6 +6,16 @@ export interface Player extends SerializedPlayer{
   isLocal: boolean,
 }
 
+interface CharacterStat {
+  id: string,
+  name: string,
+  level: number
+}
+
+export type CharacterStats = {
+  [stat: string]: CharacterStat
+}
+
 export interface CharacterAsset {
   name: string,
   picture: {
@@ -14,10 +24,7 @@ export interface CharacterAsset {
   },
   kind: CharacterKind,
   team: PlayerTeam,
-  stats: Array<{
-    ability: string,
-    level: number
-  }>
+  stats: CharacterStats
 }
 
 export interface CharacterCardClickEvent {

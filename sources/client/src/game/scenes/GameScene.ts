@@ -1,5 +1,6 @@
 import BaseScene from '@/game/scenes/BaseScene'
 import { Character } from '@/game/entities/Character'
+import { CharacterKind } from '@/store/modules/app'
 import { PostProcessing } from '@/game/PostProcessing'
 
 const HEIGHT_CAMERA_OFFSET = 400
@@ -18,8 +19,7 @@ export class GameScene extends BaseScene {
     super.create()
     this.character = new Character({
       scene: this,
-      texture: 'main',
-      frame: 'main/characters/egocentric/walking_00001',
+      kind: CharacterKind.Egocentric,
       x: 120,
       y: 200
     })

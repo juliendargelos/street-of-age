@@ -8,8 +8,8 @@
     <span v-if="!waiting" class="character-card__informations">
       <h2>{{ character.name }}</h2>
       <ul class="character-card__informations--modifiers">
-        <li v-for="stat in character.stats" :key="stat.ability">
-          <span class="ability">{{ stat.ability }}</span>
+        <li v-for="stat in character.stats" :key="stat.id">
+          <span class="ability">{{ stat.name }}</span>
           <span class="level progress-outer">
             <span class="progress-inner" :style="{ width: `${stat.level}%` }"></span>
             <span :style="{ display: 'none' }" aria-hidden="true">{{ stat.level }}%</span>

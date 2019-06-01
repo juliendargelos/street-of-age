@@ -17,8 +17,11 @@ const mrMuscle = require('./pictures/mr_muscle.png')
 const mrMuscleFace = require('./pictures/mr_muscle_face.png')
 
 const MOVE_ABILITY = 'Déplacement'
+const MOVE_ABILITY_ID = 'move'
 const JUMP_ABILITY = 'Saut'
+const JUMP_ABILITY_ID = 'jump'
 const STRENGHT_ABILITY = 'Force'
+const STRENGHT_ABILITY_ID = 'strenght'
 
 const Egocentric: CharacterAsset = {
   team: PlayerTeam.Young,
@@ -28,20 +31,23 @@ const Egocentric: CharacterAsset = {
     face: egocentricFace,
     full: egocentric
   },
-  stats: [
-    {
-      ability: MOVE_ABILITY,
-      level: 12
-    },
-    {
-      ability: JUMP_ABILITY,
+  stats: {
+    [JUMP_ABILITY_ID]: {
+      id: JUMP_ABILITY_ID,
+      name: JUMP_ABILITY,
       level: 50
     },
-    {
-      ability: STRENGHT_ABILITY,
-      level: 72
-    }
-  ]
+    [STRENGHT_ABILITY_ID]: {
+      id: STRENGHT_ABILITY_ID,
+      name: STRENGHT_ABILITY,
+      level: 50
+    },
+    [MOVE_ABILITY_ID]: {
+      id: MOVE_ABILITY_ID,
+      name: MOVE_ABILITY,
+      level: 50
+    },
+  }
 }
 
 const Fattie: CharacterAsset = {
@@ -52,20 +58,23 @@ const Fattie: CharacterAsset = {
     face: fattieFace,
     full: fattie
   },
-  stats: [
-    {
-      ability: MOVE_ABILITY,
+  stats: {
+    [JUMP_ABILITY_ID]: {
+      id: JUMP_ABILITY_ID,
+      name: JUMP_ABILITY,
       level: 50
     },
-    {
-      ability: JUMP_ABILITY,
+    [STRENGHT_ABILITY_ID]: {
+      id: STRENGHT_ABILITY_ID,
+      name: STRENGHT_ABILITY,
       level: 50
     },
-    {
-      ability: STRENGHT_ABILITY,
+    [MOVE_ABILITY_ID]: {
+      id: MOVE_ABILITY_ID,
+      name: MOVE_ABILITY,
       level: 50
-    }
-  ]
+    },
+  }
 }
 
 const FustyGrandpa: CharacterAsset = {
@@ -76,20 +85,23 @@ const FustyGrandpa: CharacterAsset = {
     face: fustyGrandpaFace,
     full: fustyGrandpa
   },
-  stats: [
-    {
-      ability: MOVE_ABILITY,
+  stats: {
+    [JUMP_ABILITY_ID]: {
+      id: JUMP_ABILITY_ID,
+      name: JUMP_ABILITY,
       level: 50
     },
-    {
-      ability: JUMP_ABILITY,
+    [STRENGHT_ABILITY_ID]: {
+      id: STRENGHT_ABILITY_ID,
+      name: STRENGHT_ABILITY,
       level: 50
     },
-    {
-      ability: STRENGHT_ABILITY,
+    [MOVE_ABILITY_ID]: {
+      id: MOVE_ABILITY_ID,
+      name: MOVE_ABILITY,
       level: 50
-    }
-  ]
+    },
+  }
 }
 
 const Geek: CharacterAsset = {
@@ -100,20 +112,23 @@ const Geek: CharacterAsset = {
     face: geekFace,
     full: geek
   },
-  stats: [
-    {
-      ability: MOVE_ABILITY,
+  stats: {
+    [JUMP_ABILITY_ID]: {
+      id: JUMP_ABILITY_ID,
+      name: JUMP_ABILITY,
       level: 50
     },
-    {
-      ability: JUMP_ABILITY,
+    [STRENGHT_ABILITY_ID]: {
+      id: STRENGHT_ABILITY_ID,
+      name: STRENGHT_ABILITY,
       level: 50
     },
-    {
-      ability: STRENGHT_ABILITY,
+    [MOVE_ABILITY_ID]: {
+      id: MOVE_ABILITY_ID,
+      name: MOVE_ABILITY,
       level: 50
-    }
-  ]
+    },
+  }
 }
 
 const Hippie: CharacterAsset = {
@@ -124,20 +139,23 @@ const Hippie: CharacterAsset = {
     face: hippieFace,
     full: hippie
   },
-  stats: [
-    {
-      ability: MOVE_ABILITY,
+  stats: {
+    [JUMP_ABILITY_ID]: {
+      id: JUMP_ABILITY_ID,
+      name: JUMP_ABILITY,
       level: 50
     },
-    {
-      ability: JUMP_ABILITY,
+    [STRENGHT_ABILITY_ID]: {
+      id: STRENGHT_ABILITY_ID,
+      name: STRENGHT_ABILITY,
       level: 50
     },
-    {
-      ability: STRENGHT_ABILITY,
+    [MOVE_ABILITY_ID]: {
+      id: MOVE_ABILITY_ID,
+      name: MOVE_ABILITY,
       level: 50
-    }
-  ]
+    },
+  }
 }
 
 const LapdogWoman: CharacterAsset = {
@@ -148,20 +166,23 @@ const LapdogWoman: CharacterAsset = {
     face: lapdogWomanFace,
     full: lapdogWoman
   },
-  stats: [
-    {
-      ability: MOVE_ABILITY,
+  stats: {
+    [JUMP_ABILITY_ID]: {
+      id: JUMP_ABILITY_ID,
+      name: JUMP_ABILITY,
       level: 50
     },
-    {
-      ability: JUMP_ABILITY,
+    [STRENGHT_ABILITY_ID]: {
+      id: STRENGHT_ABILITY_ID,
+      name: STRENGHT_ABILITY,
       level: 50
     },
-    {
-      ability: STRENGHT_ABILITY,
+    [MOVE_ABILITY_ID]: {
+      id: MOVE_ABILITY_ID,
+      name: MOVE_ABILITY,
       level: 50
-    }
-  ]
+    },
+  }
 }
 
 const MrMuscle: CharacterAsset = {
@@ -172,20 +193,23 @@ const MrMuscle: CharacterAsset = {
     face: mrMuscleFace,
     full: mrMuscle
   },
-  stats: [
-    {
-      ability: MOVE_ABILITY,
+  stats: {
+    [JUMP_ABILITY_ID]: {
+      id: JUMP_ABILITY_ID,
+      name: JUMP_ABILITY,
       level: 50
     },
-    {
-      ability: JUMP_ABILITY,
+    [STRENGHT_ABILITY_ID]: {
+      id: STRENGHT_ABILITY_ID,
+      name: STRENGHT_ABILITY,
       level: 50
     },
-    {
-      ability: STRENGHT_ABILITY,
+    [MOVE_ABILITY_ID]: {
+      id: MOVE_ABILITY_ID,
+      name: MOVE_ABILITY,
       level: 50
     }
-  ]
+  }
 }
 
 const characters: CharactersAsset = {
