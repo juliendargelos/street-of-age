@@ -11,3 +11,14 @@ export const groupBy = <T>(items: Array<T>, getKey: (item: T) => keyof T | null)
   })
   return map
 }
+
+export const gameWait = (
+  clock: Phaser.Time.Clock,
+  ms: number
+): Promise<Phaser.Time.TimerEvent> =>
+  new Promise(resolve => {
+    return clock.addEvent({
+      callback: resolve,
+      delay: ms
+    })
+  })
