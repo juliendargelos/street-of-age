@@ -9,5 +9,4 @@
   background-color: $blue
   padding: 50px
   border-top: 5px solid $green
-  color: $white
 </style>

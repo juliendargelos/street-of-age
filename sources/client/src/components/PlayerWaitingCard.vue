@@ -3,13 +3,13 @@
     <CharacterCard v-if="characterKind && ready"
                    :waiting="true"
                    :character-kind="characterKind">
-      <template v-if="$slots.metadata" slot="metadata"><slot name="metadata"/></template>
+      <template v-if="$slots['metadata']" slot="metadata"><slot name="metadata"/></template>
     </CharacterCard>
     <CharacterCard v-else
                    :waiting="true"
                    :placeholder='!characterKind ? "En attente" : "En attente"'
                    :character-kind="characterKind">
-      <template v-if="$slots.metadata" slot="metadata"><slot name="metadata"/></template>
+      <template v-if="$slots['metadata']" slot="metadata"><slot name="metadata"/></template>
     </CharacterCard>
   </div>
 </template>

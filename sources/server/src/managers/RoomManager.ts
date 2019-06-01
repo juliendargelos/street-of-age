@@ -29,10 +29,11 @@ class RoomManager {
   }
 
   @action public deleteRoom = (room: Room): void => {
-    room.io.sockets.emit(RoomEvents.RoomDeleted, room.serialize())
     room.removeAllPlayers().then(() => {
       this.rooms = this.rooms.filter(r => r.id !== room.id)
       Logger.success(`deleted ${room}`)
+      room.io.sockets.emit(RoomEvents.RoomDeleted, room.serialize())
+      room.io.sockets.emit(RoomEvents.RoomRefresh, this.serializedRooms)
     })
   }
 }

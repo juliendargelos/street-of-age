@@ -1,10 +1,8 @@
-import {PlayerTeam} from "../store/modules/app"
-import {PlayerTeam} from "@street-of-age/shared/entities/player"
-import {PlayerTeam} from "../store/modules/app"
-import {PlayerTeam} from "@street-of-age/shared/entities/player"
 <template>
   <div class="room-setup-team">
-      <h1>room setup team</h1>
+    <AppNav>
+      <BackButton/>
+    </AppNav>
     <AppPicker
       label="Votre équipe"
       lazy
@@ -18,8 +16,11 @@ import {PlayerTeam} from "@street-of-age/shared/entities/player"
 </template>
 
 <style lang="sass">
-.room
+.room-setup-team
   height: 100%
+  display: flex
+  justify-content: center
+  align-content: center
 </style>
 
 <script lang="ts">

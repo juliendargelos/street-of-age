@@ -1,6 +1,8 @@
-import {PlayerTeam} from "@street-of-age/shared/entities/player"
 <template>
   <div class="room-waiting">
+    <AppNav>
+      <BackButton/>
+    </AppNav>
       <div class="room-waiting__team room-waiting__team--old">
         <PlayerWaitingCard
           v-for="(player, index) in players.get('old')"
@@ -32,7 +34,6 @@ import {PlayerTeam} from "@street-of-age/shared/entities/player"
   height: 100%
   padding: 0 40px
   display: flex
-  color: $white
   &__team
     position: relative
     display: flex

@@ -4,11 +4,12 @@
     :class="{
       'app-button--primary': primary,
       'app-button--secondary': secondary,
+      'app-button--neutral': neutral,
       'app-button--block': block
     }"
     v-on="$listeners"
   >
-    <button class="app-button__content">
+    <button :type="type" class="app-button__content">
       <slot />
     </button>
 
@@ -21,6 +22,8 @@
   position: relative
   cursor: pointer
   min-width: 140px
+  &--neutral
+    min-width: unset
 
   &__content
     min-width: 100px
@@ -56,13 +59,18 @@
     background-color: transparent
     border: 2px solid $green
     box-shadow: 0 0 10px transparentize($green, 0.4), inset 0 0 5px transparentize($green, 0.4)
-    color: $white
 
   &--secondary &__content
     background-color: transparent
     border: 2px solid $pale-blue
     box-shadow: 0 0 10px transparentize($pale-blue, 0.4), inset 0 0 5px transparentize($pale-blue, 0.4)
-    color: $white
+
+  &--neutral &__content
+    background-color: transparent
+    border: none
+    box-shadow: none
+    transform: unset
+    padding: 5px
 
   &--block
     display: block
@@ -84,7 +92,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class AppButton extends Vue {
   @Prop({ type: Boolean, default: false }) readonly primary!: boolean
   @Prop({ type: Boolean, default: false }) readonly secondary!: boolean
+  @Prop({ type: Boolean, default: false }) readonly neutral!: boolean
   @Prop({ type: Boolean, default: false }) readonly block!: boolean
+  @Prop({ type: String, default: 'submit' }) readonly type!: string
   @Prop({ type: [String, Object], default: null }) readonly to!: string | object
 
   goToLink () {

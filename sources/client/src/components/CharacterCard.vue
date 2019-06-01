@@ -24,7 +24,6 @@
 <style lang="sass">
 .character-card
   box-sizing: border-box
-  color: $white
   font-weight: 700
   width: 180px
   height: 280px

@@ -1,14 +1,26 @@
 <template>
   <div class="room-list">
-    <ul>
-      <RoomListItem v-for="room in this.rooms" :key="room.id" :room="room"/>
-    </ul>
+    <AppNav>
+      <BackButton/>
+    </AppNav>
+    <AppPanel class="room-list__panel">
+      <ul>
+        <RoomListItem v-for="room in this.rooms" :key="`${room.id}`" :room="room"/>
+      </ul>
+    </AppPanel>
   </div>
 </template>
 
 <style lang="sass">
-.room
-
+.room-list
+  height: 100%
+  display: flex
+  justify-content: center
+  align-items: center
+  &__panel
+    height: 80%
+    width: 400px
+    overflow-y: scroll
 </style>
 
 <script lang="ts">

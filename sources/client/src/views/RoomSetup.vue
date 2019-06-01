@@ -1,7 +1,6 @@
 <template>
   <div class="room-setup">
-      <h1>room setup</h1>
-      <router-view/>
+    <router-view/>
   </div>
 </template>
 

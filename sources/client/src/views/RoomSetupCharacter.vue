@@ -1,6 +1,8 @@
 <template>
   <div class="room-setup-character">
-      <h1>room setup character</h1>
+    <AppNav>
+      <BackButton/>
+    </AppNav>
       <div class="room-setup-character__characters">
         <CharacterCard v-for="characterKind in playerTeamKinds[player.team]"
                        @click="onCharacterChange"

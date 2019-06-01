@@ -1,7 +1,6 @@
 <template>
   <form class="room-form" @submit.prevent="onSubmit">
     <AppPanel class="room-form__content">
-      <template slot="header"><h2>Configuration de la partie</h2></template>
       <input required class="room-form__name" v-model="settings.name" placeholder="Entrez le nom de la partie"/>
       <AppPicker
         label="Nombre de joueurs"
@@ -15,7 +14,9 @@
         :choices="[{ value: 'small', label: 'Petite'}, { value: 'medium', label: 'Moyenne'}, { value: 'large', label: 'Grande'}]"/>
       <div class="room-form__actions">
         <AppButton
+          type="button"
           secondary
+          @click="onBackClick"
           block>
           Retour
         </AppButton>
@@ -80,6 +81,10 @@ import { RoomSettings } from '@street-of-age/shared/entities/room'
   })
 export default class RoomForm extends Vue {
     public settings: RoomSettings = { numberOfPlayers: 4, mapSize: 'medium', name: '' }
+
+    public onBackClick () {
+      this.$router.push({ name: 'home' })
+    }
 
     public onSubmit = () => {
       if (this.settings.name === '') {
