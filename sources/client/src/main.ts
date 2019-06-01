@@ -19,7 +19,7 @@ export const Emitter = new EventEmitter()
 Vue.config.productionTip = false
 
 Vue.use(new VueSocketIO({
-  debug: true,
+  debug: process.env.NODE_ENV !== 'production',
   connection: process.env.VUE_APP_SOCKET_ENDPOINT,
   vuex: {
     store,
