@@ -4,8 +4,8 @@ import InputManager from '@/game/manager/InputManager'
 import Projectile from '@/game/entities/Projectile'
 import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/TouchDetection'
 import { CharacterKind } from '@/store/modules/app'
-import { CharacterStats } from '@/@types'
 import characters from '@/assets/characters'
+import { CharacterStats } from '@street-of-age/shared/characters'
 
 const MASS = 1
 const JUMP_FORCE = 1.7

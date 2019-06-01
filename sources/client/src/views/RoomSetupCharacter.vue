@@ -76,7 +76,7 @@ export default class RoomSetupCharacter extends Vue {
   get player (): Player {
     return AppModule.player
   }
-  get playerTeamKinds () {
+  get playerTeamKinds (): { [team: string]: string[] } {
     return PlayerTeamKinds
   }
 }

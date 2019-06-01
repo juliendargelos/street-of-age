@@ -93,7 +93,7 @@
 </style>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { CharacterAsset } from '@/@types'
+import { ClientCharacterAsset } from '@/@types'
 import characters from '@/assets/characters'
 import { CharacterKind } from '@/store/modules/app'
 
@@ -103,7 +103,7 @@ export default class CharacterCard extends Vue {
   @Prop({ required: false, default: null }) readonly placeholder!: string
   @Prop({ required: false, default: false }) readonly waiting!: string
 
-  get character (): CharacterAsset {
+  get character (): ClientCharacterAsset {
     return characters[this.characterKind]
   }
   get listeners () {

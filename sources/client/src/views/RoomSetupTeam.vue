@@ -78,7 +78,7 @@ export default class RoomSetupTeam extends Vue {
     }, new Set<PlayerTeam>([])))
   }
 
-  get team (): PlayerTeam | null {
+  get team (): PlayerTeam | string | null {
     return AppModule.player.team
   }
 }

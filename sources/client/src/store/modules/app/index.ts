@@ -36,11 +36,11 @@ class AppStore extends VuexModule implements AppState {
     this.player.id = playerId
   }
 
-  @Mutation public changePlayerCharacterTeam (team: PlayerTeam | null) {
+  @Mutation public changePlayerCharacterTeam (team: PlayerTeam | string | null) {
     this.player.team = team
   }
 
-  @Mutation public changePlayerCharacterKind (kind: CharacterKind | null) {
+  @Mutation public changePlayerCharacterKind (kind: CharacterKind | string | null) {
     this.player.characterKind = kind
   }
 

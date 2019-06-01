@@ -1,5 +1,6 @@
-import { CharacterAsset, CharactersAsset } from '@/@types'
-import { CharacterKind, PlayerTeam } from '@/store/modules/app'
+import { ClientCharactersAsset } from '@/@types'
+import serverCharacters from '@street-of-age/shared/characters'
+import { CharacterKind } from '@/store/modules/app'
 
 const egocentric = require('./pictures/egocentric.png')
 const egocentricFace = require('./pictures/egocentric_face.png')
@@ -16,210 +17,41 @@ const lapdogWomanFace = require('./pictures/lapdog_woman_face.png')
 const mrMuscle = require('./pictures/mr_muscle.png')
 const mrMuscleFace = require('./pictures/mr_muscle_face.png')
 
-const MOVE_ABILITY = 'Déplacement'
-const MOVE_ABILITY_ID = 'move'
-const JUMP_ABILITY = 'Saut'
-const JUMP_ABILITY_ID = 'jump'
-const STRENGHT_ABILITY = 'Force'
-const STRENGHT_ABILITY_ID = 'strenght'
-
-const Egocentric: CharacterAsset = {
-  team: PlayerTeam.Young,
-  kind: CharacterKind.Egocentric,
-  name: 'L\'influenceuse',
-  picture: {
+const pictures: { [kind: string]: { face: string, full: string }} = {
+  [CharacterKind.Egocentric]: {
     face: egocentricFace,
     full: egocentric
   },
-  stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
-      level: 50
-    },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
-      level: 50
-    },
-    [MOVE_ABILITY_ID]: {
-      id: MOVE_ABILITY_ID,
-      name: MOVE_ABILITY,
-      level: 50
-    },
-  }
-}
-
-const Fattie: CharacterAsset = {
-  team: PlayerTeam.Young,
-  kind: CharacterKind.Fattie,
-  name: 'La boulette',
-  picture: {
-    face: fattieFace,
-    full: fattie
-  },
-  stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
-      level: 50
-    },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
-      level: 50
-    },
-    [MOVE_ABILITY_ID]: {
-      id: MOVE_ABILITY_ID,
-      name: MOVE_ABILITY,
-      level: 50
-    },
-  }
-}
-
-const FustyGrandpa: CharacterAsset = {
-  team: PlayerTeam.Old,
-  kind: CharacterKind.FustyGrandpa,
-  name: 'Papivresse',
-  picture: {
-    face: fustyGrandpaFace,
-    full: fustyGrandpa
-  },
-  stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
-      level: 50
-    },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
-      level: 50
-    },
-    [MOVE_ABILITY_ID]: {
-      id: MOVE_ABILITY_ID,
-      name: MOVE_ABILITY,
-      level: 50
-    },
-  }
-}
-
-const Geek: CharacterAsset = {
-  team: PlayerTeam.Young,
-  kind: CharacterKind.Geek,
-  name: 'Le geek metalleux',
-  picture: {
-    face: geekFace,
-    full: geek
-  },
-  stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
-      level: 50
-    },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
-      level: 50
-    },
-    [MOVE_ABILITY_ID]: {
-      id: MOVE_ABILITY_ID,
-      name: MOVE_ABILITY,
-      level: 50
-    },
-  }
-}
-
-const Hippie: CharacterAsset = {
-  team: PlayerTeam.Young,
-  kind: CharacterKind.Hippie,
-  name: 'Le bobo',
-  picture: {
-    face: hippieFace,
-    full: hippie
-  },
-  stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
-      level: 50
-    },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
-      level: 50
-    },
-    [MOVE_ABILITY_ID]: {
-      id: MOVE_ABILITY_ID,
-      name: MOVE_ABILITY,
-      level: 50
-    },
-  }
-}
-
-const LapdogWoman: CharacterAsset = {
-  team: PlayerTeam.Old,
-  kind: CharacterKind.LapdogWoman,
-  name: 'La folle aux chiens',
-  picture: {
+  [CharacterKind.LapdogWoman]: {
     face: lapdogWomanFace,
     full: lapdogWoman
   },
-  stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
-      level: 50
-    },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
-      level: 50
-    },
-    [MOVE_ABILITY_ID]: {
-      id: MOVE_ABILITY_ID,
-      name: MOVE_ABILITY,
-      level: 50
-    },
-  }
-}
-
-const MrMuscle: CharacterAsset = {
-  team: PlayerTeam.Old,
-  kind: CharacterKind.MrMuscle,
-  name: 'Le kéké',
-  picture: {
+  [CharacterKind.Fattie]: {
+    face: fattieFace,
+    full: fattie
+  },
+  [CharacterKind.MrMuscle]: {
     face: mrMuscleFace,
     full: mrMuscle
   },
-  stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
-      level: 50
-    },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
-      level: 50
-    },
-    [MOVE_ABILITY_ID]: {
-      id: MOVE_ABILITY_ID,
-      name: MOVE_ABILITY,
-      level: 50
-    }
+  [CharacterKind.Hippie]: {
+    face: hippieFace,
+    full: hippie
+  },
+  [CharacterKind.Geek]: {
+    face: geekFace,
+    full: geek
+  },
+  [CharacterKind.FustyGrandpa]: {
+    face: fustyGrandpaFace,
+    full: fustyGrandpa
   }
 }
 
-const characters: CharactersAsset = {
-  [CharacterKind.Egocentric]: Egocentric,
-  [CharacterKind.Fattie]: Fattie,
-  [CharacterKind.FustyGrandpa]: FustyGrandpa,
-  [CharacterKind.Geek]: Geek,
-  [CharacterKind.Hippie]: Hippie,
-  [CharacterKind.LapdogWoman]: LapdogWoman,
-  [CharacterKind.MrMuscle]: MrMuscle
+let characters: ClientCharactersAsset = {}
+
+for (const kind in serverCharacters) {
+  characters[kind] = { ...serverCharacters[kind], picture: pictures[kind] }
 }
 
 export default characters
