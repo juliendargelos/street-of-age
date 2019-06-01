@@ -1,6 +1,6 @@
 <template>
   <div class="room" v-if="this.isDefined">
-    {{ this.room }}
+<!--    {{ this.room }}-->
     <router-view v-if="currentStep === 'setup'"/>
     <RoomGame v-else :players="this.room.players"/>
   </div>

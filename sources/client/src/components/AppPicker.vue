@@ -31,7 +31,7 @@
         &.selected
           background: $pale-blue
 
-        &:hover, &:active, &:focus
+        &:hover:not(.disabled), &:active:not(.disabled), &:focus:not(.disabled)
           cursor: pointer
           background: $pale-blue
 

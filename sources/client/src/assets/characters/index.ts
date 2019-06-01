@@ -1,5 +1,5 @@
-import {CharacterAsset, CharactersAsset} from '@/@types'
-import {CharacterKind, PlayerTeam} from '@/store/modules/app'
+import { CharacterAsset, CharactersAsset } from '@/@types'
+import { CharacterKind, PlayerTeam } from '@/store/modules/app'
 
 const egocentric = require('./pictures/egocentric.png')
 const egocentricFace = require('./pictures/egocentric_face.png')
@@ -24,7 +24,10 @@ const Egocentric: CharacterAsset = {
   team: PlayerTeam.Young,
   kind: CharacterKind.Egocentric,
   name: 'L\'influenceuse',
-  picture: egocentricFace,
+  picture: {
+    face: egocentricFace,
+    full: egocentric
+  },
   stats: [
     {
       ability: MOVE_ABILITY,
@@ -45,7 +48,10 @@ const Fattie: CharacterAsset = {
   team: PlayerTeam.Young,
   kind: CharacterKind.Fattie,
   name: 'La boulette',
-  picture: fattieFace,
+  picture: {
+    face: fattieFace,
+    full: fattie
+  },
   stats: [
     {
       ability: MOVE_ABILITY,
@@ -66,7 +72,10 @@ const FustyGrandpa: CharacterAsset = {
   team: PlayerTeam.Old,
   kind: CharacterKind.FustyGrandpa,
   name: 'Papivresse',
-  picture: fustyGrandpaFace,
+  picture: {
+    face: fustyGrandpaFace,
+    full: fustyGrandpa
+  },
   stats: [
     {
       ability: MOVE_ABILITY,
@@ -87,7 +96,10 @@ const Geek: CharacterAsset = {
   team: PlayerTeam.Young,
   kind: CharacterKind.Geek,
   name: 'Le geek metalleux',
-  picture: geekFace,
+  picture: {
+    face: geekFace,
+    full: geek
+  },
   stats: [
     {
       ability: MOVE_ABILITY,
@@ -108,7 +120,10 @@ const Hippie: CharacterAsset = {
   team: PlayerTeam.Young,
   kind: CharacterKind.Hippie,
   name: 'Le bobo',
-  picture: hippieFace,
+  picture: {
+    face: hippieFace,
+    full: hippie
+  },
   stats: [
     {
       ability: MOVE_ABILITY,
@@ -129,7 +144,10 @@ const LapdogWoman: CharacterAsset = {
   team: PlayerTeam.Old,
   kind: CharacterKind.LapdogWoman,
   name: 'La folle aux chiens',
-  picture: lapdogWomanFace,
+  picture: {
+    face: lapdogWomanFace,
+    full: lapdogWoman
+  },
   stats: [
     {
       ability: MOVE_ABILITY,
@@ -150,7 +168,10 @@ const MrMuscle: CharacterAsset = {
   team: PlayerTeam.Old,
   kind: CharacterKind.MrMuscle,
   name: 'Le kéké',
-  picture: mrMuscleFace,
+  picture: {
+    face: mrMuscleFace,
+    full: mrMuscle
+  },
   stats: [
     {
       ability: MOVE_ABILITY,

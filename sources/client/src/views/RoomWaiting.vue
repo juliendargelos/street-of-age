@@ -1,24 +1,28 @@
 import {PlayerTeam} from "@street-of-age/shared/entities/player"
 <template>
   <div class="room-waiting">
-      <div class="room-waiting__team--old">
+      <div class="room-waiting__team room-waiting__team--old">
         <PlayerWaitingCard
           v-for="(player, index) in players.get('old')"
-          :key="index"
+          :key="player.team + '-' + index"
           :characterKind="player.characterKind"
           :ready="player.ready"
-        />
+        >
+          <template slot="metadata">{{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKind ? '...' : '' }}</template>
+        </PlayerWaitingCard>
       </div>
       <div class="room-waiting__separator">
         <h2>VS</h2>
       </div>
-      <div class="room-waiting__team--young">
+      <div class="room-waiting__team room-waiting__team--young">
         <PlayerWaitingCard
           v-for="(player, index) in players.get('young')"
-          :key="index"
+          :key="player.team + '-' + index"
           :characterKind="player.characterKind"
           :ready="player.ready"
-        />
+        >
+          <template slot="metadata">{{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKind ? '...' : '' }}</template>
+        </PlayerWaitingCard>
       </div>
   </div>
 </template>
@@ -26,19 +30,38 @@ import {PlayerTeam} from "@street-of-age/shared/entities/player"
 <style lang="sass">
 .room-waiting
   height: 100%
-  padding: 0 60px
+  padding: 0 40px
   display: flex
   color: $white
-  &__team--old
-    flex: 2
+  &__team
+    position: relative
+    display: flex
+    justify-content: center
+    > *
+      margin: 0 8px
+      &:first-of-type, &:last-of-type
+        margin: 0
+    &--old
+      flex: 2
+      top: -3px
+    &--young
+      flex: 2
+      align-self: flex-end
+      bottom: -3px
+      & .character-card__metadata
+        bottom: unset
+        top: -20px
+
   &__separator
     flex: 1
     display: flex
     flex-direction: column
     justify-content: center
     align-items: center
-  &__team--young
-    flex: 2
+    transform: skew(-4deg)
+    text-transform: uppercase
+    font-weight: 700
+    font-size: 40px
 </style>
 
 <script lang="ts">

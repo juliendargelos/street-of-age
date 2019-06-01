@@ -8,7 +8,10 @@ export interface Player extends SerializedPlayer{
 
 export interface CharacterAsset {
   name: string,
-  picture: string,
+  picture: {
+    full: string,
+    face: string
+  },
   kind: CharacterKind,
   team: PlayerTeam,
   stats: Array<{

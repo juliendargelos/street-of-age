@@ -37,6 +37,8 @@ import { CharacterEvents } from '@street-of-age/shared/socket/events'
 
   @Component<RoomSetupTeam>({
     mounted () {
+      AppModule.changePlayerCharacterTeam(null)
+      this.$socket.emit(CharacterEvents.CharacterChangeTeam, null)
       AppModule.changePlayerCharacterKind(null)
       this.$socket.emit(CharacterEvents.CharacterChangeKind, null)
       AppModule.changePlayerCharacterReady(false)
@@ -67,8 +69,7 @@ export default class RoomSetupTeam extends Vue {
     return Array.from(this.room.players.reduce((acc) => {
       const teams = [PlayerTeam.Old, PlayerTeam.Young]
       teams.forEach(team => {
-        console.log(this.room.players.filter(player => player.team === team))
-        if (this.room.players.filter(player => player.team === team && player.ready).length === this.room.settings.numberOfPlayers / 2) {
+        if (this.room.players.filter(player => player.team === team).length === this.room.settings.numberOfPlayers / 2) {
           acc.add(team)
         }
       })

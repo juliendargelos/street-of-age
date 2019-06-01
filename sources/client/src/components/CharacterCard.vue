@@ -1,10 +1,11 @@
 <template>
-  <div v-if="placeholder || !characterKind" class="character-card placeholder">
-    <h2>{{ placeholder }}</h2>
+  <div v-if="waiting && placeholder" class="character-card placeholder">
+    <h2 class="character-card--placeholder">{{ placeholder }}</h2>
+    <span class="character-card__metadata"><slot name="metadata"/></span>
   </div>
   <button v-else class="character-card" v-on="listeners">
-    <img :src="character.picture" class="character-card__background" alt="">
-    <div class="character-card__informations">
+    <img :src="waiting ? character.picture.full : character.picture.face" class="character-card__background" alt="">
+    <span v-if="!waiting" class="character-card__informations">
       <h2>{{ character.name }}</h2>
       <ul class="character-card__informations--modifiers">
         <li v-for="stat in character.stats" :key="stat.ability">
@@ -15,7 +16,8 @@
           </span>
         </li>
       </ul>
-    </div>
+    </span>
+    <span class="character-card__metadata"><slot name="metadata"/></span>
   </button>
 </template>
 
@@ -31,6 +33,13 @@
   background: $light-blue
   outline: none
   border: none
+  padding: 0
+  h2
+    text-transform: uppercase
+    &.character-card--placeholder
+      color: $grey
+      font-size: 14px
+      text-align: center
   &.placeholder
     display: flex
     flex-direction: column
@@ -39,6 +48,11 @@
   &:disabled
     filter: grayscale(90%)
     cursor: not-allowed
+  &__metadata
+    font-weight: 300
+    font-size: 14px
+    position: absolute
+    bottom: -20px
   &__informations
     position: absolute
     bottom: 0
@@ -82,6 +96,7 @@ import { CharacterKind } from '@/store/modules/app'
 export default class CharacterCard extends Vue {
   @Prop({ required: true }) readonly characterKind!: CharacterKind
   @Prop({ required: false, default: null }) readonly placeholder!: string
+  @Prop({ required: false, default: false }) readonly waiting!: string
 
   get character (): CharacterAsset {
     return characters[this.characterKind]
