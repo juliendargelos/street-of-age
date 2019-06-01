@@ -20,15 +20,15 @@
 .app-button
   display: inline-block
   position: relative
-  cursor: pointer
   min-width: 140px
   &--neutral
     min-width: unset
 
   &__content
+    font-family: 'Dead Jim', sans-serif
+    font-size: 16px
+    letter-spacing: 1px
     min-width: 100px
-    font-size: 14px
-    font-weight: 700
     width: 100%
     padding: 12px 15px
     text-transform: uppercase
@@ -38,6 +38,8 @@
     border-radius: 4px
     transform: skew(-12deg)
     transition: .2s $easeOutQuart
+    &:hover
+      cursor: pointer
 
   &__border
     width: 100%
@@ -50,6 +52,7 @@
     box-sizing: border-box
 
   &:hover &__content, &:active &__content
+    cursor: pointer
     background: $white
     color: $pale-blue
     border-color: $white

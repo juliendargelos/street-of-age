@@ -33,6 +33,7 @@
   outline: none
   border: none
   padding: 0
+  user-select: none
   h2
     text-transform: uppercase
     &.character-card--placeholder
@@ -47,11 +48,16 @@
   &:disabled
     filter: grayscale(90%)
     cursor: not-allowed
+  &.placeholder, &__metadata
+    font-family: 'Dead Jim', sans-serif
+    font-weight: 300
   &__metadata
     font-weight: 300
-    font-size: 14px
+    font-size: 20px
+    letter-spacing: 1px
     position: absolute
-    bottom: -20px
+    bottom: -30px
+    transform: translateX(-8px)
   &__informations
     position: absolute
     bottom: 0

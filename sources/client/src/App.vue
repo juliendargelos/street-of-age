@@ -17,7 +17,6 @@
 #app
   background: url(~@/assets/background.jpg) no-repeat center center / cover
   font:
-    family: $sans-serif
     size: 16px
 
   @at-root html, body, &

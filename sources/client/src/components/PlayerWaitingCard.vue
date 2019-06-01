@@ -17,8 +17,10 @@
 <style lang="sass">
 .player-waiting-card
   & .character-card
-    width: 80px
+    width: 60px
     height: 252px
+    @media screen and (min-width: 900px)
+      width: 120px
 </style>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'

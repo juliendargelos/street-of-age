@@ -36,6 +36,11 @@
     align-items: center
     background: $pale-blue
     text-align: center
+    &:hover, &:active, &:focus
+      background: $white
+      cursor: pointer
+      & > a
+        color: $pale-blue
     &.disabled
       cursor: not-allowed
       opacity: 0.2
@@ -52,7 +57,10 @@
     & > a
       text-transform: uppercase
       text-decoration: none
-      font-weight: 700
+      font-family: 'Dead Jim', sans-serif
+      font-weight: 300
+      letter-spacing: 1px
+      font-size: 16px
       vertical-align: sub
 
 </style>

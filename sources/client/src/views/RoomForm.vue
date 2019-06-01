@@ -1,7 +1,7 @@
 <template>
   <form class="room-form" @submit.prevent="onSubmit">
     <AppPanel class="room-form__content">
-      <input required class="room-form__name" v-model="settings.name" placeholder="Entrez le nom de la partie"/>
+      <input type="text" required class="room-form__name" v-model="settings.name" placeholder="Entrez le nom de la partie"/>
       <AppPicker
         label="Nombre de joueurs"
         v-model="settings.numberOfPlayers"

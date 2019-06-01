@@ -75,6 +75,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import HomeSplash from '@/components/HomeSplash.vue'
 import HomeMenu from '@/components/HomeMenu.vue'
 import HomeTutorial from '@/components/HomeTutorial.vue'
+import AppModule from '@/store/modules/app'
 
 @Component<Home>({
   components: {
@@ -84,15 +85,28 @@ import HomeTutorial from '@/components/HomeTutorial.vue'
   },
 
   mounted () {
-    setTimeout(() => { this.logo = true }, 700)
-    setTimeout(() => {
-      this.logo = false
-      this.menu = true
-    }, 3400)
+    if (this.hasPlayedIntroduction) {
+      this.showMenu()
+    } else {
+      setTimeout(() => { this.logo = true }, 700)
+      setTimeout(() => {
+        this.showMenu()
+        AppModule.setHasPlayedIntroduction(true)
+      }, 3400)
+    }
   }
 })
 export default class Home extends Vue {
   private logo = false
   private menu = false
+
+  public showMenu (): void {
+    this.logo = false
+    this.menu = true
+  }
+
+  get hasPlayedIntroduction (): boolean {
+    return AppModule.hasPlayedIntroduction
+  }
 }
 </script>

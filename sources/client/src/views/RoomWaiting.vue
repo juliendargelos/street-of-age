@@ -1,6 +1,6 @@
 <template>
   <div class="room-waiting">
-    <AppNav>
+    <AppNav position="bottom">
       <BackButton/>
     </AppNav>
       <div class="room-waiting__team room-waiting__team--old">
@@ -32,7 +32,7 @@
 <style lang="sass">
 .room-waiting
   height: 100%
-  padding: 0 40px
+  padding: 0 20px
   display: flex
   &__team
     position: relative
@@ -40,8 +40,10 @@
     justify-content: center
     > *
       margin: 0 8px
-      &:first-of-type, &:last-of-type
-        margin: 0
+      &:first-of-type
+        margin-left: 0
+      &:last-of-type
+        margin-right: 0
     &--old
       flex: 2
       top: -3px
@@ -51,7 +53,7 @@
       bottom: -3px
       & .character-card__metadata
         bottom: unset
-        top: -20px
+        top: -30px
 
   &__separator
     flex: 1
@@ -59,10 +61,12 @@
     flex-direction: column
     justify-content: center
     align-items: center
-    transform: skew(-4deg)
+    transform: skew(6deg)
     text-transform: uppercase
-    font-weight: 700
-    font-size: 40px
+    font-family: 'Dead Jim', sans-serif
+    font-size: 100px
+    position: relative
+    left: -6px
 </style>
 
 <script lang="ts">
