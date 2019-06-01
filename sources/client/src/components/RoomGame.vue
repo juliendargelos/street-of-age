@@ -27,7 +27,7 @@ import { Player } from '@/@types/'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
 import { REGISTRY_LEVEL_KEY } from '@/constants'
 // TODO: The level should be fetched from the server. Meanwhile, it's hard-fetched for testing purposes
-import level from '@/assets/levels/Street.level.json'
+import level from '@/assets/levels/SmallStreet.level.json'
 import GameManager from '@/game/manager/GameManager'
 
 @Component<RoomGame>({
