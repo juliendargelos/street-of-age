@@ -13,7 +13,7 @@ export enum CharacterKind {
   Hippie = 'hippie',
   // DotingGranny = 'doting-granny',
   FustyGrandpa = 'fusty-grandpa',
-  LapdogWoman = 'lapdgog-woman',
+  LapdogWoman = 'lapdog-woman',
   MrMuscle = 'mr-muscle',
   Fattie = 'fattie',
 }
