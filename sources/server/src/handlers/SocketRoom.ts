@@ -2,6 +2,7 @@ import { RoomEvents } from '@street-of-age/shared/socket/events'
 import RoomManager from '../managers/RoomManager'
 import PlayerManager from '../managers/PlayerManager'
 import Logger from '../services/Logger'
+import {RoomSettings} from '@street-of-age/shared/entities/room'
 
 class SocketRoom {
   public static handle = (socket: SocketIO.Socket) => {
@@ -20,8 +21,18 @@ class SocketRoom {
       }
     })
 
-    socket.on(RoomEvents.RoomCreate, () => {
-      RoomManager.createRoom(player)
+    socket.on(RoomEvents.RoomCreate, (settings: RoomSettings) => {
+      if (settings.name === '') {
+        Logger.warn(player.toString() + ' tried to create a room with empty name. Forbit it.')
+        return
+      }
+      RoomManager.createRoom(player, settings)
+    })
+
+    socket.on(RoomEvents.RoomPlayerReady, () => {
+      player.ready = true
+      player.io.sockets.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
+      Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now ready')
     })
 
     socket.on(RoomEvents.RoomLeave, (roomId: string) => {

@@ -1,14 +1,14 @@
 import { randomBytes } from 'crypto'
 import { action, autorun, observable, decorate } from 'mobx'
 import { RoomEvents } from '@street-of-age/shared/socket/events'
-import { Room as BaseRoom, SerializedRoom } from '@street-of-age/shared/entities/room'
-import { Player, SerializedPlayer } from './Player'
+import {Room as BaseRoom, RoomSettings, SerializedRoom} from '@street-of-age/shared/entities/room'
+import { Player } from './Player'
 import RoomManager from '../managers/RoomManager'
 import Logger, { red } from '../services/Logger'
 
 class Room extends BaseRoom<Player> {
-  constructor(private readonly owner: Player) {
-    super({ id: randomBytes(20).toString('hex') })
+  constructor(private readonly owner: Player, settings: RoomSettings) {
+    super({ id: randomBytes(20).toString('hex'), settings })
 
     owner.io.sockets.emit(RoomEvents.RoomCreated, this.serialize())
 
@@ -46,6 +46,7 @@ class Room extends BaseRoom<Player> {
       })
     }))
   }
+
 
   @action public async removePlayer(player: Player): Promise<Player> {
     return new Promise(resolve => player.socket.leave(this.id, () => {

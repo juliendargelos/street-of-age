@@ -4,15 +4,15 @@
     :class="{
       'app-button--primary': primary,
       'app-button--secondary': secondary,
+      'app-button--neutral': neutral,
       'app-button--block': block
     }"
     v-on="$listeners"
   >
-    <div class="app-button__content">
+    <button :type="type" class="app-button__content">
       <slot />
-    </div>
+    </button>
 
-    <div class="app-button__border" />
   </span>
 </template>
 
@@ -20,17 +20,26 @@
 .app-button
   display: inline-block
   position: relative
-  cursor: pointer
-  font-size: 14px
+  min-width: 140px
+  &--neutral
+    min-width: unset
 
   &__content
+    font-family: 'Dead Jim', sans-serif
+    font-size: 16px
+    letter-spacing: 1px
     min-width: 100px
-    padding: 15px
+    width: 100%
+    padding: 12px 15px
+    text-transform: uppercase
     text-align: center
     z-index: 2
     position: relative
-    transform: translate(-4px, -4px)
+    border-radius: 4px
+    transform: skew(-12deg)
     transition: .2s $easeOutQuart
+    &:hover
+      cursor: pointer
 
   &__border
     width: 100%
@@ -43,21 +52,28 @@
     box-sizing: border-box
 
   &:hover &__content, &:active &__content
-    transform: translate(0, 0)
+    cursor: pointer
+    background: $white
+    color: $pale-blue
+    border-color: $white
+    box-shadow: none
 
   &--primary &__content
-    background-color: $green
-    color: $light-blue
-
-  &--primary &__border
-    border-color: $green
+    background-color: transparent
+    border: 2px solid $green
+    box-shadow: 0 0 10px transparentize($green, 0.4), inset 0 0 5px transparentize($green, 0.4)
 
   &--secondary &__content
-    background-color: $light-blue
-    color: $green
+    background-color: transparent
+    border: 2px solid $pale-blue
+    box-shadow: 0 0 10px transparentize($pale-blue, 0.4), inset 0 0 5px transparentize($pale-blue, 0.4)
 
-  &--secondary &__border
-    border-color: $white
+  &--neutral &__content
+    background-color: transparent
+    border: none
+    box-shadow: none
+    transform: unset
+    padding: 5px
 
   &--block
     display: block
@@ -79,7 +95,9 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class AppButton extends Vue {
   @Prop({ type: Boolean, default: false }) readonly primary!: boolean
   @Prop({ type: Boolean, default: false }) readonly secondary!: boolean
+  @Prop({ type: Boolean, default: false }) readonly neutral!: boolean
   @Prop({ type: Boolean, default: false }) readonly block!: boolean
+  @Prop({ type: String, default: 'submit' }) readonly type!: string
   @Prop({ type: [String, Object], default: null }) readonly to!: string | object
 
   goToLink () {

@@ -10,42 +10,44 @@ export const PlayerTeamKinds: { [P in PlayerTeam]: CharacterKind[] } = {
   [PlayerTeam.Young]: [
     CharacterKind.Egocentric,
     CharacterKind.Geek,
-    CharacterKind.Hippie
+    CharacterKind.Hippie,
+    CharacterKind.Fattie,
   ],
   [PlayerTeam.Old]: [
     CharacterKind.DotingGranny,
     CharacterKind.FustyGrandpa,
-    CharacterKind.LapdogWoman
+    CharacterKind.LapdogWoman,
+    CharacterKind.MrMuscle,
   ]
 }
 
 export interface SerializedPlayer extends Serialized {
-  id: string
-  team: PlayerTeam
-  characterKind: CharacterKind
+  id: string,
+  ready: boolean,
+  team: PlayerTeam | null
+  characterKind: CharacterKind | null
 }
 
 export class Player<Character extends BaseCharacter = BaseCharacter> implements Serializable<SerializedPlayer> {
   public readonly id: string
-  public readonly team: PlayerTeam
-  public readonly characterKind: CharacterKind
+  public team: PlayerTeam | null
+  public ready: boolean
+  public characterKind: CharacterKind | null
   public room: Room
   public characters: Character[] = []
 
   constructor(attributes: SerializedPlayer) {
-    if (!PlayerTeamKinds[attributes.team].includes(attributes.characterKind)) {
-      throw new Error(`Invalid character kind "${attributes.characterKind}" for given team "${attributes.team}"`)
-    }
-
     this.id = attributes.id
     this.team = attributes.team
     this.characterKind = attributes.characterKind
+    this.ready = attributes.ready
   }
 
   public serialize(): SerializedPlayer {
     return {
       id: this.id,
       team: this.team,
+      ready: this.ready,
       characterKind: this.characterKind
     }
   }

@@ -1,16 +1,51 @@
-import { Module, VuexModule, Mutation, getModule } from 'vuex-module-decorators'
+import { getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import store from '@/store'
+import { Player } from '@/@types'
+
+export enum PlayerTeam {
+  Young = 'young',
+  Old = 'old'
+}
+
+export enum CharacterKind {
+  Egocentric = 'egocentric',
+  Geek = 'geek',
+  Hippie = 'hippie',
+  // DotingGranny = 'doting-granny',
+  FustyGrandpa = 'fusty-grandpa',
+  LapdogWoman = 'lapdgog-woman',
+  MrMuscle = 'mr-muscle',
+  Fattie = 'fattie',
+}
 
 export interface AppState {
-  playerId?: string | null
+  hasPlayedIntroduction: boolean,
+  player: Player
 }
 
 @Module({ name: 'app', namespaced: true, dynamic: true, store })
 class AppStore extends VuexModule implements AppState {
-  public playerId: string = ''
+  public hasPlayedIntroduction: boolean = false
+  public player: Player = { id: '', isLocal: true, characterKind: null, team: null, ready: false }
+
+  @Mutation public setHasPlayedIntroduction (hasPlayedIntroduction: boolean) {
+    this.hasPlayedIntroduction = hasPlayedIntroduction
+  }
 
   @Mutation public setPlayerId (playerId: string) {
-    this.playerId = playerId
+    this.player.id = playerId
+  }
+
+  @Mutation public changePlayerCharacterTeam (team: PlayerTeam | null) {
+    this.player.team = team
+  }
+
+  @Mutation public changePlayerCharacterKind (kind: CharacterKind | null) {
+    this.player.characterKind = kind
+  }
+
+  @Mutation public changePlayerCharacterReady (ready: boolean) {
+    this.player.ready = ready
   }
 }
 

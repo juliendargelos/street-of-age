@@ -15,7 +15,7 @@ class RoomStore extends VuexModule implements RoomState {
     this.rooms = rooms
     this.rooms = this.rooms.map(room => {
       room.players = room.players.map(player => {
-        player.isLocal = player.id === AppModule.playerId
+        player.isLocal = player.id === AppModule.player.id
         return player
       })
       return room
