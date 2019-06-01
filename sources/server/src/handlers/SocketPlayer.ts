@@ -18,6 +18,12 @@ class SocketPlayer {
       Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now in ' + player.team + ' team')
     })
 
+    socket.on(CharacterEvents.CharacterChangeReady, (ready: boolean) => {
+      player.ready = ready
+      socket.server.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
+      Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now ' + ready ? '' : 'not ' + 'ready')
+    })
+
     socket.on(CharacterEvents.CharacterChangeKind, (kind: CharacterKind | null) => {
       if (kind !== null && !PlayerTeamKinds[player.team].includes(kind)) {
         throw new Error(`Invalid character kind "${kind}" for given team "${player.team}"`)

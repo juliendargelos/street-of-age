@@ -35,7 +35,7 @@ import RoomModule from '@/store/modules/room'
 import AppModule from '@/store/modules/app'
 import { PlayerTeamKinds } from '@/game/entities/player'
 import CharacterCard from '@/components/CharacterCard.vue'
-import {CharacterEvents, RoomEvents} from '@street-of-age/shared/socket/events'
+import { CharacterEvents, RoomEvents } from '@street-of-age/shared/socket/events'
 
 @Component<RoomSetupCharacter>({
   mounted () {
@@ -47,6 +47,8 @@ import {CharacterEvents, RoomEvents} from '@street-of-age/shared/socket/events'
       const characterKind = availableKinds[Math.floor(Math.random() * availableKinds.length)]
       AppModule.changePlayerCharacterKind(characterKind)
       this.$socket.emit(CharacterEvents.CharacterChangeKind, characterKind)
+      AppModule.changePlayerCharacterReady(false)
+      this.$socket.emit(CharacterEvents.CharacterChangeReady, false)
     }
   },
   components: { CharacterCard }

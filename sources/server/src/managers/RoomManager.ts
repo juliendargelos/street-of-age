@@ -3,6 +3,7 @@ import { RoomEvents } from '@street-of-age/shared/socket/events'
 import { Room, SerializedRoom } from '../entities/Room'
 import { Player } from '../entities/Player'
 import Logger from '../services/Logger'
+import {RoomSettings} from '@street-of-age/shared/entities/room'
 
 class RoomManager {
   @observable private rooms: Room[] = []
@@ -19,9 +20,9 @@ class RoomManager {
     return this.rooms.find(r => r.id === id)
   }
 
-  @action public createRoom = (owner: Player): Room => {
+  @action public createRoom = (owner: Player, settings: RoomSettings): Room => {
     owner.leaveRoom()
-    const room = new Room(owner)
+    const room = new Room(owner, settings)
     this.rooms = [...this.rooms, room]
 
     return room

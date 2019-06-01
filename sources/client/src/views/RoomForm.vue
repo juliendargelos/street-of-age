@@ -2,7 +2,7 @@
   <form class="room-form" @submit.prevent="onSubmit">
     <AppPanel class="room-form__content">
       <template slot="header"><h2>Configuration de la partie</h2></template>
-      <input class="room-form__name" v-model="settings.name" placeholder="Entrez le nom de la partie"/>
+      <input required class="room-form__name" v-model="settings.name" placeholder="Entrez le nom de la partie"/>
       <AppPicker
         label="Nombre de joueurs"
         v-model="settings.numberOfPlayers"
@@ -65,8 +65,9 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { RoomEvents } from '@street-of-age/shared/socket/events'
-import { Room, RoomSettings } from '@/@types'
+import { Room } from '@/@types'
 import AppPicker from '@/components/AppPicker.vue'
+import { RoomSettings } from '@street-of-age/shared/entities/room'
 
   @Component({
     components: { AppPicker },
@@ -81,7 +82,10 @@ export default class RoomForm extends Vue {
     public settings: RoomSettings = { numberOfPlayers: 4, mapSize: 'medium', name: '' }
 
     public onSubmit = () => {
-      this.$socket.emit(RoomEvents.RoomCreate)
+      if (this.settings.name === '') {
+        return
+      }
+      this.$socket.emit(RoomEvents.RoomCreate, this.settings)
     }
 }
 </script>

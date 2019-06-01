@@ -1,8 +1,8 @@
-interface SerializedArray extends Array<SerializedValue> {}
-type SerializedValue = null | undefined | boolean | number | string | Serialized | SerializedArray
+interface SerializedArray<T> extends Array<SerializedValue<T>> {}
+type SerializedValue<T> = null | undefined | boolean | number | string | Serialized | SerializedArray<T> | T
 
 declare type Serialized = {
-  [key: string]: SerializedValue
+  [key: string]: SerializedValue<any>
 }
 
 declare interface Serializable<T extends Serialized> {

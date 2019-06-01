@@ -2,8 +2,9 @@
   <div class="app-picker">
     <div class="app-picker__label">{{ label }}</div>
     <div class="app-picker__items">
-      <div class="app-picker__item" v-for="(choice, i) in choices" :class="{selected: i === selectedIndex}"
+      <div class="app-picker__item" v-for="(choice, i) in choices"
            :key="i"
+           :class="{selected: i === selectedIndex, disabled: isDisabled(i)}"
            @click="changeItem(i)">{{ choice.label }}
       </div>
     </div>
@@ -39,6 +40,9 @@
 
         &:last-of-type
           margin-right: 0
+        &.disabled
+          cursor: not-allowed
+          opacity: 0.4
 </style>
 
 <script lang="ts">
@@ -53,6 +57,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 })
 export default class AppPicker extends Vue {
     @Prop({ type: Array, default: () => [] }) readonly choices!: Array<{ value: number | string, label: string }>
+    @Prop({ type: Array, default: () => [] }) readonly disabledChoices!: Array<string | number>
     @Prop({ type: String, required: true }) readonly label!: string
     @Prop({ type: Boolean, default: false }) readonly lazy!: string
     @Prop() readonly value: any
@@ -60,8 +65,15 @@ export default class AppPicker extends Vue {
     private selectedIndex = 0
 
     private changeItem (index: number) {
+      if (this.isDisabled(index)) {
+        return
+      }
       this.selectedIndex = index
       this.$emit('input', this.choices[index].value)
+    }
+
+    private isDisabled (index: number): boolean {
+      return this.disabledChoices.includes(this.choices[index].value)
     }
 }
 </script>

@@ -37,6 +37,10 @@ class AppStore extends VuexModule implements AppState {
   @Mutation public changePlayerCharacterKind (kind: CharacterKind | null) {
     this.player.characterKind = kind
   }
+
+  @Mutation public changePlayerCharacterReady (ready: boolean) {
+    this.player.ready = ready
+  }
 }
 
 const AppModule = getModule(AppStore)

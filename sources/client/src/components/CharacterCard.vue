@@ -1,5 +1,8 @@
 <template>
-  <button class="character-card" v-on="listeners">
+  <div v-if="placeholder || !characterKind" class="character-card placeholder">
+    <h2>{{ placeholder }}</h2>
+  </div>
+  <button v-else class="character-card" v-on="listeners">
     <img :src="character.picture" class="character-card__background" alt="">
     <div class="character-card__informations">
       <h2>{{ character.name }}</h2>
@@ -28,6 +31,11 @@
   background: $light-blue
   outline: none
   border: none
+  &.placeholder
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
   &:disabled
     filter: grayscale(90%)
     cursor: not-allowed
@@ -73,6 +81,8 @@ import { CharacterKind } from '@/store/modules/app'
 @Component<CharacterCard>({})
 export default class CharacterCard extends Vue {
   @Prop({ required: true }) readonly characterKind!: CharacterKind
+  @Prop({ required: false, default: null }) readonly placeholder!: string
+
   get character (): CharacterAsset {
     return characters[this.characterKind]
   }
