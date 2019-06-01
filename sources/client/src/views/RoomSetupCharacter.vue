@@ -9,6 +9,12 @@
                        :character-kind="characterKind"
                        :key="characterKind"/>
       </div>
+    <AppButton
+      secondary
+      @click="onValidate"
+      block>
+      Valider
+    </AppButton>
   </div>
 </template>
 
@@ -29,7 +35,7 @@ import RoomModule from '@/store/modules/room'
 import AppModule from '@/store/modules/app'
 import { PlayerTeamKinds } from '@/game/entities/player'
 import CharacterCard from '@/components/CharacterCard.vue'
-import { CharacterEvents } from '@street-of-age/shared/socket/events'
+import {CharacterEvents, RoomEvents} from '@street-of-age/shared/socket/events'
 
 @Component<RoomSetupCharacter>({
   mounted () {
@@ -54,6 +60,10 @@ export default class RoomSetupCharacter extends Vue {
     }
     AppModule.changePlayerCharacterKind(character.kind)
     this.$socket.emit(CharacterEvents.CharacterChangeKind, character.kind)
+  }
+
+  private onValidate (): void {
+    this.$socket.emit(RoomEvents.RoomPlayerReady)
     this.$router.replace({ name: 'room-waiting', params: { id: this.room.id } })
   }
   get room (): RoomType {

@@ -16,7 +16,8 @@ class Player extends BasePlayer<Character> {
     super({
       id: socket.id,
       team,
-      characterKind
+      characterKind,
+      ready: false
     })
   }
 

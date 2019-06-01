@@ -24,6 +24,11 @@ class SocketRoom {
       RoomManager.createRoom(player)
     })
 
+    socket.on(RoomEvents.RoomPlayerReady, () => {
+      player.ready = true
+      player.io.sockets.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
+    })
+
     socket.on(RoomEvents.RoomLeave, (roomId: string) => {
       const room = RoomManager.find(roomId)
       if (room) {
