@@ -37,6 +37,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.body.setOffset(OFFSET_X, OFFSET_Y)
 
     this.body.setMass(MASS)
+    this.body.checkCollision.up = false
+    this.body.checkCollision.left = false
+    this.body.checkCollision.right = false
 
     this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
 
