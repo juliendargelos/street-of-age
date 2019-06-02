@@ -19,7 +19,7 @@ export class GameScene extends BaseScene {
     super.create()
     this.character = new Character({
       scene: this,
-      kind: CharacterKind.LapdogWoman,
+      kind: CharacterKind.MrMuscle,
       x: 120,
       y: 200
     })

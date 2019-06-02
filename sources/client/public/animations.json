@@ -223,6 +223,62 @@
       "showOnStart": true,
       "repeat": 0,
       "frameRate": 14
+    },
+    {
+      "key": "mr-muscle_walking",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 15,
+        "end": 30,
+        "zeroPad": 5,
+        "prefix": "main/characters/mr-muscle/walking_"
+      },
+      "showOnStart": true,
+      "repeat": -1,
+      "frameRate": 15
+    },
+    {
+      "key": "mr-muscle_jumping_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 5,
+        "zeroPad": 5,
+        "prefix": "main/characters/mr-muscle/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "mr-muscle_jumping_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 6,
+        "zeroPad": 5,
+        "prefix": "main/characters/mr-muscle/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "mr-muscle_jumping_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 9,
+        "zeroPad": 5,
+        "prefix": "main/characters/mr-muscle/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
     }
   ]
 }
