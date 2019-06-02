@@ -3,6 +3,8 @@ import { GRAVITY, PLAYER_DEPTH, scale } from '@/constants'
 import InputManager from '@/game/manager/InputManager'
 import Projectile from '@/game/entities/Projectile'
 import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/TouchDetection'
+import { Emitter } from '@/main'
+import { UIEvents } from '@street-of-age/shared/game/events'
 import { CharacterKind } from '@/store/modules/app'
 import characters from '@/assets/characters'
 import { CharacterStats } from '@street-of-age/shared/characters'
@@ -65,13 +67,18 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
 
-    InputManager.touch.addEventListener('tap', this.jump)
+    this.initListeners()
+
+    params.scene.add.existing(this)
+  }
+
+  private initListeners () {
     InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
     InputManager.touch.addEventListener('player:untap', () => this.projectileDir.clear())
     InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
     InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
 
-    params.scene.add.existing(this)
+    Emitter.on(UIEvents.Jump, this.jump)
   }
 
   public update = () => {
@@ -83,6 +90,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   public destroy (fromScene?: boolean): void {
     InputManager.touch.removeEventListeners()
+    Emitter.removeAllListeners(UIEvents.Jump)
     super.destroy(fromScene)
   }
 
@@ -191,7 +199,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private handleDesktopMovements = () => {
-    if (this.cursorKeys.up!.isDown && this.body.blocked.down) {
+    if (this.cursorKeys.up!.isDown) {
       this.jump()
     }
 
