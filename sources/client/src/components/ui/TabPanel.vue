@@ -1,5 +1,5 @@
 <template>
-  <div class="tab-panel" v-if="activeTabId === forTab">
+  <div class="tab-panel" v-if="activeTabId === forTab" :class="{selected: activeTabId === forTab}">
     <slot></slot>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="tab" @click="onClickHandler">
+  <div class="tab" @click="onClickHandler" :class="{selected: activeTabId === id}">
     <slot></slot>
   </div>
 </template>
@@ -15,6 +15,7 @@ import { Vue, Component, Inject, Prop } from 'vue-property-decorator'
 export default class Tab extends Vue {
   @Prop({ type: String, required: true }) readonly id!: string
   @Inject('changeTab') readonly changeTab!: (newId: string) => void
+  @Inject('activeTabId') readonly activeTabId!: string
 
   public onClickHandler (): void {
     this.changeTab(this.id)
