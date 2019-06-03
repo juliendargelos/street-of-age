@@ -16,7 +16,8 @@ export class PostProcessing extends Phaser.Renderer.WebGL.Pipelines.TextureTintP
         #define RGB_OFFSET .2
         #define HORZ_FUZZ .1
         #define RAND_NOISE .1
-        #define FISHEYE .025
+        #define FISHEYE -.014
+        #define ZOOM .96
 
         // varying vec2 vTextureCoord;
         varying vec2 outTexCoord;
@@ -109,14 +110,18 @@ export class PostProcessing extends Phaser.Renderer.WebGL.Pipelines.TextureTintP
 
         void main() {
           float aspectRatio = resolution.x / resolution.y;
-          vec2 fisheyeIntensity = vec2(FISHEYE * aspectRatio, FISHEYE * aspectRatio);
+          float area = resolution.x * resolution.y;
+          float fisheye = FISHEYE;//*area/400000.;
+          vec2 fisheyeIntensity = vec2(fisheye * aspectRatio, fisheye * aspectRatio);
           vec2 fisheyeCoords = outTexCoord;
           fisheyeCoords = (fisheyeCoords - 0.5) * 2.0;
           vec2 fisheyeRealCoordOffs;
           fisheyeRealCoordOffs.x = (fisheyeCoords.y * fisheyeCoords.y) * fisheyeIntensity.y * (fisheyeCoords.x);
           fisheyeRealCoordOffs.y = (fisheyeCoords.x * fisheyeCoords.x) * fisheyeIntensity.x * (fisheyeCoords.y);
           fisheyeRealCoordOffs.y = 1. - fisheyeRealCoordOffs.y;
-          vec2 computedCoords = (outTexCoord - fisheyeRealCoordOffs);
+          vec2 computedCoords = (outTexCoord - fisheyeRealCoordOffs) * ZOOM + (1. - ZOOM)*.5;
+          // computedCoords.y -= (1. - ZOOM)*.5 - .005;
+          // vec2 zoomedCoords = computedCoords*(1. - ZOOM);
 
           float jerkOffset = (1.0-step(snoise(vec2(time*1.3,5.0)),0.8))*0.05;
           float fuzzOffset = snoise(vec2(time*15.0,computedCoords.y*80.0))*0.003;
@@ -141,7 +146,7 @@ export class PostProcessing extends Phaser.Renderer.WebGL.Pipelines.TextureTintP
           float g = 0.;
           float b = 0.;
 
-          if (computedCoords.x >= -1. && computedCoords.x <= 1. && computedCoords.y >= -1. && computedCoords.y <= 0.) {
+          if (computedCoords.y <= 0.) {
             r = texture2D(uSampler, vec2(computedCoords.x + xOffset -0.01*RGB_OFFSET, y)).r + staticVal;
             g = texture2D(uSampler, vec2(computedCoords.x + xOffset,                  y)).g + staticVal;
             b = texture2D(uSampler, vec2(computedCoords.x + xOffset +0.01*RGB_OFFSET, y)).b + staticVal;
