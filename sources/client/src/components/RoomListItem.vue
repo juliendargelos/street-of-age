@@ -74,7 +74,7 @@ export default class RoomListItem extends Vue {
   @Prop(Object) readonly room!: Room
 
   get disabled () {
-    return this.room.players && this.room.players.length === this.room.settings.numberOfPlayers
+    return this.room.players && this.room.players.length >= this.room.settings.numberOfPlayers
   }
 }
 </script>

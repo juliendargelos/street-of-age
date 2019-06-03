@@ -26,7 +26,7 @@ export interface AppState {
 @Module({ name: 'app', namespaced: true, dynamic: true, store })
 class AppStore extends VuexModule implements AppState {
   public hasPlayedIntroduction: boolean = false
-  public player: Player = { id: '', isLocal: true, characterKind: null, team: null, ready: false }
+  public player: Player = { id: '', isLocal: true, characterKinds: [], team: null, ready: false }
 
   @Mutation public setHasPlayedIntroduction (hasPlayedIntroduction: boolean) {
     this.hasPlayedIntroduction = hasPlayedIntroduction
@@ -40,8 +40,19 @@ class AppStore extends VuexModule implements AppState {
     this.player.team = team
   }
 
-  @Mutation public changePlayerCharacterKind (kind: CharacterKind | string | null) {
-    this.player.characterKind = kind
+  @Mutation public clearPlayerCharacterKinds () {
+    this.player.characterKinds = []
+  }
+
+  @Mutation public removePlayerCharacterKind (kind: CharacterKind | string) {
+    this.player.characterKinds = this.player.characterKinds
+      .filter(k => k !== kind)
+  }
+
+  @Mutation public addPlayerCharacterKind (kind: CharacterKind | string) {
+    if (!this.player.characterKinds.includes(kind as CharacterKind)) {
+      this.player.characterKinds.push(kind as CharacterKind)
+    }
   }
 
   @Mutation public changePlayerCharacterReady (ready: boolean) {

@@ -5,6 +5,7 @@
       'app-button--primary': primary,
       'app-button--secondary': secondary,
       'app-button--neutral': neutral,
+      'app-button--filled': filled,
       'app-button--block': block
     }"
     v-on="$listeners"
@@ -51,6 +52,13 @@
     border: 2px solid
     box-sizing: border-box
 
+  &--neutral &__content
+    background-color: transparent
+    border: none
+    box-shadow: none
+    transform: unset
+    padding: 5px
+
   &:hover &__content, &:active &__content
     cursor: pointer
     background: $white
@@ -63,17 +71,24 @@
     border: 2px solid $green
     box-shadow: 0 0 10px transparentize($green, 0.4), inset 0 0 5px transparentize($green, 0.4)
 
+  &--primary.app-button--filled &__content
+    background: $green
+    &:hover, &:active
+      background: $white
+      color: $green
+
+  &--secondary.app-button--filled &__content
+    background: $pale-blue
+    &:hover, &:active
+      background: $white
+      color: $pale-blue
+
   &--secondary &__content
     background-color: transparent
     border: 2px solid $pale-blue
     box-shadow: 0 0 10px transparentize($pale-blue, 0.4), inset 0 0 5px transparentize($pale-blue, 0.4)
-
-  &--neutral &__content
-    background-color: transparent
-    border: none
-    box-shadow: none
-    transform: unset
-    padding: 5px
+    &--filled
+      background: $pale-blue
 
   &--block
     display: block
@@ -97,6 +112,7 @@ export default class AppButton extends Vue {
   @Prop({ type: Boolean, default: false }) readonly secondary!: boolean
   @Prop({ type: Boolean, default: false }) readonly neutral!: boolean
   @Prop({ type: Boolean, default: false }) readonly block!: boolean
+  @Prop({ type: Boolean, default: false }) readonly filled!: boolean
   @Prop({ type: String, default: 'submit' }) readonly type!: string
   @Prop({ type: [String, Object], default: null }) readonly to!: string | object
 
