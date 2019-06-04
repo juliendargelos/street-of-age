@@ -10,8 +10,12 @@
           :characterKind="player.characterKinds.length > 0 ? player.characterKinds[0] : null"
           :ready="player.ready"
         >
-          <template slot="metadata">{{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKinds.length > 0 ?
-            '...' : '' }}</template>
+          <template slot="metadata">
+            <span :style="getMetadataStyleForPlayer(player)">
+              {{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKinds.length > 0 ?
+            '...' : '' }}
+            </span>
+          </template>
         </PlayerWaitingCard>
       </div>
       <div class="room-waiting__separator">
@@ -24,8 +28,12 @@
           :characterKind="player.characterKinds.length > 0 ? player.characterKinds[0] : null"
           :ready="player.ready"
         >
-          <template slot="metadata">{{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKinds.length > 0 ?
-            '...' : '' }}</template>
+          <template slot="metadata">
+            <span :style="getMetadataStyleForPlayer(player)">
+              {{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKinds.length > 0 ?
+            '...' : '' }}
+            </span>
+          </template>
         </PlayerWaitingCard>
       </div>
   </div>
@@ -92,14 +100,19 @@ export default class RoomWaiting extends Vue {
   get room (): RoomType {
     return RoomModule.rooms.find(r => r.id === this.$route.params.id)!
   }
+  getMetadataStyleForPlayer (player: SerializedPlayer) {
+    return {
+      color: player.color
+    }
+  }
   get player (): Player {
     return AppModule.player
   }
   get players (): Map<string, SerializedPlayer[]> {
     const youngs = new Array<SerializedPlayer>(this.room.settings.numberOfPlayers / 2)
-      .fill({ ready: false, characterKinds: [], team: PlayerTeam.Young, id: '' })
+      .fill({ color: '', ready: false, characterKinds: [], team: PlayerTeam.Young, id: '' })
     const olds = new Array(this.room.settings.numberOfPlayers / 2)
-      .fill({ ready: false, characterKinds: [], team: PlayerTeam.Old, id: '' })
+      .fill({ color: '', ready: false, characterKinds: [], team: PlayerTeam.Old, id: '' })
     const allPlayers = [
       ...youngs.map((entry, index) => this.room.players
         .filter(player => player.team === PlayerTeam.Young && player.characterKinds.length > 0)[index] || entry),

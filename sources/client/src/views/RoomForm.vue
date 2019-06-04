@@ -70,12 +70,17 @@ import { RoomEvents } from '@street-of-age/shared/socket/events'
 import { Room } from '@/@types'
 import AppPicker from '@/components/AppPicker.vue'
 import { RoomSettings } from '@street-of-age/shared/entities/room'
+import AppModule from '@/store/modules/app'
 
   @Component({
     components: { AppPicker },
     sockets: {
       [RoomEvents.RoomJoined] (room: Room) {
         const { id } = room
+        const local = room.players.find(p => p.id === AppModule.player.id)
+        if (local) {
+          AppModule.setPlayerCharacterColor(local.color)
+        }
         this.$router.push({ name: 'room-setup-team', params: { id } })
       }
     }

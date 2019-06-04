@@ -169,7 +169,7 @@ const LapdogWoman: CharacterAsset = {
 const MrMuscle: CharacterAsset = {
   team: 'old',
   kind: 'mr-muscle',
-  name: 'Le kéké',
+  name: 'Le keke',
   stats: {
     [JUMP_ABILITY_ID]: {
       id: JUMP_ABILITY_ID,

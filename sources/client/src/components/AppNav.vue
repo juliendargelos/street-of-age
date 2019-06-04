@@ -12,6 +12,7 @@
 <style lang="sass">
 .app-nav
   position: fixed
+  left: 10px
   z-index: 10
   display: flex
   &--top

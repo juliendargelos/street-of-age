@@ -3,13 +3,13 @@
     <div class="team__block team__block--old">
       <div class="team__picker">
         <h2 class="team__picker__title">Choisi</h2>
-        <AppButton secondary alternate block class="team__picker__button" @click="chooseTeam('old')">Les anciens</AppButton>
+        <AppButton :disabled="disabledTeams.includes('old')" secondary alternate block class="team__picker__button" @click="chooseTeam('old')">Les anciens</AppButton>
       </div>
     </div>
     <div class="team__block team__block--young">
       <div class="team__picker">
         <h2 class="team__picker__title">Choisi</h2>
-        <AppButton secondary alternate block class="team__picker__button" @click="chooseTeam('young')">Les jeunes</AppButton>
+        <AppButton :disabled="disabledTeams.includes('young')" secondary alternate block class="team__picker__button" @click="chooseTeam('young')">Les jeunes</AppButton>
       </div>
     </div>
   </div>

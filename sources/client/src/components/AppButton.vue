@@ -11,7 +11,7 @@
     }"
     v-on="$listeners"
   >
-    <button :type="type" class="app-button__content">
+    <button :disabled="disabled" :type="type" class="app-button__content">
       <slot />
     </button>
 
@@ -40,6 +40,11 @@
     border-radius: 4px
     transform: skew(-12deg)
     transition: .2s $easeOutQuart
+    &:disabled
+      filter: grayscale(100%)
+      opacity: 0.7
+      &:hover
+        cursor: not-allowed
     &:hover
       cursor: pointer
 
@@ -121,6 +126,7 @@ export default class AppButton extends Vue {
   @Prop({ type: Boolean, default: false }) readonly neutral!: boolean
   @Prop({ type: Boolean, default: false }) readonly block!: boolean
   @Prop({ type: Boolean, default: false }) readonly filled!: boolean
+  @Prop({ type: Boolean, default: false }) readonly disabled!: boolean
   @Prop({ type: String, default: 'submit' }) readonly type!: string
   @Prop({ type: [String, Object], default: null }) readonly to!: string | object
 

@@ -1,6 +1,7 @@
 import { getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators'
 import store from '@/store'
 import { Player } from '@/@types'
+import { PlayerColor } from '@street-of-age/shared/entities/player'
 
 export enum PlayerTeam {
   Young = 'young',
@@ -26,7 +27,7 @@ export interface AppState {
 @Module({ name: 'app', namespaced: true, dynamic: true, store })
 class AppStore extends VuexModule implements AppState {
   public hasPlayedIntroduction: boolean = false
-  public player: Player = { id: '', isLocal: true, characterKinds: [], team: null, ready: false }
+  public player: Player = { id: '', color: '', isLocal: true, characterKinds: [], team: null, ready: false }
 
   @Mutation public setHasPlayedIntroduction (hasPlayedIntroduction: boolean) {
     this.hasPlayedIntroduction = hasPlayedIntroduction
@@ -38,6 +39,10 @@ class AppStore extends VuexModule implements AppState {
 
   @Mutation public changePlayerCharacterTeam (team: PlayerTeam | string | null) {
     this.player.team = team
+  }
+
+  @Mutation public setPlayerCharacterColor (color: PlayerColor) {
+    this.player.color = color
   }
 
   @Mutation public clearPlayerCharacterKinds () {
