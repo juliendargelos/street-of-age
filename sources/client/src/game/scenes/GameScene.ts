@@ -1,7 +1,7 @@
 import BaseScene from '@/game/scenes/BaseScene'
 import { Character } from '@/game/entities/Character'
 import { CharacterKind } from '@/store/modules/app'
-import { PostProcessing } from '@/game/PostProcessing'
+import {PostProcessing} from '@/game/PostProcessing'
 
 const HEIGHT_CAMERA_OFFSET = 400
 const WIDTH_CAMERA_OFFSET = 400
@@ -19,7 +19,7 @@ export class GameScene extends BaseScene {
     super.create()
     this.character = new Character({
       scene: this,
-      kind: 'doting-granny' as CharacterKind,
+      kind: CharacterKind.FustyGrandpa,
       x: 120,
       y: 200
     })

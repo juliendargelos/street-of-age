@@ -7,7 +7,7 @@ import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/game/events'
 import { CharacterKind } from '@/store/modules/app'
 import characters from '@/assets/characters'
-import { CharacterStats } from '@street-of-age/shared/characters'
+import { ClientCharacterAsset } from '@/@types'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
@@ -35,8 +35,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     return this._state
   }
 
-  get stats (): CharacterStats {
-    return characters[this.kind].stats
+  get characterAsset (): ClientCharacterAsset {
+    return characters[this.kind]
   }
 
   set state (value: State) {
@@ -130,6 +130,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
       scene: this.scene,
       texture: 'main',
       frame: 'main/fx/fireball/4',
+      character: this.characterAsset,
       angle,
       distance,
       x: this.x,
