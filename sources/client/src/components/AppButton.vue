@@ -4,6 +4,7 @@
     :class="{
       'app-button--primary': primary,
       'app-button--secondary': secondary,
+      'app-button--alternate': alternate,
       'app-button--neutral': neutral,
       'app-button--filled': filled,
       'app-button--block': block
@@ -90,6 +91,12 @@
     &--filled
       background: $pale-blue
 
+  &--secondary.app-button--alternate &__content
+    background: $white
+    border-color: $white
+    box-shadow: none
+    color: $pale-blue
+
   &--block
     display: block
 </style>
@@ -110,6 +117,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class AppButton extends Vue {
   @Prop({ type: Boolean, default: false }) readonly primary!: boolean
   @Prop({ type: Boolean, default: false }) readonly secondary!: boolean
+  @Prop({ type: Boolean, default: false }) readonly alternate!: boolean
   @Prop({ type: Boolean, default: false }) readonly neutral!: boolean
   @Prop({ type: Boolean, default: false }) readonly block!: boolean
   @Prop({ type: Boolean, default: false }) readonly filled!: boolean

@@ -20,7 +20,6 @@
   height: 100%
   display: flex
   justify-content: center
-  align-content: center
 </style>
 
 <script lang="ts">

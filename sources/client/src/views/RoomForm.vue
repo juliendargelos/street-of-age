@@ -22,6 +22,7 @@
         </AppButton>
         <AppButton
           secondary
+          alternate
           block
           type="submit">
           Suivant

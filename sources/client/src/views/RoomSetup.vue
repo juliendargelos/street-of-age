@@ -5,7 +5,7 @@
 </template>
 
 <style lang="sass">
-.room
+.room-setup
   height: 100%
 </style>
 
