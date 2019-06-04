@@ -15,7 +15,7 @@
 @import ./stylesheets/app
 
 #app
-  background: url(~@/assets/background.jpg) no-repeat center center / cover
+  background: url(~@/assets/background.gif) no-repeat center center / cover
   font:
     size: 16px
 
