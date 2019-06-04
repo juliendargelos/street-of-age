@@ -53,7 +53,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   }
 
   public launch = (forceAmount: number, direction: Phaser.Types.Math.Vector2Like) => {
-    this.setGravityY(400 * (1 + this.character.projectile.mass / 10))
+    this.setGravityY(550 * (1 + this.character.projectile.mass / 10))
     const scaleForce = ((forceAmount / 4) * (1 + (this.character.stats[STRENGHT_ABILITY_ID].level * 3))) / this.character.projectile.mass
     const force = new Phaser.Math.Vector2(direction)
     force.scale(scaleForce)
