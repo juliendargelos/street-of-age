@@ -24,13 +24,33 @@ class SocketPlayer {
       Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now ' + ready ? '' : 'not ' + 'ready')
     })
 
-    socket.on(CharacterEvents.CharacterChangeKind, (kind: CharacterKind | null) => {
+    socket.on(CharacterEvents.CharacterAddedKind, (kind: CharacterKind | null) => {
       if (kind !== null && !PlayerTeamKinds[player.team].includes(kind)) {
         throw new Error(`Invalid character kind "${kind}" for given team "${player.team}"`)
       }
-      player.characterKind = kind
+      if (!player.characterKinds.includes(kind)) {
+        player.characterKinds.push(kind)
+      }
       socket.server.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
-      Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now ' + player.characterKind)
+      Logger.info(player.toString() + ' in ' + player.room.toString() + ' have now characters ' + player.characterKinds.join(', '))
+    })
+
+    socket.on(CharacterEvents.CharacterRemovedKind, (kind: CharacterKind | null) => {
+      if (kind !== null && !PlayerTeamKinds[player.team].includes(kind)) {
+        throw new Error(`Invalid character kind "${kind}" for given team "${player.team}"`)
+      }
+      if (player.characterKinds.includes(kind)) {
+        player.characterKinds = player.characterKinds.filter(k => k !== kind)
+      }
+      socket.server.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
+      Logger.info(player.toString() + ' in ' + player.room.toString() + ' have now characters ' + player.characterKinds.join(', '))
+    })
+
+
+    socket.on(CharacterEvents.CharacterClearedKinds, () => {
+      player.characterKinds = []
+      socket.server.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
+      Logger.info(player.toString() + ' in ' + player.room.toString() + ' have cleared its kinds')
     })
   }
 }

@@ -13,7 +13,7 @@ export enum CharacterKind {
   Hippie = 'hippie',
   // DotingGranny = 'doting-granny',
   FustyGrandpa = 'fusty-grandpa',
-  LapdogWoman = 'lapdgog-woman',
+  LapdogWoman = 'lapdog-woman',
   MrMuscle = 'mr-muscle',
   Fattie = 'fattie',
 }
@@ -26,7 +26,7 @@ export interface AppState {
 @Module({ name: 'app', namespaced: true, dynamic: true, store })
 class AppStore extends VuexModule implements AppState {
   public hasPlayedIntroduction: boolean = false
-  public player: Player = { id: '', isLocal: true, characterKind: null, team: null, ready: false }
+  public player: Player = { id: '', isLocal: true, characterKinds: [], team: null, ready: false }
 
   @Mutation public setHasPlayedIntroduction (hasPlayedIntroduction: boolean) {
     this.hasPlayedIntroduction = hasPlayedIntroduction
@@ -36,12 +36,23 @@ class AppStore extends VuexModule implements AppState {
     this.player.id = playerId
   }
 
-  @Mutation public changePlayerCharacterTeam (team: PlayerTeam | null) {
+  @Mutation public changePlayerCharacterTeam (team: PlayerTeam | string | null) {
     this.player.team = team
   }
 
-  @Mutation public changePlayerCharacterKind (kind: CharacterKind | null) {
-    this.player.characterKind = kind
+  @Mutation public clearPlayerCharacterKinds () {
+    this.player.characterKinds = []
+  }
+
+  @Mutation public removePlayerCharacterKind (kind: CharacterKind | string) {
+    this.player.characterKinds = this.player.characterKinds
+      .filter(k => k !== kind)
+  }
+
+  @Mutation public addPlayerCharacterKind (kind: CharacterKind | string) {
+    if (!this.player.characterKinds.includes(kind as CharacterKind)) {
+      this.player.characterKinds.push(kind as CharacterKind)
+    }
   }
 
   @Mutation public changePlayerCharacterReady (ready: boolean) {

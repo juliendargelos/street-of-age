@@ -3,13 +3,13 @@
     <h2 class="character-card--placeholder">{{ placeholder }}</h2>
     <span class="character-card__metadata"><slot name="metadata"/></span>
   </div>
-  <button v-else class="character-card" v-on="listeners">
+  <button class="character-card" v-else>
     <img :src="waiting ? character.picture.full : character.picture.face" class="character-card__background" alt="">
     <span v-if="!waiting" class="character-card__informations">
       <h2>{{ character.name }}</h2>
       <ul class="character-card__informations--modifiers">
-        <li v-for="stat in character.stats" :key="stat.ability">
-          <span class="ability">{{ stat.ability }}</span>
+        <li v-for="stat in character.stats" :key="stat.id">
+          <span class="ability">{{ stat.name }}</span>
           <span class="level progress-outer">
             <span class="progress-inner" :style="{ width: `${stat.level}%` }"></span>
             <span :style="{ display: 'none' }" aria-hidden="true">{{ stat.level }}%</span>
@@ -17,6 +17,24 @@
         </li>
       </ul>
     </span>
+    <template v-if="!waiting">
+      <AppButton
+        @click="onAdd"
+        block
+        class="character-card__add-button"
+        filled
+        secondary
+        v-if="!selected">
+        Ajouter
+      </AppButton>
+      <AppButton
+        @click="onRemove"
+        block
+        class="character-card__remove-button"
+        filled
+        secondary
+        v-else>-</AppButton>
+    </template>
     <span class="character-card__metadata"><slot name="metadata"/></span>
   </button>
 </template>
@@ -34,6 +52,25 @@
   border: none
   padding: 0
   user-select: none
+  &__add-button, &__remove-button
+      & .app-button__content
+        min-width: unset
+        position: absolute
+        width: 140px
+        top: 124px
+        padding: 7px 20px
+        font-family: 'Futura', 'Helvetica Neue', 'Arial', sans-serif
+        font-size: 14px
+        text-transform: none
+  &__add-button
+    & .app-button__content
+      left: 20px
+  &__remove-button
+    & .app-button__content
+      width: 40px
+      padding: 5px
+      font-weight: 700
+      left: 62px
   h2
     text-transform: uppercase
     &.character-card--placeholder
@@ -93,26 +130,37 @@
 </style>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { CharacterAsset } from '@/@types'
+import { ClientCharacterAsset, Player } from '@/@types'
 import characters from '@/assets/characters'
-import { CharacterKind } from '@/store/modules/app'
+import AppModule, { CharacterKind } from '@/store/modules/app'
 
 @Component<CharacterCard>({})
 export default class CharacterCard extends Vue {
   @Prop({ required: true }) readonly characterKind!: CharacterKind
+  @Prop({ required: false, default: () => [] }) readonly playerCharacterKinds!: CharacterKind[]
   @Prop({ required: false, default: null }) readonly placeholder!: string
   @Prop({ required: false, default: false }) readonly waiting!: string
 
-  get character (): CharacterAsset {
+  public onAdd (e: MouseEvent) {
+    if (this.$el.getAttribute('disabled')) {
+      return
+    }
+    this.$emit('character:add', { mouseEvent: e, character: this.character })
+  }
+
+  public onRemove (e: MouseEvent) {
+    if (this.$el.getAttribute('disabled')) {
+      return
+    }
+    this.$emit('character:remove', { mouseEvent: e, character: this.character })
+  }
+
+  get character (): ClientCharacterAsset {
     return characters[this.characterKind]
   }
-  get listeners () {
-    return {
-      ...this.$listeners,
-      click: (mouseEvent: MouseEvent) => {
-        this.$emit('click', { mouseEvent, character: this.character })
-      }
-    }
+
+  get selected (): boolean {
+    return this.playerCharacterKinds.includes(this.characterKind)
   }
 }
 </script>

@@ -1,12 +1,15 @@
-import { SpriteConstructor } from '@/@types/game'
+import { CharacterConstructor, SpriteConstructor } from '@/@types/game'
 import { GRAVITY, PLAYER_DEPTH, scale } from '@/constants'
 import InputManager from '@/game/manager/InputManager'
 import Projectile from '@/game/entities/Projectile'
 import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game/entities/TouchDetection'
+import { CharacterKind } from '@/store/modules/app'
+import characters from '@/assets/characters'
+import { CharacterStats } from '@street-of-age/shared/characters'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
-const BOUNCE = 0.2
+const BOUNCE = 0
 const SPEED = 32
 const WIDTH = 26
 const HEIGHT = 75
@@ -14,17 +17,36 @@ const OFFSET_X = 18
 const OFFSET_Y = 15
 
 enum State {
-  Moving = 'Moving',
-  Idleing = 'Idleing'
+  Grounded = 'Grounded',
+  Jumping = 'Jumping',
+  MidAir = 'MidAir',
+  Falling = 'Falling',
 }
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
-  public state: State = State.Idleing
-  public projectileDir: Phaser.GameObjects.Graphics
+  private _state: State = State.Falling
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
+  public projectileDir: Phaser.GameObjects.Graphics
+  public kind: CharacterKind
 
-  constructor (params: SpriteConstructor) {
-    super(params.scene, params.x, params.y, params.texture, params.frame)
+  get state (): State {
+    return this._state
+  }
+
+  get stats (): CharacterStats {
+    return characters[this.kind].stats
+  }
+
+  set state (value: State) {
+    if (value !== this._state) {
+      this.onChangeState(value)
+    }
+    this._state = value
+  }
+
+  constructor (params: CharacterConstructor) {
+    super(params.scene, params.x, params.y, 'main')
+    this.kind = params.kind
     params.scene.physics.world.enable(this)
     this.projectileDir = params.scene.add.graphics().setDepth(10)
 
@@ -55,12 +77,43 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   public update = () => {
     this.setGravityY(GRAVITY)
     this.handleMovements()
+    this.updateState()
     this.handleAnimations()
   }
 
   public destroy (fromScene?: boolean): void {
     InputManager.touch.removeEventListeners()
     super.destroy(fromScene)
+  }
+
+  private onChangeState (newState: State) {
+    switch (newState) {
+      case State.Jumping:
+        this.play(this.kind + '_jumping_start', true)
+        break
+      case State.MidAir:
+        this.play(this.kind + '_jumping_midair', true)
+        break
+      case State.Falling:
+        if (this.anims.currentAnim.key.includes('midair')) {
+          this.play(this.kind + '_jumping_falling', true, 1)
+        } else {
+          this.play(this.kind + '_jumping_falling', true)
+        }
+        break
+    }
+  }
+
+  private updateState (): void {
+    if (this.body.blocked.down) {
+      this.state = State.Grounded
+    } else if (this.body.velocity.y < 0) {
+      this.state = State.Jumping
+    } else if (this.body.velocity.y === 0) {
+      this.state = State.MidAir
+    } else {
+      this.state = State.Falling
+    }
   }
 
   private onProjectileLaunch: ProjectileLaunchEventHandler = (evt): void => {
@@ -110,17 +163,13 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private handleMobileMovements = () => {
     const velocity = InputManager.getAxis('horizontal') * SPEED
-    if (this.cursorKeys.space!.isDown && this.body.blocked.down) {
-      this.body.velocity.y = -350 * JUMP_FORCE
+    if (this.cursorKeys.space!.isDown) {
+      this.jump()
     }
     if (velocity < 0) {
       this.turn('left')
-      this.changeState(State.Moving)
     } else if (velocity > 0) {
       this.turn('right')
-      this.changeState(State.Moving)
-    } else {
-      this.changeState(State.Idleing)
     }
     this.setVelocityX(velocity)
   }
@@ -136,7 +185,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private jump = () => {
-    this.body.velocity.y = -350 * JUMP_FORCE
+    if (this.body.blocked.down) {
+      this.body.velocity.y = -350 * JUMP_FORCE
+    }
   }
 
   private handleDesktopMovements = () => {
@@ -145,32 +196,26 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
 
     if (this.cursorKeys.left!.isDown) {
-      this.changeState(State.Moving)
       this.setVelocityX(-5 * SPEED)
       this.turn('left')
     } else if (this.cursorKeys.right!.isDown) {
-      this.changeState(State.Moving)
       this.setVelocityX(5 * SPEED)
       this.turn('right')
     } else {
-      this.changeState(State.Idleing)
       this.setVelocityX(0)
     }
   }
 
-  private handleAnimations = () => {
+  private handleAnimations () {
     switch (this.state) {
-      case State.Moving:
-        this.play('fraicheur_walking', true)
-        break
-      case State.Idleing:
-        this.play('fraicheur_walking', true, 0)
-        this.anims.stop()
+      case State.Grounded:
+        if (this.body.velocity.x === 0) {
+          this.play(this.kind + '_walking', true, 0)
+          this.anims.stop()
+        } else {
+          this.play(this.kind + '_walking', true)
+        }
         break
     }
-  }
-
-  private changeState = (newState: State) => {
-    this.state = newState
   }
 }

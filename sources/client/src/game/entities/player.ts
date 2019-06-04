@@ -1,6 +1,6 @@
 import { CharacterKind, PlayerTeam } from '@/store/modules/app'
 
-export const PlayerTeamKinds: { [P in PlayerTeam]: CharacterKind[] } = {
+export const PlayerTeamKinds: { [P in PlayerTeam]: Array<CharacterKind | string> } = {
   [PlayerTeam.Young]: [
     CharacterKind.Egocentric,
     CharacterKind.Geek,

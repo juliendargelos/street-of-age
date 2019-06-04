@@ -7,10 +7,11 @@
         <PlayerWaitingCard
           v-for="(player, index) in players.get('old')"
           :key="player.team + '-' + index"
-          :characterKind="player.characterKind"
+          :characterKind="player.characterKinds.length > 0 ? player.characterKinds[0] : null"
           :ready="player.ready"
         >
-          <template slot="metadata">{{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKind ? '...' : '' }}</template>
+          <template slot="metadata">{{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKinds.length > 0 ?
+            '...' : '' }}</template>
         </PlayerWaitingCard>
       </div>
       <div class="room-waiting__separator">
@@ -20,10 +21,11 @@
         <PlayerWaitingCard
           v-for="(player, index) in players.get('young')"
           :key="player.team + '-' + index"
-          :characterKind="player.characterKind"
+          :characterKind="player.characterKinds.length > 0 ? player.characterKinds[0] : null"
           :ready="player.ready"
         >
-          <template slot="metadata">{{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKind ? '...' : '' }}</template>
+          <template slot="metadata">{{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKinds.length > 0 ?
+            '...' : '' }}</template>
         </PlayerWaitingCard>
       </div>
   </div>
@@ -95,14 +97,14 @@ export default class RoomWaiting extends Vue {
   }
   get players (): Map<string, SerializedPlayer[]> {
     const youngs = new Array<SerializedPlayer>(this.room.settings.numberOfPlayers / 2)
-      .fill({ ready: false, characterKind: null, team: PlayerTeam.Young, id: '' })
+      .fill({ ready: false, characterKinds: [], team: PlayerTeam.Young, id: '' })
     const olds = new Array(this.room.settings.numberOfPlayers / 2)
-      .fill({ ready: false, characterKind: null, team: PlayerTeam.Old, id: '' })
+      .fill({ ready: false, characterKinds: [], team: PlayerTeam.Old, id: '' })
     const allPlayers = [
       ...youngs.map((entry, index) => this.room.players
-        .filter(player => player.team === PlayerTeam.Young && player.characterKind)[index] || entry),
+        .filter(player => player.team === PlayerTeam.Young && player.characterKinds.length > 0)[index] || entry),
       ...olds.map((entry, index) => this.room.players
-        .filter(player => player.team === PlayerTeam.Old && player.characterKind)[index] || entry)
+        .filter(player => player.team === PlayerTeam.Old && player.characterKinds.length > 0)[index] || entry)
     ]
     return groupBy(allPlayers, player => player.team)
   }

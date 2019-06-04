@@ -40,8 +40,8 @@ import { CharacterEvents } from '@street-of-age/shared/socket/events'
     mounted () {
       AppModule.changePlayerCharacterTeam(null)
       this.$socket.emit(CharacterEvents.CharacterChangeTeam, null)
-      AppModule.changePlayerCharacterKind(null)
-      this.$socket.emit(CharacterEvents.CharacterChangeKind, null)
+      AppModule.clearPlayerCharacterKinds()
+      this.$socket.emit(CharacterEvents.CharacterClearedKinds)
       AppModule.changePlayerCharacterReady(false)
       this.$socket.emit(CharacterEvents.CharacterChangeReady, false)
     },
@@ -78,7 +78,7 @@ export default class RoomSetupTeam extends Vue {
     }, new Set<PlayerTeam>([])))
   }
 
-  get team (): PlayerTeam | null {
+  get team (): PlayerTeam | string | null {
     return AppModule.player.team
   }
 }

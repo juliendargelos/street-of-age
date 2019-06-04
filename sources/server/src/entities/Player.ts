@@ -6,17 +6,17 @@ import { red } from '../services/Logger'
 class Player extends BasePlayer<Character> {
   public characters: Character[] = []
   public team: PlayerTeam | null
-  public characterKind: CharacterKind | null
+  public characterKinds: CharacterKind[]
 
   constructor(
     public readonly socket: Socket,
     team: PlayerTeam | null,
-    characterKind: CharacterKind | null
+    characterKinds: CharacterKind[]
    ) {
     super({
       id: socket.id,
       team,
-      characterKind,
+      characterKinds,
       ready: false
     })
   }

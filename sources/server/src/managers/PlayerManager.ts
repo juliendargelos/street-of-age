@@ -9,7 +9,7 @@ class PlayerManager {
 
   @action public connect = (socket: Socket): Player => {
     Logger.info(`socket with id ${red(socket.id)} has been connected`)
-    const player = new Player(socket, null, null)
+    const player = new Player(socket, null, [])
     this.players = [...this.players, player]
     return player
   }

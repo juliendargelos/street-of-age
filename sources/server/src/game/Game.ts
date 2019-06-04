@@ -20,7 +20,7 @@ class Game extends BaseGame<Character> {
       for (var i = CHARACTERS_PER_PLAYER; i > 0; --i) {
         const character = new Character(this.mainScene, {
           id: randomBytes(20).toString('hex'),
-          kind: player.characterKind
+          kind: player.characterKinds[i]
         })
 
         this.characters.push(character)
