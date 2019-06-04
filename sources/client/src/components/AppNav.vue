@@ -13,12 +13,11 @@
 .app-nav
   position: fixed
   z-index: 10
-  left: 20px
   display: flex
   &--top
-    top: 20px
+    top: 12px
   &--bottom
-    bottom: 20px
+    bottom: 12px
 </style>
 
 <script lang="ts">
