@@ -8,7 +8,10 @@ interface CharacterStat {
 }
 
 export interface CharacterProjectile {
-  mass: number
+  mass: number,
+  bounciness: number,
+  deceleration: number,
+  bulletLike: boolean
 }
 
 export type CharactersAsset = { [kind: string]: CharacterAsset }
@@ -38,7 +41,10 @@ const Egocentric: CharacterAsset = {
   kind: 'egocentric',
   name: 'L\'influenceuse',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
     [JUMP_ABILITY_ID]: {
@@ -87,7 +93,10 @@ const Fattie: CharacterAsset = {
   kind: 'fattie',
   name: 'La boulette',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
     [JUMP_ABILITY_ID]: {
@@ -113,7 +122,10 @@ const FustyGrandpa: CharacterAsset = {
   kind: 'fusty-grandpa',
   name: 'Papivresse',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
     [JUMP_ABILITY_ID]: {
@@ -139,7 +151,10 @@ const Geek: CharacterAsset = {
   kind: 'geek',
   name: 'Le geek metalleux',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
     [JUMP_ABILITY_ID]: {
@@ -165,7 +180,10 @@ const Hippie: CharacterAsset = {
   kind: 'hippie',
   name: 'Le bobo',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
     [JUMP_ABILITY_ID]: {
@@ -191,7 +209,10 @@ const LapdogWoman: CharacterAsset = {
   kind: 'lapdog-woman',
   name: 'La folle aux chiens',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
     [JUMP_ABILITY_ID]: {
@@ -217,7 +238,10 @@ const MrMuscle: CharacterAsset = {
   kind: 'mr-muscle',
   name: 'Le keke',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
     [JUMP_ABILITY_ID]: {

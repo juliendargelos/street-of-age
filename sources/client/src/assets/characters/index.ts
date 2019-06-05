@@ -26,7 +26,10 @@ interface CharacterStat {
 }
 
 export interface CharacterProjectile {
-  mass: number
+  mass: number,
+  bounciness: number,
+  deceleration: number,
+  bulletLike: boolean,
 }
 
 export type CharactersAsset = { [kind: string]: CharacterAsset }
@@ -45,27 +48,30 @@ export interface CharacterAsset {
 
 const MOVE_ABILITY = 'Déplacement'
 export const MOVE_ABILITY_ID = 'move'
-const JUMP_ABILITY = 'Saut'
-export const JUMP_ABILITY_ID = 'jump'
-const STRENGHT_ABILITY = 'Force'
-export const STRENGHT_ABILITY_ID = 'strenght'
+const CAC_ABILITY = 'Corps à corps'
+export const CAC_ABILITY_ID = 'cac'
+const DISTANCE_ABILITY = 'Combat à distance'
+export const DISTANCE_ABILITY_ID = 'distance'
 
 const Egocentric: CharacterAsset = {
   team: 'young',
   kind: 'egocentric',
   name: 'L\'influenceuse',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
+    [CAC_ABILITY_ID]: {
+      id: CAC_ABILITY_ID,
+      name: CAC_ABILITY,
       level: 0.5
     },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
+    [DISTANCE_ABILITY_ID]: {
+      id: DISTANCE_ABILITY_ID,
+      name: DISTANCE_ABILITY,
       level: 0.5
     },
     [MOVE_ABILITY_ID]: {
@@ -104,17 +110,20 @@ const Fattie: CharacterAsset = {
   kind: 'fattie',
   name: 'La boulette',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
+    [CAC_ABILITY_ID]: {
+      id: CAC_ABILITY_ID,
+      name: CAC_ABILITY,
       level: 0.5
     },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
+    [DISTANCE_ABILITY_ID]: {
+      id: DISTANCE_ABILITY_ID,
+      name: DISTANCE_ABILITY,
       level: 0.5
     },
     [MOVE_ABILITY_ID]: {
@@ -130,18 +139,21 @@ const FustyGrandpa: CharacterAsset = {
   kind: 'fusty-grandpa',
   name: 'Papivresse',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0.6,
+    deceleration: 300
   },
   stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
+    [CAC_ABILITY_ID]: {
+      id: CAC_ABILITY_ID,
+      name: CAC_ABILITY,
       level: 0.5
     },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
-      level: 0.1
+    [DISTANCE_ABILITY_ID]: {
+      id: DISTANCE_ABILITY_ID,
+      name: DISTANCE_ABILITY,
+      level: 0.8
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
@@ -156,17 +168,20 @@ const Geek: CharacterAsset = {
   kind: 'geek',
   name: 'Le geek metalleux',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
+    [CAC_ABILITY_ID]: {
+      id: CAC_ABILITY_ID,
+      name: CAC_ABILITY,
       level: 0.5
     },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
+    [DISTANCE_ABILITY_ID]: {
+      id: DISTANCE_ABILITY_ID,
+      name: DISTANCE_ABILITY,
       level: 0.5
     },
     [MOVE_ABILITY_ID]: {
@@ -182,17 +197,20 @@ const Hippie: CharacterAsset = {
   kind: 'hippie',
   name: 'Le bobo',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
+    [CAC_ABILITY_ID]: {
+      id: CAC_ABILITY_ID,
+      name: CAC_ABILITY,
       level: 0.5
     },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
+    [DISTANCE_ABILITY_ID]: {
+      id: DISTANCE_ABILITY_ID,
+      name: DISTANCE_ABILITY,
       level: 0.5
     },
     [MOVE_ABILITY_ID]: {
@@ -208,17 +226,20 @@ const LapdogWoman: CharacterAsset = {
   kind: 'lapdog-woman',
   name: 'La folle aux chiens',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
+    [CAC_ABILITY_ID]: {
+      id: CAC_ABILITY_ID,
+      name: CAC_ABILITY,
       level: 0.5
     },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
+    [DISTANCE_ABILITY_ID]: {
+      id: DISTANCE_ABILITY_ID,
+      name: DISTANCE_ABILITY,
       level: 0.5
     },
     [MOVE_ABILITY_ID]: {
@@ -234,17 +255,20 @@ const MrMuscle: CharacterAsset = {
   kind: 'mr-muscle',
   name: 'Le keke',
   projectile: {
-    mass: 1
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
   },
   stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
+    [CAC_ABILITY_ID]: {
+      id: CAC_ABILITY_ID,
+      name: CAC_ABILITY,
       level: 0.5
     },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
+    [DISTANCE_ABILITY_ID]: {
+      id: DISTANCE_ABILITY_ID,
+      name: DISTANCE_ABILITY,
       level: 1
     },
     [MOVE_ABILITY_ID]: {
