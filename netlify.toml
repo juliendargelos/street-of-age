@@ -4,3 +4,6 @@
 
 [build.environment]
   VUE_APP_SOCKET_ENDPOINT = ""
+
+[context.deploy-preview]
+  command = "unset VUE_APP_SOCKET_ENDPOINT && yarn build:client"
