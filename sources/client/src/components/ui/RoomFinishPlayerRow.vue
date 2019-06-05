@@ -1,7 +1,7 @@
 <template>
   <div class="player__row" :style="{'--player-color': player.color}">
     <div class="player__row__picture" :data-player-number="playerNumber">
-      <img :src="require(`@/assets/characters/pictos/${player.characterKinds[0]}.png`)"/>
+      <img v-if="player.characterKinds.length > 0" :src="require(`@/assets/characters/pictos/${player.characterKinds[0]}.png`)"/>
     </div>
     <div class="player__row__name">
       Joueur {{ playerNumber }}
@@ -46,6 +46,7 @@
     border: 2px solid var(--player-color)
     border-radius: 3px
     position: relative
+    min-width: 41px
     &:after
       content: attr(data-player-number)
       font-size: 12px

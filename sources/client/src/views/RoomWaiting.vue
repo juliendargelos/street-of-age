@@ -94,6 +94,11 @@ import PlayerWaitingCard from '@/components/PlayerWaitingCard.vue'
       if (!this.player.team) {
         this.$router.replace({ name: 'room-setup-team', params: { id: this.room.id } })
       }
+      window.addEventListener('keydown', e => {
+        if (e.code === 'KeyF') {
+          this.$router.push({ name: 'room-finish', params: { id: this.room.id } })
+        }
+      })
     }
   })
 export default class RoomWaiting extends Vue {
