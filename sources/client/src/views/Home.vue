@@ -149,6 +149,7 @@ export default class Home extends Vue {
     this.logo = false
     this.start = false
     this.menu = true
+    AppModule.setHasPlayedIntroduction(true)
   }
 
   public onGameStart (): void {
