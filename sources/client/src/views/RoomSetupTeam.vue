@@ -1,5 +1,8 @@
 <template>
   <div class="room-setup-team">
+    <AppNav>
+      <BackButton/>
+    </AppNav>
     <div class="team__block team__block--old">
       <div class="team__picker">
         <h2 class="team__picker__title">Choisi</h2>

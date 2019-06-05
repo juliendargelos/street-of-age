@@ -56,6 +56,11 @@
     background: linear-gradient(90deg, transparent 0%, transparent 33%, $grey 50%, transparent 67%, transparent 100%)
     text-align: center
     padding: 2px 0
+    &:before
+      content: url(~@/assets/time.png)
+      margin-right: 0.3rem
+      position: relative
+      top: -1px
   .actions
     display: flex
     justify-content: space-evenly
@@ -80,7 +85,7 @@
             height: 14px
             transform: skew(20deg)
           &--life:after
-            background: url(~@/assets/icons/death.png) no-repeat center center / contain
+            background: url(~@/assets/icons/life.png) no-repeat center center / contain
           &--death:after
             background: url(~@/assets/icons/death.png) no-repeat center center / contain
           &--fall:after
