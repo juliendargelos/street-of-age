@@ -1,7 +1,7 @@
 <template>
   <div class="room-waiting">
     <AppNav position="bottom">
-      <BackButton/>
+      <BackButton :disabled="allReady"/>
     </AppNav>
       <div class="room-waiting__team room-waiting__team--old">
         <PlayerWaitingCard
@@ -80,7 +80,7 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Player, Room as RoomType } from '@/@types'
 import RoomModule from '@/store/modules/room'
 import { SerializedPlayer } from '@street-of-age/shared/entities/player'
@@ -102,13 +102,13 @@ import PlayerWaitingCard from '@/components/PlayerWaitingCard.vue'
     }
   })
 export default class RoomWaiting extends Vue {
-  get room (): RoomType {
-    return RoomModule.rooms.find(r => r.id === this.$route.params.id)!
-  }
   public getMetadataStyleForPlayer (player: SerializedPlayer) {
     return {
       color: player.color
     }
+  }
+  get room (): RoomType {
+    return RoomModule.rooms.find(r => r.id === this.$route.params.id)!
   }
   get player (): Player {
     return AppModule.player
@@ -125,6 +125,9 @@ export default class RoomWaiting extends Vue {
         .filter(player => player.team === PlayerTeam.Old && player.characterKinds.length > 0)[index] || entry)
     ]
     return groupBy(allPlayers, player => player.team)
+  }
+  get allReady (): boolean {
+    return this.room.players.every(player => player.ready)
   }
 }
 </script>

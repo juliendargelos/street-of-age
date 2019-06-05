@@ -18,6 +18,7 @@ export enum RoomEvents {
   RoomLeft = 'room:left',
   RoomPlayerReady = 'room:player-ready',
   RoomAllPlayersReady = 'room:all-players-ready',
+  StartGame = 'room:start:game',
 }
 
 export enum PlayerEvents {

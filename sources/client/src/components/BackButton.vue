@@ -1,5 +1,5 @@
 <template>
-  <button class="back__button" @click="onClick">Retour</button>
+  <button :disabled="disabled" class="back__button" @click="onClick">Retour</button>
 </template>
 
 <style lang="sass">
@@ -10,6 +10,9 @@
   background: $blue
   padding: 10px 10px
   position: relative
+  &:disabled
+    opacity: 0.5
+    cursor: not-allowed
   &:before
     content: '< '
   &:after
@@ -24,10 +27,11 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component<BackButton>({})
 export default class BackButton extends Vue {
+  @Prop({ type: Boolean, default: false }) readonly disabled!: boolean
   private onClick () {
     this.$router.back()
   }
