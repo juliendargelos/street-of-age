@@ -2,7 +2,7 @@
   <div class="game-ui">
     <template v-if="!paused">
       <virtual-joystick v-if="mobile"/>
-      <img @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
+      <img v-if="mobile" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
     </template>
     <GamePauseUI @close="pauseToggle" v-if="paused"/>

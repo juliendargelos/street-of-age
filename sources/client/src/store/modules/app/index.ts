@@ -21,13 +21,19 @@ export enum CharacterKind {
 
 export interface AppState {
   hasPlayedIntroduction: boolean,
+  isPlaying: boolean,
   player: Player
 }
 
 @Module({ name: 'app', namespaced: true, dynamic: true, store })
 class AppStore extends VuexModule implements AppState {
   public hasPlayedIntroduction: boolean = false
+  public isPlaying: boolean = false
   public player: Player = { id: '', color: '', isLocal: true, characterKinds: [], team: null, ready: false }
+
+  @Mutation public setIsPlaying (isPlaying: boolean) {
+    this.isPlaying = isPlaying
+  }
 
   @Mutation public setHasPlayedIntroduction (hasPlayedIntroduction: boolean) {
     this.hasPlayedIntroduction = hasPlayedIntroduction

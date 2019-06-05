@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="{ playing }">
     <!-- <nav>
       <router-link :to="{ name: 'home' }">Home</router-link>
       <router-link :to="{ name: 'debug-game' }">Debug</router-link>
@@ -18,7 +18,8 @@
   background: url(~@/assets/background.gif) no-repeat center center / cover
   font:
     size: 16px
-
+  &.playing
+    background: url(~@/assets/background.jpg) no-repeat center center / cover
   @at-root html, body, &
     height: 100%
     overflow: hidden
@@ -29,13 +30,27 @@ import { Component, Vue } from 'vue-property-decorator'
 import RoomModule from '@/store/modules/room'
 import AppModule from '@/store/modules/app'
 import { PlayerEvents, RoomEvents } from '@street-of-age/shared/socket/events'
+import { Emitter } from '@/main'
+import { GameEvents } from '@street-of-age/shared/game/events'
 
-@Component({
+@Component<App>({
   sockets: {
     [RoomEvents.RoomRefresh]: RoomModule.setRooms,
     [PlayerEvents.PlayerConnected]: AppModule.setPlayerId
+  },
+  mounted (): void {
+    Emitter.on(GameEvents.GameLoaded, this.onGameLoaded)
+  },
+  beforeDestroy (): void {
+    Emitter.removeListener(GameEvents.GameLoaded, this.onGameLoaded)
   }
 })
 export default class App extends Vue {
+  public onGameLoaded () {
+    AppModule.setIsPlaying(true)
+  }
+  get playing () {
+    return AppModule.isPlaying
+  }
 }
 </script>
