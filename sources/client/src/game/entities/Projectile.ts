@@ -5,6 +5,7 @@ import {
   DISTANCE_ABILITY_ID
 } from '@/assets/characters'
 import { ClientCharacterAsset } from '@/@types'
+import destroy = Phaser.Loader.FileTypesManager.destroy
 
 interface Constructor extends SpriteConstructor{
   angle: number,
@@ -15,6 +16,7 @@ interface Constructor extends SpriteConstructor{
 class Projectile extends Phaser.Physics.Arcade.Sprite {
   private readonly character: ClientCharacterAsset
   private facing: 'left' | 'right' = 'right'
+  private bounces: number = 0
 
   constructor (params: Constructor) {
     super(params.scene, params.x, params.y, params.texture, params.frame)
@@ -33,6 +35,11 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   }
 
   public onCollide (go: Phaser.GameObjects.GameObject, other: Phaser.GameObjects.GameObject): void {
+    if (this.character.projectile.bounceTtl && this.bounces >= this.character.projectile.bounceTtl) {
+      this.destroy()
+      return
+    }
+    this.bounces++
     this.facing = this.body.velocity.x > 0 ? 'right' : 'left'
     if (this.character.projectile.bulletLike) {
       go.destroy()
@@ -80,6 +87,18 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     force.scale(scaleForce)
 
     this.applyImpulseForce(force)
+    if (this.character.projectile.ttl) {
+      this.scene.time.delayedCall(
+        this.character.projectile.ttl,
+        () => {
+          if (this) {
+            this.destroy()
+          }
+        },
+        [],
+        null
+      )
+    }
   }
 }
 

@@ -11,6 +11,8 @@ export interface CharacterProjectile {
   mass: number,
   bounciness: number,
   deceleration: number,
+  ttl: number | null,
+  bounceTtl: number | null,
   bulletLike: boolean
 }
 
@@ -41,6 +43,8 @@ const Egocentric: CharacterAsset = {
   kind: 'egocentric',
   name: 'L\'influenceuse',
   projectile: {
+    bounceTtl: null,
+    ttl: null,
     bulletLike: false,
     mass: 1,
     bounciness: 0,
@@ -93,6 +97,8 @@ const Fattie: CharacterAsset = {
   kind: 'fattie',
   name: 'La boulette',
   projectile: {
+    bounceTtl: null,
+    ttl: null,
     bulletLike: false,
     mass: 1,
     bounciness: 0,
@@ -122,6 +128,8 @@ const FustyGrandpa: CharacterAsset = {
   kind: 'fusty-grandpa',
   name: 'Papivresse',
   projectile: {
+    bounceTtl: null,
+    ttl: null,
     bulletLike: false,
     mass: 1,
     bounciness: 0,
@@ -151,6 +159,8 @@ const Geek: CharacterAsset = {
   kind: 'geek',
   name: 'Le geek metalleux',
   projectile: {
+    bounceTtl: null,
+    ttl: null,
     bulletLike: false,
     mass: 1,
     bounciness: 0,
@@ -180,6 +190,8 @@ const Hippie: CharacterAsset = {
   kind: 'hippie',
   name: 'Le bobo',
   projectile: {
+    bounceTtl: null,
+    ttl: null,
     bulletLike: false,
     mass: 1,
     bounciness: 0,
@@ -209,6 +221,8 @@ const LapdogWoman: CharacterAsset = {
   kind: 'lapdog-woman',
   name: 'La folle aux chiens',
   projectile: {
+    bounceTtl: null,
+    ttl: null,
     bulletLike: false,
     mass: 1,
     bounciness: 0,
@@ -238,6 +252,8 @@ const MrMuscle: CharacterAsset = {
   kind: 'mr-muscle',
   name: 'Le keke',
   projectile: {
+    bounceTtl: null,
+    ttl: null,
     bulletLike: false,
     mass: 1,
     bounciness: 0,
