@@ -6,7 +6,8 @@
       <router-link :to="{ name: 'room-list' }">Room List</router-link>
       <router-link :to="{ name: 'room-form' }">Room Create</router-link>
     </nav> -->
-    <router-view :key="$route.fullPath"/>
+    <router-view v-if="canPlay" :key="$route.fullPath"/>
+    <h1 v-else>Veuillez tourner votre téléphone</h1>
   </div>
 </template>
 
@@ -26,6 +27,7 @@
 </style>
 
 <script lang="ts">
+import fscreen from 'fscreen'
 import { Component, Vue } from 'vue-property-decorator'
 import RoomModule from '@/store/modules/room'
 import AppModule from '@/store/modules/app'
@@ -40,14 +42,28 @@ import { GameEvents } from '@street-of-age/shared/game/events'
   },
   mounted (): void {
     Emitter.on(GameEvents.GameLoaded, this.onGameLoaded)
+    window.screen.orientation.addEventListener('change', this.onOrientationChange)
   },
   beforeDestroy (): void {
     Emitter.removeListener(GameEvents.GameLoaded, this.onGameLoaded)
+    window.screen.orientation.removeEventListener('change', this.onOrientationChange)
   }
 })
 export default class App extends Vue {
+  public orientation: OrientationType = window.screen.orientation.type
   public onGameLoaded () {
     AppModule.setIsPlaying(true)
+  }
+  public onOrientationChange () {
+    this.orientation = window.screen.orientation.type
+    if (this.canPlay) {
+      fscreen.requestFullscreen(this.$el)
+    } else {
+      fscreen.exitFullscreen()
+    }
+  }
+  get canPlay () {
+    return this.orientation.includes('landscape')
   }
   get playing () {
     return AppModule.isPlaying
