@@ -100,7 +100,7 @@ export default class RoomWaiting extends Vue {
   get room (): RoomType {
     return RoomModule.rooms.find(r => r.id === this.$route.params.id)!
   }
-  getMetadataStyleForPlayer (player: SerializedPlayer) {
+  public getMetadataStyleForPlayer (player: SerializedPlayer) {
     return {
       color: player.color
     }

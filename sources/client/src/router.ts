@@ -33,6 +33,12 @@ export default new Router({
       component: RoomForm
     },
     {
+      path: '/finish',
+      name: 'room-finish',
+      component: RoomFinish,
+      props: true
+    },
+    {
       path: '/rooms/:id',
       name: 'room',
       component: Room,
