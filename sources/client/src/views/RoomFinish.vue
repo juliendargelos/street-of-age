@@ -51,6 +51,7 @@
     margin: 20px
     font-size: 40px
     text-align: center
+    text-transform: uppercase
   .duration
     background: linear-gradient(90deg, transparent 0%, transparent 33%, $grey 50%, transparent 67%, transparent 100%)
     text-align: center
