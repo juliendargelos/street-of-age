@@ -6,6 +6,13 @@
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
     </template>
     <GamePauseUI @close="pauseToggle" v-if="paused"/>
+    <transition name="fade" mode="out-in">
+      <div v-if="countdown > 0" class="game-ui__starting">
+        <transition-group name="zoom-out" mode="out-in">
+          <h1 :key="n" v-for="n in countdown" v-if="countdown === n" class="road-rage">{{ n }}</h1>
+        </transition-group>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -20,6 +27,18 @@
   width: 100%
   z-index: 11
   pointer-events: none
+  &__starting
+    position: fixed
+    display: flex
+    justify-content: center
+    align-items: center
+    z-index: 1000
+    width: 100%
+    height: 100%
+    background: transparentize($black, 0.5)
+    pointer-events: all
+    h1
+      font-size: 72px
   & .button
     pointer-events: all
     position: absolute
@@ -32,18 +51,32 @@
       opacity: 0.3
 </style>
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/src/game/events'
 import GamePauseUI from '@/components/ui/GamePauseUI.vue'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
 
-@Component({
-  components: { VirtualJoystick, GamePauseUI }
+@Component<GameUI>({
+  components: { VirtualJoystick, GamePauseUI },
+  mounted (): void {
+    this.intervalId = setInterval(() => {
+      this.countdown--
+    }, 1000)
+  }
 })
 export default class GameUI extends Vue {
   public paused: boolean = false
+  public countdown: number = 3
+  private intervalId!: number
   @Prop({ type: Boolean, default: false }) readonly mobile!: boolean
+
+  @Watch('countdown')
+  private onCountdownChange (countdown: number) {
+    if (countdown <= 0) {
+      clearInterval(this.intervalId)
+    }
+  }
 
   public onJumpButtonClick () {
     Emitter.emit(UIEvents.Jump)

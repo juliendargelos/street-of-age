@@ -1,6 +1,6 @@
 <template>
   <div class="room-game">
-    <GameUI :mobile="mobile"/>
+    <GameUI v-if="isPlaying" :mobile="mobile"/>
   </div>
 </template>
 
@@ -33,6 +33,7 @@ import { REGISTRY_LEVEL_KEY } from '@/constants'
 import level from '@/assets/levels/SmallStreet.level.json'
 import GameManager from '@/game/manager/GameManager'
 import GameUI from '@/components/ui/GameUI.vue'
+import AppModule from '@/store/modules/app'
 
 @Component<RoomGame>({
   components: { GameUI },
@@ -58,6 +59,10 @@ export default class RoomGame extends Vue {
 
     @Watch('players', { deep: true, immediate: true })
     private onPlayersChanged (val: Player[], oldVal: Player[]) {
+    }
+
+    get isPlaying (): boolean {
+      return AppModule.isPlaying
     }
 
     get config (): Phaser.Types.Core.GameConfig {
