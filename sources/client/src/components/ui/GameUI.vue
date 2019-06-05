@@ -9,7 +9,9 @@
     <transition name="fade" mode="out-in">
       <div v-if="countdown > 0" class="game-ui__starting">
         <transition-group name="zoom-out" mode="out-in">
-          <h1 :key="n" v-for="n in countdown" v-if="countdown === n" class="road-rage">{{ n }}</h1>
+          <h1 :key="n" v-for="n in countdown" v-if="countdown === n" class="road-rage">
+            {{ n - 1 > 0 ? n - 1 : 'Fight!' }}
+          </h1>
         </transition-group>
       </div>
     </transition>
@@ -67,7 +69,7 @@ import VirtualJoystick from '@/components/VirtualJoystick.vue'
 })
 export default class GameUI extends Vue {
   public paused: boolean = false
-  public countdown: number = 3
+  public countdown: number = 4
   private intervalId!: number
   @Prop({ type: Boolean, default: false }) readonly mobile!: boolean
 
