@@ -51,6 +51,29 @@ const Egocentric: CharacterAsset = {
   }
 }
 
+const DotingGranny: CharacterAsset = {
+  team: 'old',
+  kind: 'doting-granny',
+  name: 'Mamie gateau',
+  stats: {
+    [JUMP_ABILITY_ID]: {
+      id: JUMP_ABILITY_ID,
+      name: JUMP_ABILITY,
+      level: 50
+    },
+    [STRENGHT_ABILITY_ID]: {
+      id: STRENGHT_ABILITY_ID,
+      name: STRENGHT_ABILITY,
+      level: 50
+    },
+    [MOVE_ABILITY_ID]: {
+      id: MOVE_ABILITY_ID,
+      name: MOVE_ABILITY,
+      level: 50
+    }
+  }
+}
+
 const Fattie: CharacterAsset = {
   team: 'young',
   kind: 'fattie',
@@ -191,6 +214,7 @@ const MrMuscle: CharacterAsset = {
 
 const characters: CharactersAsset = {
   ['egocentric']: Egocentric,
+  ['doting-granny']: DotingGranny,
   ['fattie']: Fattie,
   ['fusty-grandpa']: FustyGrandpa,
   ['geek']: Geek,

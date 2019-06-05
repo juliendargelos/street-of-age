@@ -8,7 +8,7 @@ export const PlayerTeamKinds: { [P in PlayerTeam]: Array<CharacterKind | string>
     CharacterKind.Fattie
   ],
   [PlayerTeam.Old]: [
-    // CharacterKind.DotingGranny,
+    CharacterKind.DotingGranny,
     CharacterKind.FustyGrandpa,
     CharacterKind.LapdogWoman,
     CharacterKind.MrMuscle

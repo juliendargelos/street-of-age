@@ -66,6 +66,7 @@
     bottom: 26px
   &__add-button, &__remove-button
       & .app-button__content
+        line-height: 20px
         min-width: unset
         position: absolute
         transform: skew(-4deg)
@@ -124,9 +125,11 @@
     &--modifiers
       font-weight: 300
       margin-top: 10px
+      & li
+        margin: 0.1rem 0
       & span
         display: block
-        margin: 4px 0
+        margin: 0.3rem 0
         &.ability
           font-family: 'Futura', sans-serif
           font-weight: 400

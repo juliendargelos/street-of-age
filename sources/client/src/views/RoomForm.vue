@@ -54,9 +54,11 @@
     &__name
       align-self: center
       width: 70%
-
+      height: 14px
+      line-height: 14
       &::placeholder
         color: rgba($white, .6)
+        line-height: 14
 
     &__actions
       margin-top: 20px

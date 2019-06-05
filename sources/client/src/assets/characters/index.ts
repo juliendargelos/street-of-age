@@ -4,6 +4,8 @@ import { CharacterKind } from '@/store/modules/app'
 
 const egocentric = require('./pictures/egocentric.png')
 const egocentricFace = require('./pictures/egocentric_face.png')
+const dotingGranny = require('./pictures/doting-granny.png')
+const dotingGrannyFace = require('./pictures/doting-granny_face.png')
 const fattie = require('./pictures/fattie.png')
 const fattieFace = require('./pictures/fattie_face.png')
 const fustyGrandpa = require('./pictures/fusty_grandpa.png')
@@ -47,6 +49,29 @@ const Egocentric: CharacterAsset = {
   team: 'young',
   kind: 'egocentric',
   name: 'L\'influenceuse',
+  stats: {
+    [JUMP_ABILITY_ID]: {
+      id: JUMP_ABILITY_ID,
+      name: JUMP_ABILITY,
+      level: 50
+    },
+    [STRENGHT_ABILITY_ID]: {
+      id: STRENGHT_ABILITY_ID,
+      name: STRENGHT_ABILITY,
+      level: 50
+    },
+    [MOVE_ABILITY_ID]: {
+      id: MOVE_ABILITY_ID,
+      name: MOVE_ABILITY,
+      level: 50
+    }
+  }
+}
+
+const DotingGranny: CharacterAsset = {
+  team: 'old',
+  kind: 'doting-granny',
+  name: 'Mamie gateau',
   stats: {
     [JUMP_ABILITY_ID]: {
       id: JUMP_ABILITY_ID,
@@ -206,6 +231,7 @@ const MrMuscle: CharacterAsset = {
 
 const serverCharacters: CharactersAsset = {
   [CharacterKind.Egocentric]: Egocentric,
+  [CharacterKind.DotingGranny]: DotingGranny,
   [CharacterKind.Fattie]: Fattie,
   [CharacterKind.FustyGrandpa]: FustyGrandpa,
   [CharacterKind.Geek]: Geek,
@@ -218,6 +244,10 @@ const pictures: { [kind: string]: { face: string, full: string }} = {
   [CharacterKind.Egocentric]: {
     face: egocentricFace,
     full: egocentric
+  },
+  [CharacterKind.DotingGranny]: {
+    face: dotingGrannyFace,
+    full: dotingGranny
   },
   [CharacterKind.LapdogWoman]: {
     face: lapdogWomanFace,
