@@ -158,6 +158,8 @@ export default class Home extends Vue {
       try {
         fscreen.requestFullscreen(this.$root.$el)
       } catch (e) {
+        console.error(e)
+      } finally {
         this.showMenu()
       }
     }
