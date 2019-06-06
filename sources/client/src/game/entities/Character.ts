@@ -54,6 +54,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     this
       .setInteractive()
+      .setDragX(400)
       .setDepth(PLAYER_DEPTH)
       .setSize(WIDTH, HEIGHT)
       .setBounce(BOUNCE)
@@ -177,10 +178,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
     if (velocity < 0) {
       this.turn('left')
+      this.setVelocityX(velocity)
     } else if (velocity > 0) {
       this.turn('right')
+      this.setVelocityX(velocity)
     }
-    this.setVelocityX(velocity)
   }
 
   private turn = (direction: 'left' | 'right') => {

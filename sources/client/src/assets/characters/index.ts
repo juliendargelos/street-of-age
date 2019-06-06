@@ -169,7 +169,7 @@ const FustyGrandpa: CharacterAsset = {
     [DISTANCE_ABILITY_ID]: {
       id: DISTANCE_ABILITY_ID,
       name: DISTANCE_ABILITY,
-      level: 0.8
+      level: 0.5
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,

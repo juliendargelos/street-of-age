@@ -1,10 +1,9 @@
 import BaseScene from '@/game/scenes/BaseScene'
 import { Character } from '@/game/entities/Character'
 import { CharacterKind } from '@/store/modules/app'
-import {PostProcessing} from '@/game/PostProcessing'
+import { PostProcessing } from '@/game/PostProcessing'
 
 const HEIGHT_CAMERA_OFFSET = 400
-const WIDTH_CAMERA_OFFSET = 400
 
 export class GameScene extends BaseScene {
   private postprocessing!: PostProcessing
@@ -20,8 +19,8 @@ export class GameScene extends BaseScene {
     this.character = new Character({
       scene: this,
       kind: CharacterKind.FustyGrandpa,
-      x: 120,
-      y: 200
+      x: 300,
+      y: -10
     })
     this.physics.add.collider(this.character, this.level.floors)
     this.physics.add.collider(this.character, this.level.colliders)
