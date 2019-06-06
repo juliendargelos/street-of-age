@@ -90,21 +90,29 @@ const DotingGranny: CharacterAsset = {
   team: 'old',
   kind: 'doting-granny',
   name: 'Mamie gateau',
+  projectile: {
+    bounceTtl: null,
+    ttl: null,
+    bulletLike: false,
+    mass: 1,
+    bounciness: 0,
+    deceleration: 100
+  },
   stats: {
-    [JUMP_ABILITY_ID]: {
-      id: JUMP_ABILITY_ID,
-      name: JUMP_ABILITY,
-      level: 50
+    [CAC_ABILITY_ID]: {
+      id: CAC_ABILITY_ID,
+      name: CAC_ABILITY,
+      level: 0.5
     },
-    [STRENGHT_ABILITY_ID]: {
-      id: STRENGHT_ABILITY_ID,
-      name: STRENGHT_ABILITY,
-      level: 50
+    [DISTANCE_ABILITY_ID]: {
+      id: DISTANCE_ABILITY_ID,
+      name: DISTANCE_ABILITY,
+      level: 0.5
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 50
+      level: 0.5
     }
   }
 }
