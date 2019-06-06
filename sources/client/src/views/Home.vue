@@ -155,8 +155,11 @@ export default class Home extends Vue {
 
   public onGameStart (): void {
     if (this.start) {
-      fscreen.requestFullscreen(this.$root.$el)
-      this.showMenu()
+      try {
+        fscreen.requestFullscreen(this.$root.$el)
+      } catch (e) {
+        this.showMenu()
+      }
     }
   }
 
