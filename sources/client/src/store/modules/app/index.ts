@@ -69,6 +69,10 @@ class AppStore extends VuexModule implements AppState {
   @Mutation public changePlayerCharacterReady (ready: boolean) {
     this.player.ready = ready
   }
+
+  get orientationApiSupported () {
+    return 'orientation' in window.screen
+  }
 }
 
 const AppModule = getModule(AppStore)

@@ -42,6 +42,7 @@
 </style>
 
 <script lang="ts">
+import fscreen from 'fscreen'
 import { Component, Vue } from 'vue-property-decorator'
 import RoomModule from '@/store/modules/room'
 import AppModule from '@/store/modules/app'
@@ -56,12 +57,22 @@ import { GameEvents } from '@street-of-age/shared/game/events'
   },
   mounted (): void {
     Emitter.on(GameEvents.GameLoaded, this.onGameLoaded)
-    // using addListener instead of addEventListener because it would not work in Safari
-    this.mql.addListener(this.onOrientationChange)
+
+    if (this.orientationApiSupported) {
+      window.screen.orientation.addEventListener('change', this.onOrientationChange)
+    } else {
+      // using addListener instead of addEventListener because it would not work in Safari
+      this.mql.addListener(this.onOrientationChange)
+    }
   },
   beforeDestroy (): void {
     Emitter.removeListener(GameEvents.GameLoaded, this.onGameLoaded)
-    this.mql.removeListener(this.onOrientationChange)
+
+    if (this.orientationApiSupported) {
+      window.screen.orientation.removeEventListener('change', this.onOrientationChange)
+    } else {
+      this.mql.removeListener(this.onOrientationChange)
+    }
   }
 })
 export default class App extends Vue {
@@ -71,7 +82,22 @@ export default class App extends Vue {
     AppModule.setIsPlaying(true)
   }
   public onOrientationChange () {
-    this.orientation = this.mql.matches ? 'portrait' : 'landscape'
+    if (this.orientationApiSupported) {
+      this.orientation = window.screen.orientation.type.includes('landscape')
+        ? 'landscape' : 'portrait'
+      if (this.canPlay) {
+        fscreen.requestFullscreen(this.$el)
+      } else {
+        if (fscreen.fullscreenElement !== null) {
+          fscreen.exitFullscreen()
+        }
+      }
+    } else {
+      this.orientation = this.mql.matches ? 'portrait' : 'landscape'
+    }
+  }
+  get orientationApiSupported () {
+    return AppModule.orientationApiSupported
   }
   get isMobile () {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
