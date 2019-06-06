@@ -1,6 +1,6 @@
 <template>
   <div class="room-game">
-    <virtual-joystick v-if="mobile"/>
+    <GameUI v-if="isPlaying" :mobile="mobile"/>
   </div>
 </template>
 
@@ -17,6 +17,10 @@
     bottom: 0
     right: 0
     left: 0
+    will-change: filter
+    transition: all .2s
+    &.paused
+      filter: blur(25px)
 </style>
 
 <script lang="ts">
@@ -24,14 +28,15 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import Phaser from 'phaser'
 import { GameScene } from '@/game/scenes/GameScene'
 import { Player } from '@/@types/'
-import VirtualJoystick from '@/components/VirtualJoystick.vue'
 import { REGISTRY_LEVEL_KEY } from '@/constants'
 // TODO: The level should be fetched from the server. Meanwhile, it's hard-fetched for testing purposes
 import level from '@/assets/levels/SmallStreet.level.json'
 import GameManager from '@/game/manager/GameManager'
+import GameUI from '@/components/ui/GameUI.vue'
+import AppModule from '@/store/modules/app'
 
 @Component<RoomGame>({
-  components: { VirtualJoystick },
+  components: { GameUI },
   mounted () {
     this.game = new Phaser.Game(this.config)
     GameManager.init(this.game)
@@ -54,6 +59,10 @@ export default class RoomGame extends Vue {
 
     @Watch('players', { deep: true, immediate: true })
     private onPlayersChanged (val: Player[], oldVal: Player[]) {
+    }
+
+    get isPlaying (): boolean {
+      return AppModule.isPlaying
     }
 
     get config (): Phaser.Types.Core.GameConfig {

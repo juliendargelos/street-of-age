@@ -33,6 +33,10 @@ class SocketRoom {
       player.ready = true
       player.io.sockets.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
       Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now ready')
+      if (player.room.players.every(p => p.ready)) {
+        Logger.info(`All players ready on ${player.room}. Starting game...`)
+        socket.server.in(player.room.id).emit(RoomEvents.StartGame)
+      }
     })
 
     socket.on(RoomEvents.RoomLeave, (roomId: string) => {

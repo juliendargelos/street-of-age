@@ -12,13 +12,13 @@
 <style lang="sass">
 .app-nav
   position: fixed
+  left: 0
   z-index: 10
-  left: 20px
   display: flex
   &--top
-    top: 20px
+    top: 0
   &--bottom
-    bottom: 20px
+    bottom: 0
 </style>
 
 <script lang="ts">

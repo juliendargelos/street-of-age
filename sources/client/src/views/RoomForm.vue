@@ -22,6 +22,7 @@
         </AppButton>
         <AppButton
           secondary
+          alternate
           block
           type="submit">
           Suivant
@@ -53,9 +54,11 @@
     &__name
       align-self: center
       width: 70%
-
+      height: 14px
+      line-height: 14
       &::placeholder
         color: rgba($white, .6)
+        line-height: 14
 
     &__actions
       margin-top: 20px
@@ -69,12 +72,17 @@ import { RoomEvents } from '@street-of-age/shared/socket/events'
 import { Room } from '@/@types'
 import AppPicker from '@/components/AppPicker.vue'
 import { RoomSettings } from '@street-of-age/shared/entities/room'
+import AppModule from '@/store/modules/app'
 
   @Component({
     components: { AppPicker },
     sockets: {
       [RoomEvents.RoomJoined] (room: Room) {
         const { id } = room
+        const local = room.players.find(p => p.id === AppModule.player.id)
+        if (local) {
+          AppModule.setPlayerCharacterColor(local.color)
+        }
         this.$router.push({ name: 'room-setup-team', params: { id } })
       }
     }

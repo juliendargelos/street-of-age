@@ -1,8 +1,7 @@
 <template>
   <div class="room" v-if="this.isDefined">
 <!--    {{ this.room }}-->
-    <router-view v-if="currentStep === 'setup'"/>
-    <RoomGame v-else :players="this.room.players"/>
+    <router-view/>
   </div>
 </template>
 
@@ -24,8 +23,8 @@ import RoomModule from '@/store/modules/room'
 
 @Component<Room>({
   sockets: {
-    [RoomEvents.RoomAllPlayersReady] () {
-      this.currentStep = 'playing'
+    [RoomEvents.StartGame] () {
+      this.$router.replace({ name: 'room-game', params: { id: this.$route.params.id } })
     },
     [RoomEvents.RoomDefined] () {
       this.isDefined = true
@@ -54,7 +53,6 @@ import RoomModule from '@/store/modules/room'
 })
 export default class Room extends Vue {
   public isDefined: boolean = false
-  public currentStep: 'setup' | 'playing' = 'setup'
 
   get room (): RoomType {
     return RoomModule.rooms.find(r => r.id === this.$route.params.id)!

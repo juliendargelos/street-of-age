@@ -4,13 +4,14 @@
     :class="{
       'app-button--primary': primary,
       'app-button--secondary': secondary,
+      'app-button--alternate': alternate,
       'app-button--neutral': neutral,
       'app-button--filled': filled,
       'app-button--block': block
     }"
     v-on="$listeners"
   >
-    <button :type="type" class="app-button__content">
+    <button :disabled="disabled" :type="type" class="app-button__content">
       <slot />
     </button>
 
@@ -39,6 +40,11 @@
     border-radius: 4px
     transform: skew(-12deg)
     transition: .2s $easeOutQuart
+    &:disabled
+      filter: grayscale(100%)
+      opacity: 0.7
+      &:hover
+        cursor: not-allowed
     &:hover
       cursor: pointer
 
@@ -90,6 +96,12 @@
     &--filled
       background: $pale-blue
 
+  &--secondary.app-button--alternate &__content
+    background: $white
+    border-color: $white
+    box-shadow: none
+    color: $pale-blue
+
   &--block
     display: block
 </style>
@@ -110,9 +122,11 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 export default class AppButton extends Vue {
   @Prop({ type: Boolean, default: false }) readonly primary!: boolean
   @Prop({ type: Boolean, default: false }) readonly secondary!: boolean
+  @Prop({ type: Boolean, default: false }) readonly alternate!: boolean
   @Prop({ type: Boolean, default: false }) readonly neutral!: boolean
   @Prop({ type: Boolean, default: false }) readonly block!: boolean
   @Prop({ type: Boolean, default: false }) readonly filled!: boolean
+  @Prop({ type: Boolean, default: false }) readonly disabled!: boolean
   @Prop({ type: String, default: 'submit' }) readonly type!: string
   @Prop({ type: [String, Object], default: null }) readonly to!: string | object
 

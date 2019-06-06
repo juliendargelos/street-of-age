@@ -14,8 +14,10 @@
                        :key="characterKind"/>
       </div>
     <AppButton
+      class="validate-button"
       v-if="ready"
       secondary
+      alternate
       @click="onValidate"
       block>
       Valider
@@ -26,9 +28,16 @@
 <style lang="sass">
 .room-setup-character
   height: 100%
+  & .validate-button
+    position: fixed
+    top: 10px
+    right: 10px
   &__characters
     display: flex
-    margin-bottom: 30px
+    width: 100%
+    height: 100%
+    justify-content: space-evenly
+    align-items: center
     & .character-card.local
       box-shadow: 0 0 30px white
       z-index: 1

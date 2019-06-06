@@ -9,6 +9,8 @@ import RoomSetup from '@/views/RoomSetup.vue'
 import RoomSetupTeam from '@/views/RoomSetupTeam.vue'
 import RoomSetupCharacter from '@/views/RoomSetupCharacter.vue'
 import RoomWaiting from '@/views/RoomWaiting.vue'
+import RoomFinish from '@/views/RoomFinish.vue'
+import RoomGame from '@/components/RoomGame.vue'
 
 Vue.use(Router)
 
@@ -60,6 +62,18 @@ export default new Router({
           path: 'waiting',
           name: 'room-waiting',
           component: RoomWaiting,
+          props: true
+        },
+        {
+          path: 'game',
+          name: 'room-game',
+          component: RoomGame,
+          props: true
+        },
+        {
+          path: 'finish',
+          name: 'room-finish',
+          component: RoomFinish,
           props: true
         }
       ]

@@ -1,6 +1,6 @@
 import BaseScene from '@/game/scenes/BaseScene'
-import {Character} from '@/game/entities/Character'
-import {CharacterKind} from '@/store/modules/app'
+import { Character } from '@/game/entities/Character'
+import { CharacterKind } from '@/store/modules/app'
 import { PostProcessing } from '@/game/PostProcessing'
 
 const HEIGHT_CAMERA_OFFSET = 400

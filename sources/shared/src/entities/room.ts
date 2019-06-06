@@ -1,4 +1,4 @@
-import { Player as BasePlayer, SerializedPlayer } from './player'
+import {Player as BasePlayer, PlayerColor, SerializedPlayer} from './player'
 
 export interface RoomSettings {
   name: string
@@ -16,6 +16,7 @@ export class Room<Player extends BasePlayer = BasePlayer> implements Serializabl
   public readonly id: string
   public settings:  RoomSettings
   public players: Player[] = []
+  private playersColors: PlayerColor[] = ['#f64afe', '#0be5fe', '#50fbd7', '#e6ff5d', '#ff4f73', '#ff3dad']
 
   constructor(attributes: SerializedRoom) {
     this.id = attributes.id
@@ -24,6 +25,7 @@ export class Room<Player extends BasePlayer = BasePlayer> implements Serializabl
 
   public async addPlayer(player: Player): Promise<Player> {
     player.room = this
+    player.color = this.playersColors.pop()
     this.players = [...this.players, player]
     return player
   }
@@ -31,6 +33,9 @@ export class Room<Player extends BasePlayer = BasePlayer> implements Serializabl
   public async removePlayer(player: Player): Promise<Player> {
     const index = this.players.indexOf(player)
     if (index !== -1) {
+      if (player.color) {
+        this.playersColors.push(player.color)
+      }
       this.players.splice(index, 1)
       player.room = null
     }

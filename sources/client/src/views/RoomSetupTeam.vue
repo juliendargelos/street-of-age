@@ -3,15 +3,18 @@
     <AppNav>
       <BackButton/>
     </AppNav>
-    <AppPicker
-      label="Votre équipe"
-      lazy
-      :value="this.team"
-      @input="changePlayerCharacterTeam"
-      class="room-setup-team__field"
-      :disabledChoices="disabledTeams"
-      :choices="[{ value: 'old', label: 'Vieux' }, { value: 'young', label: 'Jeunes' }]"/>
-
+    <div class="team__block team__block--old">
+      <div class="team__picker">
+        <h2 class="team__picker__title">Choisi</h2>
+        <AppButton :disabled="disabledTeams.includes('old')" secondary alternate block class="team__picker__button" @click="chooseTeam('old')">Les anciens</AppButton>
+      </div>
+    </div>
+    <div class="team__block team__block--young">
+      <div class="team__picker">
+        <h2 class="team__picker__title">Choisi</h2>
+        <AppButton :disabled="disabledTeams.includes('young')" secondary alternate block class="team__picker__button" @click="chooseTeam('young')">Les jeunes</AppButton>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -20,7 +23,31 @@
   height: 100%
   display: flex
   justify-content: center
-  align-content: center
+  background: url(~@/assets/team.png) no-repeat center center / cover
+  & .team__block
+    flex: 1
+    position: relative
+    & .team__picker
+      position: absolute
+      bottom: 33px
+      &__title
+        font-family: 'Dead Jim', sans-serif
+        text-align: center
+        margin-bottom: 6px
+      &__button .app-button__content
+        font-size: 24px
+        min-width: unset
+        width: 260px
+    &--young .team__picker
+      right: 0
+      &__button
+        position: relative
+        right: -8px
+    &--old .team__picker
+      left: 0
+      &__button
+        position: relative
+        left: -8px
 </style>
 
 <script lang="ts">
@@ -45,13 +72,6 @@ import { CharacterEvents } from '@street-of-age/shared/socket/events'
       AppModule.changePlayerCharacterReady(false)
       this.$socket.emit(CharacterEvents.CharacterChangeReady, false)
     },
-    methods: {
-      changePlayerCharacterTeam (team: PlayerTeam) {
-        AppModule.changePlayerCharacterTeam(team)
-        this.$socket.emit(CharacterEvents.CharacterChangeTeam, team)
-        this.$router.push({ name: 'room-setup-character', params: { id: this.room.id } })
-      }
-    },
     components: {
       RoomTeam,
       AppPicker,
@@ -62,6 +82,11 @@ import { CharacterEvents } from '@street-of-age/shared/socket/events'
     }
   })
 export default class RoomSetupTeam extends Vue {
+  public chooseTeam (team: PlayerTeam) {
+    AppModule.changePlayerCharacterTeam(team)
+    this.$socket.emit(CharacterEvents.CharacterChangeTeam, team)
+    this.$router.push({ name: 'room-setup-character', params: { id: this.room.id } })
+  }
   get room (): RoomType {
     return RoomModule.rooms.find(r => r.id === this.$route.params.id)!
   }

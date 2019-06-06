@@ -1,13 +1,13 @@
 <template>
-  <div class="home-menu">
-    <AppBlock>
+  <div class="home-menu-view">
+    <div class="home-menu">
       <AppButton
         class="home-menu__button"
         primary
         block
         :to="{ name: 'room-form' }"
       >
-        Create game
+        Creer une partie
       </AppButton>
       <AppButton
         class="home-menu__button"
@@ -15,17 +15,17 @@
         block
         :to="{ name: 'room-list' }"
       >
-        Join game
+        Rejoindre une partie
       </AppButton>
-      <AppButton
-        class="home-menu__button"
-        secondary
-        block
-        :to="{ name: 'debug-game' }"
-      >
-        Debug
-      </AppButton>
-    </AppBlock>
+    </div>
+    <AppButton
+      class="home-menu__button home-menu__button--debug"
+      secondary
+      block
+      :to="{ name: 'debug-game' }"
+    >
+      Debug
+    </AppButton>
   </div>
 </template>
 
@@ -36,6 +36,12 @@
       left: auto
       right: auto
     max-width: 200px
+    &--debug.app-button
+      position: absolute
+      bottom: 20px
+      right: 20px
+    & .app-button__content
+      height: 50px
 
     &:not(:last-of-type)
       margin-bottom: 20px

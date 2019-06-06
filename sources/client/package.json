@@ -12,6 +12,7 @@
     "@street-of-age/shared": "*",
     "array-flat-polyfill": "^1.0.1",
     "core-js": "^2.6.5",
+    "fscreen": "^1.0.2",
     "nipplejs": "^0.8.1",
     "phaser": "^3.17.0",
     "register-service-worker": "^1.6.2",

@@ -1,16 +1,88 @@
+@import transitions
+
+@font-face
+  font-family: 'Futura'
+  src: url('~@/assets/fonts/Futura-Medium.woff2') format('woff2'),
+  url('~@/assets/fonts/Futura-Medium.woff') format('woff')
+  font-weight: 500
+  font-style: normal
+
+
+@font-face
+  font-family: 'VT323'
+  src: url('~@/assets/fonts/VT323-Regular.woff2') format('woff2'),
+  url('~@/assets/fonts/VT323-Regular.woff') format('woff')
+  font-weight: normal
+  font-style: normal
+
+
+@font-face
+  font-family: 'Futura Bk'
+  src: url('~@/assets/fonts/Futura-Book.woff2') format('woff2'),
+  url('~@/assets/fonts/Futura-Book.woff') format('woff')
+  font-weight: normal
+  font-style: normal
+
+
+@font-face
+  font-family: 'Futura'
+  src: url('~@/assets/fonts/Futura-Bold.woff2') format('woff2'),
+  url('~@/assets/fonts/Futura-Bold.woff') format('woff')
+  font-weight: bold
+  font-style: normal
+
+
+@font-face
+  font-family: 'Futura'
+  src: url('~@/assets/fonts/Futura-Heavy.woff2') format('woff2'),
+  url('~@/assets/fonts/Futura-Heavy.woff') format('woff')
+  font-weight: 900
+  font-style: normal
+
+
+@font-face
+  font-family: 'Futura'
+  src: url('~@/assets/fonts/Futura-Light.woff2') format('woff2'),
+  url('~@/assets/fonts/Futura-Light.woff') format('woff')
+  font-weight: 300
+  font-style: normal
+
+
+@font-face
+  font-family: 'Dead Jim'
+  src: url('~@/assets/fonts/HesDeadJim.woff2') format('woff2'),
+  url('~@/assets/fonts/HesDeadJim.woff') format('woff')
+  font-weight: normal
+  font-style: normal
+
+
+@font-face
+  font-family: 'Road Rage'
+  src: url('~@/assets/fonts/RoadRage.woff2') format('woff2'),
+  url('~@/assets/fonts/RoadRage.woff') format('woff')
+  font-weight: normal
+  font-style: normal
+
 body, button, a, input
   color: $white
 
 input[type="text"]
   text-align: center
-
-body, input
-  font-family: 'Futura', 'Helvetica Neue', 'Arial', $sans-serif
-
-input
   background: $pale-blue
   border: none
   outline: none
   padding: 10px 15px
   border-radius: 3px
   appearance: none
+
+body, input
+  font-family: 'Futura', 'Helvetica Neue', 'Arial', $sans-serif
+
+.road-rage
+  font-family: 'Road Rage', sans-serif
+  color: $cyan
+  text-shadow: 0 -4px 10px transparentize($cyan, 0.5), 3px 3px 0 $violet
+
+.road-rage-colors
+  color: $cyan
+  text-shadow: 0 -4px 10px transparentize($cyan, 0.5), 3px 3px 0 $violet

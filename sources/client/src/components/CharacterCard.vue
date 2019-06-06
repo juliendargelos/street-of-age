@@ -5,7 +5,7 @@
   </div>
   <button class="character-card" v-else>
     <img :src="waiting ? character.picture.full : character.picture.face" class="character-card__background" alt="">
-    <span v-if="!waiting" class="character-card__informations">
+    <span v-if="!waiting && !playerCharacterKinds.includes(characterKind)" class="character-card__informations">
       <h2>{{ character.name }}</h2>
       <ul class="character-card__informations--modifiers">
         <li v-for="stat in character.stats" :key="stat.id">
@@ -16,6 +16,9 @@
           </span>
         </li>
       </ul>
+    </span>
+    <span v-if="!waiting && playerCharacterKinds.includes(characterKind)" class="character-card__ready">
+      Prêt
     </span>
     <template v-if="!waiting">
       <AppButton
@@ -43,7 +46,7 @@
 .character-card
   box-sizing: border-box
   font-weight: 700
-  width: 180px
+  width: 140px
   height: 280px
   transform: skew(-4deg)
   position: relative
@@ -52,27 +55,42 @@
   border: none
   padding: 0
   user-select: none
+  &__ready
+    position: absolute
+    z-index: 1
+    background: $pale-blue
+    height: 30px
+    line-height: 30px
+    width: 120px
+    left: 10px
+    bottom: 26px
   &__add-button, &__remove-button
       & .app-button__content
+        line-height: 20px
         min-width: unset
         position: absolute
-        width: 140px
-        top: 124px
-        padding: 7px 20px
+        transform: skew(-4deg)
+        width: 128px
+        top: 126px
+        padding: 2px 20px
         font-family: 'Futura', 'Helvetica Neue', 'Arial', sans-serif
         font-size: 14px
         text-transform: none
   &__add-button
     & .app-button__content
-      left: 20px
+      left: 6px
   &__remove-button
     & .app-button__content
-      width: 40px
-      padding: 5px
+      width: 30px
+      padding: 4px 10px
       font-weight: 700
-      left: 62px
+      left: 56px
   h2
     text-transform: uppercase
+    font-family: 'Dead Jim', sans-serif
+    font-size: 14px
+    font-weight: 300
+    text-align: left
     &.character-card--placeholder
       color: $grey
       font-size: 14px
@@ -98,26 +116,32 @@
   &__informations
     position: absolute
     bottom: 0
-    height: 50%
+    height: 45%
     left: 0
     right: 0
     background: linear-gradient(90deg, #3c2380 6%, transparent 160%)
     clip-path: polygon(100% 0, 100% 0, 100% 100%, 0 100%, 0 10%)
-    padding: 40px 10px 10px 10px
+    padding: 30px 10px 10px 10px
     &--modifiers
       font-weight: 300
-      margin-top: 20px
+      margin-top: 10px
+      & li
+        margin: 0.1rem 0
       & span
         display: block
-        margin: 4px 0
+        margin: 0.3rem 0
+        &.ability
+          font-family: 'Futura', sans-serif
+          font-weight: 400
+          text-align: left
         &.level
           & .progress-inner
-            height: 10px
+            height: 5px
             background: $white
           &.progress-outer
             width: 100%
-            height: 10px
-            background: $pale-blue
+            height: 5px
+            background: transparentize($white, 0.7)
   &__background
     position: absolute
     top: 0

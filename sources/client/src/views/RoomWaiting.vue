@@ -1,7 +1,7 @@
 <template>
   <div class="room-waiting">
     <AppNav position="bottom">
-      <BackButton/>
+      <BackButton :disabled="allReady"/>
     </AppNav>
       <div class="room-waiting__team room-waiting__team--old">
         <PlayerWaitingCard
@@ -10,8 +10,12 @@
           :characterKind="player.characterKinds.length > 0 ? player.characterKinds[0] : null"
           :ready="player.ready"
         >
-          <template slot="metadata">{{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKinds.length > 0 ?
-            '...' : '' }}</template>
+          <template slot="metadata">
+            <span :style="getMetadataStyleForPlayer(player)">
+              {{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKinds.length > 0 ?
+            '...' : '' }}
+            </span>
+          </template>
         </PlayerWaitingCard>
       </div>
       <div class="room-waiting__separator">
@@ -24,8 +28,12 @@
           :characterKind="player.characterKinds.length > 0 ? player.characterKinds[0] : null"
           :ready="player.ready"
         >
-          <template slot="metadata">{{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKinds.length > 0 ?
-            '...' : '' }}</template>
+          <template slot="metadata">
+            <span :style="getMetadataStyleForPlayer(player)">
+              {{ player.ready ? `J${room.players.indexOf(player) + 1}` : player.characterKinds.length > 0 ?
+            '...' : '' }}
+            </span>
+          </template>
         </PlayerWaitingCard>
       </div>
   </div>
@@ -72,7 +80,7 @@
 </style>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { Player, Room as RoomType } from '@/@types'
 import RoomModule from '@/store/modules/room'
 import { SerializedPlayer } from '@street-of-age/shared/entities/player'
@@ -86,9 +94,19 @@ import PlayerWaitingCard from '@/components/PlayerWaitingCard.vue'
       if (!this.player.team) {
         this.$router.replace({ name: 'room-setup-team', params: { id: this.room.id } })
       }
+      window.addEventListener('keydown', e => {
+        if (e.code === 'KeyF') {
+          this.$router.push({ name: 'room-finish', params: { id: this.room.id } })
+        }
+      })
     }
   })
 export default class RoomWaiting extends Vue {
+  public getMetadataStyleForPlayer (player: SerializedPlayer) {
+    return {
+      color: player.color
+    }
+  }
   get room (): RoomType {
     return RoomModule.rooms.find(r => r.id === this.$route.params.id)!
   }
@@ -97,9 +115,9 @@ export default class RoomWaiting extends Vue {
   }
   get players (): Map<string, SerializedPlayer[]> {
     const youngs = new Array<SerializedPlayer>(this.room.settings.numberOfPlayers / 2)
-      .fill({ ready: false, characterKinds: [], team: PlayerTeam.Young, id: '' })
+      .fill({ color: '', ready: false, characterKinds: [], team: PlayerTeam.Young, id: '' })
     const olds = new Array(this.room.settings.numberOfPlayers / 2)
-      .fill({ ready: false, characterKinds: [], team: PlayerTeam.Old, id: '' })
+      .fill({ color: '', ready: false, characterKinds: [], team: PlayerTeam.Old, id: '' })
     const allPlayers = [
       ...youngs.map((entry, index) => this.room.players
         .filter(player => player.team === PlayerTeam.Young && player.characterKinds.length > 0)[index] || entry),
@@ -107,6 +125,9 @@ export default class RoomWaiting extends Vue {
         .filter(player => player.team === PlayerTeam.Old && player.characterKinds.length > 0)[index] || entry)
     ]
     return groupBy(allPlayers, player => player.team)
+  }
+  get allReady (): boolean {
+    return this.room.players.every(player => player.ready)
   }
 }
 </script>
