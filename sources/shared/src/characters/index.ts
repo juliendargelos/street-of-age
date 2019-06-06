@@ -13,7 +13,10 @@ export interface CharacterProjectile {
   deceleration: number,
   ttl: number | null,
   bounceTtl: number | null,
-  bulletLike: boolean
+  bulletLike: boolean,
+  radiusDamage: number
+  explosionMultiplier: number,
+  damage: number
 }
 
 export type CharactersAsset = { [kind: string]: CharacterAsset }
@@ -42,6 +45,9 @@ const Egocentric: CharacterAsset = {
   kind: 'egocentric',
   name: 'L\'influenceuse',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -73,6 +79,9 @@ const DotingGranny: CharacterAsset = {
   kind: 'doting-granny',
   name: 'Mamie gateau',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -104,6 +113,9 @@ const Fattie: CharacterAsset = {
   kind: 'fattie',
   name: 'La boulette',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -135,6 +147,9 @@ const FustyGrandpa: CharacterAsset = {
   kind: 'fusty-grandpa',
   name: 'Papivresse',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -166,6 +181,9 @@ const Geek: CharacterAsset = {
   kind: 'geek',
   name: 'Le geek metalleux',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -197,6 +215,9 @@ const Hippie: CharacterAsset = {
   kind: 'hippie',
   name: 'Le bobo',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -228,6 +249,9 @@ const LapdogWoman: CharacterAsset = {
   kind: 'lapdog-woman',
   name: 'La folle aux chiens',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -259,6 +283,9 @@ const MrMuscle: CharacterAsset = {
   kind: 'mr-muscle',
   name: 'Le keke',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,

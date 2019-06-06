@@ -32,6 +32,9 @@ export interface CharacterProjectile {
   ttl: number | null,
   bounceTtl: number | null,
   bulletLike: boolean,
+  radiusDamage: number
+  explosionMultiplier: number,
+  damage: number,
 }
 
 export type CharactersAsset = { [kind: string]: CharacterAsset }
@@ -60,6 +63,9 @@ const Egocentric: CharacterAsset = {
   kind: 'egocentric',
   name: 'L\'influenceuse',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -91,11 +97,14 @@ const DotingGranny: CharacterAsset = {
   kind: 'doting-granny',
   name: 'Mamie gateau',
   projectile: {
-    bounceTtl: null,
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
+    bounceTtl: 5,
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0,
+    bounciness: 0.4,
     deceleration: 100
   },
   stats: {
@@ -122,6 +131,9 @@ const Fattie: CharacterAsset = {
   kind: 'fattie',
   name: 'La boulette',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -153,9 +165,12 @@ const FustyGrandpa: CharacterAsset = {
   kind: 'fusty-grandpa',
   name: 'Papivresse',
   projectile: {
-    bounceTtl: 6,
+    damage: 1,
+    radiusDamage: 300,
+    explosionMultiplier: 1,
+    bounceTtl: null,
     ttl: null,
-    bulletLike: false,
+    bulletLike: true,
     mass: 1,
     bounciness: 0.6,
     deceleration: 300
@@ -169,7 +184,7 @@ const FustyGrandpa: CharacterAsset = {
     [DISTANCE_ABILITY_ID]: {
       id: DISTANCE_ABILITY_ID,
       name: DISTANCE_ABILITY,
-      level: 0.5
+      level: 0.2
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
@@ -184,6 +199,9 @@ const Geek: CharacterAsset = {
   kind: 'geek',
   name: 'Le geek metalleux',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -215,6 +233,9 @@ const Hippie: CharacterAsset = {
   kind: 'hippie',
   name: 'Le bobo',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -246,6 +267,9 @@ const LapdogWoman: CharacterAsset = {
   kind: 'lapdog-woman',
   name: 'La folle aux chiens',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,
@@ -277,6 +301,9 @@ const MrMuscle: CharacterAsset = {
   kind: 'mr-muscle',
   name: 'Le keke',
   projectile: {
+    damage: 1,
+    radiusDamage: 120,
+    explosionMultiplier: 1,
     bounceTtl: null,
     ttl: null,
     bulletLike: false,

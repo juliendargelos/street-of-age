@@ -8,7 +8,7 @@ import { ClientCharacterAsset } from '@/@types'
 import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
 
-const BULLET_FORCE = 25
+const BULLET_FORCE = 10000
 
 interface Constructor extends SpriteConstructor{
   angle: number,
@@ -49,7 +49,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   }
 
   public onDestroy (): void {
-    Emitter.emit(GameEvents.ProjectileExploded, { x: this.x, y: this.y })
+    Emitter.emit(GameEvents.ProjectileExploded, { x: this.x, y: this.y, ...this.character.projectile })
     this.destroy()
   }
 
@@ -61,8 +61,10 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     this.scene.time.delayedCall(
       duration * 1000,
       () => {
-        if (this) {
+        try {
           this.setAcceleration(0, 0)
+        } catch (e) {
+
         }
       },
       [],
@@ -72,10 +74,12 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 
   public launch = (forceAmount: number, direction: Phaser.Types.Math.Vector2Like) => {
     // this.scene.cameras.main.startFollow(this, false, 0.1, 0.1)
-    const gravityY = this.character.projectile.bulletLike ? 0 : 550
+    const gravityY = this.character.projectile.bulletLike ? 100 : 550
     this.setGravityY(gravityY * (1 + this.character.projectile.mass / 10))
     const force = this.character.projectile.bulletLike ? BULLET_FORCE : (((forceAmount / 4) * (1 + (this.character.stats[DISTANCE_ABILITY_ID].level * 3))) * 400) / this.character.projectile.mass
-    this.setDragX((force / 10000) * this.character.projectile.deceleration)
+    if (!this.character.projectile.bulletLike) {
+      this.setDragX((force / 10000) * this.character.projectile.deceleration)
+    }
     this.applyImpulseForce(
       (new Phaser.Math.Vector2(direction).normalize())
         .scale(force)
