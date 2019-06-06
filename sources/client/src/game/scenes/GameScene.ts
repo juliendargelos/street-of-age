@@ -30,6 +30,7 @@ export class GameScene extends BaseScene {
             const force = (area.radius - Math.sqrt(a * a + b * b)) * 2 * projectile.explosionMultiplier
             character.body.velocity.x += Math.cos(angle) * force
             character.body.velocity.y += Math.sin(angle) * force
+            character.takeDamage(projectile.damage)
           })
       }
     } catch (e) {
@@ -42,22 +43,8 @@ export class GameScene extends BaseScene {
     this.characters = [
       new Character({
         scene: this,
-        kind: CharacterKind.DotingGranny,
+        kind: CharacterKind.FustyGrandpa,
         x: 250,
-        y: -10
-      }),
-
-      new Character({
-        scene: this,
-        kind: CharacterKind.MrMuscle,
-        x: 350,
-        y: -10
-      }),
-
-      new Character({
-        scene: this,
-        kind: CharacterKind.Egocentric,
-        x: 450,
         y: -10
       })
     ]

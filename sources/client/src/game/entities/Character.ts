@@ -28,8 +28,10 @@ enum State {
 export class Character extends Phaser.Physics.Arcade.Sprite {
   private _state: State = State.Falling
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
+  private damaged: boolean = false
   public projectileDir: Phaser.GameObjects.Graphics
   public kind: CharacterKind
+  public health: number = 4
 
   get state (): State {
     return this._state
@@ -95,19 +97,28 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     super.destroy(fromScene)
   }
 
+  public takeDamage (damage: number): void {
+    this.damaged = true
+    this.health -= damage
+    this.scene.time.delayedCall(800, () => {
+      this.damaged = false
+    }, [], null)
+  }
+
   private onChangeState (newState: State) {
+    const action = this.damaged ? 'hit' : 'jumping'
     switch (newState) {
       case State.Jumping:
-        this.play(this.kind + '_jumping_start', true)
+        this.play(`${this.kind}_${action}_start`, true)
         break
       case State.MidAir:
-        this.play(this.kind + '_jumping_midair', true)
+        this.play(this.kind + `_${action}_midair`, true)
         break
       case State.Falling:
         if (this.anims.currentAnim.key.includes('midair')) {
-          this.play(this.kind + '_jumping_falling', true, 1)
+          this.play(this.kind + `_${action}_falling`, true, 1)
         } else {
-          this.play(this.kind + '_jumping_falling', true)
+          this.play(this.kind + `_${action}_falling`, true)
         }
         break
     }
