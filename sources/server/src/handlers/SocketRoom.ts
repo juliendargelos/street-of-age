@@ -4,6 +4,8 @@ import PlayerManager from '../managers/PlayerManager'
 import Logger from '../services/Logger'
 import {RoomSettings} from '@street-of-age/shared/entities/room'
 
+const TIME_BEFORE_LAUNCH_GAME = 3000
+
 class SocketRoom {
   public static handle = (socket: SocketIO.Socket) => {
     const player = PlayerManager.find(socket)
@@ -33,9 +35,11 @@ class SocketRoom {
       player.ready = true
       player.io.sockets.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
       Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now ready')
-      if (player.room.players.every(p => p.ready)) {
-        Logger.info(`All players ready on ${player.room}. Starting game...`)
-        socket.server.in(player.room.id).emit(RoomEvents.StartGame)
+      if (player.room.players.filter(p => p.ready).length === player.room.settings.numberOfPlayers) {
+        Logger.info(`All players ready on ${player.room}. Starting game in ${TIME_BEFORE_LAUNCH_GAME / 1000} seconds...`)
+        setTimeout(() => {
+          socket.server.in(player.room.id).emit(RoomEvents.StartGame)
+        }, TIME_BEFORE_LAUNCH_GAME)
       }
     })
 
