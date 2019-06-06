@@ -42,7 +42,6 @@
 </style>
 
 <script lang="ts">
-import fscreen from 'fscreen'
 import { Component, Vue } from 'vue-property-decorator'
 import RoomModule from '@/store/modules/room'
 import AppModule from '@/store/modules/app'
@@ -57,31 +56,28 @@ import { GameEvents } from '@street-of-age/shared/game/events'
   },
   mounted (): void {
     Emitter.on(GameEvents.GameLoaded, this.onGameLoaded)
-    window.screen.orientation.addEventListener('change', this.onOrientationChange)
+    // using addListener instead of addEventListener because it would not work in Safari
+    this.mql.addListener(this.onOrientationChange)
   },
   beforeDestroy (): void {
     Emitter.removeListener(GameEvents.GameLoaded, this.onGameLoaded)
-    window.screen.orientation.removeEventListener('change', this.onOrientationChange)
+    this.mql.removeListener(this.onOrientationChange)
   }
 })
 export default class App extends Vue {
-  public orientation: OrientationType = window.screen.orientation.type
+  private mql = window.matchMedia('(orientation: portrait)')
+  public orientation: 'portrait' | 'landscape' = this.mql.matches ? 'portrait' : 'landscape'
   public onGameLoaded () {
     AppModule.setIsPlaying(true)
   }
   public onOrientationChange () {
-    this.orientation = window.screen.orientation.type
-    if (this.canPlay) {
-      fscreen.requestFullscreen(this.$el)
-    } else {
-      fscreen.exitFullscreen()
-    }
+    this.orientation = this.mql.matches ? 'portrait' : 'landscape'
   }
   get isMobile () {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   }
   get canPlay () {
-    return this.orientation.includes('landscape') && this.isMobile
+    return this.orientation === 'landscape' && this.isMobile
   }
   get playing () {
     return AppModule.isPlaying

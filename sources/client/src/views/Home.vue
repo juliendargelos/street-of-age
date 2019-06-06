@@ -118,6 +118,7 @@
 </style>
 
 <script lang="ts">
+import fscreen from 'fscreen'
 import { Component, Vue } from 'vue-property-decorator'
 import HomeSplash from '@/components/HomeSplash.vue'
 import HomeMenu from '@/components/HomeMenu.vue'
@@ -154,6 +155,7 @@ export default class Home extends Vue {
 
   public onGameStart (): void {
     if (this.start) {
+      fscreen.requestFullscreen(this.$root.$el)
       this.showMenu()
     }
   }
