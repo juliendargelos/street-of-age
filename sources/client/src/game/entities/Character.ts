@@ -7,7 +7,7 @@ import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/game/events'
 import { CharacterKind } from '@/store/modules/app'
 import characters from '@/assets/characters'
-import { CharacterStats } from '@street-of-age/shared/characters'
+import { ClientCharacterAsset } from '@/@types'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
@@ -33,16 +33,18 @@ enum WeaponType {
 export class Character extends Phaser.Physics.Arcade.Sprite {
   private _state: State = State.Falling
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
+  private damaged: boolean = false
   private weaponType: WeaponType = WeaponType.Melee
   public projectileDir: Phaser.GameObjects.Graphics
   public kind: CharacterKind
+  public health: number = 4
 
   get state (): State {
     return this._state
   }
 
-  get stats (): CharacterStats {
-    return characters[this.kind].stats
+  get characterAsset (): ClientCharacterAsset {
+    return characters[this.kind]
   }
 
   set state (value: State) {
@@ -60,6 +62,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     this
       .setInteractive()
+      .setDragX(400)
       .setDepth(PLAYER_DEPTH)
       .setSize(WIDTH, HEIGHT)
       .setBounce(BOUNCE)
@@ -100,19 +103,28 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     super.destroy(fromScene)
   }
 
+  public takeDamage (damage: number): void {
+    this.damaged = true
+    this.health -= damage
+    this.scene.time.delayedCall(800, () => {
+      this.damaged = false
+    }, [], null)
+  }
+
   private onChangeState (newState: State) {
+    const action = this.damaged ? 'hit' : 'jumping'
     switch (newState) {
       case State.Jumping:
-        this.play(this.kind + '_jumping_start', true)
+        this.play(`${this.kind}_${action}_start`, true)
         break
       case State.MidAir:
-        this.play(this.kind + '_jumping_midair', true)
+        this.play(this.kind + `_${action}_midair`, true)
         break
       case State.Falling:
         if (this.anims.currentAnim.key.includes('midair')) {
-          this.play(this.kind + '_jumping_falling', true, 1)
+          this.play(this.kind + `_${action}_falling`, true, 1)
         } else {
-          this.play(this.kind + '_jumping_falling', true)
+          this.play(this.kind + `_${action}_falling`, true)
         }
         break
     }
@@ -138,7 +150,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         texture: 'main',
         frame: 'main/fx/fireball/4',
 
-        angle,
+        character: this.characterAsset,angle,
         distance,
         x: this.x,
         y: this.y
@@ -190,10 +202,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
     if (velocity < 0) {
       this.turn('left')
+      this.setVelocityX(velocity)
     } else if (velocity > 0) {
       this.turn('right')
+      this.setVelocityX(velocity)
     }
-    this.setVelocityX(velocity)
   }
 
   private turn = (direction: 'left' | 'right') => {
