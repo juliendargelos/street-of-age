@@ -359,10 +359,10 @@ const MrMuscle: CharacterAsset = {
   projectile: {
     damage: 1,
     radiusDamage: 120,
-    explosionMultiplier: 1,
+    explosionMultiplier: 3,
     bounceTtl: null,
     ttl: null,
-    bulletLike: false,
+    bulletLike: true,
     mass: 1,
     bounciness: 0,
     deceleration: 100
