@@ -25,9 +25,15 @@ enum State {
   Falling = 'Falling',
 }
 
+enum WeaponType {
+  Distance = 'Distance',
+  Melee = 'Melee',
+}
+
 export class Character extends Phaser.Physics.Arcade.Sprite {
   private _state: State = State.Falling
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
+  private weaponType: WeaponType = WeaponType.Melee
   public projectileDir: Phaser.GameObjects.Graphics
   public kind: CharacterKind
 
@@ -125,18 +131,24 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private onProjectileLaunch: ProjectileLaunchEventHandler = (evt): void => {
-    const { distance, angle, position } = evt.detail
-    const projectile = new Projectile({
-      scene: this.scene,
-      texture: 'main',
-      frame: 'main/fx/fireball/4',
-      angle,
-      distance,
-      x: this.x,
-      y: this.y
-    })
-    const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
-    projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
+    if (this.weaponType === WeaponType.Distance) {
+      const { distance, angle, position } = evt.detail
+      const projectile = new Projectile({
+        scene: this.scene,
+        texture: 'main',
+        frame: 'main/fx/fireball/4',
+
+        angle,
+        distance,
+        x: this.x,
+        y: this.y
+      })
+      const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
+      projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
+    } else if (this.weaponType === WeaponType.Melee) {
+      console.log('playing', `${this.kind}_melee`)
+      this.anims.play(`${this.kind}_melee`, true)
+    }
   }
 
   private onProjectileMove: ProjectileMoveEventHandler = (evt): void => {
@@ -158,7 +170,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private onPlayerTap = (): void => {
     this.projectileDir.clear()
+    this.weaponType = this.weaponType === WeaponType.Distance ? WeaponType.Melee : WeaponType.Distance
     console.log('player tapped')
+    console.log(this.weaponType)
   }
 
   private handleMovements = () => {
@@ -218,8 +232,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     switch (this.state) {
       case State.Grounded:
         if (this.body.velocity.x === 0) {
-          this.play(this.kind + '_walking', true, 0)
-          this.anims.stop()
+          if (!this.anims.currentAnim.key.includes('melee')) {
+            this.play(this.kind + '_walking', true, 0)
+            console.log('playing idle')
+            this.anims.stop()
+          }
         } else {
           this.play(this.kind + '_walking', true)
         }
