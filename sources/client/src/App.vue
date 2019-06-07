@@ -100,7 +100,7 @@ export default class App extends Vue {
     return AppModule.orientationApiSupported
   }
   get isMobile () {
-    return true // testing
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
   }
   get canPlay () {
     return this.orientation === 'landscape' && this.isMobile
