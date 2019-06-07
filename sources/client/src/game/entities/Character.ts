@@ -7,6 +7,7 @@ import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/game/events'
 import { CharacterKind } from '@/store/modules/app'
 import characters from '@/assets/characters'
+import MeleeAttack from '@/game/entities/MeleeAttack'
 import { ClientCharacterAsset } from '@/@types'
 
 const MASS = 1
@@ -32,6 +33,7 @@ enum WeaponType {
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
   private _state: State = State.Falling
+  private local: boolean = false
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
   private damaged: boolean = false
   private weaponType: WeaponType = WeaponType.Melee
@@ -57,6 +59,10 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   constructor (params: CharacterConstructor) {
     super(params.scene, params.x, params.y, 'main')
     this.kind = params.kind
+    if (params.local) {
+      this.local = params.local
+    }
+    this.setData('tag', 'character')
     params.scene.physics.world.enable(this)
     this.projectileDir = params.scene.add.graphics().setDepth(10)
 
@@ -82,10 +88,12 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private initListeners () {
-    InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
-    InputManager.touch.addEventListener('player:untap', () => this.projectileDir.clear())
-    InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
-    InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
+    if (this.local) {
+      InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
+      InputManager.touch.addEventListener('player:untap', () => this.projectileDir.clear())
+      InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
+      InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
+    }
 
     Emitter.on(UIEvents.Jump, this.jump)
   }
@@ -103,9 +111,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     super.destroy(fromScene)
   }
 
-  public takeDamage (damage: number): void {
+  public takeDamage (damage: number, force: number, angle: number): void {
     this.damaged = true
     this.health -= damage
+    this.body.velocity.x += Math.cos(angle) * force
+    this.body.velocity.y += Math.sin(angle) * force
     this.scene.time.delayedCall(800, () => {
       this.damaged = false
     }, [], null)
@@ -150,7 +160,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         texture: 'main',
         frame: 'main/fx/fireball/4',
 
-        character: this.characterAsset,angle,
+        character: this.characterAsset,
+        angle,
         distance,
         x: this.x,
         y: this.y
@@ -158,8 +169,14 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
       const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
       projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
     } else if (this.weaponType === WeaponType.Melee) {
-      console.log('playing', `${this.kind}_melee`)
       this.anims.play(`${this.kind}_melee`, true)
+      const melee = new MeleeAttack({
+        scene: this.scene,
+        x: this.x,
+        y: this.y,
+        modifiers: this.characterAsset.melee,
+        direction: this.scaleX
+      })
     }
   }
 
@@ -196,16 +213,18 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private handleMobileMovements = () => {
-    const velocity = InputManager.getAxis('horizontal') * SPEED
-    if (this.cursorKeys.space!.isDown) {
-      this.jump()
-    }
-    if (velocity < 0) {
-      this.turn('left')
-      this.setVelocityX(velocity)
-    } else if (velocity > 0) {
-      this.turn('right')
-      this.setVelocityX(velocity)
+    if (this.local) {
+      const velocity = InputManager.getAxis('horizontal') * SPEED
+      if (this.cursorKeys.space!.isDown) {
+        this.jump()
+      }
+      if (velocity < 0) {
+        this.turn('left')
+        this.setVelocityX(velocity)
+      } else if (velocity > 0) {
+        this.turn('right')
+        this.setVelocityX(velocity)
+      }
     }
   }
 
@@ -247,7 +266,6 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         if (this.body.velocity.x === 0) {
           if (!this.anims.currentAnim.key.includes('melee')) {
             this.play(this.kind + '_walking', true, 0)
-            console.log('playing idle')
             this.anims.stop()
           }
         } else {

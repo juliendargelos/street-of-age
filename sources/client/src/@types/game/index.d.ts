@@ -19,5 +19,6 @@ export interface CharacterConstructor {
   scene: Phaser.Scene
   x: number
   y: number,
-  kind: CharacterKind
+  kind: CharacterKind,
+  local?: boolean
 }

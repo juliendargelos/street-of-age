@@ -1,7 +1,7 @@
 import BaseScene from '@/game/scenes/BaseScene'
-import {Character} from '@/game/entities/Character'
-import {CharacterKind} from '@/store/modules/app'
-import {PostProcessing} from '@/game/PostProcessing'
+import { Character } from '@/game/entities/Character'
+import { CharacterKind } from '@/store/modules/app'
+import { PostProcessing } from '@/game/PostProcessing'
 import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
 import { CharacterProjectile } from '@/assets/characters'
@@ -28,9 +28,7 @@ export class GameScene extends BaseScene {
             const b = character.y - projectile.y
             const angle = Math.atan2(character.y - projectile.y, character.x - projectile.x)
             const force = (area.radius - Math.sqrt(a * a + b * b)) * 2 * projectile.explosionMultiplier
-            character.body.velocity.x += Math.cos(angle) * force
-            character.body.velocity.y += Math.sin(angle) * force
-            character.takeDamage(projectile.damage)
+            character.takeDamage(projectile.damage, force, angle)
           })
       }
     } catch (e) {
@@ -43,8 +41,30 @@ export class GameScene extends BaseScene {
     this.characters = [
       new Character({
         scene: this,
-        kind: CharacterKind.FustyGrandpa,
+        kind: CharacterKind.MrMuscle,
         x: 250,
+        y: -10,
+        local: true
+      }),
+
+      new Character({
+        scene: this,
+        kind: CharacterKind.FustyGrandpa,
+        x: 300,
+        y: -10
+      }),
+
+      new Character({
+        scene: this,
+        kind: CharacterKind.Egocentric,
+        x: 350,
+        y: -10
+      }),
+
+      new Character({
+        scene: this,
+        kind: CharacterKind.DotingGranny,
+        x: 400,
         y: -10
       })
     ]

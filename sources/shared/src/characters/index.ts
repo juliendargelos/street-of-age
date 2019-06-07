@@ -7,6 +7,13 @@ interface CharacterStat {
   level: number
 }
 
+export interface CharacterMelee {
+  distance: number,
+  delay: number,
+  damage: number,
+  force: number
+}
+
 export interface CharacterProjectile {
   mass: number,
   bounciness: number,
@@ -30,6 +37,7 @@ export interface CharacterAsset {
   kind: string,
   team: string,
   stats: CharacterStats,
+  melee: CharacterMelee,
   projectile: CharacterProjectile,
 }
 
@@ -44,6 +52,12 @@ const Egocentric: CharacterAsset = {
   team: 'young',
   kind: 'egocentric',
   name: 'L\'influenceuse',
+  melee: {
+    force: 180,
+    delay: 500,
+    distance: 100,
+    damage: 1
+  },
   projectile: {
     damage: 1,
     radiusDamage: 120,
@@ -78,6 +92,12 @@ const DotingGranny: CharacterAsset = {
   team: 'old',
   kind: 'doting-granny',
   name: 'Mamie gateau',
+  melee: {
+    force: 180,
+    delay: 500,
+    distance: 100,
+    damage: 1
+  },
   projectile: {
     damage: 1,
     radiusDamage: 120,
@@ -112,6 +132,12 @@ const Fattie: CharacterAsset = {
   team: 'young',
   kind: 'fattie',
   name: 'La boulette',
+  melee: {
+    force: 180,
+    delay: 500,
+    distance: 100,
+    damage: 1
+  },
   projectile: {
     damage: 1,
     radiusDamage: 120,
@@ -146,6 +172,12 @@ const FustyGrandpa: CharacterAsset = {
   team: 'old',
   kind: 'fusty-grandpa',
   name: 'Papivresse',
+  melee: {
+    force: 180,
+    delay: 500,
+    distance: 100,
+    damage: 1
+  },
   projectile: {
     damage: 1,
     radiusDamage: 120,
@@ -180,6 +212,12 @@ const Geek: CharacterAsset = {
   team: 'young',
   kind: 'geek',
   name: 'Le geek metalleux',
+  melee: {
+    force: 180,
+    delay: 500,
+    distance: 100,
+    damage: 1
+  },
   projectile: {
     damage: 1,
     radiusDamage: 120,
@@ -214,6 +252,12 @@ const Hippie: CharacterAsset = {
   team: 'young',
   kind: 'hippie',
   name: 'Le bobo',
+  melee: {
+    force: 180,
+    delay: 500,
+    distance: 100,
+    damage: 1
+  },
   projectile: {
     damage: 1,
     radiusDamage: 120,
@@ -248,6 +292,12 @@ const LapdogWoman: CharacterAsset = {
   team: 'old',
   kind: 'lapdog-woman',
   name: 'La folle aux chiens',
+  melee: {
+    force: 180,
+    delay: 500,
+    distance: 100,
+    damage: 1
+  },
   projectile: {
     damage: 1,
     radiusDamage: 120,
@@ -282,6 +332,12 @@ const MrMuscle: CharacterAsset = {
   team: 'old',
   kind: 'mr-muscle',
   name: 'Le keke',
+  melee: {
+    force: 300,
+    delay: 500,
+    distance: 40,
+    damage: 1
+  },
   projectile: {
     damage: 1,
     radiusDamage: 120,
