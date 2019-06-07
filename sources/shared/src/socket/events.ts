@@ -16,6 +16,7 @@ export enum RoomEvents {
   RoomJoined = 'room:joined',
   RoomLeave = 'room:leave',
   RoomLeft = 'room:left',
+  RoomReady = 'room:ready',
   RoomPlayerReady = 'room:player-ready',
   RoomAllPlayersReady = 'room:all-players-ready',
   StartGame = 'room:start:game',
@@ -23,6 +24,17 @@ export enum RoomEvents {
 
 export enum PlayerEvents {
   PlayerConnected = 'player:connected'
+}
+
+export enum GameEvents {
+  GameCreate = "game:create",
+  GameCreated = "game:created",
+  GameTurnChanged = "game:turn:changed",
+  GameCharacterMoved = "game:character:moved",
+  GameCharacterJumped = "game:character:jumped",
+  GameCharacterShooted = "game:character:shooted",
+  GameCharacterDied = "game:character:died",
+  GameEnded = "game:ended"
 }
 
 export enum CharacterEvents {

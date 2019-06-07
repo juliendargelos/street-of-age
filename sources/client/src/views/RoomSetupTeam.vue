@@ -82,9 +82,9 @@ import { CharacterEvents } from '@street-of-age/shared/socket/events'
     }
   })
 export default class RoomSetupTeam extends Vue {
-  public chooseTeam (team: PlayerTeam) {
-    AppModule.changePlayerCharacterTeam(team)
-    this.$socket.emit(CharacterEvents.CharacterChangeTeam, team)
+  public chooseTeam (teamKind: PlayerTeam) {
+    AppModule.changePlayerCharacterTeam(teamKind)
+    this.$socket.emit(CharacterEvents.CharacterChangeTeam, teamKind)
     this.$router.push({ name: 'room-setup-character', params: { id: this.room.id } })
   }
   get room (): RoomType {
@@ -95,7 +95,7 @@ export default class RoomSetupTeam extends Vue {
     return Array.from(this.room.players.reduce((acc) => {
       const teams = [PlayerTeam.Old, PlayerTeam.Young]
       teams.forEach(team => {
-        if (this.room.players.filter(player => player.team === team).length === this.room.settings.numberOfPlayers / 2) {
+        if (this.room.players.filter(player => player.teamKind === team).length === this.room.settings.numberOfPlayers / 2) {
           acc.add(team)
         }
       })
@@ -104,7 +104,7 @@ export default class RoomSetupTeam extends Vue {
   }
 
   get team (): PlayerTeam | string | null {
-    return AppModule.player.team
+    return AppModule.player.teamKind
   }
 }
 </script>
