@@ -70,7 +70,7 @@ class TouchDetection implements EventTarget {
   }
 
   public addEventListener<K extends keyof ProjectileDetectionEventsMap> (type: K, listener: (evt: ProjectileDetectionEventsMap[K]) => void, options?: boolean | AddEventListenerOptions): void {
-    this.delegate.addEventListener(type, listener, options)
+    this.delegate.addEventListener(type, listener as EventListener, options)
   }
 
   public dispatchEvent (event: Event): boolean {
@@ -78,7 +78,7 @@ class TouchDetection implements EventTarget {
   }
 
   public removeEventListener<K extends keyof ProjectileDetectionEventsMap> (type: K, callback: (evt: ProjectileDetectionEventsMap[K]) => void, options?: EventListenerOptions | boolean): void {
-    this.delegate.removeEventListener(type, callback, options)
+    this.delegate.removeEventListener(type, callback as EventListener, options)
   }
 }
 
