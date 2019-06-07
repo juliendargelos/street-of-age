@@ -71,7 +71,7 @@ class InputManager implements EventTarget {
   }
 
   public addEventListener<K extends keyof JoystickEventsMap> (type: K, listener: (evt: JoystickEventsMap[K]) => void, options?: boolean | AddEventListenerOptions): void {
-    this.delegate.addEventListener(type, listener, options)
+    this.delegate.addEventListener(type, listener as EventListener, options)
   }
 
   public dispatchEvent (event: Event): boolean {
@@ -79,7 +79,7 @@ class InputManager implements EventTarget {
   }
 
   public removeEventListener<K extends keyof JoystickEventsMap> (type: K, callback: (evt: JoystickEventsMap[K]) => void, options?: EventListenerOptions | boolean): void {
-    this.delegate.removeEventListener(type, callback, options)
+    this.delegate.removeEventListener(type, callback as EventListener, options)
   }
 }
 
