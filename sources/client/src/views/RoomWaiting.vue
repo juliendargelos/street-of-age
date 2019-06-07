@@ -6,7 +6,7 @@
       <div class="room-waiting__team room-waiting__team--old">
         <PlayerWaitingCard
           v-for="(player, index) in players.get('old')"
-          :key="player.team + '-' + index"
+          :key="player.teamKind + '-' + index"
           :characterKind="player.characterKinds.length > 0 ? player.characterKinds[0] : null"
           :ready="player.ready"
         >
@@ -24,7 +24,7 @@
       <div class="room-waiting__team room-waiting__team--young">
         <PlayerWaitingCard
           v-for="(player, index) in players.get('young')"
-          :key="player.team + '-' + index"
+          :key="player.teamKind + '-' + index"
           :characterKind="player.characterKinds.length > 0 ? player.characterKinds[0] : null"
           :ready="player.ready"
         >
@@ -93,7 +93,7 @@ import PlayerWaitingCard from '@/components/PlayerWaitingCard.vue'
   @Component<RoomWaiting>({
     components: { PlayerWaitingCard },
     mounted (): void {
-      if (!this.player.team) {
+      if (!this.player.teamKind) {
         this.$router.replace({ name: 'room-setup-team', params: { id: this.room.id } })
       }
       window.addEventListener('keydown', e => {
@@ -117,16 +117,16 @@ export default class RoomWaiting extends Vue {
   }
   get players (): Map<string, SerializedPlayer[]> {
     const youngs = new Array<SerializedPlayer>(this.room.settings.numberOfPlayers / 2)
-      .fill({ color: '', ready: false, characterKinds: [], team: PlayerTeam.Young, id: '' })
+      .fill({ color: '', ready: false, characterKinds: [], teamKind: PlayerTeam.Young, id: '' })
     const olds = new Array(this.room.settings.numberOfPlayers / 2)
-      .fill({ color: '', ready: false, characterKinds: [], team: PlayerTeam.Old, id: '' })
+      .fill({ color: '', ready: false, characterKinds: [], teamKind: PlayerTeam.Old, id: '' })
     const allPlayers = [
       ...youngs.map((entry, index) => this.room.players
-        .filter(player => player.team === PlayerTeam.Young && player.characterKinds.length > 0)[index] || entry),
+        .filter(player => player.teamKind === PlayerTeam.Young && player.characterKinds.length > 0)[index] || entry),
       ...olds.map((entry, index) => this.room.players
-        .filter(player => player.team === PlayerTeam.Old && player.characterKinds.length > 0)[index] || entry)
+        .filter(player => player.teamKind === PlayerTeam.Old && player.characterKinds.length > 0)[index] || entry)
     ]
-    return groupBy(allPlayers, player => player.team)
+    return groupBy(allPlayers, player => player.teamKind)
   }
   get allReady (): boolean {
     return this.room.players.length === this.room.settings.numberOfPlayers &&
