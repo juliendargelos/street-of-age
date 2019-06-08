@@ -169,7 +169,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
       const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
       projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
     } else if (this.weaponType === WeaponType.Melee) {
-      this.anims.play(`${this.kind}_melee`, true)
+      this.anims.play(`${this.kind}_melee`, true).once('animationcomplete', () => {
+        this.anims.play(`${this.kind}_idle`)
+      })
       const melee = new MeleeAttack({
         scene: this.scene,
         x: this.x,
@@ -265,8 +267,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
       case State.Grounded:
         if (this.body.velocity.x === 0) {
           if (!this.anims.currentAnim.key.includes('melee')) {
-            this.play(this.kind + '_walking', true, 0)
-            this.anims.stop()
+            this.play(this.kind + '_idle', true, 0)
           }
         } else {
           this.play(this.kind + '_walking', true)
