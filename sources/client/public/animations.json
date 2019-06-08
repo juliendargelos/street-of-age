@@ -1,6 +1,90 @@
 {
   "anims": [
     {
+      "key": "egocentric_idle",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 1,
+        "zeroPad": 5,
+        "prefix": "main/characters/egocentric/idle_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 15
+    },
+    {
+      "key": "egocentric_melee",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 10,
+        "zeroPad": 5,
+        "prefix": "main/characters/egocentric/melee_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "egocentric_launch",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 8,
+        "zeroPad": 5,
+        "prefix": "main/characters/egocentric/launch_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "egocentric_hit_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/egocentric/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "egocentric_hit_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 2,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/egocentric/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "egocentric_hit_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 3,
+        "end": 4,
+        "zeroPad": 2,
+        "prefix": "main/characters/egocentric/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
       "key": "egocentric_walking",
       "frames": {
         "key": "main",
@@ -55,6 +139,20 @@
       "showOnStart": true,
       "repeat": 0,
       "frameRate": 18
+    },
+    {
+      "key": "doting-granny_idle",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 1,
+        "zeroPad": 5,
+        "prefix": "main/characters/doting-granny/idle_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 15
     },
     {
       "key": "doting-granny_walking",
@@ -113,6 +211,20 @@
       "frameRate": 14
     },
     {
+      "key": "fusty-grandpa_idle",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 1,
+        "zeroPad": 5,
+        "prefix": "main/characters/fusty-grandpa/idle_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 15
+    },
+    {
       "key": "fusty-grandpa_walking",
       "frames": {
         "key": "main",
@@ -169,6 +281,20 @@
       "frameRate": 18
     },
     {
+      "key": "lapdog-woman_idle",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 1,
+        "zeroPad": 5,
+        "prefix": "main/characters/lapdog-woman/idle_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 15
+    },
+    {
       "key": "lapdog-woman_walking",
       "frames": {
         "key": "main",
@@ -223,6 +349,20 @@
       "showOnStart": true,
       "repeat": 0,
       "frameRate": 14
+    },
+    {
+      "key": "mr-muscle_idle",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 1,
+        "zeroPad": 5,
+        "prefix": "main/characters/mr-muscle/idle_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 15
     },
     {
       "key": "mr-muscle_walking",
@@ -317,48 +457,6 @@
         "end": 4,
         "zeroPad": 2,
         "prefix": "main/characters/doting-granny/hit_"
-      },
-      "showOnStart": true,
-      "repeat": 0,
-      "frameRate": 11
-    },
-    {
-      "key": "egocentric_hit_start",
-      "frames": {
-        "key": "main",
-        "typeOfGeneration": "generateFrameNames",
-        "start": 0,
-        "end": 2,
-        "zeroPad": 2,
-        "prefix": "main/characters/egocentric/hit_"
-      },
-      "showOnStart": true,
-      "repeat": 0,
-      "frameRate": 11
-    },
-    {
-      "key": "egocentric_hit_midair",
-      "frames": {
-        "key": "main",
-        "typeOfGeneration": "generateFrameNames",
-        "start": 2,
-        "end": 2,
-        "zeroPad": 2,
-        "prefix": "main/characters/egocentric/hit_"
-      },
-      "showOnStart": true,
-      "repeat": 0,
-      "frameRate": 11
-    },
-    {
-      "key": "egocentric_hit_falling",
-      "frames": {
-        "key": "main",
-        "typeOfGeneration": "generateFrameNames",
-        "start": 3,
-        "end": 4,
-        "zeroPad": 2,
-        "prefix": "main/characters/egocentric/hit_"
       },
       "showOnStart": true,
       "repeat": 0,
@@ -505,20 +603,6 @@
       "frameRate": 14
     },
     {
-      "key": "egocentric_melee",
-      "frames": {
-        "key": "main",
-        "typeOfGeneration": "generateFrameNames",
-        "start": 0,
-        "end": 10,
-        "zeroPad": 5,
-        "prefix": "main/characters/egocentric/melee_"
-      },
-      "showOnStart": true,
-      "repeat": 0,
-      "frameRate": 11
-    },
-    {
       "key": "fusty-grandpa_melee",
       "frames": {
         "key": "main",
@@ -559,6 +643,538 @@
       "showOnStart": true,
       "repeat": 0,
       "frameRate": 11
+    },
+    {
+      "key": "fusty-grandpa_launch",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 8,
+        "zeroPad": 5,
+        "prefix": "main/characters/fusty-grandpa/launch_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "doting-granny_launch",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 8,
+        "zeroPad": 5,
+        "prefix": "main/characters/doting-granny/launch_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "lapdog-woman_launch",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 8,
+        "zeroPad": 5,
+        "prefix": "main/characters/lapdog-woman/launch_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "mr-muscle_launch",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 8,
+        "zeroPad": 5,
+        "prefix": "main/characters/mr-muscle/launch_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "geek_idle",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 1,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/idle_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 15
+    },
+    {
+      "key": "geek_melee",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 10,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/melee_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "geek_launch",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 8,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/launch_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "geek_hit_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/geek/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "geek_hit_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 2,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/geek/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "geek_hit_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 3,
+        "end": 4,
+        "zeroPad": 2,
+        "prefix": "main/characters/geek/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "geek_walking",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 17,
+        "end": 30,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/walking_"
+      },
+      "showOnStart": true,
+      "repeat": -1,
+      "frameRate": 15
+    },
+    {
+      "key": "geek_jumping_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 5,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "geek_jumping_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 6,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "geek_jumping_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 9,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "fattie_idle",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 1,
+        "zeroPad": 5,
+        "prefix": "main/characters/fattie/idle_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 15
+    },
+    {
+      "key": "fattie_melee",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 10,
+        "zeroPad": 5,
+        "prefix": "main/characters/fattie/melee_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "fattie_launch",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 8,
+        "zeroPad": 5,
+        "prefix": "main/characters/fattie/launch_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "fattie_hit_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/fattie/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "fattie_hit_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 2,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/fattie/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "fattie_hit_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 3,
+        "end": 4,
+        "zeroPad": 2,
+        "prefix": "main/characters/fattie/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "fattie_walking",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 15,
+        "end": 30,
+        "zeroPad": 5,
+        "prefix": "main/characters/fattie/walking_"
+      },
+      "showOnStart": true,
+      "repeat": -1,
+      "frameRate": 15
+    },
+    {
+      "key": "fattie_jumping_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 5,
+        "zeroPad": 5,
+        "prefix": "main/characters/fattie/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "fattie_jumping_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 6,
+        "zeroPad": 5,
+        "prefix": "main/characters/fattie/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "fattie_jumping_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 9,
+        "zeroPad": 5,
+        "prefix": "main/characters/fattie/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "hippie_idle",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 1,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/idle_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 15
+    },
+    {
+      "key": "hippie_melee",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 10,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/melee_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "hippie_launch",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 8,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/launch_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "hippie_hit_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/hippie/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "hippie_hit_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 2,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/hippie/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "hippie_hit_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 3,
+        "end": 4,
+        "zeroPad": 2,
+        "prefix": "main/characters/hippie/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "hippie_walking",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 15,
+        "end": 30,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/walking_"
+      },
+      "showOnStart": true,
+      "repeat": -1,
+      "frameRate": 15
+    },
+    {
+      "key": "hippie_jumping_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 5,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "hippie_jumping_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 6,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "hippie_jumping_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 9,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "explosions_first",
+      "frames": {
+        "key": "explosions",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 17,
+        "zeroPad": 5,
+        "prefix": "explosions/first/34_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 21
+    },
+    {
+      "key": "explosions_second",
+      "frames": {
+        "key": "explosions",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 23,
+        "zeroPad": 5,
+        "prefix": "explosions/second/28_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 21
+    },
+    {
+      "key": "hippie_melee_attack",
+      "frames": {
+        "key": "melee",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 34,
+        "zeroPad": 5,
+        "prefix": "melee/hippie/13_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 21
+    },
+    {
+      "key": "fusty-grandpa_melee_attack",
+      "frames": {
+        "key": "melee",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 40,
+        "zeroPad": 5,
+        "prefix": "melee/fusty-grandpa/14_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 21
     }
   ]
 }

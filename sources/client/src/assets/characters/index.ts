@@ -35,6 +35,8 @@ export interface CharacterProjectile {
   radiusDamage: number
   explosionMultiplier: number,
   damage: number,
+  offsetX?: number,
+  offsetY?: number,
 }
 
 export type CharactersAsset = { [kind: string]: CharacterAsset }
@@ -47,7 +49,9 @@ export interface CharacterMelee {
   distance: number,
   damage: number,
   delay: number,
-  force: number
+  force: number,
+  offsetX?: number,
+  offsetY?: number,
 }
 
 export interface CharacterAsset {
@@ -84,7 +88,7 @@ const Egocentric: CharacterAsset = {
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0,
+    bounciness: 0.6,
     deceleration: 100
   },
   stats: {
@@ -164,7 +168,7 @@ const Fattie: CharacterAsset = {
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0,
+    bounciness: 0.6,
     deceleration: 100
   },
   stats: {
@@ -191,21 +195,25 @@ const FustyGrandpa: CharacterAsset = {
   kind: 'fusty-grandpa',
   name: 'Papivresse',
   melee: {
-    force: 1,
-    delay: 500,
-    distance: 10,
-    damage: 1
+    force: 0.7,
+    delay: 750,
+    distance: 230,
+    damage: 1,
+    offsetY: 0.35,
+    offsetX: -0.1
   },
   projectile: {
     damage: 1,
     radiusDamage: 300,
     explosionMultiplier: 1,
-    bounceTtl: null,
+    bounceTtl: 5,
     ttl: null,
-    bulletLike: true,
+    bulletLike: false,
     mass: 1,
     bounciness: 0.6,
-    deceleration: 300
+    deceleration: 200,
+    offsetX: 24,
+    offsetY: 6
   },
   stats: {
     [CAC_ABILITY_ID]: {
@@ -244,7 +252,7 @@ const Geek: CharacterAsset = {
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0,
+    bounciness: 0.6,
     deceleration: 100
   },
   stats: {
@@ -271,21 +279,22 @@ const Hippie: CharacterAsset = {
   kind: 'hippie',
   name: 'Le bobo',
   melee: {
-    force: 1,
+    force: 0.5,
     delay: 500,
-    distance: 100,
-    damage: 1
+    distance: 280,
+    damage: 1,
+    offsetY: 0.15
   },
   projectile: {
     damage: 1,
     radiusDamage: 120,
-    explosionMultiplier: 1,
+    explosionMultiplier: 3,
     bounceTtl: null,
     ttl: null,
-    bulletLike: false,
+    bulletLike: true,
     mass: 1,
-    bounciness: 0,
-    deceleration: 100
+    bounciness: 0.6,
+    deceleration: 100,
   },
   stats: {
     [CAC_ABILITY_ID]: {
@@ -324,7 +333,7 @@ const LapdogWoman: CharacterAsset = {
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0,
+    bounciness: 0.6,
     deceleration: 100
   },
   stats: {
@@ -360,12 +369,12 @@ const MrMuscle: CharacterAsset = {
     damage: 1,
     radiusDamage: 120,
     explosionMultiplier: 3,
-    bounceTtl: null,
+    bounceTtl: 6,
     ttl: null,
-    bulletLike: true,
-    mass: 1,
-    bounciness: 0,
-    deceleration: 100
+    bulletLike: false,
+    mass: 3,
+    bounciness: 0.6,
+    deceleration: 200
   },
   stats: {
     [CAC_ABILITY_ID]: {

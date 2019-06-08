@@ -14,6 +14,18 @@
       },
       {
         "type": "atlas",
+        "key": "melee",
+        "textureURL": "atlases/melee.png",
+        "atlasURL": "atlases/melee.json"
+      },
+      {
+        "type": "atlas",
+        "key": "explosions",
+        "textureURL": "atlases/explosions.png",
+        "atlasURL": "atlases/explosions.json"
+      },
+      {
+        "type": "atlas",
         "key": "level",
         "textureURL": "atlases/level.png",
         "atlasURL": "atlases/level.json"

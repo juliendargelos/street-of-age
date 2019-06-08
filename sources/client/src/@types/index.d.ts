@@ -1,6 +1,6 @@
 import { SerializedPlayer } from '@street-of-age/shared/entities/player'
 import { RoomSettings } from '@street-of-age/shared/entities/room'
-import { CharacterAsset } from '@street-of-age/shared/characters'
+import { CharacterAsset } from '@/assets/characters'
 
 export interface Player extends SerializedPlayer{
   isLocal: boolean,

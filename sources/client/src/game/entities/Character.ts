@@ -9,6 +9,7 @@ import { CharacterKind } from '@/store/modules/app'
 import characters from '@/assets/characters'
 import MeleeAttack from '@/game/entities/MeleeAttack'
 import { ClientCharacterAsset } from '@/@types'
+import {gameWait} from '@/utils/functions'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
@@ -18,6 +19,8 @@ const WIDTH = 26
 const HEIGHT = 75
 const OFFSET_X = 18
 const OFFSET_Y = 15
+
+const GROUNDED_ANIMATIONS = ['melee', 'launch']
 
 enum State {
   Grounded = 'Grounded',
@@ -36,7 +39,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private local: boolean = false
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
   public damaged: boolean = false
-  private weaponType: WeaponType = WeaponType.Melee
+  private weaponType: WeaponType = WeaponType.Distance
   public projectileDir: Phaser.GameObjects.Graphics
   public kind: CharacterKind
   public health: number = 4
@@ -152,30 +155,37 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  private onProjectileLaunch: ProjectileLaunchEventHandler = (evt): void => {
+  private onProjectileLaunch: ProjectileLaunchEventHandler = async (evt) => {
     if (this.weaponType === WeaponType.Distance) {
+      this.anims.play(`${this.kind}_launch`, true).once('animationcomplete', () => {
+        this.anims.play(`${this.kind}_idle`)
+      })
+      await gameWait(this.scene.time, 500)
       const { distance, angle, position } = evt.detail
       const projectile = new Projectile({
         scene: this.scene,
-        texture: 'main',
-        frame: 'main/fx/fireball/4',
-
         character: this.characterAsset,
         angle,
         distance,
         x: this.x,
-        y: this.y
+        y: this.y,
+        offsetX: this.characterAsset.projectile.offsetX,
+        offsetY: this.characterAsset.projectile.offsetY,
+        direction: this.scaleX
       })
       const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
       projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
     } else if (this.weaponType === WeaponType.Melee) {
-      this.anims.play(`${this.kind}_melee`, true)
+      this.anims.play(`${this.kind}_melee`, true).once('animationcomplete', () => {
+        this.anims.play(`${this.kind}_idle`)
+      })
       const melee = new MeleeAttack({
         scene: this.scene,
         x: this.x,
         y: this.y,
+        kind: this.characterAsset.kind,
         modifiers: this.characterAsset.melee,
-        direction: this.scaleX
+        scaleX: this.scaleX
       })
     }
   }
@@ -264,9 +274,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     switch (this.state) {
       case State.Grounded:
         if (this.body.velocity.x === 0) {
-          if (!this.anims.currentAnim.key.includes('melee')) {
-            this.play(this.kind + '_walking', true, 0)
-            this.anims.stop()
+          if (!GROUNDED_ANIMATIONS.some(anim => this.anims.currentAnim.key.includes(anim))) {
+            this.play(this.kind + '_idle', true, 0)
           }
         } else {
           this.play(this.kind + '_walking', true)
