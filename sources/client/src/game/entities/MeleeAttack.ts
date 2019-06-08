@@ -23,7 +23,6 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
     this.modifiers = params.modifiers
     this.kind = params.kind
     this.direction = params.scaleX
-    console.log(this.modifiers)
     this
       .setAlpha(0)
       .setOrigin(this.direction < 0 ? 1 : 0, 0)

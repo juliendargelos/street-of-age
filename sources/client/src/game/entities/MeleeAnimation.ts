@@ -17,9 +17,9 @@ export default class MeleeAnimation extends Phaser.GameObjects.Sprite {
     params.scene.add.existing(this)
     try {
       this
-        .setScale(params.scaleX)
         .setOrigin((params.offsetX ? params.offsetX : 0), 0.5 + (params.offsetY ? params.offsetY : 0))
         .setDepth(PLAYER_DEPTH)
+      this.scaleX = params.scaleX
       this.anims.play(`${params.kind}_melee_attack`).once('animationcomplete', () => {
         this.destroy()
       })

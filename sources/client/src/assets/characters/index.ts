@@ -195,10 +195,12 @@ const FustyGrandpa: CharacterAsset = {
   kind: 'fusty-grandpa',
   name: 'Papivresse',
   melee: {
-    force: 1,
-    delay: 500,
-    distance: 10,
-    damage: 1
+    force: 0.7,
+    delay: 750,
+    distance: 230,
+    damage: 1,
+    offsetY: 0.35,
+    offsetX: -0.1
   },
   projectile: {
     damage: 1,
