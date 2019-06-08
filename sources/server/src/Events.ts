@@ -27,9 +27,13 @@ export enum GameEvents {
   GameUpdate = "game:update",
   GameUpdated = "game:updated",
   GameTurnChanged = "game:turn:changed",
+  GameCharacterMove = "game:character:move",
   GameCharacterMoved = "game:character:moved",
+  GameCharacterJump = "game:character:jump",
   GameCharacterJumped = "game:character:jumped",
+  GameCharacterShoot = "game:character:shoot",
   GameCharacterShooted = "game:character:shooted",
+  GameCharacterDie = "game:character:die",
   GameCharacterDied = "game:character:died",
   GameEnded = "game:ended"
 }
