@@ -279,6 +279,286 @@
       "showOnStart": true,
       "repeat": 0,
       "frameRate": 11
+    },
+    {
+      "key": "doting-granny_hit_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/doting-granny/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "doting-granny_hit_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 2,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/doting-granny/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "doting-granny_hit_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 3,
+        "end": 4,
+        "zeroPad": 2,
+        "prefix": "main/characters/doting-granny/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "egocentric_hit_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/egocentric/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "egocentric_hit_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 2,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/egocentric/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "egocentric_hit_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 3,
+        "end": 4,
+        "zeroPad": 2,
+        "prefix": "main/characters/egocentric/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "fusty-grandpa_hit_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/fusty-grandpa/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "fusty-grandpa_hit_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 2,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/fusty-grandpa/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "fusty-grandpa_hit_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 3,
+        "end": 4,
+        "zeroPad": 2,
+        "prefix": "main/characters/fusty-grandpa/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "lapdog-woman_hit_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/lapdog-woman/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "lapdog-woman_hit_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 2,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/lapdog-woman/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "lapdog-woman_hit_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 3,
+        "end": 4,
+        "zeroPad": 2,
+        "prefix": "main/characters/lapdog-woman/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "mr-muscle_hit_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/mr-muscle/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "mr-muscle_hit_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 2,
+        "end": 2,
+        "zeroPad": 2,
+        "prefix": "main/characters/mr-muscle/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "mr-muscle_hit_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 3,
+        "end": 4,
+        "zeroPad": 2,
+        "prefix": "main/characters/mr-muscle/hit_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "doting-granny_melee",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 6,
+        "zeroPad": 5,
+        "prefix": "main/characters/doting-granny/melee_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 14
+    },
+    {
+      "key": "egocentric_melee",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 10,
+        "zeroPad": 5,
+        "prefix": "main/characters/egocentric/melee_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "fusty-grandpa_melee",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 11,
+        "zeroPad": 5,
+        "prefix": "main/characters/fusty-grandpa/melee_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "lapdog-woman_melee",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 12,
+        "zeroPad": 5,
+        "prefix": "main/characters/lapdog-woman/melee_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
+    },
+    {
+      "key": "mr-muscle_melee",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 11,
+        "zeroPad": 5,
+        "prefix": "main/characters/mr-muscle/melee_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 11
     }
   ]
 }

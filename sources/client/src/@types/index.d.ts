@@ -1,4 +1,3 @@
-import { CharacterKind, PlayerTeam } from '@/store/modules/app'
 import { SerializedPlayer } from '@street-of-age/shared/entities/player'
 import { RoomSettings } from '@street-of-age/shared/entities/room'
 import { CharacterAsset } from '@street-of-age/shared/characters'

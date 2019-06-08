@@ -10,7 +10,7 @@ import { GameEvents } from '@street-of-age/shared/src/game/events'
 export default class BaseScene extends Phaser.Scene {
   protected animationHelper?: AnimationHelper
   public level!: GameLevel
-  protected character!: Character
+  public characters!: Character[]
 
   public init (): void {
     this.game.scene.dump()
