@@ -39,7 +39,7 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
         offsetY: this.modifiers.offsetY,
         scaleX: this.direction
       })
-      scene.physics.add.overlap(this, scene.characters, this.onCollide.bind(this))
+      scene.physics.add.overlap(this, scene.charactersArray, this.onCollide.bind(this))
       this
         .setDisplaySize(this.modifiers.distance, 1)
         .setGravityY(0)

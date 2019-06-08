@@ -50,8 +50,13 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private weaponType: WeaponType = WeaponType.Distance
   private controlsEnabled: boolean = false
   public projectileDir: Phaser.GameObjects.Graphics
+  public id: string
   public kind: CharacterKind
   public health: number = 4
+  private previousX: number = 0
+  private previousY: number = 0
+  private previousVelocityX: number = 0
+  private previousVelocityY: number = 0
 
   get state (): State {
     return this._state
@@ -70,6 +75,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   constructor (params: CharacterConstructor) {
     super(params.scene, params.x, params.y, 'main')
+    this.id = params.id
     console.log(params.x, params.y)
     this.kind = params.kind
     this.setData('tag', 'character')
@@ -100,9 +106,32 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   public update = () => {
     this.setGravityY(GRAVITY)
+
+    if (this.body.velocity.x < 0) {
+      this.turn('left')
+    } else if (this.body.velocity.x > 0) {
+      this.turn('right')
+    }
+
     if (this.controlsEnabled) this.handleMovements()
     this.updateState()
     this.handleAnimations()
+
+    if (
+      this.x !== this.previousX ||
+      this.y !== this.previousY
+    ) {
+      this.previousX = this.x
+      this.previousY = this.y
+
+      this.emit('moved', {
+        id: this.id,
+        x: this.x,
+        y: this.y,
+        velocityX: this.body.velocity.x,
+        velocityY: this.body.velocity.y
+      })
+    }
   }
 
   public destroy (fromScene?: boolean): void {
@@ -240,19 +269,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private handleMobileMovements = () => {
-    if (this.local) {
-      const velocity = InputManager.getAxis('horizontal') * SPEED
-      if (this.cursorKeys.space!.isDown) {
-        this.jump()
-      }
-      if (velocity < 0) {
-        this.turn('left')
-        this.setVelocityX(velocity)
-      } else if (velocity > 0) {
-        this.turn('right')
-        this.setVelocityX(velocity)
-      }
+    const velocity = InputManager.getAxis('horizontal') * SPEED
+    if (this.cursorKeys.space!.isDown) {
+      this.jump()
     }
+    this.setVelocityX(velocity)
   }
 
   private turn = (direction: 'left' | 'right') => {

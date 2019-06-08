@@ -37,6 +37,20 @@ import AppModule from '@/store/modules/app'
 import { GameEvents } from '@street-of-age/shared/socket/events'
 import { Character, SerializedCharacter } from '@/game/entities/Character'
 
+const throttle = (method: (...args: any) => void, limit: number, always: (...args: any) => boolean = () => false): (...args: any) => void => {
+  let inThrottle: boolean = false
+  let timeout: NodeJS.Timer
+
+  return (...args: any) => {
+    if (!inThrottle || always(...args)) {
+      method(...args)
+      inThrottle = true
+      clearTimeout(timeout)
+      timeout = setTimeout(() => inThrottle = false, limit)
+    }
+  }
+}
+
 @Component<RoomGame>({
   components: { GameUI },
   sockets: {
@@ -45,7 +59,8 @@ import { Character, SerializedCharacter } from '@/game/entities/Character'
       const character = this.scene.characters.get(game.currentCharacter.id) as Character
       this.scene.setCurrentCharacter(character)
 
-      if (game.currentPlayer.id === AppModule.player.id) this.scene.enableControls(character)
+      this.currentPlayer = game.currentPlayer
+      if (this.isCurrentPlayer) this.scene.enableControls(character)
       else this.scene.disableControls()
     },
 
@@ -53,17 +68,37 @@ import { Character, SerializedCharacter } from '@/game/entities/Character'
     //   this.scene.setCharacters(game.characters)
     // },
 
+    [GameEvents.GameCharacterMoved](character: SerializedCharacter) {
+      this.scene.moveCharacter(character)
+    },
+
     [GameEvents.GameTurnChanged](game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
+      this.scene.resetVelocity()
       const character = this.scene.characters.get(game.currentCharacter.id) as Character
       this.scene.setCurrentCharacter(character)
 
-      if (game.currentPlayer.id === AppModule.player.id) this.scene.enableControls(character)
+      this.currentPlayer = game.currentPlayer
+      if (this.isCurrentPlayer) this.scene.enableControls(character)
       else this.scene.disableControls()
     }
   },
   mounted () {
-    this.scene = new GameScene(() => {
-      this.$socket.emit(GameEvents.GameCreate, this.$route.params.id)
+    this.scene = new GameScene({
+      created: () => {
+        this.$socket.emit(GameEvents.GameCreate, this.$route.params.id)
+      },
+
+      characterMoved: throttle((character: SerializedCharacter) => {
+        if (this.isCurrentPlayer) {
+          this.$socket.emit(GameEvents.GameCharacterMove , character)
+        }
+      }, 100, ({ velocityX, velocityY }) => velocityX === 0 && velocityY === 0),
+
+      characterDied: (character: SerializedCharacter) => {
+        if (this.isCurrentPlayer) {
+          this.$socket.emit(GameEvents.GameCharacterDie, character)
+        }
+      }
     })
 
     this.game = new Phaser.Game(this.config)
@@ -80,6 +115,7 @@ import { Character, SerializedCharacter } from '@/game/entities/Character'
 })
 export default class RoomGame extends Vue {
     $el!: HTMLDivElement
+    public currentPlayer: { id: string } = { id: '' }
     private game!: Phaser.Game
     private scene!: GameScene
     private mobile: boolean = false
@@ -92,6 +128,10 @@ export default class RoomGame extends Vue {
 
     get isPlaying (): boolean {
       return AppModule.isPlaying
+    }
+
+    get isCurrentPlayer() {
+      return AppModule.player.id === this.currentPlayer.id
     }
 
     get config (): Phaser.Types.Core.GameConfig {

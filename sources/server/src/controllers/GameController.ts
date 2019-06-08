@@ -1,7 +1,7 @@
 import { Controller } from '../core'
 import { GameEvents } from '../Events'
 import { Player } from '../entities/Player'
-import { Character } from '../entities/Character'
+import { Character, SerializedCharacter } from '../entities/Character'
 import { Room, RoomSettings, SerializedRoom } from '../entities/Room'
 import { Game } from '../entities/Game'
 
@@ -14,9 +14,9 @@ export class GameController extends Controller {
     super(socket, [
       GameEvents.GameCreate,
       GameEvents.GameUpdate,
-      GameEvents.GameCharacterMoved,
-      GameEvents.GameCharacterShooted,
-      GameEvents.GameCharacterDied
+      GameEvents.GameCharacterMove,
+      GameEvents.GameCharacterShoot,
+      GameEvents.GameCharacterDie
     ])
 
     this.player = Player.all.get(socket.id)
@@ -45,25 +45,27 @@ export class GameController extends Controller {
     }
   }
 
-  [GameEvents.GameCharacterMoved](id: string, x: number, y: number) {
-    const character = Character.all.get(id)
-    character.x = x
-    character.y = y
-    this.socket.broadcast.emit(GameEvents.GameCharacterMoved, { id, x, y })
+  [GameEvents.GameCharacterMove](attributes: SerializedCharacter) {
+    const character = Character.all.get(attributes.id)
+    character.x = attributes.x
+    character.y = attributes.y
+    character.velocityX = attributes.velocityX
+    character.velocityY = attributes.velocityY
+    this.socket.broadcast.emit(GameEvents.GameCharacterMoved, character.serialize())
   }
 
-  [GameEvents.GameCharacterShooted](id: string) {
-    this.socket.broadcast.emit(GameEvents.GameCharacterShooted, { id })
+  [GameEvents.GameCharacterShoot](id: string) {
+    // this.socket.broadcast.emit(GameEvents.GameCharacterShooted, { id })
 
-    clearInterval(this.interval)
+    // clearInterval(this.interval)
 
-    setTimeout(() => {
-      this.game.nextTurn()
-    }, 500)
+    // setTimeout(() => {
+    //   this.game.nextTurn()
+    // }, 500)
   }
 
-  [GameEvents.GameCharacterDied](id: string) {
-    this.socket.broadcast.emit(GameEvents.GameCharacterDied, { id });
+  [GameEvents.GameCharacterDie](id: string) {
+    // this.socket.broadcast.emit(GameEvents.GameCharacterDied, { id });
   }
 
   public unmount() {
