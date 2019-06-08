@@ -1,9 +1,9 @@
 import BaseScene from '@/game/scenes/BaseScene'
 import { Character, SerializedCharacter } from '@/game/entities/Character'
-import { CharacterKind } from '@/store/modules/app'
+import AppModule, { CharacterKind } from '@/store/modules/app'
 import { PostProcessing } from '@/game/PostProcessing'
 import { Socket } from 'socket.io'
-import AppModule from '@/store/modules/app'
+
 import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
 import { CharacterProjectile } from '@/assets/characters'
@@ -15,7 +15,7 @@ export class GameScene extends BaseScene {
   public characters: Map<string, Character> = new Map()
   private controlledCharacter: Character | null = null
 
-  constructor (private socketCreate: () => void) {
+  constructor (private readonly socketCreate: () => void) {
     super({
       key: 'GAME_SCENE'
     })
@@ -54,7 +54,7 @@ export class GameScene extends BaseScene {
     this.socketCreate()
   }
 
-  public setCurrentCharacter(character: Character) {
+  public setCurrentCharacter (character: Character) {
     this.cameras.main.stopFollow()
     this.cameras.main.startFollow(character, false, 0.1, 0.1)
   }
@@ -71,7 +71,7 @@ export class GameScene extends BaseScene {
     this.controlledCharacter = null
   }
 
-  public createCharacter(attributes: SerializedCharacter) {
+  public createCharacter (attributes: SerializedCharacter) {
     const character = new Character({
       scene: this,
       kind: attributes.kind,
@@ -89,7 +89,7 @@ export class GameScene extends BaseScene {
     return character
   }
 
-  public removeCharacter(id: string) {
+  public removeCharacter (id: string) {
     const character = this.characters.get(id)
 
     if (character) {
@@ -98,7 +98,7 @@ export class GameScene extends BaseScene {
     }
   }
 
-  public setCharacters(characters: SerializedCharacter[]) {
+  public setCharacters (characters: SerializedCharacter[]) {
     this.characters.forEach((_, id) => this.removeCharacter(id))
     characters.forEach(character => this.createCharacter(character))
     // alert('ok')
