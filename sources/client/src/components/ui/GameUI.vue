@@ -1,20 +1,21 @@
 <template>
   <div class="game-ui">
     <template v-if="!paused">
+      <PlayerHealth :health="4" kind="fusty-grandpa" color="#f64afe"/>
       <virtual-joystick v-if="mobile"/>
       <img v-if="mobile" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
     </template>
     <GamePauseUI @close="pauseToggle" v-if="paused"/>
-<!--    <transition name="fade" mode="out-in">-->
-<!--      <div v-if="countdown > 0" class="game-ui__starting">-->
-<!--        <transition-group name="zoom-out" mode="out-in">-->
-<!--          <h1 :key="n" v-for="n in countdown" v-if="countdown === n" class="road-rage">-->
-<!--            {{ n - 1 > 0 ? n - 1 : 'Fight!' }}-->
-<!--          </h1>-->
-<!--        </transition-group>-->
-<!--      </div>-->
-<!--    </transition>-->
+    <transition name="fade" mode="out-in">
+      <div v-if="countdown > 0" class="game-ui__starting">
+        <transition-group name="zoom-out" mode="out-in">
+          <h1 :key="n" v-for="n in countdown" v-if="countdown === n" class="road-rage">
+            {{ n - 1 > 0 ? n - 1 : 'Fight!' }}
+          </h1>
+        </transition-group>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -40,7 +41,7 @@
     background: transparentize($black, 0.5)
     pointer-events: all
     h1
-      font-size: 72px
+      font-size: 140px
   & .button
     pointer-events: all
     position: absolute
@@ -58,9 +59,10 @@ import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/src/game/events'
 import GamePauseUI from '@/components/ui/GamePauseUI.vue'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
+import PlayerHealth from '@/components/ui/PlayerHealth.vue'
 
 @Component<GameUI>({
-  components: { VirtualJoystick, GamePauseUI },
+  components: {PlayerHealth, VirtualJoystick, GamePauseUI },
   mounted (): void {
     this.intervalId = setInterval(() => {
       this.countdown--

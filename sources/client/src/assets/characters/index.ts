@@ -294,7 +294,7 @@ const Hippie: CharacterAsset = {
     bulletLike: true,
     mass: 1,
     bounciness: 0.6,
-    deceleration: 100,
+    deceleration: 100
   },
   stats: {
     [CAC_ABILITY_ID]: {
