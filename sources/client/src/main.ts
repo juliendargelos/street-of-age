@@ -19,7 +19,7 @@ export const Emitter = new EventEmitter()
 
 Vue.config.productionTip = false
 
-Vue.use(new VueSocketIO({
+const vueSocketIO = new VueSocketIO({
   debug: process.env.NODE_ENV !== 'production',
   connection: process.env.VUE_APP_SOCKET_ENDPOINT,
   vuex: {
@@ -27,7 +27,10 @@ Vue.use(new VueSocketIO({
     actionPrefix: 'SOCKET_',
     mutationPrefix: 'SOCKET_'
   }
-}))
+})
+
+// Vue.prototype.$io = vueSocketIO.io
+Vue.use(vueSocketIO)
 
 Vue.component('GlobalEvents', VueGlobalEvents)
 Vue.component('AppNav', AppNav)

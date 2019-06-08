@@ -13,26 +13,37 @@ export class GameController extends Controller {
   constructor(socket: SocketIO.Socket) {
     super(socket, [
       GameEvents.GameCreate,
+      GameEvents.GameUpdate,
       GameEvents.GameCharacterMoved,
       GameEvents.GameCharacterShooted,
-      GameEvents.GameCharacterDied,
+      GameEvents.GameCharacterDied
     ])
 
     this.player = Player.all.get(socket.id)
   }
 
+  [GameEvents.GameUpdate]() {
+    if (this.game) {
+      this.socket.emit(GameEvents.GameUpdated, this.game.serialize())
+    }
+  }
+
   [GameEvents.GameCreate](id: string) {
     const room = Room.all.get(id)
     this.game = Game.all.add(new Game(id, room.players))
-    this.io.in(room.id).emit(GameEvents.GameCreated, id);
+    this.io.in(room.id).emit(GameEvents.GameCreated, this.game.serialize())
     // this.socket.broadcast.emit(, this.game.id)
 
+    this.timeout = setTimeout(() => {
+      this.game.nextTurn()
+    }, 1000)
+
     this.autorun(() => {
-      this.io.in(room.id).emit(GameEvents.GameTurnChanged, this.game.turn)
+      this.io.in(room.id).emit(GameEvents.GameTurnChanged, this.game.serialize())
 
       this.timeout = setTimeout(() => {
         this.game.nextTurn()
-      }, 500)
+      }, 150000)
     })
   }
 

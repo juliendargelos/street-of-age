@@ -65,6 +65,12 @@ export class Character extends Entity implements Serializable<SerializedCharacte
     this.velocityY = velocityY
   }
 
+  public randomizePosition(): this {
+    this.x = ~~(Math.random()*10)
+    this.y = ~~(Math.random()*10)
+    return this
+  }
+
   @computedFn public serialize(): SerializedCharacter {
     return {
       id: this.id,

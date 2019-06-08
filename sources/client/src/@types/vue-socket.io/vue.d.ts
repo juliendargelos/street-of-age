@@ -6,10 +6,11 @@ type Sockets = {
 
 declare module 'vue/types/vue' {
   interface Vue {
-    $socket: {
-      emit: (eventName: string, ...args: any[]) => void
-      on: (eventName: string, handler: (...args: any[]) => void) => void
-    }
+    // $socket: {
+    //   emit: (eventName: string, ...args: any[]) => void
+    //   on: (eventName: string, handler: (...args: any[]) => void) => void
+    // }
+    $socket: SocketIO.Socket
   }
 }
 

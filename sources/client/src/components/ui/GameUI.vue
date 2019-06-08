@@ -73,7 +73,7 @@ import AudioManager from '@/game/manager/AudioManager'
 export default class GameUI extends Vue {
   public paused: boolean = false
   public countdown: number = 4
-  private intervalId!: number
+  private intervalId!: NodeJS.Timer
   @Prop({ type: Boolean, default: false }) readonly mobile!: boolean
 
   @Watch('countdown')

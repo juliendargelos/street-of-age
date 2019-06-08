@@ -25,7 +25,7 @@ export class PlayerController extends Controller {
   }
 
   [CharacterEvents.CharacterAddedKind](kind: CharacterKind) {
-    this.player.characters.add(new Character(kind))
+    this.player.characters.add(new Character(kind).randomizePosition())
   }
 
   [CharacterEvents.CharacterRemovedKind](kind: CharacterKind) {

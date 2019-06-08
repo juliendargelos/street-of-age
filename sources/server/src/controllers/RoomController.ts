@@ -39,7 +39,7 @@ export class RoomController extends Controller {
       // Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now ready')
       if (this.room.ready) {
         setTimeout(() => {
-          this.io.in(this.room.id).emit(RoomEvents.RoomReady)
+          this.socket.emit(RoomEvents.RoomReady)
         }, TIME_BEFORE_LAUNCH_GAME)
       }
     }

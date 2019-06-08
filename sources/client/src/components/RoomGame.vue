@@ -96,7 +96,7 @@ export default class RoomGame extends Vue {
           ]
         },
         disableContextMenu: true,
-        scene: GameScene
+        scene: new GameScene(this.$socket)
       }
     }
 }
