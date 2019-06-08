@@ -5,6 +5,8 @@ const WebpackFreeTexPacker = require('webpack-free-tex-packer')
 const atlases = path.join(__dirname, 'atlases')
 
 module.exports = {
+  lintOnSave: false,
+
   chainWebpack: config => {
     config.module
       .rule('url-loader')

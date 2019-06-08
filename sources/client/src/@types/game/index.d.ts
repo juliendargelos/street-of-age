@@ -17,7 +17,9 @@ export interface SpriteConstructor {
 
 export interface CharacterConstructor {
   scene: Phaser.Scene
-  x: number
-  y: number,
   kind: CharacterKind
+  x: number
+  y: number
+  velocityX: number
+  velocityY: number
 }

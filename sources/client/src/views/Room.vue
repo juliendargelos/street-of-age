@@ -19,7 +19,9 @@ import RoomGame from '@/components/RoomGame.vue'
 import RoomScore from '@/components/RoomScore.vue'
 import { RoomEvents, GameEvents } from '@street-of-age/shared/socket/events'
 import { Room as RoomType } from '@/@types'
+import { SerializedCharacter } from '@/game/entities/Character'
 import RoomModule from '@/store/modules/room'
+import GameModule from '@/store/modules/game'
 
 @Component<Room>({
   sockets: {

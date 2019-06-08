@@ -29,6 +29,8 @@ export enum PlayerEvents {
 export enum GameEvents {
   GameCreate = "game:create",
   GameCreated = "game:created",
+  GameUpdate = "game:update",
+  GameUpdated = "game:updated",
   GameTurnChanged = "game:turn:changed",
   GameCharacterMoved = "game:character:moved",
   GameCharacterJumped = "game:character:jumped",

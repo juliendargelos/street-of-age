@@ -57,6 +57,118 @@
       "frameRate": 18
     },
     {
+      "key": "geek_walking",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 15,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/walking_"
+      },
+      "showOnStart": true,
+      "repeat": -1,
+      "frameRate": 15
+    },
+    {
+      "key": "geek_jumping_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 5,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "geek_jumping_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 6,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "geek_jumping_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 9,
+        "zeroPad": 5,
+        "prefix": "main/characters/geek/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "hippie_walking",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 15,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/walking_"
+      },
+      "showOnStart": true,
+      "repeat": -1,
+      "frameRate": 15
+    },
+    {
+      "key": "hippie_jumping_start",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 5,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "hippie_jumping_midair",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 6,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
+      "key": "hippie_jumping_falling",
+      "frames": {
+        "key": "main",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 6,
+        "end": 9,
+        "zeroPad": 5,
+        "prefix": "main/characters/hippie/jump_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 18
+    },
+    {
       "key": "doting-granny_walking",
       "frames": {
         "key": "main",

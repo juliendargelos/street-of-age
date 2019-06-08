@@ -4,11 +4,14 @@ import { computedFn } from '../utils'
 import { CHARACTERS_PER_PLAYER } from '../constants'
 import { Player, SerializedPlayer } from './Player'
 import { Team, TeamKind } from './Team'
-import { Character } from './Character'
+import { Character, SerializedCharacter } from './Character'
 
 export interface SerializedGame extends SerializedObject {
   id: string,
   players: SerializedPlayer[]
+  characters: SerializedCharacter[]
+  currentPlayer?: SerializedPlayer
+  currentCharacter?: SerializedCharacter
 }
 
 const all = new Collection<Game>()
@@ -44,18 +47,17 @@ export class Game extends Entity implements Serializable<SerializedGame> {
   }
 
   @computed get currentPlayer(): Player {
-    return this.currentTeam.players.at(this.currentPlayerIndex)
+    return this.currentTeam && this.currentTeam.players.at(this.currentPlayerIndex)
   }
 
   @computed get currentCharacter(): Character {
-    return this.currentPlayer.characters.at(this.currentCharacterIndex)
+    return this.currentPlayer && this.currentPlayer.characters.at(this.currentCharacterIndex)
   }
 
   @computed get characters(): Collection<Character> {
-    return Character.collection(this.players.reduce((characters, player) => {
-      characters.push(...player.characters)
-      return characters
-    }, []))
+    return this.players.reduce((characters, player) => (
+      characters.concat(player.characters)
+    ), Character.collection())
   }
 
   @action public nextTurn() {
@@ -75,7 +77,10 @@ export class Game extends Entity implements Serializable<SerializedGame> {
   @computedFn serialize(): SerializedGame {
     return {
       id: this.id,
-      players: this.players.serialize() as SerializedPlayer[]
+      players: this.players.serialize() as SerializedPlayer[],
+      characters: this.characters.serialize() as SerializedCharacter[],
+      currentPlayer: this.currentPlayer && this.currentPlayer.serialize(),
+      currentCharacter: this.currentCharacter && this.currentCharacter.serialize()
     }
   }
 }
