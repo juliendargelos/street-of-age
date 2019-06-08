@@ -9,19 +9,22 @@ import AudioManager from '@/game/manager/AudioManager'
 import { gameWait } from '@/utils/functions'
 import { GameEvents } from '@street-of-age/shared/socket/events'
 import { Socket } from 'socket.io'
+import AppModule from '@/store/modules/app'
 
 const HEIGHT_CAMERA_OFFSET = 800
 export const WORLD_Y_LIMIT = 600
 
 export class GameScene extends BaseScene {
   private postprocessing!: PostProcessing
-  private characters: Map<string, Character> = new Map()
+  public characters: Map<string, Character> = new Map()
   private controlledCharacter: Character | null = null
 
-  constructor (private readonly socket: Socket) {
+  constructor (private socketCreate: () => void) {
     super({
       key: 'GAME_SCENE'
     })
+
+    this.socketCreate = socketCreate
   }
 
   private onProjectileExploded = (projectile: CharacterProjectile & { x: number, y: number }) => {
@@ -48,6 +51,7 @@ export class GameScene extends BaseScene {
 
   public create = () => {
     super.create()
+
     AudioManager.playBg()
     this.socket.on(GameEvents.GameUpdated, (game: { characters: SerializedCharacter[] }) => {
       this.setCharacters(game.characters)
@@ -68,31 +72,33 @@ export class GameScene extends BaseScene {
     this.cameras.main.setBounds(0, -HEIGHT_CAMERA_OFFSET, width, window.innerHeight + HEIGHT_CAMERA_OFFSET)
     this.postprocessing = (this.game.renderer as Phaser.Renderer.WebGL.WebGLRenderer).addPipeline('PostProcessing', new PostProcessing(this.game)) as PostProcessing
     this.cameras.main.setRenderToTexture(this.postprocessing)
+
+    this.socketCreate()
   }
 
-  private setCurrentCharacter(character: Character) {
+  public setCurrentCharacter(character: Character) {
     this.cameras.main.stopFollow()
     this.cameras.main.startFollow(character, false, 0.1, 0.1)
   }
 
-  private enableControls (character: Character) {
+  public enableControls (character: Character) {
     this.disableControls()
     character.enableControls()
     this.controlledCharacter = character
   }
 
-  private disableControls () {
+  public disableControls () {
     if (!this.controlledCharacter) return
     this.controlledCharacter.disableControls()
     this.controlledCharacter = null
   }
 
-  private createCharacter(attributes: SerializedCharacter) {
+  public createCharacter(attributes: SerializedCharacter) {
     const character = new Character({
       scene: this,
       kind: attributes.kind,
-      x: 0,
-      y: 0,
+      x: attributes.x || 0,
+      y: attributes.y || 0,
       velocityX: attributes.velocityX || 0,
       velocityY: attributes.velocityY || 0
     })
@@ -105,7 +111,7 @@ export class GameScene extends BaseScene {
     return character
   }
 
-  private removeCharacter(id: string) {
+  public removeCharacter(id: string) {
     const character = this.characters.get(id)
 
     if (character) {
@@ -114,9 +120,11 @@ export class GameScene extends BaseScene {
     }
   }
 
-  private setCharacters(characters: SerializedCharacter[]) {
+  public setCharacters(characters: SerializedCharacter[]) {
     this.characters.forEach((_, id) => this.removeCharacter(id))
     characters.forEach(character => this.createCharacter(character))
+    // alert('ok')
+    // console.log(this.characters)
   }
 
   public update = (time: number, delta: number) => {

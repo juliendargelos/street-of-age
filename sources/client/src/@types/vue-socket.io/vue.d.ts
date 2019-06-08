@@ -10,7 +10,10 @@ declare module 'vue/types/vue' {
     //   emit: (eventName: string, ...args: any[]) => void
     //   on: (eventName: string, handler: (...args: any[]) => void) => void
     // }
-    $socket: SocketIO.Socket
+    $socket: {
+      emit: (eventName: string, ...args: any[]) => void
+      on: (eventName: string, handler: (...args: any[]) => void) => void
+    }
   }
 }
 
