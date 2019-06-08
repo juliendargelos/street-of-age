@@ -1,6 +1,7 @@
 <template>
   <div class="game-ui">
     <template v-if="!paused">
+      <PlayerHealth :health="4" kind="fusty-grandpa" color="#f64afe"/>
       <virtual-joystick v-if="mobile"/>
       <img v-if="mobile" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
@@ -42,7 +43,7 @@
     background: transparentize($black, 0.5)
     pointer-events: all
     h1
-      font-size: 72px
+      font-size: 140px
   & .button
     pointer-events: all
     position: absolute
@@ -60,10 +61,11 @@ import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/src/game/events'
 import GamePauseUI from '@/components/ui/GamePauseUI.vue'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
+import PlayerHealth from '@/components/ui/PlayerHealth.vue'
 import AudioManager from '@/game/manager/AudioManager'
 
 @Component<GameUI>({
-  components: { VirtualJoystick, GamePauseUI },
+  components: {PlayerHealth, VirtualJoystick, GamePauseUI },
   mounted (): void {
     this.intervalId = setInterval(() => {
       this.countdown--
