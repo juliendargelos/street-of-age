@@ -1,5 +1,6 @@
 export enum GameEvents {
-  GameLoaded = 'game:loaded'
+  GameLoaded = 'game:loaded',
+  ProjectileExploded = 'projectile:exploded',
 }
 
 export enum UIEvents {

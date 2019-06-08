@@ -11,8 +11,8 @@
         <li v-for="stat in character.stats" :key="stat.id">
           <span class="ability">{{ stat.name }}</span>
           <span class="level progress-outer">
-            <span class="progress-inner" :style="{ width: `${stat.level}%` }"></span>
-            <span :style="{ display: 'none' }" aria-hidden="true">{{ stat.level }}%</span>
+            <span class="progress-inner" :style="{ width: `${stat.level * 100}%` }"></span>
+            <span :style="{ display: 'none' }" aria-hidden="true">{{ stat.level * 100 }}%</span>
           </span>
         </li>
       </ul>

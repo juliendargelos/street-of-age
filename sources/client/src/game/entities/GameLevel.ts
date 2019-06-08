@@ -48,18 +48,18 @@ export default class GameLevel {
     const layers = Object.entries(this.layers)
       .map(value => value[1])
     const offset = window.innerHeight - this.height
-    const gradient = createPhaserGradient(scene, {
-      width: this.bounds.width + 500,
-      height: this.bounds.height - offset,
-      x0: 0,
-      y0: 0,
-      x1: 0,
-      y1: this.bounds.height - offset,
-      colorStops: [{ offset: 0, color: this.background.to }, { offset: 1, color: this.background.from }]
-    })
-    scene.add.image(-30, offset < 0 ? offset : offset * 2, gradient)
-      .setDepth(-10)
-      .setOrigin(0, 0)
+    // const gradient = createPhaserGradient(scene, {
+    //   width: this.bounds.width + 500,
+    //   height: this.bounds.height - offset,
+    //   x0: 0,
+    //   y0: 0,
+    //   x1: 0,
+    //   y1: this.bounds.height - offset,
+    //   colorStops: [{ offset: 0, color: this.background.to }, { offset: 1, color: this.background.from }]
+    // })
+    // scene.add.image(-30, offset < 0 ? offset : offset * 2, gradient)
+    //   .setDepth(-10)
+    //   .setOrigin(0, 0)
     scene.cameras.main.setBackgroundColor(this.background.to)
     layers
       .forEach(layer => {

@@ -7,7 +7,9 @@ import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/game/events'
 import { CharacterKind } from '@/store/modules/app'
 import characters from '@/assets/characters'
-import { CharacterStats } from '@street-of-age/shared/characters'
+import MeleeAttack from '@/game/entities/MeleeAttack'
+import { ClientCharacterAsset } from '@/@types'
+import {gameWait} from '@/utils/functions'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
@@ -17,6 +19,8 @@ const WIDTH = 26
 const HEIGHT = 75
 const OFFSET_X = 18
 const OFFSET_Y = 15
+
+const GROUNDED_ANIMATIONS = ['melee', 'launch']
 
 enum State {
   Grounded = 'Grounded',
@@ -34,19 +38,27 @@ export interface SerializedCharacter extends Serialized {
   velocityY?: number
 }
 
+enum WeaponType {
+  Distance = 'Distance',
+  Melee = 'Melee',
+}
+
 export class Character extends Phaser.Physics.Arcade.Sprite {
   private _state: State = State.Falling
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
+  public damaged: boolean = false
+  private weaponType: WeaponType = WeaponType.Distance
   private controlsEnabled: boolean = false
   public projectileDir: Phaser.GameObjects.Graphics
   public kind: CharacterKind
+  public health: number = 4
 
   get state (): State {
     return this._state
   }
 
-  get stats (): CharacterStats {
-    return characters[this.kind].stats
+  get characterAsset (): ClientCharacterAsset {
+    return characters[this.kind]
   }
 
   set state (value: State) {
@@ -60,11 +72,13 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     super(params.scene, params.x, params.y, 'main')
     console.log(params.x, params.y)
     this.kind = params.kind
+    this.setData('tag', 'character')
     params.scene.physics.world.enable(this)
     this.projectileDir = params.scene.add.graphics().setDepth(10)
 
     this
       .setInteractive()
+      .setDragX(400)
       .setDepth(PLAYER_DEPTH)
       .setSize(WIDTH, HEIGHT)
       .setBounce(BOUNCE)
@@ -97,19 +111,30 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     super.destroy(fromScene)
   }
 
+  public takeDamage (damage: number, force: number, angle: number): void {
+    this.damaged = true
+    this.health -= damage
+    this.body.velocity.x += Math.cos(angle) * force
+    this.body.velocity.y += Math.sin(angle) * force
+    this.scene.time.delayedCall(800, () => {
+      this.damaged = false
+    }, [], null)
+  }
+
   private onChangeState (newState: State) {
+    const action = this.damaged ? 'hit' : 'jumping'
     switch (newState) {
       case State.Jumping:
-        this.play(this.kind + '_jumping_start', true)
+        this.play(`${this.kind}_${action}_start`, true)
         break
       case State.MidAir:
-        this.play(this.kind + '_jumping_midair', true)
+        this.play(this.kind + `_${action}_midair`, true)
         break
       case State.Falling:
         if (this.anims.currentAnim.key.includes('midair')) {
-          this.play(this.kind + '_jumping_falling', true, 1)
+          this.play(this.kind + `_${action}_falling`, true, 1)
         } else {
-          this.play(this.kind + '_jumping_falling', true)
+          this.play(this.kind + `_${action}_falling`, true)
         }
         break
     }
@@ -143,19 +168,39 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.controlsEnabled = false
   }
 
-  private onProjectileLaunch: ProjectileLaunchEventHandler = (evt): void => {
-    const { distance, angle, position } = evt.detail
-    const projectile = new Projectile({
-      scene: this.scene,
-      texture: 'main',
-      frame: 'main/fx/fireball/4',
-      angle,
-      distance,
-      x: this.x,
-      y: this.y
-    })
-    const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
-    projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
+  private onProjectileLaunch: ProjectileLaunchEventHandler = async (evt) => {
+    if (this.weaponType === WeaponType.Distance) {
+      this.anims.play(`${this.kind}_launch`, true).once('animationcomplete', () => {
+        this.anims.play(`${this.kind}_idle`)
+      })
+      await gameWait(this.scene.time, 500)
+      const { distance, angle, position } = evt.detail
+      const projectile = new Projectile({
+        scene: this.scene,
+        character: this.characterAsset,
+        angle,
+        distance,
+        x: this.x,
+        y: this.y,
+        offsetX: this.characterAsset.projectile.offsetX,
+        offsetY: this.characterAsset.projectile.offsetY,
+        direction: this.scaleX
+      })
+      const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
+      projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
+    } else if (this.weaponType === WeaponType.Melee) {
+      this.anims.play(`${this.kind}_melee`, true).once('animationcomplete', () => {
+        this.anims.play(`${this.kind}_idle`)
+      })
+      const melee = new MeleeAttack({
+        scene: this.scene,
+        x: this.x,
+        y: this.y,
+        kind: this.characterAsset.kind,
+        modifiers: this.characterAsset.melee,
+        scaleX: this.scaleX
+      })
+    }
   }
 
   private onProjectileMove: ProjectileMoveEventHandler = (evt): void => {
@@ -177,7 +222,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private onPlayerTap = (): void => {
     this.projectileDir.clear()
+    this.weaponType = this.weaponType === WeaponType.Distance ? WeaponType.Melee : WeaponType.Distance
     console.log('player tapped')
+    console.log(this.weaponType)
   }
 
   private onPlayerUntap = (): void => {
@@ -193,16 +240,19 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private handleMobileMovements = () => {
-    const velocity = InputManager.getAxis('horizontal') * SPEED
-    if (this.cursorKeys.space!.isDown) {
-      this.jump()
+    if (this.local) {
+      const velocity = InputManager.getAxis('horizontal') * SPEED
+      if (this.cursorKeys.space!.isDown) {
+        this.jump()
+      }
+      if (velocity < 0) {
+        this.turn('left')
+        this.setVelocityX(velocity)
+      } else if (velocity > 0) {
+        this.turn('right')
+        this.setVelocityX(velocity)
+      }
     }
-    if (velocity < 0) {
-      this.turn('left')
-    } else if (velocity > 0) {
-      this.turn('right')
-    }
-    this.setVelocityX(velocity)
   }
 
   private turn = (direction: 'left' | 'right') => {
@@ -241,8 +291,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     switch (this.state) {
       case State.Grounded:
         if (this.body.velocity.x === 0) {
-          this.play(this.kind + '_walking', true, 0)
-          this.anims.stop()
+          if (!GROUNDED_ANIMATIONS.some(anim => this.anims.currentAnim.key.includes(anim))) {
+            this.play(this.kind + '_idle', true, 0)
+          }
         } else {
           this.play(this.kind + '_walking', true)
         }
