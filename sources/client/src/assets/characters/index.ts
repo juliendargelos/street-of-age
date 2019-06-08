@@ -71,7 +71,7 @@ const Egocentric: CharacterAsset = {
   kind: 'egocentric',
   name: 'L\'influenceuse',
   melee: {
-    force: 180,
+    force: 1,
     delay: 500,
     distance: 100,
     damage: 1
@@ -111,7 +111,7 @@ const DotingGranny: CharacterAsset = {
   kind: 'doting-granny',
   name: 'Mamie gateau',
   melee: {
-    force: 180,
+    force: 1,
     delay: 500,
     distance: 100,
     damage: 1
@@ -151,7 +151,7 @@ const Fattie: CharacterAsset = {
   kind: 'fattie',
   name: 'La boulette',
   melee: {
-    force: 180,
+    force: 1,
     delay: 500,
     distance: 100,
     damage: 1
@@ -191,7 +191,7 @@ const FustyGrandpa: CharacterAsset = {
   kind: 'fusty-grandpa',
   name: 'Papivresse',
   melee: {
-    force: 180,
+    force: 1,
     delay: 500,
     distance: 10,
     damage: 1
@@ -231,7 +231,7 @@ const Geek: CharacterAsset = {
   kind: 'geek',
   name: 'Le geek metalleux',
   melee: {
-    force: 180,
+    force: 1,
     delay: 500,
     distance: 100,
     damage: 1
@@ -271,7 +271,7 @@ const Hippie: CharacterAsset = {
   kind: 'hippie',
   name: 'Le bobo',
   melee: {
-    force: 180,
+    force: 1,
     delay: 500,
     distance: 100,
     damage: 1
@@ -311,7 +311,7 @@ const LapdogWoman: CharacterAsset = {
   kind: 'lapdog-woman',
   name: 'La folle aux chiens',
   melee: {
-    force: 180,
+    force: 1,
     delay: 500,
     distance: 100,
     damage: 1
@@ -351,7 +351,7 @@ const MrMuscle: CharacterAsset = {
   kind: 'mr-muscle',
   name: 'Le keke',
   melee: {
-    force: 300,
+    force: 2,
     delay: 500,
     distance: 40,
     damage: 1

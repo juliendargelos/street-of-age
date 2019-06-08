@@ -35,7 +35,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private _state: State = State.Falling
   private local: boolean = false
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
-  private damaged: boolean = false
+  public damaged: boolean = false
   private weaponType: WeaponType = WeaponType.Melee
   public projectileDir: Phaser.GameObjects.Graphics
   public kind: CharacterKind
