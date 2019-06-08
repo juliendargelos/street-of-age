@@ -7,6 +7,7 @@ import {
 import { ClientCharacterAsset } from '@/@types'
 import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
+import Explosion from '@/game/entities/Explosion'
 
 const BULLET_FORCE = 10000
 
@@ -27,7 +28,6 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     super(params.scene, params.x, params.y, 'main', `main/weapons/${params.character.kind}`)
     this.character = params.character
     params.scene.physics.world.enable(this)
-    params.scene.add.existing(this)
     const scene = params.scene as GameScene
     scene.physics.add.collider(scene.level.colliders, this, this.onCollide.bind(this))
     scene.physics.add.collider(scene.level.floors, this, this.onCollide.bind(this))
@@ -38,6 +38,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
       .setAngularDrag(this.character.projectile.bulletLike ? 0 : this.character.projectile.deceleration)
       .setBounce(this.character.projectile.bounciness)
     this.body.setSize(20, 20)
+    params.scene.add.existing(this)
   }
 
   public onCollide (go: Phaser.GameObjects.GameObject, other: Phaser.GameObjects.GameObject): void {
@@ -53,6 +54,12 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 
   public onDestroy (): void {
     Emitter.emit(GameEvents.ProjectileExploded, { x: this.x, y: this.y, ...this.character.projectile })
+    const explosion = new Explosion({
+      scene: this.scene,
+      x: this.x,
+      y: this.y,
+      texture: 'explosions'
+    })
     this.destroy()
   }
 

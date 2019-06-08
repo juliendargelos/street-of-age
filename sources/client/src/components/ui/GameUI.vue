@@ -6,15 +6,15 @@
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
     </template>
     <GamePauseUI @close="pauseToggle" v-if="paused"/>
-    <transition name="fade" mode="out-in">
-      <div v-if="countdown > 0" class="game-ui__starting">
-        <transition-group name="zoom-out" mode="out-in">
-          <h1 :key="n" v-for="n in countdown" v-if="countdown === n" class="road-rage">
-            {{ n - 1 > 0 ? n - 1 : 'Fight!' }}
-          </h1>
-        </transition-group>
-      </div>
-    </transition>
+<!--    <transition name="fade" mode="out-in">-->
+<!--      <div v-if="countdown > 0" class="game-ui__starting">-->
+<!--        <transition-group name="zoom-out" mode="out-in">-->
+<!--          <h1 :key="n" v-for="n in countdown" v-if="countdown === n" class="road-rage">-->
+<!--            {{ n - 1 > 0 ? n - 1 : 'Fight!' }}-->
+<!--          </h1>-->
+<!--        </transition-group>-->
+<!--      </div>-->
+<!--    </transition>-->
   </div>
 </template>
 
