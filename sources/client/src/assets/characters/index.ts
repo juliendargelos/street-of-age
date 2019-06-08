@@ -35,6 +35,8 @@ export interface CharacterProjectile {
   radiusDamage: number
   explosionMultiplier: number,
   damage: number,
+  offsetX?: number,
+  offsetY?: number,
 }
 
 export type CharactersAsset = { [kind: string]: CharacterAsset }
@@ -47,7 +49,9 @@ export interface CharacterMelee {
   distance: number,
   damage: number,
   delay: number,
-  force: number
+  force: number,
+  offsetX?: number,
+  offsetY?: number,
 }
 
 export interface CharacterAsset {
@@ -200,12 +204,14 @@ const FustyGrandpa: CharacterAsset = {
     damage: 1,
     radiusDamage: 300,
     explosionMultiplier: 1,
-    bounceTtl: null,
+    bounceTtl: 5,
     ttl: null,
-    bulletLike: true,
+    bulletLike: false,
     mass: 1,
     bounciness: 0.6,
-    deceleration: 300
+    deceleration: 200,
+    offsetX: 24,
+    offsetY: 6
   },
   stats: {
     [CAC_ABILITY_ID]: {
@@ -271,21 +277,22 @@ const Hippie: CharacterAsset = {
   kind: 'hippie',
   name: 'Le bobo',
   melee: {
-    force: 1,
+    force: 0.5,
     delay: 500,
-    distance: 100,
-    damage: 1
+    distance: 280,
+    damage: 1,
+    offsetY: 0.15
   },
   projectile: {
     damage: 1,
     radiusDamage: 120,
-    explosionMultiplier: 1,
+    explosionMultiplier: 3,
     bounceTtl: null,
     ttl: null,
-    bulletLike: false,
+    bulletLike: true,
     mass: 1,
     bounciness: 0.6,
-    deceleration: 100
+    deceleration: 100,
   },
   stats: {
     [CAC_ABILITY_ID]: {

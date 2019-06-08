@@ -1,12 +1,18 @@
-import { SpriteConstructor } from '@/@types/game'
-import {PLAYER_DEPTH} from '@/constants'
+import { PLAYER_DEPTH } from '@/constants'
+
+interface Constructor {
+  scene: Phaser.Scene,
+  x: number,
+  y: number,
+  explosion: string
+}
 
 export default class Explosion extends Phaser.GameObjects.Sprite {
-  constructor (params: SpriteConstructor) {
-    super(params.scene, params.x, params.y, params.texture, params.frame)
+  constructor (params: Constructor) {
+    super(params.scene, params.x, params.y, 'explosions')
     params.scene.add.existing(this)
     this.setDepth(PLAYER_DEPTH)
-    this.anims.play('explosions_first').once('animationcomplete', () => {
+    this.anims.play(params.explosion).once('animationcomplete', () => {
       this.destroy()
     })
   }

@@ -1,9 +1,6 @@
-import { SpriteConstructor } from '@/@types/game'
 import { GameScene } from '@/game/scenes/GameScene'
 import { PLAYER_DEPTH } from '@/constants'
-import {
-  DISTANCE_ABILITY_ID
-} from '@/assets/characters'
+import { DISTANCE_ABILITY_ID } from '@/assets/characters'
 import { ClientCharacterAsset } from '@/@types'
 import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
@@ -17,7 +14,10 @@ interface Constructor {
   y: number
   angle: number,
   distance: number,
-  character: ClientCharacterAsset
+  character: ClientCharacterAsset,
+  direction: number,
+  offsetX?: number,
+  offsetY?: number,
 }
 
 class Projectile extends Phaser.Physics.Arcade.Sprite {
@@ -25,19 +25,33 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   private bounces: number = 0
 
   constructor (params: Constructor) {
-    super(params.scene, params.x, params.y, 'main', `main/weapons/${params.character.kind}`)
+    super(
+      params.scene,
+      params.x,
+      params.y,
+      'main',
+      `main/weapons/${params.character.kind}`
+    )
     this.character = params.character
+    if (params.direction < 0) {
+      this.x -= params.offsetX || 0
+      this.y -= params.offsetY || 0
+    } else {
+      this.x += params.offsetX || 0
+      this.y += params.offsetY || 0
+    }
     params.scene.physics.world.enable(this)
     const scene = params.scene as GameScene
     scene.physics.add.collider(scene.level.colliders, this, this.onCollide.bind(this))
     scene.physics.add.collider(scene.level.floors, this, this.onCollide.bind(this))
+    this.body.setSize(20, 20)
     this
       .setDepth(PLAYER_DEPTH)
       .setGravityY(0)
       .setDrag(this.character.projectile.bulletLike ? 0 : this.character.projectile.deceleration)
       .setAngularDrag(this.character.projectile.bulletLike ? 0 : this.character.projectile.deceleration)
       .setBounce(this.character.projectile.bounciness)
-    this.body.setSize(20, 20)
+      .updateDisplayOrigin()
     params.scene.add.existing(this)
   }
 
@@ -58,7 +72,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
       scene: this.scene,
       x: this.x,
       y: this.y,
-      texture: 'explosions'
+      explosion: 'explosions_first'
     })
     this.destroy()
   }

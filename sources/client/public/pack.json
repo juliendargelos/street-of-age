@@ -11,7 +11,14 @@
         "key": "main",
         "textureURL": "atlases/main.png",
         "atlasURL": "atlases/main.json"
-      },{
+      },
+      {
+        "type": "atlas",
+        "key": "melee",
+        "textureURL": "atlases/melee.png",
+        "atlasURL": "atlases/melee.json"
+      },
+      {
         "type": "atlas",
         "key": "explosions",
         "textureURL": "atlases/explosions.png",

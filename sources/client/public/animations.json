@@ -1133,6 +1133,34 @@
       "showOnStart": true,
       "repeat": 0,
       "frameRate": 21
+    },
+    {
+      "key": "explosions_second",
+      "frames": {
+        "key": "explosions",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 1,
+        "end": 23,
+        "zeroPad": 5,
+        "prefix": "explosions/second/28_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 21
+    },
+    {
+      "key": "hippie_melee_attack",
+      "frames": {
+        "key": "melee",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 34,
+        "zeroPad": 5,
+        "prefix": "melee/hippie/13_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 21
     }
   ]
 }

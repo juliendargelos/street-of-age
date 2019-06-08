@@ -168,7 +168,10 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         angle,
         distance,
         x: this.x,
-        y: this.y
+        y: this.y,
+        offsetX: this.characterAsset.projectile.offsetX,
+        offsetY: this.characterAsset.projectile.offsetY,
+        direction: this.scaleX
       })
       const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
       projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
@@ -180,8 +183,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         scene: this.scene,
         x: this.x,
         y: this.y,
+        kind: this.characterAsset.kind,
         modifiers: this.characterAsset.melee,
-        direction: this.scaleX
+        scaleX: this.scaleX
       })
     }
   }
