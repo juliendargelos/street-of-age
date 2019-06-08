@@ -84,7 +84,7 @@ const Egocentric: CharacterAsset = {
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0,
+    bounciness: 0.6,
     deceleration: 100
   },
   stats: {
@@ -164,7 +164,7 @@ const Fattie: CharacterAsset = {
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0,
+    bounciness: 0.6,
     deceleration: 100
   },
   stats: {
@@ -244,7 +244,7 @@ const Geek: CharacterAsset = {
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0,
+    bounciness: 0.6,
     deceleration: 100
   },
   stats: {
@@ -284,7 +284,7 @@ const Hippie: CharacterAsset = {
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0,
+    bounciness: 0.6,
     deceleration: 100
   },
   stats: {
@@ -324,7 +324,7 @@ const LapdogWoman: CharacterAsset = {
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0,
+    bounciness: 0.6,
     deceleration: 100
   },
   stats: {
@@ -360,12 +360,12 @@ const MrMuscle: CharacterAsset = {
     damage: 1,
     radiusDamage: 120,
     explosionMultiplier: 3,
-    bounceTtl: null,
+    bounceTtl: 6,
     ttl: null,
-    bulletLike: true,
-    mass: 1,
-    bounciness: 0,
-    deceleration: 100
+    bulletLike: false,
+    mass: 3,
+    bounciness: 0.6,
+    deceleration: 200
   },
   stats: {
     [CAC_ABILITY_ID]: {

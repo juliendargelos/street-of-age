@@ -10,7 +10,10 @@ import { GameEvents } from '@street-of-age/shared/game/events'
 
 const BULLET_FORCE = 10000
 
-interface Constructor extends SpriteConstructor{
+interface Constructor {
+  scene: Phaser.Scene,
+  x: number,
+  y: number
   angle: number,
   distance: number,
   character: ClientCharacterAsset
@@ -21,7 +24,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   private bounces: number = 0
 
   constructor (params: Constructor) {
-    super(params.scene, params.x, params.y, params.texture, params.frame)
+    super(params.scene, params.x, params.y, 'main', `main/weapons/${params.character.kind}`)
     this.character = params.character
     params.scene.physics.world.enable(this)
     params.scene.add.existing(this)
@@ -31,10 +34,10 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     this
       .setDepth(PLAYER_DEPTH)
       .setGravityY(0)
-      .setDragX(this.character.projectile.bulletLike ? 0 : this.character.projectile.deceleration)
+      .setDrag(this.character.projectile.bulletLike ? 0 : this.character.projectile.deceleration)
+      .setAngularDrag(this.character.projectile.bulletLike ? 0 : this.character.projectile.deceleration)
       .setBounce(this.character.projectile.bounciness)
-      .setDisplaySize(40, 40)
-      .updateDisplayOrigin()
+    this.body.setSize(20, 20)
   }
 
   public onCollide (go: Phaser.GameObjects.GameObject, other: Phaser.GameObjects.GameObject): void {
@@ -58,11 +61,13 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 
   public applyImpulseForce (force: Phaser.Math.Vector2, duration: number = 0.1) {
     this.setAcceleration(force.x, force.y)
+    this.setAngularAcceleration(force.x * 2)
     this.scene.time.delayedCall(
       duration * 1000,
       () => {
         try {
           this.setAcceleration(0, 0)
+          this.setAngularAcceleration(0)
         } catch (e) {
 
         }
