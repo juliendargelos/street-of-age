@@ -58,6 +58,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   constructor (params: CharacterConstructor) {
     super(params.scene, params.x, params.y, 'main')
+    console.log(params.x, params.y)
     this.kind = params.kind
     params.scene.physics.world.enable(this)
     this.projectileDir = params.scene.add.graphics().setDepth(10)

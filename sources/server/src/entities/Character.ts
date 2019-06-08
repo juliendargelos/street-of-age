@@ -66,8 +66,8 @@ export class Character extends Entity implements Serializable<SerializedCharacte
   }
 
   public randomizePosition(): this {
-    this.x = ~~(Math.random()*10)
-    this.y = ~~(Math.random()*10)
+    this.x = ~~(Math.random()*2000)
+    this.y = ~~(Math.random()*500)
     return this
   }
 

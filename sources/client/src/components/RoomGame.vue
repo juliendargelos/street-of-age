@@ -34,10 +34,38 @@ import level from '@/assets/levels/SmallStreet.level.json'
 import GameManager from '@/game/manager/GameManager'
 import GameUI from '@/components/ui/GameUI.vue'
 import AppModule from '@/store/modules/app'
+import { GameEvents } from '@street-of-age/shared/socket/events'
+import { Character, SerializedCharacter } from '@/game/entities/Character'
 
 @Component<RoomGame>({
   components: { GameUI },
+  sockets: {
+    [GameEvents.GameCreated] (game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
+      this.scene.setCharacters(game.characters)
+      const character = this.scene.characters.get(game.currentCharacter.id) as Character
+      this.scene.setCurrentCharacter(character)
+
+      if (game.currentPlayer.id === AppModule.player.id) this.scene.enableControls(character)
+      else this.scene.disableControls()
+    },
+
+    // [GameEvents.GameUpdated](game: { characters: SerializedCharacter[] }) {
+    //   this.scene.setCharacters(game.characters)
+    // },
+
+    [GameEvents.GameTurnChanged](game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
+      const character = this.scene.characters.get(game.currentCharacter.id) as Character
+      this.scene.setCurrentCharacter(character)
+
+      if (game.currentPlayer.id === AppModule.player.id) this.scene.enableControls(character)
+      else this.scene.disableControls()
+    }
+  },
   mounted () {
+    this.scene = new GameScene(() => {
+      this.$socket.emit(GameEvents.GameCreate, this.$route.params.id)
+    })
+
     this.game = new Phaser.Game(this.config)
     GameManager.init(this.game)
     this.game.registry.set(REGISTRY_LEVEL_KEY, level)
@@ -53,6 +81,7 @@ import AppModule from '@/store/modules/app'
 export default class RoomGame extends Vue {
     $el!: HTMLDivElement
     private game!: Phaser.Game
+    private scene!: GameScene
     private mobile: boolean = false
     @Prop({ type: Boolean, default: process.env.NODE_ENV === 'development' }) readonly debug!: boolean
     @Prop({ type: Array, default: () => [] }) readonly players!: Player[]
@@ -88,7 +117,7 @@ export default class RoomGame extends Vue {
           default: 'arcade'
         },
         disableContextMenu: true,
-        scene: new GameScene(this.$socket)
+        scene: this.scene
       }
     }
 }

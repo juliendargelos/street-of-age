@@ -25,11 +25,8 @@ import GameModule from '@/store/modules/game'
 
 @Component<Room>({
   sockets: {
-    [GameEvents.GameCreated] () {
-      this.$router.replace({ name: 'room-game', params: { id: this.$route.params.id } })
-    },
     [RoomEvents.RoomReady] () {
-      this.$socket.emit(GameEvents.GameCreate, this.$route.params.id)
+      this.$router.replace({ name: 'room-game', params: { id: this.$route.params.id } })
     },
     [RoomEvents.RoomDefined] () {
       this.isDefined = true

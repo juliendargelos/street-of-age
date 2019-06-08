@@ -8,7 +8,7 @@ import { Game } from '../entities/Game'
 export class GameController extends Controller {
   private player: Player
   private game!: Game
-  private timeout: number = null
+  private interval: number = null
 
   constructor(socket: SocketIO.Socket) {
     super(socket, [
@@ -24,27 +24,25 @@ export class GameController extends Controller {
 
   [GameEvents.GameUpdate]() {
     if (this.game) {
-      this.socket.emit(GameEvents.GameUpdated, this.game.serialize())
+      this.io.in(this.game.id).emit(GameEvents.GameUpdated, this.game.serialize())
+      // this.socket.emit(GameEvents.GameUpdated, this.game.serialize())
     }
   }
 
   [GameEvents.GameCreate](id: string) {
     const room = Room.all.get(id)
-    this.game = Game.all.add(new Game(id, room.players))
-    this.io.in(room.id).emit(GameEvents.GameCreated, this.game.serialize())
-    // this.socket.broadcast.emit(, this.game.id)
+    this.game = Game.all.get(id)
 
-    this.timeout = setTimeout(() => {
+    if (!this.game) {
+      this.game = Game.all.add(new Game(id, room.players))
       this.game.nextTurn()
-    }, 1000)
+      this.io.in(room.id).emit(GameEvents.GameCreated, this.game.serialize())
 
-    this.autorun(() => {
-      this.io.in(room.id).emit(GameEvents.GameTurnChanged, this.game.serialize())
-
-      this.timeout = setTimeout(() => {
+      this.interval = setInterval(() => {
         this.game.nextTurn()
-      }, 150000)
-    })
+        this.io.in(room.id).emit(GameEvents.GameTurnChanged, this.game.serialize())
+      }, 15000)
+    }
   }
 
   [GameEvents.GameCharacterMoved](id: string, x: number, y: number) {
@@ -57,7 +55,7 @@ export class GameController extends Controller {
   [GameEvents.GameCharacterShooted](id: string) {
     this.socket.broadcast.emit(GameEvents.GameCharacterShooted, { id })
 
-    clearInterval(this.timeout)
+    clearInterval(this.interval)
 
     setTimeout(() => {
       this.game.nextTurn()
