@@ -227,6 +227,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
           .subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
           .multiply(new Phaser.Math.Vector2(-1, -1))
 
+        this.scene.cameras.main.startFollow(projectile, false, 0.1, 0.1)
+
         projectile.launch(Phaser.Math.Clamp(distance! / 10, 20, 50), position)
         break
 
