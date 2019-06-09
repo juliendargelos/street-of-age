@@ -40,7 +40,9 @@
         "type": "audio",
         "key": "bg",
         "url": [
-          "sounds/bg.mp3"
+          "sounds/bg.mp3",
+          "sounds/bg.ogg",
+          "sounds/bg.m4a"
         ]
       },
       {

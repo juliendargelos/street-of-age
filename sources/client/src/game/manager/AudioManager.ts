@@ -2,9 +2,12 @@ import { GameManager } from './GameManager'
 import GameModule from '@/store/modules/game'
 
 const BG_MUSIC = 'bg'
-const BG_VOLUME = 0.1
+export const BG_VOLUME = 0.15
+export const MENU_BG_VOLUME = 0.05
 const AMBIANT_VOLUME = 0.1
-const SFX_VOLUME = 0.05
+export const SFX_VOLUME = 0.1
+export const MENU_SFX_VOLUME = 0.2
+export const BUTTON_AUDIO_PATH = '/sounds/sfx/button.mp3'
 
 type ExtraConfig = Partial<Phaser.Types.Sound.SoundConfig & Phaser.Types.Sound.SoundMarker>
 
@@ -51,6 +54,7 @@ class AudioManager {
   }
 
   public playUniqueSfx = (key: string, extra?: ExtraConfig) => {
+    if (!this.sound) return
     if (this.uniqueSfx) {
       this.uniqueSfx.stop()
     }

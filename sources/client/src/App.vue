@@ -8,7 +8,12 @@
       </div>
       <h1 class="road-rage-colors" v-else>Veuillez tourner votre appareil</h1>
     </div>
-    <audio ref="sound" v-if="canPlay && !playing" src="/sounds/menu.mp3" autoplay></audio>
+    <audio ref="sound" v-if="canPlay && !playing" autoplay loop>
+      <source src="/sounds/menu.ogg" type="audio/ogg">
+      <source src="/sounds/menu.mp3" type="audio/mpeg">
+      <source src="/sounds/menu.m4a" type="audio/mp4">
+    </audio>
+
   </div>
 </template>
 
@@ -50,6 +55,7 @@ import AppModule from '@/store/modules/app'
 import { PlayerEvents, RoomEvents } from '@street-of-age/shared/socket/events'
 import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
+import { MENU_BG_VOLUME } from '@/game/manager/AudioManager'
 
 @Component<App>({
   sockets: {
@@ -59,7 +65,7 @@ import { GameEvents } from '@street-of-age/shared/game/events'
   mounted (): void {
     Emitter.on(GameEvents.GameLoaded, this.onGameLoaded)
     if (this.$refs.sound) {
-      this.$refs.sound.volume = 0.05
+      this.$refs.sound.volume = MENU_BG_VOLUME
     }
     if (this.orientationApiSupported) {
       window.screen.orientation.addEventListener('change', this.onOrientationChange)
