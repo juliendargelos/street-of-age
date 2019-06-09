@@ -17,7 +17,7 @@
 <style lang="sass">
 .player-waiting-card
   & .character-card
-    width: 60px
+    width: 70px
     height: 252px
     @media screen and (min-width: 900px)
       width: 120px

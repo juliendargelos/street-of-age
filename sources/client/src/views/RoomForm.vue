@@ -1,5 +1,8 @@
 <template>
   <form class="room-form" @submit.prevent="onSubmit">
+    <AppNav>
+      <BackButton :to="{ name: 'home' }"/>
+    </AppNav>
     <AppPanel class="room-form__content">
       <input type="text" required class="room-form__name" v-model="settings.name" placeholder="Entrez le nom de la partie"/>
       <AppPicker
@@ -13,13 +16,6 @@
         class="room-form__mapsize"
         :choices="[{ value: 'small', label: 'Petite'}, { value: 'medium', label: 'Moyenne'}, { value: 'large', label: 'Grande'}]"/>
       <div class="room-form__actions">
-        <AppButton
-          type="button"
-          secondary
-          @click="onBackClick"
-          block>
-          Retour
-        </AppButton>
         <AppButton
           secondary
           alternate

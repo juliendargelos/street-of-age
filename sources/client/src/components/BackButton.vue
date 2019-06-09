@@ -28,12 +28,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { RawLocation } from '@street-of-age/client/node_modules/vue-router'
 
 @Component<BackButton>({})
 export default class BackButton extends Vue {
   @Prop({ type: Boolean, default: false }) readonly disabled!: boolean
+  @Prop({ type: Object, default: null }) readonly to!: RawLocation
   private onClick () {
-    this.$router.back()
+    if (this.to) {
+      this.$router.push(this.to)
+    } else {
+      this.$router.back()
+    }
   }
 }
 </script>

@@ -35,7 +35,7 @@
     margin:
       left: auto
       right: auto
-    max-width: 200px
+    max-width: 240px
     &--debug.app-button
       position: absolute
       bottom: 20px

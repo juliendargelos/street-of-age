@@ -28,7 +28,7 @@
 
   &__content
     font-family: 'Dead Jim', sans-serif
-    font-size: 16px
+    font-size: 18px
     letter-spacing: 1px
     min-width: 100px
     width: 100%
