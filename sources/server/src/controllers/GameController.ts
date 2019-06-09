@@ -8,7 +8,7 @@ import { Game } from '../entities/Game'
 export class GameController extends Controller {
   private player: Player
   private game!: Game
-  private interval: number = null
+  private interval!: NodeJS.Timer
 
   constructor(socket: SocketIO.Socket) {
     super(socket, [
