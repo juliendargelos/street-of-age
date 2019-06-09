@@ -1,5 +1,6 @@
 import { Floor, Layers, LevelBackground, Sprite } from '@street-of-age/shared/src/@types'
-import { createPhaserGradient } from '@/constants'
+import { Hole } from '@street-of-age/shared/src/@types/level'
+import {PLAYER_DEPTH} from '@/constants'
 
 interface Bounds {
   x: number,
@@ -16,6 +17,7 @@ const getMinYSprites = (sprites: Sprite[]) =>
 
 export default class GameLevel {
   public floors!: Phaser.Physics.Arcade.StaticGroup
+  public holes!: Phaser.GameObjects.Rectangle[]
   public colliders!: Phaser.Physics.Arcade.StaticGroup
   public layers: Layers
 
@@ -25,7 +27,8 @@ export default class GameLevel {
     public height: number,
     public background: LevelBackground,
     private serializedLayers: Layers,
-    private serializedFloors: Floor[]
+    private serializedFloors: Floor[],
+    private serializedHoles: Hole[]
   ) {
     this.layers = serializedLayers
   }
@@ -77,6 +80,11 @@ export default class GameLevel {
           .setOrigin(floor.pivot.x, floor.pivot.y)
           .setDepth(10)
       )
+    )
+    this.holes = this.serializedHoles.map(hole =>
+      scene.add.rectangle(hole.x, hole.y + offset, hole.width, hole.height, hole.color)
+        .setOrigin(hole.pivot.x, hole.pivot.y)
+        .setDepth(PLAYER_DEPTH - 1)
     )
     this.colliders = scene.physics.add.staticGroup()
     layers.forEach(layer => {

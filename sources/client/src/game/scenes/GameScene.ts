@@ -6,7 +6,7 @@ import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
 import { CharacterProjectile } from '@/assets/characters'
 
-const HEIGHT_CAMERA_OFFSET = 400
+const HEIGHT_CAMERA_OFFSET = 800
 
 export class GameScene extends BaseScene {
   private postprocessing!: PostProcessing
@@ -43,7 +43,7 @@ export class GameScene extends BaseScene {
         scene: this,
         kind: CharacterKind.FustyGrandpa,
         x: 250,
-        y: -10,
+        y: -500,
         local: true
       }),
 
@@ -51,21 +51,21 @@ export class GameScene extends BaseScene {
         scene: this,
         kind: CharacterKind.FustyGrandpa,
         x: 300,
-        y: -10
+        y: -500
       }),
 
       new Character({
         scene: this,
         kind: CharacterKind.Egocentric,
         x: 350,
-        y: -10
+        y: -500
       }),
 
       new Character({
         scene: this,
         kind: CharacterKind.DotingGranny,
         x: 400,
-        y: -10
+        y: -500
       })
     ]
     Emitter.on(GameEvents.ProjectileExploded, this.onProjectileExploded)

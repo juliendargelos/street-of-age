@@ -1,12 +1,15 @@
 import {parseSync} from 'svgson'
 import {Collider, Floor, Layers, Level, Sprite} from '../../sources/shared/src/@types'
 import {Layer} from '../../sources/shared/src/@types/sprite'
+import {Hole} from '../../sources/shared/src/@types/level'
 
 const FLOOR_GROUP = ['floors', 'Floor', 'floors', 'Floors', 'ground', 'Ground']
-const LAYER_MASK_EXCLUDE = [...FLOOR_GROUP]
+const HOLES_GROUP = ['holes', 'Hole', 'Holes', 'hole']
+const LAYER_MASK_EXCLUDE = [...FLOOR_GROUP, ...HOLES_GROUP]
 
 const DEFAULT_BACKGROUND_FROM = '#4C86B0'
 const DEFAULT_FLOOR_COLOR = 0x040310
+const DEFAULT_HOLES_COLOR = 0x252341
 const DEFAULT_BACKGROUND_TO = '#2F1C66'
 
 type ParseTransformResult = { [key: string]: number[] }
@@ -28,7 +31,9 @@ export const parseSvg = (svgContent: string): Level => {
   const rootGroup = root.children.find((node: any) => node.name === 'g' && node.attributes.id === title.replace(' ', '-'))!
   const layersSvg: any[] = rootGroup.children.filter((node: any) => node.name === 'g' && !LAYER_MASK_EXCLUDE.includes(node.attributes.id))
   const floorLayer: any = rootGroup.children.find((node: any) => node.name === 'g' && FLOOR_GROUP.includes(node.attributes.id))!
+  const holesLayer: any = rootGroup.children.find((node: any) => node.name === 'g' && HOLES_GROUP.includes(node.attributes.id))!
   let floors: Floor[] = []
+  let holes: Hole[] = []
   if (floorLayer) {
     const floorTranslate = parseTransform(floorLayer.attributes.transform).translate
     floors = floorLayer.children
@@ -44,6 +49,22 @@ export const parseSvg = (svgContent: string): Level => {
           y: 0
         }
       }) as Floor)
+  }
+  if (holesLayer) {
+    const holesTranslate = parseTransform(holesLayer.attributes.transform).translate
+    holes = holesLayer.children
+      .filter((node: any) => node.name === 'rect')
+      .map((node: any) => ({
+        x: parseFloat(node.attributes.x) + holesTranslate[0],
+        y: parseFloat(node.attributes.y) + holesTranslate[1],
+        width: parseFloat(node.attributes.width),
+        height: parseFloat(node.attributes.height),
+        color: DEFAULT_HOLES_COLOR,
+        pivot: {
+          x: 0,
+          y: 0
+        }
+      }) as Hole)
   }
 
   const layers: Layers = layersSvg.reduce((acc, value, index) => {
@@ -106,6 +127,7 @@ export const parseSvg = (svgContent: string): Level => {
       to: DEFAULT_BACKGROUND_TO
     },
     layers,
-    floors
+    floors,
+    holes
   }
 }
