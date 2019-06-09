@@ -1,6 +1,7 @@
 import InputManager from '@/game/manager/InputManager'
 import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/src/game/events'
+import AudioManager from '@/game/manager/AudioManager'
 
 export class GameManager {
   public game!: Phaser.Game
@@ -14,6 +15,7 @@ export class GameManager {
     this.game = game
     Emitter.on(GameEvents.GameLoaded, () => {
       InputManager.init(this)
+      AudioManager.init(this)
     })
   }
 

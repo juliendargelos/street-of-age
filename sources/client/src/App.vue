@@ -8,6 +8,7 @@
       </div>
       <h1 class="road-rage-colors" v-else>Veuillez tourner votre appareil</h1>
     </div>
+    <audio ref="sound" v-if="canPlay && !playing" src="/sounds/menu.mp3" autoplay></audio>
   </div>
 </template>
 
@@ -57,7 +58,9 @@ import { GameEvents } from '@street-of-age/shared/game/events'
   },
   mounted (): void {
     Emitter.on(GameEvents.GameLoaded, this.onGameLoaded)
-
+    if (this.$refs.sound) {
+      this.$refs.sound.volume = 0.05
+    }
     if (this.orientationApiSupported) {
       window.screen.orientation.addEventListener('change', this.onOrientationChange)
     } else {
@@ -76,6 +79,9 @@ import { GameEvents } from '@street-of-age/shared/game/events'
   }
 })
 export default class App extends Vue {
+  $refs!: {
+    sound: HTMLAudioElement
+  }
   private mql = window.matchMedia('(orientation: portrait)')
   public orientation: 'portrait' | 'landscape' = this.mql.matches ? 'portrait' : 'landscape'
   public onGameLoaded () {
@@ -100,7 +106,7 @@ export default class App extends Vue {
     return AppModule.orientationApiSupported
   }
   get isMobile () {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) 
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
   }
   get canPlay () {
     return this.orientation === 'landscape' && this.isMobile

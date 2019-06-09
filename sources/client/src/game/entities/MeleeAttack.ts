@@ -3,6 +3,7 @@ import { PLAYER_DEPTH } from '@/constants'
 import { GameScene } from '@/game/scenes/GameScene'
 import { Character } from '@/game/entities/Character'
 import MeleeAnimation from '@/game/entities/MeleeAnimation'
+import AudioManager from '@/game/manager/AudioManager'
 
 interface Constructor {
   scene: Phaser.Scene
@@ -42,6 +43,7 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
         offsetY: this.modifiers.offsetY,
         scaleX: this.direction
       })
+      AudioManager.playSfx('melee', { volume: 0.2 })
       scene.physics.add.overlap(this, scene.characters, this.onCollide.bind(this))
       this
         .setDisplaySize(this.modifiers.distance, 1)
