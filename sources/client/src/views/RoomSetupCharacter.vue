@@ -15,7 +15,7 @@
       </div>
     <transition name="slide-fade" mode="out-in">
       <SetupCharacterReadyOverlay
-        :team="player.team"
+        :team="player.teamKind"
         v-if="ready"
         @close="onClose"
         @click="onValidate"/>
