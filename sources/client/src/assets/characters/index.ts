@@ -54,10 +54,18 @@ export interface CharacterMelee {
   offsetY?: number,
 }
 
+export interface CharacterBody {
+  width: number,
+  height: number,
+  offsetX: number,
+  offsetY: number,
+}
+
 export interface CharacterAsset {
   name: string,
   kind: string,
   team: string,
+  body: CharacterBody
   stats: CharacterStats,
   melee: CharacterMelee,
   projectile: CharacterProjectile
@@ -74,6 +82,12 @@ const Egocentric: CharacterAsset = {
   team: 'young',
   kind: 'egocentric',
   name: 'L\'influenceuse',
+  body: {
+    width: 26,
+    height: 75,
+    offsetX: 30,
+    offsetY: 15
+  },
   melee: {
     force: 1,
     delay: 500,
@@ -114,6 +128,12 @@ const DotingGranny: CharacterAsset = {
   team: 'old',
   kind: 'doting-granny',
   name: 'Mamie gateau',
+  body: {
+    width: 40,
+    height: 65,
+    offsetX: 25,
+    offsetY: 25
+  },
   melee: {
     force: 1,
     delay: 500,
@@ -154,6 +174,12 @@ const Fattie: CharacterAsset = {
   team: 'young',
   kind: 'fattie',
   name: 'La boulette',
+  body: {
+    width: 32,
+    height: 75,
+    offsetX: 27,
+    offsetY: 15
+  },
   melee: {
     force: 1,
     delay: 500,
@@ -194,6 +220,12 @@ const FustyGrandpa: CharacterAsset = {
   team: 'old',
   kind: 'fusty-grandpa',
   name: 'Papivresse',
+  body: {
+    width: 45,
+    height: 70,
+    offsetX: 22,
+    offsetY: 20
+  },
   melee: {
     force: 0.7,
     delay: 750,
@@ -238,6 +270,12 @@ const Geek: CharacterAsset = {
   team: 'young',
   kind: 'geek',
   name: 'Le geek metalleux',
+  body: {
+    width: 26,
+    height: 85,
+    offsetX: 30,
+    offsetY: 5
+  },
   melee: {
     force: 1,
     delay: 500,
@@ -278,6 +316,12 @@ const Hippie: CharacterAsset = {
   team: 'young',
   kind: 'hippie',
   name: 'Le bobo',
+  body: {
+    width: 30,
+    height: 85,
+    offsetX: 30,
+    offsetY: 5
+  },
   melee: {
     force: 0.5,
     delay: 500,
@@ -294,7 +338,7 @@ const Hippie: CharacterAsset = {
     bulletLike: true,
     mass: 1,
     bounciness: 0.6,
-    deceleration: 100,
+    deceleration: 100
   },
   stats: {
     [CAC_ABILITY_ID]: {
@@ -319,6 +363,12 @@ const LapdogWoman: CharacterAsset = {
   team: 'old',
   kind: 'lapdog-woman',
   name: 'La folle aux chiens',
+  body: {
+    width: 26,
+    height: 78,
+    offsetX: 34,
+    offsetY: 12
+  },
   melee: {
     force: 1,
     delay: 500,
@@ -359,6 +409,12 @@ const MrMuscle: CharacterAsset = {
   team: 'old',
   kind: 'mr-muscle',
   name: 'Le keke',
+  body: {
+    width: 34,
+    height: 85,
+    offsetX: 30,
+    offsetY: 5
+  },
   melee: {
     force: 2,
     delay: 500,

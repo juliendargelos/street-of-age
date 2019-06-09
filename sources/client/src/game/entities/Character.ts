@@ -9,16 +9,12 @@ import { CharacterKind } from '@/store/modules/app'
 import characters from '@/assets/characters'
 import MeleeAttack from '@/game/entities/MeleeAttack'
 import { ClientCharacterAsset } from '@/@types'
-import {gameWait} from '@/utils/functions'
+import { gameWait } from '@/utils/functions'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
 const BOUNCE = 0
 const SPEED = 32
-const WIDTH = 26
-const HEIGHT = 75
-const OFFSET_X = 18
-const OFFSET_Y = 15
 
 const GROUNDED_ANIMATIONS = ['melee', 'launch']
 
@@ -69,14 +65,16 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     params.scene.physics.world.enable(this)
     this.projectileDir = params.scene.add.graphics().setDepth(10)
 
+    const { width, height, offsetX, offsetY } = this.characterAsset.body
+
     this
       .setInteractive()
       .setDragX(400)
       .setDepth(PLAYER_DEPTH)
-      .setSize(WIDTH, HEIGHT)
+      .setSize(width, height)
       .setBounce(BOUNCE)
 
-    this.body.setOffset(OFFSET_X, OFFSET_Y)
+    this.body.setOffset(offsetX, offsetY)
 
     this.body.setMass(MASS)
     this.body.checkCollision.up = false
@@ -239,11 +237,12 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private turn = (direction: 'left' | 'right') => {
+    const { width, offsetX, offsetY } = this.characterAsset.body
     if (direction === 'left') {
       this.scaleX = -1
-      this.setOffset(WIDTH + OFFSET_X, OFFSET_Y)
+      this.setOffset(width + offsetX, offsetY)
     } else {
-      this.setOffset(OFFSET_X, OFFSET_Y)
+      this.setOffset(offsetX, offsetY)
       this.scaleX = 1
     }
   }

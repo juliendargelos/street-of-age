@@ -54,7 +54,7 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
   private onCollide (go: Phaser.GameObjects.GameObject, other: Phaser.GameObjects.GameObject) {
     if (other.getData('tag') && other.getData('tag') === 'character') {
       const player = other as Character
-      if (!player.damaged) {
+      if (player.kind !== this.kind && !player.damaged) {
         player.takeDamage(this.modifiers.damage, 300 * this.modifiers.force, this.direction < 0 ? -2.8 : -0.5)
       }
     }
