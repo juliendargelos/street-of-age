@@ -39,10 +39,12 @@ import GameManager from '@/game/manager/GameManager'
 import GameUI from '@/components/ui/GameUI.vue'
 import AppModule from '@/store/modules/app'
 import PhaserUpdatePlugin from 'phaser-plugin-update'
+import GameModule from '@/store/modules/game'
 import { GameEvents } from '@street-of-age/shared/socket/events'
 import { Character, SerializedCharacter } from '@/game/entities/Character'
 import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/game/events'
+import { PlayerTeam, SerializedPlayer } from '@street-of-age/shared/entities/player'
 
 const throttle = (method: (...args: any) => void, limit: number, always: (...args: any) => boolean = () => false): (...args: any) => void => {
   let inThrottle: boolean = false
@@ -86,9 +88,16 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
       this.scene.shoot(shoot)
     },
 
-    [GameEvents.GameTurnChanged] (game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
+    [GameEvents.GameTurnChanged] (game: { players: SerializedPlayer[], losingTeamKind: PlayerTeam, characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
       // Emitter.emit(UIEvents.ResetTimer)
       this.scene.resetVelocity()
+
+      if (game.losingTeamKind) {
+        GameModule.setData(game)
+        this.$router.replace({ name: 'room-finish', params: { id: this.$route.params.id } })
+        return
+      }
+
       const character = this.scene.characters.get(game.currentCharacter.id) as Character
       this.scene.setCurrentCharacter(character)
 

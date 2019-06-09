@@ -22,9 +22,11 @@ export const PlayerTeamKinds: { [P in PlayerTeam]: CharacterKind[] } = {
 }
 
 export interface SerializedPlayer extends Serialized {
-  id: string,
-  ready: boolean,
+  id: string
+  ready: boolean
   color: PlayerColor
+  numberOfKills: number
+  numberOfDeaths: number
   teamKind: PlayerTeam | string | null
   characterKinds: CharacterKind[] | string[]
 }
@@ -38,6 +40,7 @@ export class Player<Character extends BaseCharacter = BaseCharacter> implements 
   public characterKinds: CharacterKind[] | string[]
   public room: Room
   public color: PlayerColor
+  public numberOfKills: number
 
 
   constructor(attributes: SerializedPlayer) {
@@ -45,6 +48,7 @@ export class Player<Character extends BaseCharacter = BaseCharacter> implements 
     this.teamKind = attributes.teamKind
     this.characterKinds = attributes.characterKinds
     this.ready = attributes.ready
+    this.numberOfKills = attributes.numberOfKills
   }
 
   public serialize(): SerializedPlayer {
@@ -53,6 +57,7 @@ export class Player<Character extends BaseCharacter = BaseCharacter> implements 
       teamKind: this.teamKind,
       ready: this.ready,
       color: this.color,
+      numberOfKills: this.numberOfKills,
       characterKinds: this.characterKinds
     }
   }

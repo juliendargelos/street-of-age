@@ -7,9 +7,8 @@
       Joueur {{ playerNumber }}
     </div>
     <div class="player__row__metrics">
-      <div class="player__row__metric player__row__metric--life"><h2>2</h2></div>
-      <div class="player__row__metric player__row__metric--death"><h2>2</h2></div>
-      <div class="player__row__metric player__row__metric--fall"><h2>2</h2></div>
+      <div class="player__row__metric player__row__metric--death"><h2>{{ death }}</h2></div>
+      <div class="player__row__metric player__row__metric--kill"><h2>{{ kill }}</h2></div>
     </div>
   </div>
 </template>
@@ -77,5 +76,7 @@ import { SerializedPlayer } from '@street-of-age/shared/entities/player'
 export default class RoomFinishPlayerRow extends Vue {
   @Prop({ type: Object, required: true }) readonly player!: SerializedPlayer
   @Prop({ type: Number, required: true }) readonly playerNumber!: number
+  @Prop({ type: Number, required: true }) readonly death!: number
+  @Prop({ type: Number, required: true }) readonly kill!: number
 }
 </script>

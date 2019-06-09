@@ -9,6 +9,7 @@ import { Character, SerializedCharacter } from './Character'
 export interface SerializedGame extends SerializedObject {
   id: string,
   players: SerializedPlayer[]
+  losingTeamKind: TeamKind
   characters: SerializedCharacter[]
   currentPlayer?: SerializedPlayer
   currentCharacter?: SerializedCharacter
@@ -64,7 +65,14 @@ export class Game extends Entity implements Serializable<SerializedGame> {
     ), Character.collection())
   }
 
+  @computed get losingTeamKind(): TeamKind {
+    const losingTeam = this.teams.find(team => team.lose)
+    return losingTeam ? losingTeam.kind : null
+  }
+
   @action public nextTurn() {
+    if (this.losingTeamKind) return this.disableInterval()
+
     ++this.turn
 
     this.currentTeamIndex = (this.currentTeamIndex + 1)%this.teams.length
@@ -81,6 +89,7 @@ export class Game extends Entity implements Serializable<SerializedGame> {
   @computedFn public serialize(): SerializedGame {
     return {
       id: this.id,
+      losingTeamKind: this.losingTeamKind,
       players: this.players.serialize() as SerializedPlayer[],
       characters: this.characters.serialize() as SerializedCharacter[],
       currentPlayer: this.currentPlayer && this.currentPlayer.serialize(),

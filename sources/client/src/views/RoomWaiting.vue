@@ -117,9 +117,9 @@ export default class RoomWaiting extends Vue {
   }
   get players (): Map<string, SerializedPlayer[]> {
     const youngs = new Array<SerializedPlayer>(this.room.settings.numberOfPlayers / 2)
-      .fill({ color: '', ready: false, characterKinds: [], teamKind: PlayerTeam.Young, id: '' })
+      .fill({ color: '', ready: false, numberOfKills: 0, numberOfDeaths: 0, characterKinds: [], teamKind: PlayerTeam.Young, id: '' })
     const olds = new Array(this.room.settings.numberOfPlayers / 2)
-      .fill({ color: '', ready: false, characterKinds: [], teamKind: PlayerTeam.Old, id: '' })
+      .fill({ color: '', ready: false, numberOfKills: 0, numberOfDeaths: 0, characterKinds: [], teamKind: PlayerTeam.Old, id: '' })
     const allPlayers = [
       ...youngs.map((entry, index) => this.room.players
         .filter(player => player.teamKind === PlayerTeam.Young && player.characterKinds.length > 0)[index] || entry),

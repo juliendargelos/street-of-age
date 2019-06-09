@@ -1,3 +1,4 @@
+import { computed } from 'mobx'
 import { Entity, Collection } from '../core'
 import { Player } from './Player'
 
@@ -20,5 +21,9 @@ export class Team extends Entity {
   ) {
     super()
     this.players.set(players)
+  }
+
+  @computed get lose(): boolean {
+    return this.players.every(player => player.lose)
   }
 }
