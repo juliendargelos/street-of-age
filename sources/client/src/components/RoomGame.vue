@@ -34,10 +34,73 @@ import level from '@/assets/levels/SmallStreet.level.json'
 import GameManager from '@/game/manager/GameManager'
 import GameUI from '@/components/ui/GameUI.vue'
 import AppModule from '@/store/modules/app'
+import { GameEvents } from '@street-of-age/shared/socket/events'
+import { Character, SerializedCharacter } from '@/game/entities/Character'
+
+const throttle = (method: (...args: any) => void, limit: number, always: (...args: any) => boolean = () => false): (...args: any) => void => {
+  let inThrottle: boolean = false
+  let timeout: NodeJS.Timer
+
+  return (...args: any) => {
+    if (!inThrottle || always(...args)) {
+      method(...args)
+      inThrottle = true
+      clearTimeout(timeout)
+      timeout = setTimeout(() => inThrottle = false, limit)
+    }
+  }
+}
 
 @Component<RoomGame>({
   components: { GameUI },
+  sockets: {
+    [GameEvents.GameCreated] (game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
+      this.scene.setCharacters(game.characters)
+      const character = this.scene.characters.get(game.currentCharacter.id) as Character
+      this.scene.setCurrentCharacter(character)
+
+      this.currentPlayer = game.currentPlayer
+      if (this.isCurrentPlayer) this.scene.enableControls(character)
+      else this.scene.disableControls()
+    },
+
+    // [GameEvents.GameUpdated](game: { characters: SerializedCharacter[] }) {
+    //   this.scene.setCharacters(game.characters)
+    // },
+
+    [GameEvents.GameCharacterMoved](character: SerializedCharacter) {
+      this.scene.moveCharacter(character)
+    },
+
+    [GameEvents.GameTurnChanged](game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
+      this.scene.resetVelocity()
+      const character = this.scene.characters.get(game.currentCharacter.id) as Character
+      this.scene.setCurrentCharacter(character)
+
+      this.currentPlayer = game.currentPlayer
+      if (this.isCurrentPlayer) this.scene.enableControls(character)
+      else this.scene.disableControls()
+    }
+  },
   mounted () {
+    this.scene = new GameScene({
+      created: () => {
+        this.$socket.emit(GameEvents.GameCreate, this.$route.params.id)
+      },
+
+      characterMoved: throttle((character: SerializedCharacter) => {
+        if (this.isCurrentPlayer) {
+          this.$socket.emit(GameEvents.GameCharacterMove , character)
+        }
+      }, 100, ({ velocityX, velocityY }) => velocityX === 0 && velocityY === 0),
+
+      characterDied: (character: SerializedCharacter) => {
+        if (this.isCurrentPlayer) {
+          this.$socket.emit(GameEvents.GameCharacterDie, character)
+        }
+      }
+    })
+
     this.game = new Phaser.Game(this.config)
     GameManager.init(this.game)
     this.game.registry.set(REGISTRY_LEVEL_KEY, level)
@@ -52,7 +115,9 @@ import AppModule from '@/store/modules/app'
 })
 export default class RoomGame extends Vue {
     $el!: HTMLDivElement
+    public currentPlayer: { id: string } = { id: '' }
     private game!: Phaser.Game
+    private scene!: GameScene
     private mobile: boolean = false
     @Prop({ type: Boolean, default: process.env.NODE_ENV === 'development' }) readonly debug!: boolean
     @Prop({ type: Array, default: () => [] }) readonly players!: Player[]
@@ -63,6 +128,10 @@ export default class RoomGame extends Vue {
 
     get isPlaying (): boolean {
       return AppModule.isPlaying
+    }
+
+    get isCurrentPlayer() {
+      return AppModule.player.id === this.currentPlayer.id
     }
 
     get config (): Phaser.Types.Core.GameConfig {
@@ -88,7 +157,7 @@ export default class RoomGame extends Vue {
           default: 'arcade'
         },
         disableContextMenu: true,
-        scene: GameScene
+        scene: this.scene
       }
     }
 }

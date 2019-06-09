@@ -4,7 +4,7 @@
       <BackButton/>
     </AppNav>
       <div class="room-setup-character__characters">
-        <CharacterCard v-for="characterKind in playerTeamKinds[player.team]"
+        <CharacterCard v-for="characterKind in playerTeamKinds[player.teamKind]"
                        :disabled="!player.characterKinds.includes(characterKind) && ready"
                        :player-character-kinds="player.characterKinds"
                        :class="{'local': player.characterKind === characterKind}"
@@ -53,7 +53,7 @@ import SetupCharacterReadyOverlay from '@/components/ui/SetupCharacterReadyOverl
 
 @Component<RoomSetupCharacter>({
   mounted () {
-    if (!this.player.team) {
+    if (!this.player.teamKind) {
       this.$router.replace({ name: 'room-setup-team', params: { id: this.room.id } })
     }
   },
@@ -62,7 +62,7 @@ import SetupCharacterReadyOverlay from '@/components/ui/SetupCharacterReadyOverl
 export default class RoomSetupCharacter extends Vue {
   public onCharacterAdd ({ character }: CharacterCardClickEvent): void {
     console.log('adding', character)
-    if (this.player.team !== character.team) {
+    if (this.player.teamKind !== character.team) {
       AppModule.changePlayerCharacterTeam(character.team)
       this.$socket.emit(CharacterEvents.CharacterChangeTeam, character.team)
     }
@@ -72,7 +72,7 @@ export default class RoomSetupCharacter extends Vue {
 
   public onCharacterRemove ({ character }: CharacterCardClickEvent): void {
     console.log('removing', character)
-    if (this.player.team !== character.team) {
+    if (this.player.teamKind !== character.team) {
       AppModule.changePlayerCharacterTeam(character.team)
       this.$socket.emit(CharacterEvents.CharacterChangeTeam, character.team)
     }

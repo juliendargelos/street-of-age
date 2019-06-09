@@ -17,13 +17,15 @@ import RoomCharacter from '@/components/RoomCharacter.vue'
 import RoomLobby from '@/components/RoomLobby.vue'
 import RoomGame from '@/components/RoomGame.vue'
 import RoomScore from '@/components/RoomScore.vue'
-import { RoomEvents } from '@street-of-age/shared/socket/events'
+import { RoomEvents, GameEvents } from '@street-of-age/shared/socket/events'
 import { Room as RoomType } from '@/@types'
+import { SerializedCharacter } from '@/game/entities/Character'
 import RoomModule from '@/store/modules/room'
+import GameModule from '@/store/modules/game'
 
 @Component<Room>({
   sockets: {
-    [RoomEvents.StartGame] () {
+    [RoomEvents.RoomReady] () {
       this.$router.replace({ name: 'room-game', params: { id: this.$route.params.id } })
     },
     [RoomEvents.RoomDefined] () {

@@ -25,6 +25,15 @@ enum State {
   Falling = 'Falling',
 }
 
+export interface SerializedCharacter extends Serialized {
+  id: string
+  kind: CharacterKind
+  x?: number
+  y?: number
+  velocityX?: number
+  velocityY?: number
+}
+
 enum WeaponType {
   Distance = 'Distance',
   Melee = 'Melee',
@@ -32,13 +41,18 @@ enum WeaponType {
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
   private _state: State = State.Falling
-  private local: boolean = false
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
   public damaged: boolean = false
   private weaponType: WeaponType = WeaponType.Distance
+  private controlsEnabled: boolean = false
   public projectileDir: Phaser.GameObjects.Graphics
+  public id: string
   public kind: CharacterKind
   public health: number = 4
+  private previousX: number = 0
+  private previousY: number = 0
+  private previousVelocityX: number = 0
+  private previousVelocityY: number = 0
 
   get state (): State {
     return this._state
@@ -57,10 +71,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   constructor (params: CharacterConstructor) {
     super(params.scene, params.x, params.y, 'main')
+    this.id = params.id
+    console.log(params.x, params.y)
     this.kind = params.kind
-    if (params.local) {
-      this.local = params.local
-    }
     this.setData('tag', 'character')
     params.scene.physics.world.enable(this)
     this.projectileDir = params.scene.add.graphics().setDepth(10)
@@ -81,29 +94,42 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.body.checkCollision.left = false
     this.body.checkCollision.right = false
 
-    this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
+    this.setVelocityX(params.velocityX)
+    this.setVelocityY(params.velocityY)
 
-    this.initListeners()
+    this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
 
     params.scene.add.existing(this)
   }
 
-  private initListeners () {
-    if (this.local) {
-      InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
-      InputManager.touch.addEventListener('player:untap', () => this.projectileDir.clear())
-      InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
-      InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
-    }
-
-    Emitter.on(UIEvents.Jump, this.jump)
-  }
-
   public update = () => {
     this.setGravityY(GRAVITY)
-    this.handleMovements()
+
+    if (this.body.velocity.x < 0) {
+      this.turn('left')
+    } else if (this.body.velocity.x > 0) {
+      this.turn('right')
+    }
+
+    if (this.controlsEnabled) this.handleMovements()
     this.updateState()
     this.handleAnimations()
+
+    if (
+      this.x !== this.previousX ||
+      this.y !== this.previousY
+    ) {
+      this.previousX = this.x
+      this.previousY = this.y
+
+      this.emit('moved', {
+        id: this.id,
+        x: this.x,
+        y: this.y,
+        velocityX: this.body.velocity.x,
+        velocityY: this.body.velocity.y
+      })
+    }
   }
 
   public destroy (fromScene?: boolean): void {
@@ -151,6 +177,22 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     } else {
       this.state = State.Falling
     }
+  }
+
+  public enableControls () {
+    InputManager.touch.addEventListener('tap', this.jump)
+    InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
+    InputManager.touch.addEventListener('player:untap', this.onPlayerUntap)
+    InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
+    InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
+    Emitter.on(UIEvents.Jump, this.jump)
+    this.controlsEnabled = true
+  }
+
+  public disableControls () {
+    InputManager.touch.removeEventListeners()
+    Emitter.off(UIEvents.Jump, this.jump)
+    this.controlsEnabled = false
   }
 
   private onProjectileLaunch: ProjectileLaunchEventHandler = async (evt) => {
@@ -213,6 +255,10 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     console.log(this.weaponType)
   }
 
+  private onPlayerUntap = (): void => {
+    this.projectileDir.clear()
+  }
+
   private handleMovements = () => {
     if (this.scene.game.device.os.desktop) {
       this.handleDesktopMovements()
@@ -222,19 +268,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private handleMobileMovements = () => {
-    if (this.local) {
-      const velocity = InputManager.getAxis('horizontal') * SPEED
-      if (this.cursorKeys.space!.isDown) {
-        this.jump()
-      }
-      if (velocity < 0) {
-        this.turn('left')
-        this.setVelocityX(velocity)
-      } else if (velocity > 0) {
-        this.turn('right')
-        this.setVelocityX(velocity)
-      }
+    const velocity = InputManager.getAxis('horizontal') * SPEED
+    if (this.cursorKeys.space!.isDown) {
+      this.jump()
     }
+    this.setVelocityX(velocity)
   }
 
   private turn = (direction: 'left' | 'right') => {
