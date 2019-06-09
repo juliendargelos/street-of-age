@@ -45,6 +45,7 @@ export default class GameTimer extends Vue {
   private rafId: number | null = null
   public remaining = GAME_TURN_DURATION
   public paused = false
+  private time: number = 0
 
   @Watch('paused')
   private onPausedChange (paused: boolean) {
@@ -54,13 +55,15 @@ export default class GameTimer extends Vue {
         console.log('clearing RAF')
       }
     } else {
-      this.rafId = requestAnimationFrame(this.onTick)
+      this.resetRaf()
       console.log('Resuming RAF')
     }
   }
 
   @Watch('currentPlayer')
   private onCurrentPlayerChanged (player: SerializedPlayer) {
+    this.remaining = GAME_TURN_DURATION
+    this.resume()
     this.resetRaf()
   }
 
@@ -68,6 +71,7 @@ export default class GameTimer extends Vue {
     if (this.rafId) {
       cancelAnimationFrame(this.rafId)
     }
+    this.time = Date.now()
     this.rafId = requestAnimationFrame(this.onTick)
   }
 
@@ -84,19 +88,24 @@ export default class GameTimer extends Vue {
     this.paused = false
   }
 
-  private onTick (delta: number) {
+  private onTick () {
+    const time = Date.now()
+    const delta = time - this.time
+    this.time += delta
+
     if (!this.paused) {
-      this.remaining -= 1000 / 60
+      this.remaining -= delta
       console.log('tick')
       if (this.remaining <= 0) {
-        this.remaining = GAME_TURN_DURATION
+        this.remaining = 0
+        this.pause()
       }
       this.rafId = requestAnimationFrame(this.onTick)
     }
   }
 
   get percentage () {
-    return this.remaining * (100 / GAME_TURN_DURATION)
+    return this.remaining/GAME_TURN_DURATION*100
   }
 
   get style () {

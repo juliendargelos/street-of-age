@@ -16,6 +16,8 @@ export interface SerializedGame extends SerializedObject {
 
 const all = new Collection<Game>()
 
+const GAME_TURN_DURATION = 15000
+
 export class Game extends Entity implements Serializable<SerializedGame> {
   public static all = all
   public static collection = all.collection
@@ -26,6 +28,8 @@ export class Game extends Entity implements Serializable<SerializedGame> {
   @observable public turn: number = -1
   @observable public readonly players: Collection<Player> = Player.collection()
   @observable public readonly teams: Collection<Team> = Team.collection()
+
+  private interval: NodeJS.Timer
 
   constructor(
     id: string,
@@ -74,7 +78,7 @@ export class Game extends Entity implements Serializable<SerializedGame> {
     }
   }
 
-  @computedFn serialize(): SerializedGame {
+  @computedFn public serialize(): SerializedGame {
     return {
       id: this.id,
       players: this.players.serialize() as SerializedPlayer[],
@@ -82,5 +86,17 @@ export class Game extends Entity implements Serializable<SerializedGame> {
       currentPlayer: this.currentPlayer && this.currentPlayer.serialize(),
       currentCharacter: this.currentCharacter && this.currentCharacter.serialize()
     }
+  }
+
+  public disableInterval() {
+    clearInterval(this.interval)
+  }
+
+  public enableInterval() {
+    this.disableInterval()
+
+    this.interval = setInterval(() => {
+      this.nextTurn()
+    }, GAME_TURN_DURATION) as unknown as NodeJS.Timer
   }
 }
