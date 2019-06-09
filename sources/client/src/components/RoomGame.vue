@@ -1,6 +1,9 @@
 <template>
   <div class="room-game">
-    <GameUI v-if="isPlaying" :mobile="mobile"/>
+    <transition name="slide-fade" mode="out-in">
+      <GameLoader v-if="!isPlaying"/>
+      <GameUI v-else :mobile="mobile"/>
+    </transition>
   </div>
 </template>
 
@@ -36,6 +39,7 @@ import GameUI from '@/components/ui/GameUI.vue'
 import AppModule from '@/store/modules/app'
 import { GameEvents } from '@street-of-age/shared/socket/events'
 import { Character, SerializedCharacter } from '@/game/entities/Character'
+import GameLoader from '@/components/ui/GameLoader.vue'
 
 const throttle = (method: (...args: any) => void, limit: number, always: (...args: any) => boolean = () => false): (...args: any) => void => {
   let inThrottle: boolean = false
@@ -52,7 +56,7 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
 }
 
 @Component<RoomGame>({
-  components: { GameUI },
+  components: { GameLoader, GameUI },
   sockets: {
     [GameEvents.GameCreated] (game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
       this.scene.setCharacters(game.characters)
@@ -68,11 +72,11 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
     //   this.scene.setCharacters(game.characters)
     // },
 
-    [GameEvents.GameCharacterMoved](character: SerializedCharacter) {
+    [GameEvents.GameCharacterMoved] (character: SerializedCharacter) {
       this.scene.moveCharacter(character)
     },
 
-    [GameEvents.GameTurnChanged](game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
+    [GameEvents.GameTurnChanged] (game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
       this.scene.resetVelocity()
       const character = this.scene.characters.get(game.currentCharacter.id) as Character
       this.scene.setCurrentCharacter(character)
@@ -90,7 +94,7 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
 
       characterMoved: throttle((character: SerializedCharacter) => {
         if (this.isCurrentPlayer) {
-          this.$socket.emit(GameEvents.GameCharacterMove , character)
+          this.$socket.emit(GameEvents.GameCharacterMove, character)
         }
       }, 100, ({ velocityX, velocityY }) => velocityX === 0 && velocityY === 0),
 
@@ -130,7 +134,7 @@ export default class RoomGame extends Vue {
       return AppModule.isPlaying
     }
 
-    get isCurrentPlayer() {
+    get isCurrentPlayer () {
       return AppModule.player.id === this.currentPlayer.id
     }
 
