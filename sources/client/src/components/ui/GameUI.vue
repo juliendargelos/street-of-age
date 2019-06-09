@@ -1,8 +1,8 @@
 <template>
   <div class="game-ui">
-    <GameTimer :current-player="currentPlayer" color="#f64afe"/>
+    <GameTimer v-if="currentPlayer" :current-player="currentPlayer" color="#f64afe"/>
     <template v-if="!paused">
-      <PlayerHealth :health="4" :kind="currentCharacter.kind" color="#f64afe"/>
+      <PlayerHealth v-if="currentCharacter" :health="4" :kind="currentCharacter.kind" color="#f64afe"/>
       <virtual-joystick v-if="mobile && isCurrentPlayer"/>
       <img v-if="mobile && isCurrentPlayer" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
@@ -79,8 +79,8 @@ export default class GameUI extends Vue {
   private intervalId!: NodeJS.Timer
   @Prop({ type: Boolean, default: false }) readonly mobile!: boolean
   @Prop({ type: Boolean, default: false }) readonly isCurrentPlayer!: boolean
-  @Prop({ type: Object, required: true }) readonly currentCharacter!: SerializedCharacter
-  @Prop({ type: Object, required: true }) readonly currentPlayer!: SerializedPlayer
+  @Prop({ type: Object, default: null }) readonly currentCharacter!: SerializedCharacter
+  @Prop({ type: Object, default: null }) readonly currentPlayer!: SerializedPlayer
 
   @Watch('countdown')
   private onCountdownChange (countdown: number) {

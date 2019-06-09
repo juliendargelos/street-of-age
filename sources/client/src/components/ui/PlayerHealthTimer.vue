@@ -1,5 +1,5 @@
 <template>
-  <div class="player__health__timer" :style="style">
+  <div class="player__health__timer">
     00:12
   </div>
 </template>

@@ -1,5 +1,5 @@
 import BaseScene from '@/game/scenes/BaseScene'
-import { Character, SerializedCharacter } from '@/game/entities/Character'
+import { Character, SerializedCharacter, WeaponType } from '@/game/entities/Character'
 import { CharacterKind } from '@/store/modules/app'
 import { PostProcessing } from '@/game/PostProcessing'
 import { Socket } from 'socket.io'
@@ -8,11 +8,34 @@ import AppModule from '@/store/modules/app'
 const HEIGHT_CAMERA_OFFSET = 400
 const WIDTH_CAMERA_OFFSET = 400
 
-interface GameSceneListeners {
-  created: () => void,
-  characterMoved: (characer: SerializedCharacter) => void,
-  characterDied: (characer: SerializedCharacter) => void,
+export interface Shoot {
+  id: string
+  weaponType: WeaponType
+  characterX: number
+  characterY: number
+  scaleX: number
+  distance?: number
+  angle?: number
+  x?: number
+  y?: number
 }
+
+interface GameSceneListeners {
+  created: () => void
+  characterMoved: (character: SerializedCharacter) => void
+  characterDied: (character: SerializedCharacter) => void
+  characterShooted: (shoot: Shoot) => void
+}
+
+// this.weaponType WeaponType.Distance WeaponType.Melee
+
+// {
+//   detail: {
+//     distance: '',
+//     angle: '',
+//     position: ''
+//   }
+// }
 
 export class GameScene extends BaseScene {
   private postprocessing!: PostProcessing
@@ -82,6 +105,7 @@ export class GameScene extends BaseScene {
     this.characters.set(attributes.id, character)
 
     character.on('moved', this.listeners.characterMoved)
+    character.on('shooted', this.listeners.characterShooted)
 
     return character
   }
@@ -92,6 +116,7 @@ export class GameScene extends BaseScene {
     if (character) {
       character.destroy()
       character.off('moved', this.listeners.characterMoved)
+      character.off('shooted', this.listeners.characterShooted)
       this.characters.delete(id)
       this.listeners.characterDied(character)
     }
@@ -109,6 +134,11 @@ export class GameScene extends BaseScene {
     characters.forEach(character => this.createCharacter(character))
     // alert('ok')
     // console.log(this.characters)
+  }
+
+  public shoot(shoot: Shoot) {
+    const character = this.characters.get(shoot.id) as Character
+    character.launchProjectile(shoot)
   }
 
   public update = (time: number, delta: number) => {
