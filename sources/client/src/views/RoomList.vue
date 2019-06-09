@@ -1,7 +1,7 @@
 <template>
   <div class="room-list">
     <AppNav>
-      <BackButton/>
+      <BackButton :to="{name: 'home'}"/>
     </AppNav>
     <AppPanel class="room-list__panel">
       <ul>
