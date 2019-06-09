@@ -3,10 +3,12 @@ import { Character, SerializedCharacter, WeaponType } from '@/game/entities/Char
 import { CharacterKind } from '@/store/modules/app'
 import { PostProcessing } from '@/game/PostProcessing'
 import { Socket } from 'socket.io'
+import { Emitter } from '@/main'
+import { GameEvents } from '@street-of-age/shared/game/events'
 import AppModule from '@/store/modules/app'
+import { CharacterProjectile } from '@/assets/characters'
 import AudioManager from '@/game/manager/AudioManager'
 import { gameWait } from '@/utils/functions'
-import { GameEvents } from '@street-of-age/shared/socket/events'
 import { Socket } from 'socket.io'
 import AppModule from '@/store/modules/app'
 
@@ -80,6 +82,7 @@ export class GameScene extends BaseScene {
     this.cameras.main.setBounds(0, -HEIGHT_CAMERA_OFFSET, width, window.innerHeight + HEIGHT_CAMERA_OFFSET)
     this.postprocessing = (this.game.renderer as Phaser.Renderer.WebGL.WebGLRenderer).addPipeline('PostProcessing', new PostProcessing(this.game)) as PostProcessing
     this.cameras.main.setRenderToTexture(this.postprocessing)
+    Emitter.on(GameEvents.ProjectileExploded, this.onProjectileExploded)
     this.listeners.created()
   }
 
@@ -167,8 +170,24 @@ export class GameScene extends BaseScene {
     this.characters.forEach(character => character.update())
   }
 
-  protected destroy (): void {
+  public destroy = () => {
     Emitter.removeAllListeners(GameEvents.ProjectileExploded)
     super.destroy()
+  }
+
+  private onProjectileExploded = (projectile: CharacterProjectile & { x: number, y: number }) => {
+    try {
+      const area = new Phaser.Geom.Circle(projectile.x, projectile.y, projectile.radiusDamage)
+      this.characters.forEach(character => {
+        if (!Phaser.Geom.Circle.Contains(area, character.x, character.y)) return
+        const a = character.x - projectile.x
+        const b = character.y - projectile.y
+        const angle = Math.atan2(character.y - projectile.y, character.x - projectile.x)
+        const force = (area.radius - Math.sqrt(a * a + b * b)) * 2 * projectile.explosionMultiplier
+        character.takeDamage(projectile.damage, force, angle)
+      })
+    } catch (e) {
+
+    }
   }
 }
