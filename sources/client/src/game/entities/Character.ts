@@ -181,6 +181,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
         scene: this.scene,
         x: this.x,
         y: this.y,
+        origin: this,
         kind: this.characterAsset.kind,
         modifiers: this.characterAsset.melee,
         scaleX: this.scaleX

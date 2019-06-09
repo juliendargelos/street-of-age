@@ -9,6 +9,7 @@ interface Constructor {
   x: number
   y: number
   modifiers: CharacterMelee,
+  origin: Character,
   kind: string,
   scaleX: number
 }
@@ -17,11 +18,13 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
   private modifiers: CharacterMelee
   private kind: string
   private direction: number
+  private origin: Character
 
   constructor (params: Constructor) {
     super(params.scene, params.x, params.y, 'melee')
     this.modifiers = params.modifiers
     this.kind = params.kind
+    this.origin = params.origin
     this.direction = params.scaleX
     this
       .setAlpha(0)
@@ -54,7 +57,7 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
   private onCollide (go: Phaser.GameObjects.GameObject, other: Phaser.GameObjects.GameObject) {
     if (other.getData('tag') && other.getData('tag') === 'character') {
       const player = other as Character
-      if (player.kind !== this.kind && !player.damaged) {
+      if (player !== this.origin && !player.damaged) {
         player.takeDamage(this.modifiers.damage, 300 * this.modifiers.force, this.direction < 0 ? -2.8 : -0.5)
       }
     }
