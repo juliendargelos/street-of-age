@@ -247,6 +247,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   public onProjectileLaunch: ProjectileLaunchEventHandler = async (evt) => {
+    if (!this.controlsEnabled) return
+
     const shoot: Shoot = {
       id: this.id,
       weaponType: this.weaponType,

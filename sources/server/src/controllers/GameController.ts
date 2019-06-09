@@ -1,3 +1,4 @@
+import { reaction } from 'mobx'
 import { Controller } from '../core'
 import { GameEvents } from '../Events'
 import { Player } from '../entities/Player'
@@ -38,10 +39,11 @@ export class GameController extends Controller {
       this.game.nextTurn()
       this.io.in(room.id).emit(GameEvents.GameCreated, this.game.serialize())
 
-      this.interval = setInterval(() => {
-        this.game.nextTurn()
-        this.io.in(room.id).emit(GameEvents.GameTurnChanged, this.game.serialize())
-      }, 15000) as unknown as NodeJS.Timer
+      reaction(() => this.game.turn, () => {
+        this.io.in(this.game.id).emit(GameEvents.GameTurnChanged, this.game.serialize())
+      })
+
+      this.game.enableInterval()
     }
   }
 
@@ -57,11 +59,12 @@ export class GameController extends Controller {
   [GameEvents.GameCharacterShoot](shoot: object) {
     this.socket.broadcast.emit(GameEvents.GameCharacterShooted, shoot)
 
-    clearInterval(this.interval)
+    this.game.disableInterval()
 
     setTimeout(() => {
       this.game.nextTurn()
-    }, 1000)
+      this.game.enableInterval()
+    }, 5000)
   }
 
   [GameEvents.GameCharacterDie](id: string) {

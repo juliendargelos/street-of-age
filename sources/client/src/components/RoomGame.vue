@@ -112,6 +112,7 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
       characterShooted: (shoot: Shoot) => {
         if (this.isCurrentPlayer) {
           this.$socket.emit(GameEvents.GameCharacterShoot, shoot)
+          this.scene.disableControls()
         }
       },
 
