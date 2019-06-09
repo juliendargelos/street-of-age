@@ -1,6 +1,10 @@
 <template>
   <div class="room-game">
-    <GameUI v-if="isPlaying" :mobile="mobile"/>
+    <GameUI v-if="isPlaying"
+            :current-character="currentCharacter"
+            :current-player="currentPlayer"
+            :is-current-player="isCurrentPlayer"
+            :mobile="mobile"/>
   </div>
 </template>
 
@@ -37,6 +41,8 @@ import AppModule from '@/store/modules/app'
 import PhaserUpdatePlugin from 'phaser-plugin-update'
 import { GameEvents } from '@street-of-age/shared/socket/events'
 import { Character, SerializedCharacter } from '@/game/entities/Character'
+import { Emitter } from '@/main'
+import { UIEvents } from '@street-of-age/shared/game/events'
 
 const throttle = (method: (...args: any) => void, limit: number, always: (...args: any) => boolean = () => false): (...args: any) => void => {
   let inThrottle: boolean = false
@@ -56,11 +62,14 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
   components: { GameUI },
   sockets: {
     [GameEvents.GameCreated] (game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
+      Emitter.emit(UIEvents.ResetTimer)
+      Emitter.emit(UIEvents.PauseTimer)
       this.scene.setCharacters(game.characters)
       const character = this.scene.characters.get(game.currentCharacter.id) as Character
       this.scene.setCurrentCharacter(character)
 
       this.currentPlayer = game.currentPlayer
+      this.currentCharacter = game.currentCharacter
       if (this.isCurrentPlayer) this.scene.enableControls(character)
       else this.scene.disableControls()
     },
@@ -69,16 +78,18 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
     //   this.scene.setCharacters(game.characters)
     // },
 
-    [GameEvents.GameCharacterMoved](character: SerializedCharacter) {
+    [GameEvents.GameCharacterMoved] (character: SerializedCharacter) {
       this.scene.moveCharacter(character)
     },
 
-    [GameEvents.GameTurnChanged](game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
+    [GameEvents.GameTurnChanged] (game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
+      // Emitter.emit(UIEvents.ResetTimer)
       this.scene.resetVelocity()
       const character = this.scene.characters.get(game.currentCharacter.id) as Character
       this.scene.setCurrentCharacter(character)
 
       this.currentPlayer = game.currentPlayer
+      this.currentCharacter = game.currentCharacter
       if (this.isCurrentPlayer) this.scene.enableControls(character)
       else this.scene.disableControls()
     }
@@ -91,7 +102,7 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
 
       characterMoved: throttle((character: SerializedCharacter) => {
         if (this.isCurrentPlayer) {
-          this.$socket.emit(GameEvents.GameCharacterMove , character)
+          this.$socket.emit(GameEvents.GameCharacterMove, character)
         }
       }, 100, ({ velocityX, velocityY }) => velocityX === 0 && velocityY === 0),
 
@@ -117,6 +128,7 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
 export default class RoomGame extends Vue {
     $el!: HTMLDivElement
     public currentPlayer: { id: string } = { id: '' }
+    public currentCharacter: SerializedCharacter | null = null
     private game!: Phaser.Game
     private scene!: GameScene
     private mobile: boolean = false
@@ -131,7 +143,7 @@ export default class RoomGame extends Vue {
       return AppModule.isPlaying
     }
 
-    get isCurrentPlayer() {
+    get isCurrentPlayer () {
       return AppModule.player.id === this.currentPlayer.id
     }
 
