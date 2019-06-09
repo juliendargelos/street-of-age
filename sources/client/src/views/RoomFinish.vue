@@ -103,6 +103,9 @@ import RoomFinishPlayerRow from '@/components/ui/RoomFinishPlayerRow.vue'
 import RoomModule from '@/store/modules/room'
 
 @Component<RoomFinish>({
+  mounted () {
+    AppModule.setIsPlaying(false)
+  },
   components: { RoomFinishPlayerRow }
 })
 export default class RoomFinish extends Vue {
