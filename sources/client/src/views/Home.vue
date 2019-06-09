@@ -39,6 +39,7 @@
     color: $green
     text-transform: uppercase
     font-weight: 500
+    letter-spacing: 2px
     animation: home__logo 0.5s infinite alternate-reverse $easeInQuart
   small
     position: fixed
@@ -67,9 +68,9 @@
     background: url(~@/assets/splashscreen.png) no-repeat center center / cover
 
   &__logo
-    background: url(~@/assets/logo.svg) no-repeat center center / contain
+    background: url(~@/assets/logo.png) no-repeat center center / contain
     width: 90%
-    height: 0
+    height: 40px
     margin: auto
     opacity: .7
     padding-top: 20.27%

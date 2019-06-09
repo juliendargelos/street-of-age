@@ -13,15 +13,13 @@
                        v-on:character:remove="onCharacterRemove"
                        :key="characterKind"/>
       </div>
-    <AppButton
-      class="validate-button"
-      v-if="ready"
-      secondary
-      alternate
-      @click="onValidate"
-      block>
-      Valider
-    </AppButton>
+    <transition name="slide-fade" mode="out-in">
+      <SetupCharacterReadyOverlay
+        :team="player.team"
+        v-if="ready"
+        @close="onClose"
+        @click="onValidate"/>
+    </transition>
   </div>
 </template>
 
@@ -51,6 +49,7 @@ import AppModule from '@/store/modules/app'
 import { PlayerTeamKinds } from '@/game/entities/player'
 import CharacterCard from '@/components/CharacterCard.vue'
 import { CharacterEvents, RoomEvents } from '@street-of-age/shared/socket/events'
+import SetupCharacterReadyOverlay from '@/components/ui/SetupCharacterReadyOverlay.vue'
 
 @Component<RoomSetupCharacter>({
   mounted () {
@@ -58,7 +57,7 @@ import { CharacterEvents, RoomEvents } from '@street-of-age/shared/socket/events
       this.$router.replace({ name: 'room-setup-team', params: { id: this.room.id } })
     }
   },
-  components: { CharacterCard }
+  components: { SetupCharacterReadyOverlay, CharacterCard }
 })
 export default class RoomSetupCharacter extends Vue {
   public onCharacterAdd ({ character }: CharacterCardClickEvent): void {
@@ -85,6 +84,15 @@ export default class RoomSetupCharacter extends Vue {
     this.$socket.emit(RoomEvents.RoomPlayerReady)
     this.$router.replace({ name: 'room-waiting', params: { id: this.room.id } })
   }
+
+  public onClose (): void {
+    AppModule.changePlayerCharacterReady(false)
+    this.player.characterKinds.forEach(characterKind => {
+      this.$socket.emit(CharacterEvents.CharacterRemovedKind, characterKind)
+    })
+    AppModule.clearPlayerCharacterKinds()
+  }
+
   get ready (): boolean {
     return this.player.characterKinds.length === 3
   }
