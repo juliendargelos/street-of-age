@@ -1,9 +1,10 @@
 <template>
   <div class="game-ui">
+    <GameTimer :current-player="currentPlayer" color="#f64afe"/>
     <template v-if="!paused">
-      <PlayerHealth :health="4" kind="fusty-grandpa" color="#f64afe"/>
-      <virtual-joystick v-if="mobile"/>
-      <img v-if="mobile" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
+      <PlayerHealth :health="4" :kind="currentCharacter.kind" color="#f64afe"/>
+      <virtual-joystick v-if="mobile && isCurrentPlayer"/>
+      <img v-if="mobile && isCurrentPlayer" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
     </template>
     <GamePauseUI @close="pauseToggle" v-if="paused"/>
@@ -60,9 +61,12 @@ import { UIEvents } from '@street-of-age/shared/src/game/events'
 import GamePauseUI from '@/components/ui/GamePauseUI.vue'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
 import PlayerHealth from '@/components/ui/PlayerHealth.vue'
+import { SerializedCharacter } from '@street-of-age/shared/game/character'
+import GameTimer from '@/components/ui/GameTimer.vue'
+import { SerializedPlayer } from '@street-of-age/shared/entities/player'
 
 @Component<GameUI>({
-  components: {PlayerHealth, VirtualJoystick, GamePauseUI },
+  components: { GameTimer, PlayerHealth, VirtualJoystick, GamePauseUI },
   mounted (): void {
     this.intervalId = setInterval(() => {
       this.countdown--
@@ -74,11 +78,15 @@ export default class GameUI extends Vue {
   public countdown: number = 4
   private intervalId!: NodeJS.Timer
   @Prop({ type: Boolean, default: false }) readonly mobile!: boolean
+  @Prop({ type: Boolean, default: false }) readonly isCurrentPlayer!: boolean
+  @Prop({ type: Object, required: true }) readonly currentCharacter!: SerializedCharacter
+  @Prop({ type: Object, required: true }) readonly currentPlayer!: SerializedPlayer
 
   @Watch('countdown')
   private onCountdownChange (countdown: number) {
     if (countdown <= 0) {
       clearInterval(this.intervalId)
+      Emitter.emit(UIEvents.ResumeTimer)
     }
   }
 
