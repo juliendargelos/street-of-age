@@ -29,7 +29,7 @@ export interface AppState {
 class AppStore extends VuexModule implements AppState {
   public hasPlayedIntroduction: boolean = false
   public isPlaying: boolean = false
-  public player: Player = { id: '', color: '', isLocal: true, characterKinds: [], teamKind: null, ready: false }
+  public player: Player = { id: '', color: '', isLocal: true, numberOfKills: 0, numberOfDeaths: 0, characterKinds: [], teamKind: null, ready: false }
 
   @Mutation public setIsPlaying (isPlaying: boolean) {
     this.isPlaying = isPlaying

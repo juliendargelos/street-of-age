@@ -67,8 +67,13 @@ export class GameController extends Controller {
     }, 5000)
   }
 
-  [GameEvents.GameCharacterDie](id: string) {
-    // this.socket.broadcast.emit(GameEvents.GameCharacterDied, { id });
+  [GameEvents.GameCharacterDie](id: string, killed: boolean) {
+    if (killed) ++this.player.numberOfKills
+    const character = this.game.characters.get(id)
+    const player = this.game.players.find(player => player.characters.has(character))
+    player.characters.remove(character)
+    ++player.numberOfDeaths
+    this.socket.broadcast.emit(GameEvents.GameCharacterDied, { id });
   }
 
   public unmount() {
