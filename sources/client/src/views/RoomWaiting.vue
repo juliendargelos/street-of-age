@@ -127,7 +127,8 @@ export default class RoomWaiting extends Vue {
     return groupBy(allPlayers, player => player.teamKind)
   }
   get allReady (): boolean {
-    return this.room.players.every(player => player.ready)
+    return this.room.players.length === this.room.settings.numberOfPlayers &&
+      this.room.players.every(player => player.ready)
   }
 }
 </script>
