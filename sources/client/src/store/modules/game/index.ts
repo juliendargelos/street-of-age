@@ -6,7 +6,7 @@ export interface GameSettings {
     music: number,
     sfx: number
   },
-  vibrations: boolean,
+  vibrations: boolean
 }
 
 export interface GameState {
@@ -28,7 +28,6 @@ class GameStore extends VuexModule implements GameState {
   @Mutation public setVolumeMusicSfx (volume: number) {
     this.settings.volume.sfx = volume
   }
-
 }
 
 const GameModule = getModule(GameStore)

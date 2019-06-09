@@ -5,6 +5,7 @@
     "esModuleInterop": false,
     "allowJs": true,
     "target": "es6",
+    "lib": ["es2017", "dom","es6", "dom.iterable", "scripthost"],
     "noImplicitAny": true,
     "moduleResolution": "node",
     "sourceMap": true,
@@ -22,7 +23,6 @@
     }
   },
   "include": [
-    "index.ts",
     "src/**/*"
   ]
 }

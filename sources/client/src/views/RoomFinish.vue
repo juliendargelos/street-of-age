@@ -116,7 +116,7 @@ export default class RoomFinish extends Vue {
     return this.room.players.indexOf(player) + 1
   }
   get players (): Map<string, SerializedPlayer[]> {
-    return groupBy(this.room.players, player => player.team)
+    return groupBy(this.room.players, player => player.teamKind)
   }
 }
 </script>

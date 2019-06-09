@@ -1,12 +1,18 @@
 import * as socketio from 'socket.io'
 import * as express from 'express'
+import { autorun } from 'mobx'
 import { Express } from 'express'
 import { Server as HttpServer } from 'http'
-import { SocketEvents } from '@street-of-age/shared/socket/events'
-import PlayerManager from './managers/PlayerManager'
-import SocketRoom from './handlers/SocketRoom'
-import SocketPlayer from './handlers/SocketPlayer'
+import { SocketEvents } from './Events'
 import Logger from './services/Logger'
+import { PlayerController } from './controllers/PlayerController'
+import { RoomController } from './controllers/RoomController'
+import { GameController } from './controllers/GameController'
+
+import { Player } from './entities/Player'
+import { Character } from './entities/Character'
+import { Room } from './entities/Room'
+import { Game } from './entities/Game'
 
 export default new class Server {
   public port: number = Number(process.env.PORT) || 4444
@@ -14,7 +20,7 @@ export default new class Server {
   private http: HttpServer
   private io: socketio.Server
 
-  public init = (): this => {
+  public init(): this {
     this.app = express()
     this.app.set('port', this.port)
     this.http = new HttpServer(this.app)
@@ -24,22 +30,30 @@ export default new class Server {
     return this
   }
 
-  public listen = (listener?: (port: number) => void): this => {
+  public listen(listener?: (port: number) => void): this {
     this.http.listen(this.port, () => {
       Logger.info(`Listening on port ${this.port}`)
-      if (listener) {
-        listener(this.port)
-      }
+      if (listener)  listener(this.port)
     })
 
     this.io.on(SocketEvents.Connect, socket => {
-      const player = PlayerManager.connect(socket)
+      const playerController = new PlayerController(socket)
+      const roomController = new RoomController(socket)
+      const gameController = new GameController(socket)
 
-      SocketPlayer.handle(socket)
-      SocketRoom.handle(socket)
+      // const disposeDebugPlayer    = autorun(() => console.log('Players   ', Player.all.serialize()))
+      // const disposeDebugCharacter = autorun(() => console.log('Characters', Character.all.serialize()))
+      // const disposeDebugRoom      = autorun(() => console.log('Rooms     ', Room.all.serialize()))
+      // const disposeDebugGame      = autorun(() => console.log('Games     ', Game.all.serialize()))
 
       socket.on(SocketEvents.Disconnect, () => {
-        PlayerManager.disconnect(player)
+        // disposeDebugPlayer()
+        // disposeDebugCharacter()
+        // disposeDebugRoom()
+        // disposeDebugGame()
+        playerController.unmount()
+        roomController.unmount()
+        gameController.unmount()
       })
     })
 
