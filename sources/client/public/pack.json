@@ -31,6 +31,12 @@
         "atlasURL": "atlases/level.json"
       },
       {
+        "type": "atlas",
+        "key": "lights",
+        "textureURL": "atlases/lights.png",
+        "atlasURL": "atlases/lights.json"
+      },
+      {
         "type": "json",
         "key": "animations",
         "url": "animations.json"

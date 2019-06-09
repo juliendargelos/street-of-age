@@ -1,7 +1,7 @@
 {
   "title": "SmallStreet",
   "width": 3699,
-  "height": 779,
+  "height": 1397,
   "background": {
     "from": "#4C86B0",
     "to": "#2F1C66"
@@ -17,7 +17,7 @@
         {
           "id": "level/backgrounds/buildings_group_blurred",
           "x": 854,
-          "y": 373,
+          "y": 719,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
@@ -30,7 +30,7 @@
         {
           "id": "level/backgrounds/buildings_group_blurred",
           "x": 507,
-          "y": 404,
+          "y": 750,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
@@ -43,7 +43,7 @@
         {
           "id": "level/backgrounds/buildings_group_blurred",
           "x": 2135,
-          "y": 475,
+          "y": 821,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
@@ -56,7 +56,7 @@
         {
           "id": "level/backgrounds/buildings_group_blurred",
           "x": 2639,
-          "y": 471,
+          "y": 817,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
@@ -69,7 +69,7 @@
         {
           "id": "level/backgrounds/buildings_group_blurred",
           "x": 137,
-          "y": 494,
+          "y": 840,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
@@ -82,7 +82,7 @@
         {
           "id": "level/backgrounds/buildings_group_blurred",
           "x": 1384,
-          "y": 367,
+          "y": 713,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
@@ -95,7 +95,7 @@
         {
           "id": "level/backgrounds/buildings_group_blurred",
           "x": 1887,
-          "y": 471,
+          "y": 817,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
@@ -108,7 +108,7 @@
         {
           "id": "level/backgrounds/buildings_group_blurred",
           "x": 3171,
-          "y": 494,
+          "y": 840,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group_blurred",
           "width": 455,
@@ -130,7 +130,7 @@
         {
           "id": "level/backgrounds/buildings_group",
           "x": 899,
-          "y": 378,
+          "y": 724,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group",
           "width": 556,
@@ -143,7 +143,7 @@
         {
           "id": "level/backgrounds/buildings_group",
           "x": 601,
-          "y": 401,
+          "y": 747,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group",
           "width": 556,
@@ -156,7 +156,7 @@
         {
           "id": "level/backgrounds/buildings_group",
           "x": 2049,
-          "y": 441,
+          "y": 787,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group",
           "width": 556,
@@ -169,7 +169,7 @@
         {
           "id": "level/backgrounds/buildings_group",
           "x": 2599,
-          "y": 451,
+          "y": 797,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group",
           "width": 556,
@@ -182,7 +182,7 @@
         {
           "id": "level/backgrounds/buildings_group",
           "x": 87,
-          "y": 474,
+          "y": 820,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group",
           "width": 556,
@@ -195,7 +195,7 @@
         {
           "id": "level/backgrounds/buildings_group",
           "x": 1307,
-          "y": 386,
+          "y": 732,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group",
           "width": 556,
@@ -208,7 +208,7 @@
         {
           "id": "level/backgrounds/buildings_group",
           "x": 1827,
-          "y": 447,
+          "y": 793,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group",
           "width": 556,
@@ -221,7 +221,7 @@
         {
           "id": "level/backgrounds/buildings_group",
           "x": 3121,
-          "y": 474,
+          "y": 820,
           "texture": "level",
           "frame": "level/backgrounds/buildings_group",
           "width": 556,
@@ -241,7 +241,7 @@
       "colliders": [
         {
           "x": 3036.5,
-          "y": 602.5,
+          "y": 948.5,
           "width": 530,
           "height": 12,
           "pivot": {
@@ -251,7 +251,7 @@
         },
         {
           "x": 3022.5,
-          "y": 322.5,
+          "y": 668.5,
           "width": 544,
           "height": 14,
           "pivot": {
@@ -261,7 +261,7 @@
         },
         {
           "x": 3022.5,
-          "y": 471.5,
+          "y": 817.5,
           "width": 544,
           "height": 9,
           "pivot": {
@@ -271,7 +271,7 @@
         },
         {
           "x": 2418.5,
-          "y": 582.5,
+          "y": 928.5,
           "width": 279,
           "height": 19,
           "pivot": {
@@ -281,7 +281,7 @@
         },
         {
           "x": 2698.5,
-          "y": 541.5,
+          "y": 887.5,
           "width": 343,
           "height": 19,
           "pivot": {
@@ -291,7 +291,7 @@
         },
         {
           "x": 2467.5,
-          "y": 394.5,
+          "y": 740.5,
           "width": 218,
           "height": 8,
           "pivot": {
@@ -301,7 +301,7 @@
         },
         {
           "x": 2083.5,
-          "y": 576.5,
+          "y": 922.5,
           "width": 341,
           "height": 12,
           "pivot": {
@@ -311,7 +311,7 @@
         },
         {
           "x": 2083.5,
-          "y": 449.5,
+          "y": 795.5,
           "width": 341,
           "height": 12,
           "pivot": {
@@ -321,7 +321,7 @@
         },
         {
           "x": 160.5,
-          "y": 576.5,
+          "y": 922.5,
           "width": 368,
           "height": 12,
           "pivot": {
@@ -331,7 +331,7 @@
         },
         {
           "x": 160.5,
-          "y": 449.5,
+          "y": 795.5,
           "width": 368,
           "height": 12,
           "pivot": {
@@ -341,7 +341,7 @@
         },
         {
           "x": 476.5,
-          "y": 394.5,
+          "y": 740.5,
           "width": 467,
           "height": 12,
           "pivot": {
@@ -351,7 +351,7 @@
         },
         {
           "x": 1263.5,
-          "y": 608.5,
+          "y": 954.5,
           "width": 382,
           "height": 14,
           "pivot": {
@@ -361,7 +361,7 @@
         },
         {
           "x": 1574.5,
-          "y": 498.5,
+          "y": 844.5,
           "width": 516,
           "height": 14,
           "pivot": {
@@ -374,7 +374,7 @@
         {
           "id": "level/buildings/building_8",
           "x": 2924,
-          "y": 92,
+          "y": 438,
           "texture": "level",
           "frame": "level/buildings/building_8",
           "width": 740,
@@ -387,7 +387,7 @@
         {
           "id": "level/buildings/building_7",
           "x": 2628,
-          "y": 461,
+          "y": 807,
           "texture": "level",
           "frame": "level/buildings/building_7",
           "width": 481,
@@ -400,7 +400,7 @@
         {
           "id": "level/buildings/building_6",
           "x": 2317,
-          "y": 102,
+          "y": 448,
           "texture": "level",
           "frame": "level/buildings/building_6",
           "width": 464,
@@ -413,7 +413,7 @@
         {
           "id": "level/buildings/building_1",
           "x": 1963,
-          "y": 331,
+          "y": 677,
           "texture": "level",
           "frame": "level/buildings/building_1",
           "width": 555,
@@ -426,7 +426,7 @@
         {
           "id": "level/buildings/building_5",
           "x": 1475,
-          "y": 245,
+          "y": 591,
           "texture": "level",
           "frame": "level/buildings/building_5",
           "width": 714,
@@ -439,7 +439,7 @@
         {
           "id": "level/buildings/building_4",
           "x": 1210,
-          "y": 556,
+          "y": 903,
           "texture": "level",
           "frame": "level/buildings/building_4",
           "width": 482,
@@ -452,7 +452,7 @@
         {
           "id": "level/buildings/building_3",
           "x": 890,
-          "y": 362,
+          "y": 708,
           "texture": "level",
           "frame": "level/buildings/building_3",
           "width": 392,
@@ -465,7 +465,7 @@
         {
           "id": "level/buildings/building_2",
           "x": 375,
-          "y": 267,
+          "y": 613,
           "texture": "level",
           "frame": "level/buildings/building_2",
           "width": 675,
@@ -478,7 +478,7 @@
         {
           "id": "level/buildings/building_1",
           "x": 67,
-          "y": 331,
+          "y": 677,
           "texture": "level",
           "frame": "level/buildings/building_1",
           "width": 555,
@@ -500,7 +500,7 @@
         {
           "id": "level/props/car",
           "x": 1599,
-          "y": 664,
+          "y": 1010,
           "texture": "level",
           "frame": "level/props/car",
           "width": 363,
@@ -513,7 +513,7 @@
         {
           "id": "level/props/floorlamp",
           "x": 362,
-          "y": 495,
+          "y": 841,
           "texture": "level",
           "frame": "level/props/floorlamp",
           "width": 63,
@@ -526,7 +526,7 @@
         {
           "id": "level/props/floorlamp",
           "x": 2313,
-          "y": 494,
+          "y": 840,
           "texture": "level",
           "frame": "level/props/floorlamp",
           "width": 63,
@@ -539,7 +539,7 @@
         {
           "id": "level/props/floorlamp",
           "x": 3183,
-          "y": 494,
+          "y": 840,
           "texture": "level",
           "frame": "level/props/floorlamp",
           "width": 63,
@@ -552,7 +552,7 @@
         {
           "id": "level/props/floorlamp",
           "x": 1295,
-          "y": 495,
+          "y": 841,
           "texture": "level",
           "frame": "level/props/floorlamp",
           "width": 63,
@@ -565,7 +565,7 @@
         {
           "id": "level/props/trash",
           "x": 1953,
-          "y": 694,
+          "y": 1040,
           "texture": "level",
           "frame": "level/props/trash",
           "width": 60,
@@ -578,7 +578,7 @@
         {
           "id": "level/props/fire_hydrant",
           "x": 602,
-          "y": 698,
+          "y": 1044,
           "texture": "level",
           "frame": "level/props/fire_hydrant",
           "width": 30,
@@ -591,7 +591,7 @@
         {
           "id": "level/props/fire_hydrant",
           "x": 3368,
-          "y": 699,
+          "y": 1045,
           "texture": "level",
           "frame": "level/props/fire_hydrant",
           "width": 30,
@@ -604,7 +604,7 @@
         {
           "id": "level/props/stop",
           "x": 658,
-          "y": 595,
+          "y": 941,
           "texture": "level",
           "frame": "level/props/stop",
           "width": 43,
@@ -617,7 +617,7 @@
         {
           "id": "level/props/forbidden",
           "x": 2468,
-          "y": 638,
+          "y": 984,
           "texture": "level",
           "frame": "level/props/forbidden",
           "width": 28,
@@ -639,7 +639,7 @@
         {
           "id": "level/lights/floorlamp",
           "x": 54,
-          "y": 177,
+          "y": 523,
           "texture": "level",
           "frame": "level/lights/floorlamp",
           "width": 712,
@@ -652,7 +652,7 @@
         {
           "id": "level/lights/floorlamp",
           "x": 2005,
-          "y": 176,
+          "y": 522,
           "texture": "level",
           "frame": "level/lights/floorlamp",
           "width": 712,
@@ -665,7 +665,7 @@
         {
           "id": "level/lights/floorlamp",
           "x": 2875,
-          "y": 176,
+          "y": 522,
           "texture": "level",
           "frame": "level/lights/floorlamp",
           "width": 712,
@@ -678,11 +678,167 @@
         {
           "id": "level/lights/floorlamp",
           "x": 987,
-          "y": 177,
+          "y": 523,
           "texture": "level",
           "frame": "level/lights/floorlamp",
           "width": 712,
           "height": 712,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/red",
+          "x": 431,
+          "y": 440,
+          "texture": "lights",
+          "frame": "lights/red",
+          "width": 802,
+          "height": 801,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/red",
+          "x": 1730,
+          "y": 582,
+          "texture": "lights",
+          "frame": "lights/red",
+          "width": 802,
+          "height": 801,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/red",
+          "x": 982,
+          "y": 582,
+          "texture": "lights",
+          "frame": "lights/red",
+          "width": 802,
+          "height": 801,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/red",
+          "x": 2982,
+          "y": 439,
+          "texture": "lights",
+          "frame": "lights/red",
+          "width": 802,
+          "height": 801,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 1321,
+          "y": 506,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 2457,
+          "y": 462,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 2131,
+          "y": 308,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 1567,
+          "y": 332,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": -292,
+          "y": 456,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 3168,
+          "y": 199,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 3124,
+          "y": 519,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": -32,
+          "y": 662,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
           "pivot": {
             "x": 0,
             "y": 0
@@ -700,17 +856,17 @@
           "x": 0.5,
           "y": 0.5,
           "width": 26,
-          "height": 749,
+          "height": 1095,
           "pivot": {
             "x": 0,
             "y": 0
           }
         },
         {
-          "x": 3672.5,
+          "x": 3667.5,
           "y": 0.5,
-          "width": 26,
-          "height": 749,
+          "width": 31,
+          "height": 1095,
           "pivot": {
             "x": 0,
             "y": 0
@@ -722,11 +878,101 @@
   },
   "floors": [
     {
-      "x": 0,
-      "y": 750,
-      "width": 3708,
-      "height": 29,
+      "x": 2945,
+      "y": 1095,
+      "width": 754,
+      "height": 302,
       "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 2161,
+      "y": 1095,
+      "width": 676,
+      "height": 302,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 1220,
+      "y": 1095,
+      "width": 794,
+      "height": 302,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 0,
+      "y": 1095,
+      "width": 696,
+      "height": 302,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 789,
+      "y": 1095,
+      "width": 338,
+      "height": 302,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "holes": [
+    {
+      "x": 696,
+      "y": 1095,
+      "width": 93,
+      "height": 302,
+      "color": 2433857,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 1127,
+      "y": 1095,
+      "width": 93,
+      "height": 302,
+      "color": 2433857,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 2014,
+      "y": 1095,
+      "width": 150,
+      "height": 302,
+      "color": 2433857,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 2837,
+      "y": 1095,
+      "width": 108,
+      "height": 302,
+      "color": 2433857,
       "pivot": {
         "x": 0,
         "y": 0
