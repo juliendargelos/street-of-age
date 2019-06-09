@@ -411,7 +411,6 @@ const MrMuscle: CharacterAsset = {
   name: 'Le keke',
   body: {
     width: 34,
-    width: 34,
     height: 85,
     offsetX: 30,
     offsetY: 5
