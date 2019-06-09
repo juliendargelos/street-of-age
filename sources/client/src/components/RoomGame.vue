@@ -1,10 +1,12 @@
 <template>
   <div class="room-game">
-    <GameUI v-if="isPlaying"
-            :current-character="currentCharacter"
-            :current-player="currentPlayer"
-            :is-current-player="isCurrentPlayer"
-            :mobile="mobile"/>
+    <transition mode="out-in" name="slide-fade">
+      <GameLoader v-if="!isPlaying"/>
+      <GameUI :current-character="currentCharacter"
+              :current-player="currentPlayer"
+              :is-current-player="isCurrentPlayer"
+              :mobile="mobile"
+              v-if="isPlaying"/>    </transition>
   </div>
 </template>
 
@@ -45,6 +47,7 @@ import { Character, SerializedCharacter } from '@/game/entities/Character'
 import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/game/events'
 import { PlayerTeam, SerializedPlayer } from '@street-of-age/shared/entities/player'
+import GameLoader from '@/components/ui/GameLoader.vue'
 
 const throttle = (method: (...args: any) => void, limit: number, always: (...args: any) => boolean = () => false): (...args: any) => void => {
   let inThrottle: boolean = false
@@ -61,7 +64,7 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
 }
 
 @Component<RoomGame>({
-  components: { GameUI },
+  components: { GameLoader, GameUI },
   sockets: {
     [GameEvents.GameCreated] (game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
       Emitter.emit(UIEvents.ResetTimer)

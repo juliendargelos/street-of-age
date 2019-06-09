@@ -6,6 +6,7 @@ import GameLevelBuilder from '@/game/GameLevelBuilder'
 import { REGISTRY_LEVEL_KEY } from '@/constants'
 import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/src/game/events'
+import { gameWait } from '@/utils/functions'
 
 export default class BaseScene extends Phaser.Scene {
   protected animationHelper?: AnimationHelper
@@ -23,7 +24,6 @@ export default class BaseScene extends Phaser.Scene {
       'game'
     )
     this.load.on('complete', () => {
-      Emitter.emit(GameEvents.GameLoaded)
       this.animationHelper = new AnimationHelper(
         this,
         this.cache.json.get('animations')
@@ -35,6 +35,9 @@ export default class BaseScene extends Phaser.Scene {
     const json = this.registry.get(REGISTRY_LEVEL_KEY)
     console.log('BUILDING LEVEL...')
     this.loadLevel(GameLevelBuilder.build(json))
+    // gameWait(this.time, 5000).then(() => {
+    Emitter.emit(GameEvents.GameLoaded)
+    // })
   }
 
   public update (time: number, delta: number): void {}
