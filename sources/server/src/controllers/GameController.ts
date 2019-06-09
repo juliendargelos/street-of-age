@@ -41,7 +41,7 @@ export class GameController extends Controller {
       this.interval = setInterval(() => {
         this.game.nextTurn()
         this.io.in(room.id).emit(GameEvents.GameTurnChanged, this.game.serialize())
-      }, 15000)
+      }, 15000) as unknown as NodeJS.Timer
     }
   }
 
@@ -54,14 +54,14 @@ export class GameController extends Controller {
     this.socket.broadcast.emit(GameEvents.GameCharacterMoved, character.serialize())
   }
 
-  [GameEvents.GameCharacterShoot](id: string) {
-    // this.socket.broadcast.emit(GameEvents.GameCharacterShooted, { id })
+  [GameEvents.GameCharacterShoot](shoot: object) {
+    this.socket.broadcast.emit(GameEvents.GameCharacterShooted, shoot)
 
-    // clearInterval(this.interval)
+    clearInterval(this.interval)
 
-    // setTimeout(() => {
-    //   this.game.nextTurn()
-    // }, 500)
+    setTimeout(() => {
+      this.game.nextTurn()
+    }, 1000)
   }
 
   [GameEvents.GameCharacterDie](id: string) {

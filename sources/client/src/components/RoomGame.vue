@@ -30,7 +30,7 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import Phaser from 'phaser'
-import { GameScene } from '@/game/scenes/GameScene'
+import { GameScene, Shoot } from '@/game/scenes/GameScene'
 import { Player } from '@/@types/'
 import { REGISTRY_LEVEL_KEY } from '@/constants'
 // TODO: The level should be fetched from the server. Meanwhile, it's hard-fetched for testing purposes
@@ -82,6 +82,10 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
       this.scene.moveCharacter(character)
     },
 
+    [GameEvents.GameCharacterShooted] (shoot: Shoot) {
+      this.scene.shoot(shoot)
+    },
+
     [GameEvents.GameTurnChanged] (game: { characters: SerializedCharacter[], currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) {
       // Emitter.emit(UIEvents.ResetTimer)
       this.scene.resetVelocity()
@@ -105,6 +109,12 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
           this.$socket.emit(GameEvents.GameCharacterMove, character)
         }
       }, 100, ({ velocityX, velocityY }) => velocityX === 0 && velocityY === 0),
+
+      characterShooted: (shoot: Shoot) => {
+        if (this.isCurrentPlayer) {
+          this.$socket.emit(GameEvents.GameCharacterShoot, shoot)
+        }
+      },
 
       characterDied: (character: SerializedCharacter) => {
         if (this.isCurrentPlayer) {

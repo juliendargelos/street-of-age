@@ -11,6 +11,7 @@ import MeleeAttack from '@/game/entities/MeleeAttack'
 import { ClientCharacterAsset } from '@/@types'
 import { gameWait } from '@/utils/functions'
 import AudioManager from '@/game/manager/AudioManager'
+import { Shoot } from '../scenes/GameScene'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
@@ -35,7 +36,7 @@ export interface SerializedCharacter extends Serialized {
   velocityY?: number
 }
 
-enum WeaponType {
+export enum WeaponType {
   Distance = 'Distance',
   Melee = 'Melee',
 }
@@ -45,7 +46,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
   private controlsEnabled: boolean = false
   public damaged: boolean = false
-  private weaponType: WeaponType = WeaponType.Distance
+  public weaponType: WeaponType = WeaponType.Distance
   public projectileDir: Phaser.GameObjects.Graphics
   public id: string
   public kind: CharacterKind
@@ -197,40 +198,69 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.controlsEnabled = false
   }
 
-  private onProjectileLaunch: ProjectileLaunchEventHandler = async (evt) => {
-    if (this.weaponType === WeaponType.Distance) {
-      this.anims.play(`${this.kind}_launch`, true).once('animationcomplete', () => {
-        this.anims.play(`${this.kind}_idle`)
-      })
-      await gameWait(this.scene.time, 500)
-      const { distance, angle, position } = evt.detail
-      const projectile = new Projectile({
-        scene: this.scene,
-        character: this.characterAsset,
-        angle,
-        distance,
-        x: this.x,
-        y: this.y,
-        offsetX: this.characterAsset.projectile.offsetX,
-        offsetY: this.characterAsset.projectile.offsetY,
-        direction: this.scaleX
-      })
-      const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
-      projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
-    } else if (this.weaponType === WeaponType.Melee) {
-      this.anims.play(`${this.kind}_melee`, true).once('animationcomplete', () => {
-        this.anims.play(`${this.kind}_idle`)
-      })
-      const melee = new MeleeAttack({
-        scene: this.scene,
-        x: this.x,
-        y: this.y,
-        origin: this,
-        kind: this.characterAsset.kind,
-        modifiers: this.characterAsset.melee,
-        scaleX: this.scaleX
-      })
+  public async launchProjectile(shoot: Shoot) {
+    this.weaponType = shoot.weaponType
+    this.scaleX = shoot.scaleX
+    this.x = shoot.characterX
+    this.y = shoot.characterY
+
+    switch (this.weaponType) {
+      case WeaponType.Distance:
+        this.anims.play(`${this.kind}_launch`, true).once('animationcomplete', () => {
+          this.anims.play(`${this.kind}_idle`)
+        })
+        await gameWait(this.scene.time, 500)
+        const { distance, angle, x, y } = shoot
+        const projectile = new Projectile({
+          scene: this.scene,
+          character: this.characterAsset,
+          angle: angle!,
+          distance: distance!,
+          x: this.x,
+          y: this.y,
+          offsetX: this.characterAsset.projectile.offsetX,
+          offsetY: this.characterAsset.projectile.offsetY,
+          direction: this.scaleX
+        })
+
+        const position = new Phaser.Math.Vector2(x, y)
+          .subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
+          .multiply(new Phaser.Math.Vector2(-1, -1))
+
+        projectile.launch(Phaser.Math.Clamp(distance! / 10, 20, 50), position)
+        break
+
+      case WeaponType.Melee:
+        this.anims.play(`${this.kind}_melee`, true).once('animationcomplete', () => {
+          this.anims.play(`${this.kind}_idle`)
+        })
+        const melee = new MeleeAttack({
+          scene: this.scene,
+          x: this.x,
+          y: this.y,
+          origin: this,kind: this.characterAsset.kind,
+          modifiers: this.characterAsset.melee,
+          scaleX: this.scaleX
+        })
+        break
     }
+  }
+
+  public onProjectileLaunch: ProjectileLaunchEventHandler = async (evt) => {
+    const shoot: Shoot = {
+      id: this.id,
+      weaponType: this.weaponType,
+      scaleX: this.scaleX,
+      characterX: this.x,
+      characterY: this.y,
+      ...(this.weaponType === WeaponType.Distance
+        ? { angle: evt.detail.angle, distance: evt.detail.distance, x: evt.detail.position.x, y: evt.detail.position.y }
+        : null
+      )
+    }
+
+    this.emit('shooted', shoot)
+    await this.launchProjectile(shoot)
   }
 
   private onProjectileMove: ProjectileMoveEventHandler = (evt): void => {
