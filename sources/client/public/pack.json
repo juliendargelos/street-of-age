@@ -2,11 +2,6 @@
   "game": {
     "files": [
       {
-        "type": "image",
-        "key": "ground",
-        "url": "img/platform.png"
-      },
-      {
         "type": "atlas",
         "key": "main",
         "textureURL": "atlases/main.png",
@@ -40,6 +35,60 @@
         "type": "json",
         "key": "animations",
         "url": "animations.json"
+      },
+      {
+        "type": "audio",
+        "key": "bg",
+        "url": [
+          "sounds/bg.mp3",
+          "sounds/bg.ogg",
+          "sounds/bg.m4a"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "distance",
+        "url": [
+          "sounds/sfx/distance.mp3",
+          "sounds/sfx/distance.ogg",
+          "sounds/sfx/distance.m4a"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "explosion",
+        "url": [
+          "sounds/sfx/explosion.mp3",
+          "sounds/sfx/explosion.ogg",
+          "sounds/sfx/explosion.m4a"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "jump",
+        "url": [
+          "sounds/sfx/jump.mp3",
+          "sounds/sfx/jump.ogg",
+          "sounds/sfx/jump.m4a"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "melee",
+        "url": [
+          "sounds/sfx/melee.mp3",
+          "sounds/sfx/melee.ogg",
+          "sounds/sfx/melee.m4a"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "start",
+        "url": [
+          "sounds/sfx/start.mp3",
+          "sounds/sfx/start.ogg",
+          "sounds/sfx/start.m4a"
+        ]
       }
     ]
   }

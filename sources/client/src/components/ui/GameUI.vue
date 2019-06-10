@@ -58,6 +58,7 @@ import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/src/game/events'
 import GamePauseUI from '@/components/ui/GamePauseUI.vue'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
+import AudioManager from '@/game/manager/AudioManager'
 
 @Component<GameUI>({
   components: { VirtualJoystick, GamePauseUI },
@@ -84,6 +85,7 @@ export default class GameUI extends Vue {
     Emitter.emit(UIEvents.Jump)
   }
   public pauseToggle () {
+    AudioManager.playSfx('start', { volume: 0.15 })
     this.paused = !this.paused
     const canvas = document.querySelector('canvas')
     if (canvas) {

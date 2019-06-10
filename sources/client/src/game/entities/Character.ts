@@ -10,6 +10,7 @@ import characters from '@/assets/characters'
 import MeleeAttack from '@/game/entities/MeleeAttack'
 import { ClientCharacterAsset } from '@/@types'
 import { gameWait } from '@/utils/functions'
+import AudioManager from '@/game/manager/AudioManager'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
@@ -250,6 +251,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private jump = () => {
     if (this.body.blocked.down) {
+      AudioManager.playSfx('jump', { volume: 0.2 })
       this.body.velocity.y = -350 * JUMP_FORCE
     }
   }

@@ -29,6 +29,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
 import { RawLocation } from '@street-of-age/client/node_modules/vue-router'
+import { BUTTON_AUDIO_PATH, MENU_SFX_VOLUME } from '@/game/manager/AudioManager'
 
 @Component<BackButton>({})
 export default class BackButton extends Vue {
@@ -40,6 +41,9 @@ export default class BackButton extends Vue {
     } else {
       this.$router.back()
     }
+    const audio = new Audio(BUTTON_AUDIO_PATH)
+    audio.volume = MENU_SFX_VOLUME
+    audio.play()
   }
 }
 </script>
