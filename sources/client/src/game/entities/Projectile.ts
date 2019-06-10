@@ -1,4 +1,4 @@
-import { GameScene } from '@/game/scenes/GameScene'
+import { GameScene, WORLD_Y_LIMIT } from '@/game/scenes/GameScene'
 import { PLAYER_DEPTH } from '@/constants'
 import { DISTANCE_ABILITY_ID } from '@/assets/characters'
 import { ClientCharacterAsset } from '@/@types'
@@ -42,6 +42,12 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
       this.y += params.offsetY || 0
     }
     params.scene.physics.world.enable(this)
+    params.scene.physics.world.enable(this)
+    // @ts-ignore
+    if (this.scene.updates) {
+      // @ts-ignore
+      params.scene.updates.add(this)
+    }
     const scene = params.scene as GameScene
     scene.physics.add.collider(scene.level.colliders, this, this.onCollide.bind(this))
     scene.physics.add.collider(scene.level.floors, this, this.onCollide.bind(this))
@@ -79,6 +85,9 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   }
 
   public update (): void {
+    if (this.y > WORLD_Y_LIMIT) {
+      this.onDestroy()
+    }
   }
 
   public applyImpulseForce (force: Phaser.Math.Vector2, duration: number = 0.1) {
@@ -100,7 +109,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   }
 
   public launch = (forceAmount: number, direction: Phaser.Types.Math.Vector2Like) => {
-    // this.scene.cameras.main.startFollow(this, false, 0.1, 0.1)
+    this.scene.cameras.main.startFollow(this, false, 0.1, 0.1)
     const gravityY = this.character.projectile.bulletLike ? 100 : 550
     this.setGravityY(gravityY * (1 + this.character.projectile.mass / 10))
     const force = this.character.projectile.bulletLike ? BULLET_FORCE : (((forceAmount / 4) * (1 + (this.character.stats[DISTANCE_ABILITY_ID].level * 3))) * 400) / this.character.projectile.mass

@@ -202,8 +202,8 @@ const Fattie: CharacterAsset = {
     bounceTtl: 5,
     ttl: null,
     bulletLike: false,
-    mass: 1.2,
-    bounciness: 1.2,
+    mass: 1,
+    bounciness: 0.9,
     deceleration: 100
   },
   stats: {

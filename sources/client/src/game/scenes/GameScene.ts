@@ -6,8 +6,10 @@ import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
 import { CharacterProjectile } from '@/assets/characters'
 import AudioManager from '@/game/manager/AudioManager'
+import { gameWait } from '@/utils/functions'
 
 const HEIGHT_CAMERA_OFFSET = 800
+export const WORLD_Y_LIMIT = 600
 
 export class GameScene extends BaseScene {
   private postprocessing!: PostProcessing
@@ -21,8 +23,6 @@ export class GameScene extends BaseScene {
   private onProjectileExploded = (projectile: CharacterProjectile & { x: number, y: number }) => {
     try {
       const area = new Phaser.Geom.Circle(projectile.x, projectile.y, projectile.radiusDamage)
-      AudioManager.playSfx('explosion', { volume: 0.35 })
-      this.cameras.main.shake(300, 0.05)
       if (this.characters) {
         this.characters
           .filter(character => Phaser.Geom.Circle.Contains(area, character.x, character.y))
@@ -34,6 +34,9 @@ export class GameScene extends BaseScene {
             character.takeDamage(projectile.damage, force, angle)
           })
       }
+      gameWait(this.time, 1500).then(() => {
+        this.cameras.main.startFollow(this.characters[0], false, 0.1, 0.1)
+      })
     } catch (e) {
 
     }
@@ -45,7 +48,7 @@ export class GameScene extends BaseScene {
     this.characters = [
       new Character({
         scene: this,
-        kind: CharacterKind.Geek,
+        kind: CharacterKind.Egocentric,
         x: 250,
         y: -500,
         local: true
