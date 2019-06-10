@@ -22,6 +22,7 @@ export class GameScene extends BaseScene {
     try {
       const area = new Phaser.Geom.Circle(projectile.x, projectile.y, projectile.radiusDamage)
       AudioManager.playSfx('explosion', { volume: 0.2 })
+      this.cameras.main.shake(300, 0.05)
       if (this.characters) {
         this.characters
           .filter(character => Phaser.Geom.Circle.Contains(area, character.x, character.y))
@@ -44,7 +45,7 @@ export class GameScene extends BaseScene {
     this.characters = [
       new Character({
         scene: this,
-        kind: CharacterKind.Egocentric,
+        kind: CharacterKind.Geek,
         x: 250,
         y: -500,
         local: true
