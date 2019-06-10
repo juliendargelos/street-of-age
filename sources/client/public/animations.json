@@ -789,7 +789,7 @@
       "frames": {
         "key": "main",
         "typeOfGeneration": "generateFrameNames",
-        "start": 17,
+        "start": 15,
         "end": 30,
         "zeroPad": 5,
         "prefix": "main/characters/geek/walking_"
