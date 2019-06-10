@@ -41,6 +41,7 @@ export class Player<Character extends BaseCharacter = BaseCharacter> implements 
   public room: Room
   public color: PlayerColor
   public numberOfKills: number
+  public numberOfDeaths: number
 
 
   constructor(attributes: SerializedPlayer) {
@@ -48,7 +49,8 @@ export class Player<Character extends BaseCharacter = BaseCharacter> implements 
     this.teamKind = attributes.teamKind
     this.characterKinds = attributes.characterKinds
     this.ready = attributes.ready
-    this.numberOfKills = attributes.numberOfKills
+    this.numberOfKills = attributes.numberOfKills || 0
+    this.numberOfDeaths = attributes.numberOfDeatsh || 0
   }
 
   public serialize(): SerializedPlayer {
@@ -58,6 +60,7 @@ export class Player<Character extends BaseCharacter = BaseCharacter> implements 
       ready: this.ready,
       color: this.color,
       numberOfKills: this.numberOfKills,
+      numberOfDeaths: this.numberOfDeaths,
       characterKinds: this.characterKinds
     }
   }

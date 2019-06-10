@@ -139,6 +139,7 @@ export default class AppButton extends Vue {
     return {
       ...this.$listeners,
       click: (e: MouseEvent) => {
+        this.$listeners.click && (this.$listeners.click as Function)(e)
         const audio = new Audio(BUTTON_AUDIO_PATH)
         audio.volume = MENU_SFX_VOLUME
         audio.play()
