@@ -3,12 +3,14 @@ import { PLAYER_DEPTH } from '@/constants'
 import { GameScene } from '@/game/scenes/GameScene'
 import { Character } from '@/game/entities/Character'
 import MeleeAnimation from '@/game/entities/MeleeAnimation'
+import AudioManager from '@/game/manager/AudioManager'
 
 interface Constructor {
   scene: Phaser.Scene
   x: number
   y: number
   modifiers: CharacterMelee,
+  origin: Character,
   kind: string,
   scaleX: number
 }
@@ -17,11 +19,13 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
   private modifiers: CharacterMelee
   private kind: string
   private direction: number
+  private origin: Character
 
   constructor (params: Constructor) {
     super(params.scene, params.x, params.y, 'melee')
     this.modifiers = params.modifiers
     this.kind = params.kind
+    this.origin = params.origin
     this.direction = params.scaleX
     this
       .setAlpha(0)
@@ -39,7 +43,10 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
         offsetY: this.modifiers.offsetY,
         scaleX: this.direction
       })
+
+      AudioManager.playSfx('melee', { volume: 0.2 })
       scene.physics.add.overlap(this, scene.charactersArray, this.onCollide.bind(this))
+
       this
         .setDisplaySize(this.modifiers.distance, 1)
         .setGravityY(0)
@@ -54,7 +61,7 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
   private onCollide (go: Phaser.GameObjects.GameObject, other: Phaser.GameObjects.GameObject) {
     if (other.getData('tag') && other.getData('tag') === 'character') {
       const player = other as Character
-      if (!player.damaged) {
+      if (player !== this.origin && !player.damaged) {
         player.takeDamage(this.modifiers.damage, 300 * this.modifiers.force, this.direction < 0 ? -2.8 : -0.5)
       }
     }

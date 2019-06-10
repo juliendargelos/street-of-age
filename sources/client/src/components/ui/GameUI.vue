@@ -64,6 +64,7 @@ import PlayerHealth from '@/components/ui/PlayerHealth.vue'
 import { SerializedCharacter } from '@street-of-age/shared/game/character'
 import GameTimer from '@/components/ui/GameTimer.vue'
 import { SerializedPlayer } from '@street-of-age/shared/entities/player'
+import AudioManager from '@/game/manager/AudioManager'
 
 @Component<GameUI>({
   components: { GameTimer, PlayerHealth, VirtualJoystick, GamePauseUI },
@@ -94,6 +95,7 @@ export default class GameUI extends Vue {
     Emitter.emit(UIEvents.Jump)
   }
   public pauseToggle () {
+    AudioManager.playSfx('start', { volume: 0.15 })
     this.paused = !this.paused
     const canvas = document.querySelector('canvas')
     if (canvas) {

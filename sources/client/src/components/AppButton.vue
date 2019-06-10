@@ -9,7 +9,7 @@
       'app-button--filled': filled,
       'app-button--block': block
     }"
-    v-on="$listeners"
+    v-on="listeners"
   >
     <button :disabled="disabled" :type="type" class="app-button__content">
       <slot />
@@ -108,6 +108,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
+import { BUTTON_AUDIO_PATH, MENU_SFX_VOLUME } from '@/game/manager/AudioManager'
 
 @Component<AppButton>({
   mounted () {
@@ -132,6 +133,17 @@ export default class AppButton extends Vue {
 
   goToLink () {
     this.to && this.$router.push(this.to)
+  }
+
+  get listeners () {
+    return {
+      ...this.$listeners,
+      click: (e: MouseEvent) => {
+        const audio = new Audio(BUTTON_AUDIO_PATH)
+        audio.volume = MENU_SFX_VOLUME
+        audio.play()
+      }
+    }
   }
 }
 </script>

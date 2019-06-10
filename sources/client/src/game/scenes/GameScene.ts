@@ -7,8 +7,9 @@ import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
 import AppModule from '@/store/modules/app'
 import { CharacterProjectile } from '@/assets/characters'
+import AudioManager from '@/game/manager/AudioManager'
 
-const HEIGHT_CAMERA_OFFSET = 400
+const HEIGHT_CAMERA_OFFSET = 800
 const WIDTH_CAMERA_OFFSET = 400
 
 export interface Shoot {
@@ -57,6 +58,7 @@ export class GameScene extends BaseScene {
 
   public create = () => {
     super.create()
+    AudioManager.playBg()
 
     this.cameras.main.setRoundPixels(true)
     const { width } = this.level.bounds
@@ -159,6 +161,7 @@ export class GameScene extends BaseScene {
   private onProjectileExploded = (projectile: CharacterProjectile & { x: number, y: number }) => {
     try {
       const area = new Phaser.Geom.Circle(projectile.x, projectile.y, projectile.radiusDamage)
+      AudioManager.playSfx('explosion', { volume: 0.2 })
       this.characters.forEach(character => {
         if (!Phaser.Geom.Circle.Contains(area, character.x, character.y)) return
         const a = character.x - projectile.x

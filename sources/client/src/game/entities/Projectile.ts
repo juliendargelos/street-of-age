@@ -5,6 +5,7 @@ import { ClientCharacterAsset } from '@/@types'
 import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
 import Explosion from '@/game/entities/Explosion'
+import AudioManager from '@/game/manager/AudioManager'
 
 const BULLET_FORCE = 10000
 
@@ -110,6 +111,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
       (new Phaser.Math.Vector2(direction).normalize())
         .scale(force)
     )
+    AudioManager.playSfx('distance', { volume: 0.2 })
     if (this.character.projectile.ttl) {
       this.scene.time.delayedCall(
         this.character.projectile.ttl,

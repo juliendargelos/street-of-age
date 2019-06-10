@@ -13,6 +13,8 @@ export interface Floor extends Omit<Collider, 'texture'> {
   color: number
 }
 
+export type Hole = Floor
+
 export interface Collider {
   x: number,
   y: number,
@@ -32,4 +34,5 @@ export interface Level {
   background: LevelBackground,
   layers: Layers,
   floors: Floor[],
+  holes: Hole[],
 }
