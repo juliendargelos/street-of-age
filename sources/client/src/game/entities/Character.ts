@@ -6,7 +6,7 @@ import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game
 import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/game/events'
 import { CharacterKind } from '@/store/modules/app'
-import characters, {MOVE_ABILITY_ID} from '@/assets/characters'
+import characters, { MOVE_ABILITY_ID } from '@/assets/characters'
 import MeleeAttack from '@/game/entities/MeleeAttack'
 import { ClientCharacterAsset } from '@/@types'
 import { gameWait } from '@/utils/functions'
@@ -114,6 +114,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   public takeDamage (damage: number, force: number, angle: number): void {
+    AudioManager.playUniqueSfx('melee', { volume: 0.5 })
     this.damaged = true
     this.health -= damage
     this.body.velocity.x += Math.cos(angle) * force

@@ -21,7 +21,7 @@ export class GameScene extends BaseScene {
   private onProjectileExploded = (projectile: CharacterProjectile & { x: number, y: number }) => {
     try {
       const area = new Phaser.Geom.Circle(projectile.x, projectile.y, projectile.radiusDamage)
-      AudioManager.playSfx('explosion', { volume: 0.2 })
+      AudioManager.playSfx('explosion', { volume: 0.35 })
       this.cameras.main.shake(300, 0.05)
       if (this.characters) {
         this.characters
