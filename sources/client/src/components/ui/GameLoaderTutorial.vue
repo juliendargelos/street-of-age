@@ -1,5 +1,6 @@
 <template>
   <div class="game__loader__tutorial">
+    <img :src="require('@/assets/loader.png')" alt="" class="game__loader__tutorial--animation"/>
     <transition mode="out-in" name="slide-fade">
       <div :key="activeTutorial.id" class="game__loader__tutorial__content">
         <h2>{{ activeTutorial.content }}</h2>
@@ -16,6 +17,9 @@
   display: flex
   justify-content: center
   align-items: center
+  &--animation
+    position: fixed
+    bottom: 43%
   &__content
     display: flex
     flex-direction: column
@@ -26,7 +30,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 
-const TUTORIAL_SHOW_DURATION = 2500
+const TUTORIAL_SHOW_DURATION = 5000
 
 @Component<GameLoaderTutorial>({
   mounted (): void {
@@ -41,7 +45,7 @@ const TUTORIAL_SHOW_DURATION = 2500
 })
 export default class GameLoaderTutorial extends Vue {
   public activeTutorialIndex: number = Math.floor(Math.random() * this.tutorials.length)
-  private intervalId: NodeJS.Timeout | null = null
+  private intervalId: number | null = null
 
   get activeTutorial () {
     return this.tutorials[this.activeTutorialIndex]

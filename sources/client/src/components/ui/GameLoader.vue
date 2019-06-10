@@ -24,7 +24,7 @@ import { Vue, Component } from 'vue-property-decorator'
 import GameLoaderTutorial from '@/components/ui/GameLoaderTutorial.vue'
 
 @Component<GameLoader>({
-  components: {GameLoaderTutorial}
+  components: { GameLoaderTutorial }
 })
 export default class GameLoader extends Vue {
 
