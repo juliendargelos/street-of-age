@@ -210,8 +210,12 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private onPlayerTap = (): void => {
     this.projectileDir.clear()
+    if (this.weaponType === WeaponType.Distance) {
+      AudioManager.playUniqueSfx('switch', { volume: 0.8 })
+    } else {
+      AudioManager.playUniqueSfx('switch_back', { volume: 0.8 })
+    }
     this.weaponType = this.weaponType === WeaponType.Distance ? WeaponType.Melee : WeaponType.Distance
-    console.log('player tapped')
     console.log(this.weaponType)
   }
 
