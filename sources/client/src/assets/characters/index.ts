@@ -49,6 +49,7 @@ export interface CharacterMelee {
   distance: number,
   damage: number,
   delay: number,
+  hitDelay?: number
   force: number,
   offsetX?: number,
   offsetY?: number,
@@ -89,37 +90,37 @@ const Egocentric: CharacterAsset = {
     offsetY: 15
   },
   melee: {
-    force: 1,
+    force: 0.5,
     delay: 500,
-    distance: 100,
+    distance: 40,
     damage: 1
   },
   projectile: {
-    damage: 1,
-    radiusDamage: 120,
-    explosionMultiplier: 1,
+    damage: 2,
+    radiusDamage: 300,
+    explosionMultiplier: 3,
     bounceTtl: null,
-    ttl: null,
+    ttl: 4000,
     bulletLike: false,
     mass: 1,
-    bounciness: 0.6,
+    bounciness: 0.7,
     deceleration: 100
   },
   stats: {
     [CAC_ABILITY_ID]: {
       id: CAC_ABILITY_ID,
       name: CAC_ABILITY,
-      level: 0.5
+      level: 0.375
     },
     [DISTANCE_ABILITY_ID]: {
       id: DISTANCE_ABILITY_ID,
       name: DISTANCE_ABILITY,
-      level: 0.5
+      level: 0.625
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 0.5
+      level: 0.875
     }
   }
 }
@@ -135,19 +136,19 @@ const DotingGranny: CharacterAsset = {
     offsetY: 25
   },
   melee: {
-    force: 1,
-    delay: 500,
-    distance: 100,
-    damage: 1
+    force: 2,
+    delay: 300,
+    distance: 40,
+    damage: 2
   },
   projectile: {
     damage: 1,
-    radiusDamage: 120,
-    explosionMultiplier: 1,
-    bounceTtl: 5,
-    ttl: null,
+    radiusDamage: 250,
+    explosionMultiplier: 2,
+    bounceTtl: null,
+    ttl: 4000,
     bulletLike: false,
-    mass: 1,
+    mass: 1.33,
     bounciness: 0.4,
     deceleration: 100
   },
@@ -155,7 +156,7 @@ const DotingGranny: CharacterAsset = {
     [CAC_ABILITY_ID]: {
       id: CAC_ABILITY_ID,
       name: CAC_ABILITY,
-      level: 0.5
+      level: 0.75
     },
     [DISTANCE_ABILITY_ID]: {
       id: DISTANCE_ABILITY_ID,
@@ -165,7 +166,7 @@ const DotingGranny: CharacterAsset = {
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 0.5
+      level: 0.25
     }
   }
 }
@@ -181,37 +182,37 @@ const Fattie: CharacterAsset = {
     offsetY: 15
   },
   melee: {
-    force: 1,
+    force: 2,
     delay: 500,
-    distance: 100,
-    damage: 1
+    distance: 40,
+    damage: 2
   },
   projectile: {
     damage: 1,
     radiusDamage: 120,
     explosionMultiplier: 1,
-    bounceTtl: null,
+    bounceTtl: 5,
     ttl: null,
     bulletLike: false,
-    mass: 1,
-    bounciness: 0.6,
+    mass: 1.2,
+    bounciness: 1.2,
     deceleration: 100
   },
   stats: {
     [CAC_ABILITY_ID]: {
       id: CAC_ABILITY_ID,
       name: CAC_ABILITY,
-      level: 0.5
+      level: 0.75
     },
     [DISTANCE_ABILITY_ID]: {
       id: DISTANCE_ABILITY_ID,
       name: DISTANCE_ABILITY,
-      level: 0.5
+      level: 0.625
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 0.5
+      level: 0.375
     }
   }
 }
@@ -230,7 +231,8 @@ const FustyGrandpa: CharacterAsset = {
     force: 0.7,
     delay: 750,
     distance: 230,
-    damage: 1,
+    hitDelay: 250,
+    damage: 2,
     offsetY: 0.35,
     offsetX: -0.1
   },
@@ -256,7 +258,7 @@ const FustyGrandpa: CharacterAsset = {
     [DISTANCE_ABILITY_ID]: {
       id: DISTANCE_ABILITY_ID,
       name: DISTANCE_ABILITY,
-      level: 0.2
+      level: 0.75
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
@@ -277,20 +279,22 @@ const Geek: CharacterAsset = {
     offsetY: 5
   },
   melee: {
-    force: 1,
-    delay: 500,
-    distance: 100,
-    damage: 1
+    force: 0.75,
+    delay: 600,
+    hitDelay: 400,
+    distance: 300,
+    damage: 1,
+    offsetX: 0.1
   },
   projectile: {
-    damage: 1,
+    damage: 2,
     radiusDamage: 120,
-    explosionMultiplier: 1,
-    bounceTtl: null,
+    explosionMultiplier: 1.75,
+    bounceTtl: 1,
     ttl: null,
     bulletLike: false,
-    mass: 1,
-    bounciness: 0.6,
+    mass: 1.1,
+    bounciness: 0.3,
     deceleration: 100
   },
   stats: {
@@ -302,7 +306,7 @@ const Geek: CharacterAsset = {
     [DISTANCE_ABILITY_ID]: {
       id: DISTANCE_ABILITY_ID,
       name: DISTANCE_ABILITY,
-      level: 0.5
+      level: 0.75
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
@@ -325,17 +329,18 @@ const Hippie: CharacterAsset = {
   melee: {
     force: 0.5,
     delay: 500,
+    hitDelay: 200,
     distance: 280,
-    damage: 1,
+    damage: 2,
     offsetY: 0.15
   },
   projectile: {
     damage: 1,
-    radiusDamage: 120,
-    explosionMultiplier: 3,
-    bounceTtl: null,
+    radiusDamage: 150,
+    explosionMultiplier: 1.5,
+    bounceTtl: 3,
     ttl: null,
-    bulletLike: true,
+    bulletLike: false,
     mass: 1,
     bounciness: 0.6,
     deceleration: 100
@@ -344,17 +349,17 @@ const Hippie: CharacterAsset = {
     [CAC_ABILITY_ID]: {
       id: CAC_ABILITY_ID,
       name: CAC_ABILITY,
-      level: 0.5
+      level: 0.625
     },
     [DISTANCE_ABILITY_ID]: {
       id: DISTANCE_ABILITY_ID,
       name: DISTANCE_ABILITY,
-      level: 0.5
+      level: 0.625
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 0.5
+      level: 0.25
     }
   }
 }
@@ -370,37 +375,37 @@ const LapdogWoman: CharacterAsset = {
     offsetY: 12
   },
   melee: {
-    force: 1,
-    delay: 500,
-    distance: 100,
+    force: 1.5,
+    delay: 800,
+    distance: 30,
     damage: 1
   },
   projectile: {
-    damage: 1,
+    damage: 2,
     radiusDamage: 120,
-    explosionMultiplier: 1,
-    bounceTtl: null,
+    explosionMultiplier: 1.5,
+    bounceTtl: 1,
     ttl: null,
     bulletLike: false,
     mass: 1,
-    bounciness: 0.6,
-    deceleration: 100
+    bounciness: 0.3,
+    deceleration: 300
   },
   stats: {
     [CAC_ABILITY_ID]: {
       id: CAC_ABILITY_ID,
       name: CAC_ABILITY,
-      level: 0.5
+      level: 0.375
     },
     [DISTANCE_ABILITY_ID]: {
       id: DISTANCE_ABILITY_ID,
       name: DISTANCE_ABILITY,
-      level: 0.5
+      level: 0.625
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 0.5
+      level: 0.875
     }
   }
 }
@@ -416,37 +421,37 @@ const MrMuscle: CharacterAsset = {
     offsetY: 5
   },
   melee: {
-    force: 2,
+    force: 2.5,
     delay: 500,
     distance: 40,
-    damage: 1
+    damage: 2
   },
   projectile: {
     damage: 1,
     radiusDamage: 120,
-    explosionMultiplier: 3,
-    bounceTtl: 6,
+    explosionMultiplier: 1.5,
+    bounceTtl: 5,
     ttl: null,
     bulletLike: false,
-    mass: 3,
+    mass: 0.75,
     bounciness: 0.6,
-    deceleration: 200
+    deceleration: 100
   },
   stats: {
     [CAC_ABILITY_ID]: {
       id: CAC_ABILITY_ID,
       name: CAC_ABILITY,
-      level: 0.5
+      level: 0.75
     },
     [DISTANCE_ABILITY_ID]: {
       id: DISTANCE_ABILITY_ID,
       name: DISTANCE_ABILITY,
-      level: 1
+      level: 0.5
     },
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 0.5
+      level: 0.625
     }
   }
 }

@@ -57,11 +57,11 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
   }
 
   public onCollide (go: Phaser.GameObjects.GameObject, other: Phaser.GameObjects.GameObject): void {
+    this.bounces++
     if (this.character.projectile.bounceTtl && this.bounces >= this.character.projectile.bounceTtl) {
       this.onDestroy()
       return
     }
-    this.bounces++
     if (this.character.projectile.bulletLike) {
       this.onDestroy()
     }

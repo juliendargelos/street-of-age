@@ -4,6 +4,7 @@ import { GameScene } from '@/game/scenes/GameScene'
 import { Character } from '@/game/entities/Character'
 import MeleeAnimation from '@/game/entities/MeleeAnimation'
 import AudioManager from '@/game/manager/AudioManager'
+import { CharacterKind } from '@/store/modules/app'
 
 interface Constructor {
   scene: Phaser.Scene
@@ -32,8 +33,6 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
       .setOrigin(this.direction < 0 ? 1 : 0, 0)
     const scene = params.scene as GameScene
     scene.time.delayedCall(this.modifiers.delay, () => {
-      scene.physics.world.enable(this)
-      scene.add.existing(this)
       const animation = new MeleeAnimation({
         scene: this.scene,
         x: this.x,
@@ -44,16 +43,36 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
         scaleX: this.direction
       })
       AudioManager.playSfx('melee', { volume: 0.2 })
-      scene.physics.add.overlap(this, scene.characters, this.onCollide.bind(this))
-      this
-        .setDisplaySize(this.modifiers.distance, 1)
-        .setGravityY(0)
-        .setDepth(PLAYER_DEPTH)
-        .updateDisplayOrigin()
+      if (this.kind === CharacterKind.Egocentric) {
+        scene.cameras.main.flash(500, 255, 255, 255)
+      }
+      if (this.modifiers.hitDelay) {
+        scene.time.delayedCall(this.modifiers.hitDelay, () => {
+          this.addToPhysicsScene(scene)
+        }, [], null)
+      } else {
+        this.addToPhysicsScene(scene)
+      }
     }, [], null)
-    scene.time.delayedCall(this.modifiers.delay + 500, () => {
+    scene.time.delayedCall(this.modifiers.delay + (this.modifiers.hitDelay || 0) + 500, () => {
       this.destroy()
     }, [], null)
+  }
+
+  private addToPhysicsScene (scene: Phaser.Scene) {
+    scene.physics.world.enable(this)
+    scene.add.existing(this)
+    scene.physics.add.overlap(this, (scene as GameScene).characters, this.onCollide.bind(this))
+    this
+      .setDisplaySize(this.modifiers.distance, 1)
+      .setGravityY(0)
+      .setDepth(PLAYER_DEPTH)
+      .updateDisplayOrigin()
+  }
+
+  private addToScenePhysics (scene: Phaser.Scene): void {
+    scene.physics.world.enable(this)
+    scene.add.existing(this)
   }
 
   private onCollide (go: Phaser.GameObjects.GameObject, other: Phaser.GameObjects.GameObject) {
