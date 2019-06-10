@@ -1,5 +1,9 @@
 <template>
   <div class="game__timer" :style="style">
+    <div class="game__timer--left" :style="{ height: `${percentage.left}%`}"></div>
+    <div class="game__timer--bottom" :style="{ width: `${percentage.bottom}%`}"></div>
+    <div class="game__timer--right" :style="{ height: `${percentage.right}%`}"></div>
+    <div class="game__timer--top" :style="{ width: `${percentage.top}%`}"></div>
   </div>
 </template>
 
@@ -10,9 +14,33 @@
   left: 0
   right: 0
   bottom: 0
-  width: 100%
-  height: 4px
-  background: var(--color)
+  background: transparent
+  &--left,&--bottom,&--right,&--top
+    background: var(--color)
+  &--left
+    position: absolute
+    left: 0
+    bottom: 0
+    width: 4px
+    height: 100%
+  &--bottom
+    position: absolute
+    bottom: 0
+    right: 0
+    width: 100%
+    height: 4px
+  &--right
+    position: absolute
+    right: 0
+    top: 0
+    width: 4px
+    height: 100%
+  &--top
+    position: absolute
+    top: 0
+    left: 0
+    width: 100%
+    height: 4px
 </style>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
@@ -40,10 +68,15 @@ const GAME_TURN_DURATION = 15000
 })
 export default class GameTimer extends Vue {
   @Prop({ type: String, required: true }) readonly color!: PlayerColor
-  @Prop({ type: Object, required: true }) readonly currentPlayer!: SerializedPlayer
+  @Prop({ type: Object, required: false }) readonly currentPlayer!: SerializedPlayer
 
   private rafId: number | null = null
-  public remaining = GAME_TURN_DURATION
+  public remaining = {
+    left: GAME_TURN_DURATION / 4,
+    bottom: GAME_TURN_DURATION / 4,
+    right: GAME_TURN_DURATION / 4,
+    top: GAME_TURN_DURATION / 4
+  }
   public paused = false
   private time: number = 0
 
@@ -52,17 +85,18 @@ export default class GameTimer extends Vue {
     if (paused) {
       if (this.rafId) {
         cancelAnimationFrame(this.rafId)
-        console.log('clearing RAF')
       }
     } else {
       this.resetRaf()
-      console.log('Resuming RAF')
     }
   }
 
   @Watch('currentPlayer')
   private onCurrentPlayerChanged (player: SerializedPlayer) {
-    this.remaining = GAME_TURN_DURATION
+    this.remaining.left = GAME_TURN_DURATION / 4
+    this.remaining.bottom = GAME_TURN_DURATION / 4
+    this.remaining.right = GAME_TURN_DURATION / 4
+    this.remaining.top = GAME_TURN_DURATION / 4
     this.resume()
     this.resetRaf()
   }
@@ -76,7 +110,10 @@ export default class GameTimer extends Vue {
   }
 
   private reset () {
-    this.remaining = GAME_TURN_DURATION
+    this.remaining.left = GAME_TURN_DURATION / 4
+    this.remaining.bottom = GAME_TURN_DURATION / 4
+    this.remaining.right = GAME_TURN_DURATION / 4
+    this.remaining.top = GAME_TURN_DURATION / 4
     this.resetRaf()
   }
 
@@ -92,26 +129,43 @@ export default class GameTimer extends Vue {
     const time = Date.now()
     const delta = time - this.time
     this.time += delta
-
     if (!this.paused) {
-      this.remaining -= delta
-      console.log('tick')
-      if (this.remaining <= 0) {
-        this.remaining = 0
-        this.pause()
+      this.remaining.left -= delta
+      if (this.remaining.left <= 0) {
+        this.remaining.left = 0
+        this.remaining.bottom -= delta
+        if (this.remaining.bottom <= 0) {
+          this.remaining.bottom = 0
+          this.remaining.right -= delta
+          if (this.remaining.right <= 0) {
+            this.remaining.right = 0
+            this.remaining.top -= delta
+            if (this.remaining.top <= 0) {
+              this.remaining.left = 0
+              this.remaining.bottom = 0
+              this.remaining.right = 0
+              this.remaining.top = 0
+              this.pause()
+            }
+          }
+        }
       }
       this.rafId = requestAnimationFrame(this.onTick)
     }
   }
 
   get percentage () {
-    return this.remaining/GAME_TURN_DURATION*100
+    return {
+      left: this.remaining.left / (GAME_TURN_DURATION / 4) * 100,
+      bottom: this.remaining.bottom / (GAME_TURN_DURATION / 4) * 100,
+      right: this.remaining.right / (GAME_TURN_DURATION / 4) * 100,
+      top: this.remaining.top / (GAME_TURN_DURATION / 4) * 100
+    }
   }
 
   get style () {
     return {
-      '--color': this.color,
-      width: `${this.percentage}%`
+      '--color': this.color
     }
   }
 }
