@@ -20,6 +20,7 @@
   &--animation
     position: fixed
     bottom: 43%
+    width: 100%
   &__content
     display: flex
     flex-direction: column
