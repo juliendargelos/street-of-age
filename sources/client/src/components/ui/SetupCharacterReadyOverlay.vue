@@ -1,6 +1,9 @@
 <template>
   <div class="setup__character__ready__overlay" @click.self="$emit('close')">
-    <h2 @click="$emit('click')" class="road-rage">{{ this.heading }}</h2>
+    <div class="setup__character__ready__overlay__container">
+      <h2 @click="$emit('click')" class="road-rage">{{ this.heading }}</h2>
+      <h3>Touche pour commencer</h3>
+    </div>
   </div>
 </template>
 
@@ -11,18 +14,33 @@
   bottom: 0
   left: 0
   right: 0
-  z-index: 1
+  z-index: 1000
   background: transparentize($black, 0.4)
   display: flex
   justify-content: center
   align-items: center
-  h2
-    font-size: 60px
+  &__container
+    display: flex
     width: 100%
     text-align: center
     transform: skewY(-10deg)
     background: $blue
-    padding: 15px
+    padding: 30px
+    flex-direction: column
+    h2
+      font-size: 60px
+    h3
+      margin-top: 18px
+      font-size: 12px
+      opacity: 0.3
+      text-transform: uppercase
+      letter-spacing: 2px
+      animation: flicker 1s alternate-reverse infinite
+  @keyframes flicker
+    from
+      opacity: 0.3
+    to
+      opacity: 1
 </style>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'

@@ -279,7 +279,7 @@ const FustyGrandpa: CharacterAsset = {
 const Geek: CharacterAsset = {
   team: 'young',
   kind: 'geek',
-  name: 'Le geek metalleux',
+  name: 'Le geek',
   body: {
     width: 26,
     height: 85,
@@ -379,7 +379,7 @@ const Hippie: CharacterAsset = {
 const LapdogWoman: CharacterAsset = {
   team: 'old',
   kind: 'lapdog-woman',
-  name: 'La folle aux chiens',
+  name: 'La bimbo',
   body: {
     width: 26,
     height: 78,

@@ -23,9 +23,15 @@
   &:last-of-type
     margin-bottom: 0
   &__informations, &__action
-    padding: 15px 20px
+    padding: 13px 20px
+    border-radius: 3px
   &__informations
     flex: 1.8
+    &__name
+      font-size: 16px
+      margin-bottom: 6px
+    &__players
+      font-size: 13px
     > span
       display: block
   &__action
@@ -60,7 +66,7 @@
       font-family: 'Dead Jim', sans-serif
       font-weight: 300
       letter-spacing: 1px
-      font-size: 16px
+      font-size: 18px
       vertical-align: sub
 
 </style>

@@ -18,9 +18,11 @@
   justify-content: center
   align-items: center
   &__panel
-    height: 80%
+    height: 57%
     width: 400px
     overflow-y: scroll
+    & .app-panel__header--empty
+      box-shadow: 0 2px 20px black
 </style>
 
 <script lang="ts">

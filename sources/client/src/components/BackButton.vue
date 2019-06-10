@@ -7,8 +7,8 @@
   font-family: "Dead Jim", sans-serif
   border: none
   outline: none
-  background: $blue
-  padding: 10px 10px
+  background: rgba($astronaut, 0.75)
+  padding: 15px 20px
   position: relative
   &:disabled
     opacity: 0.5
@@ -22,7 +22,7 @@
     height: 100%
     background: inherit
     top: 0
-    right: -19px
+    right: -20px
     clip-path: polygon(100% 0, 0 0, 0 100%)
 </style>
 

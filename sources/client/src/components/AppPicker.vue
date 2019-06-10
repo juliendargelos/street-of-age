@@ -22,6 +22,7 @@
     &__items
       display: flex
       justify-content: space-between
+      margin-top: 8px
       .app-picker__item
         padding: 10px
         border-radius: 3px
