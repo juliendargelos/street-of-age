@@ -44,7 +44,7 @@ export class GameScene extends BaseScene {
     this.characters = [
       new Character({
         scene: this,
-        kind: CharacterKind.Geek,
+        kind: CharacterKind.Egocentric,
         x: 250,
         y: -500,
         local: true

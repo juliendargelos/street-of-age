@@ -49,7 +49,11 @@ export interface CharacterMelee {
   distance: number,
   damage: number,
   delay: number,
-  hitDelay?: number
+  hitDelay?: number,
+  sound?: {
+    volume?: number,
+    key: string
+  },
   force: number,
   offsetX?: number,
   offsetY?: number,
@@ -90,8 +94,12 @@ const Egocentric: CharacterAsset = {
     offsetY: 15
   },
   melee: {
-    force: 0.5,
+    force: 0.80,
     delay: 500,
+    sound: {
+      key: 'melee_egocentric_sfx',
+      volume: 0.6
+    },
     distance: 40,
     damage: 1
   },
@@ -120,7 +128,7 @@ const Egocentric: CharacterAsset = {
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 0.875
+      level: 0.65
     }
   }
 }
@@ -280,16 +288,20 @@ const Geek: CharacterAsset = {
   },
   melee: {
     force: 0.75,
-    delay: 600,
+    delay: 500,
     hitDelay: 400,
+    sound: {
+      key: 'melee_geek_sfx',
+      volume: 0.6
+    },
     distance: 300,
     damage: 1,
     offsetX: 0.1
   },
   projectile: {
     damage: 2,
-    radiusDamage: 120,
-    explosionMultiplier: 1.75,
+    radiusDamage: 180,
+    explosionMultiplier: 2.5,
     bounceTtl: 1,
     ttl: null,
     bulletLike: false,
@@ -377,13 +389,17 @@ const LapdogWoman: CharacterAsset = {
   melee: {
     force: 1.5,
     delay: 800,
+    sound: {
+      key: 'melee_lapdog_woman_sfx',
+      volume: 1
+    },
     distance: 30,
     damage: 1
   },
   projectile: {
     damage: 2,
-    radiusDamage: 120,
-    explosionMultiplier: 1.5,
+    radiusDamage: 160,
+    explosionMultiplier: 2,
     bounceTtl: 1,
     ttl: null,
     bulletLike: false,
@@ -405,7 +421,7 @@ const LapdogWoman: CharacterAsset = {
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 0.875
+      level: 0.65
     }
   }
 }

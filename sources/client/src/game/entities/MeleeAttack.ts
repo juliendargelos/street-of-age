@@ -42,7 +42,9 @@ export default class MeleeAttack extends Phaser.Physics.Arcade.Sprite {
         offsetY: this.modifiers.offsetY,
         scaleX: this.direction
       })
-      AudioManager.playSfx('melee', { volume: 0.2 })
+      const sound = this.modifiers.sound ? this.modifiers.sound.key : 'melee'
+      const volume = this.modifiers.sound && this.modifiers.sound.volume ? this.modifiers.sound.volume : 0.3
+      AudioManager.playSfx(sound, { volume })
       if (this.kind === CharacterKind.Egocentric) {
         scene.cameras.main.flash(500, 255, 255, 255)
       }
