@@ -26,6 +26,8 @@ export class Game extends Entity implements Serializable<SerializedGame> {
   @observable public currentTeamIndex: number = -1
   @observable public currentPlayerIndex: number = -1
   @observable public currentCharacterIndex: number = -1
+  @observable public playersLoaded: number = 0
+  @observable public created: boolean = false
   @observable public turn: number = -1
   @observable public readonly players: Collection<Player> = Player.collection()
   @observable public readonly teams: Collection<Team> = Team.collection()

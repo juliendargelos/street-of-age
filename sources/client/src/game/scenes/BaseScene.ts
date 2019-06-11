@@ -35,9 +35,9 @@ export default class BaseScene extends Phaser.Scene {
     const json = this.registry.get(REGISTRY_LEVEL_KEY)
     console.log('BUILDING LEVEL...')
     this.loadLevel(GameLevelBuilder.build(json))
-    gameWait(this.time, 15000).then(() => {
-      Emitter.emit(GameEvents.GameLoaded)
-    })
+    // gameWait(this.time, 15000).then(() => {
+    Emitter.emit(GameEvents.GameLoaded)
+    // })
   }
 
   public update (time: number, delta: number): void {}
