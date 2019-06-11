@@ -158,7 +158,7 @@ export default class Home extends Vue {
     if (this.start) {
       try {
         if (fscreen.fullscreenElement === null) {
-          // fscreen.requestFullscreen(this.$root.$el)
+          fscreen.requestFullscreen(this.$root.$el)
         }
       } catch (e) {
         console.error(e)
