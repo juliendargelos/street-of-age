@@ -81,10 +81,14 @@ export class Game extends Entity implements Serializable<SerializedGame> {
 
     if (this.turn%this.teams.length === 0) {
       this.currentPlayerIndex = (this.currentPlayerIndex + 1)%this.currentTeam.players.length
+
+      while (!this.currentPlayer.characters.length) {
+        this.currentPlayerIndex = (this.currentPlayerIndex + 1)%this.currentTeam.players.length
+      }
     }
 
     if (this.turn%this.players.length === 0) {
-      this.currentCharacterIndex = (this.currentCharacterIndex + 1)%CHARACTERS_PER_PLAYER
+      this.currentCharacterIndex = (this.currentCharacterIndex + 1)%this.currentPlayer.characters.length
     }
   }
 

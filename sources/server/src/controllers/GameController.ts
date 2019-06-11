@@ -17,7 +17,8 @@ export class GameController extends Controller {
       GameEvents.GameUpdate,
       GameEvents.GameCharacterMove,
       GameEvents.GameCharacterShoot,
-      GameEvents.GameCharacterDie
+      GameEvents.GameCharacterDie,
+      GameEvents.GameCharacterTakeDamage
     ])
 
     this.player = Player.all.get(socket.id)
@@ -39,9 +40,9 @@ export class GameController extends Controller {
 
     if (!this.game) {
       this.game = Game.all.add(new Game(id, room.players))
-      this.game.nextTurn()
 
       reaction(() => this.game.turn, () => {
+        this.resetVelocity()
         this.io.in(this.game.id).emit(GameEvents.GameTurnChanged, this.game.serialize())
       })
     }
@@ -50,16 +51,30 @@ export class GameController extends Controller {
       this.game.created = true
       this.game.enableInterval()
       this.io.in(room.id).emit(GameEvents.GameCreated, this.game.serialize())
+      setTimeout(() => this.game.nextTurn(), 3000)
     }
   }
 
   [GameEvents.GameCharacterMove](attributes: SerializedCharacter) {
     const character = Character.all.get(attributes.id)
+    if (!character) return
     character.x = attributes.x
     character.y = attributes.y
-    character.velocityX = attributes.velocityX
-    character.velocityY = attributes.velocityY
-    this.socket.broadcast.emit(GameEvents.GameCharacterMoved, character.serialize())
+    if (character.y >= 600) {
+      const player = this.game.players.find(player => player.characters.has(character))
+      player.characters.remove(character)
+      this.io.in(this.game.id).emit(GameEvents.GameCharacterDied, { id: attributes.id })
+
+      if (player.id === this.game.currentPlayer.id) {
+        this.game.disableInterval()
+        this.game.nextTurn()
+        this.game.enableInterval()
+      }
+    } else {
+      character.velocityX = attributes.velocityX
+      character.velocityY = attributes.velocityY
+      this.socket.broadcast.emit(GameEvents.GameCharacterMoved, character.serialize())
+    }
   }
 
   [GameEvents.GameCharacterShoot](shoot: object) {
@@ -74,12 +89,34 @@ export class GameController extends Controller {
   }
 
   [GameEvents.GameCharacterDie](id: string, killed: boolean) {
-    if (killed) ++this.player.numberOfKills
+    if (killed) ++this.game.currentPlayer.numberOfKills
     const character = this.game.characters.get(id)
+    if (!character) return
+    character.health = 0
     const player = this.game.players.find(player => player.characters.has(character))
     player.characters.remove(character)
     ++player.numberOfDeaths
-    this.socket.broadcast.emit(GameEvents.GameCharacterDied, { id });
+    this.io.in(this.game.id).emit(GameEvents.GameCharacterDied, { id })
+  }
+
+  [GameEvents.GameCharacterTakeDamage](damage: { id: string, damage: number }) {
+    const character = this.game.characters.get(damage.id)
+    if (!character) return
+    character.health -= damage.damage
+
+    if (character.health <= 0) {
+      this[GameEvents.GameCharacterDie](character.id, true)
+    } else {
+      this.socket.broadcast.emit(GameEvents.GameCharacterTookDamage, character.serialize());
+    }
+  }
+
+  private resetVelocity() {
+    this.game.characters.forEach(character => {
+      character.velocityY = 0
+      character.velocityX = 0
+      this.io.in(this.game.id).emit(GameEvents.GameCharacterMoved, character.serialize())
+    })
   }
 
   public unmount() {

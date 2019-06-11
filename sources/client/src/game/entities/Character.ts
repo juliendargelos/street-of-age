@@ -108,19 +108,19 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     params.scene.add.existing(this)
   }
 
-  private initListeners () {
-    if (this.local) {
-      InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
-      InputManager.touch.addEventListener('player:untap', () => {
-        this.projectileDir.clear()
-        this.projectileDirFront.setVisible(false)
-      })
-      InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
-      InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
-    }
+  // private initListeners () {
+  //   if (this.local) {
+  //     InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
+  //     InputManager.touch.addEventListener('player:untap', () => {
+  //       this.projectileDir.clear()
+  //       this.projectileDirFront.setVisible(false)
+  //     })
+  //     InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
+  //     InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
+  //   }
 
-    Emitter.on(UIEvents.Jump, this.jump)
-  }
+  //   Emitter.on(UIEvents.Jump, this.jump)
+  // }
 
   public update = () => {
     this.setGravityY(GRAVITY)
@@ -167,6 +167,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.scene.time.delayedCall(800, () => {
       this.damaged = false
     }, [], null)
+
+    this.emit('tookDamage', { id: this.id, damage })
   }
 
   private onChangeState (newState: State) {
@@ -201,7 +203,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   public enableControls () {
-    InputManager.touch.addEventListener('tap', this.jump)
+    // InputManager.touch.addEventListener('tap', this.jump)
     InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
     InputManager.touch.addEventListener('player:untap', this.onPlayerUntap)
     InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)

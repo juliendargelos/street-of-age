@@ -1,8 +1,8 @@
 <template>
   <div class="game-ui">
-    <GameTimer v-if="currentPlayer" :current-player="currentPlayer" color="#f64afe"/>
+    <GameTimer v-if="currentPlayer" :current-player="currentPlayer"/>
     <template v-if="!paused">
-      <PlayerHealth v-if="currentCharacter" :health="4" :kind="currentCharacter.kind" color="#f64afe"/>
+      <PlayerHealth v-if="currentCharacter" :health="currentCharacter.health" :kind="currentCharacter.kind" :color="currentPlayer.color"/>
       <virtual-joystick v-if="mobile && isCurrentPlayer"/>
       <img v-if="mobile && isCurrentPlayer" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">

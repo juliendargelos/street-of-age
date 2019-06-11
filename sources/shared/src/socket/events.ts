@@ -40,6 +40,8 @@ export enum GameEvents {
   GameCharacterShooted = "game:character:shooted",
   GameCharacterDie = "game:character:die",
   GameCharacterDied = "game:character:died",
+  GameCharacterTakeDamage = "game:character:takedamage",
+  GameCharacterTookDamage = "game:character:tookdamage",
   GameEnded = "game:ended"
 }
 

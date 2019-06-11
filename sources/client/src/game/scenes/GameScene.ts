@@ -26,6 +26,7 @@ interface GameSceneListeners {
   characterMoved: (character: SerializedCharacter) => void
   characterDied: (character: SerializedCharacter) => void
   characterShooted: (shoot: Shoot) => void
+  characterTookDamage: (damage: { id: string, damage: number }) => void
 }
 
 // this.weaponType WeaponType.Distance WeaponType.Melee
@@ -68,13 +69,17 @@ export class GameScene extends BaseScene {
 
   public setCurrentCharacter (character: Character) {
     this.cameras.main.stopFollow()
-    this.cameras.main.startFollow(character, false, 0.1, 0.1)
+    if (character) this.cameras.main.startFollow(character, false, 0.1, 0.1)
   }
 
   public enableControls (character: Character) {
     this.disableControls()
-    character.enableControls()
-    this.controlledCharacter = character
+    if (character) {
+      character.enableControls()
+      this.controlledCharacter = character
+    } else {
+      this.controlledCharacter = null
+    }
   }
 
   public disableControls () {
@@ -85,6 +90,7 @@ export class GameScene extends BaseScene {
 
   public moveCharacter (attributes: SerializedCharacter) {
     const character = this.characters.get(attributes.id) as Character
+    if (!character) return
     character.x = attributes.x as number
     character.y = attributes.y as number
     character.setVelocityX(attributes.velocityX as number)
@@ -109,6 +115,7 @@ export class GameScene extends BaseScene {
 
     character.on('moved', this.listeners.characterMoved)
     character.on('shooted', this.listeners.characterShooted)
+    character.on('tookDamage', this.listeners.characterTookDamage)
 
     return character
   }
@@ -165,6 +172,7 @@ export class GameScene extends BaseScene {
         const angle = Math.atan2(character.y - projectile.y, character.x - projectile.x)
         const force = (area.radius - Math.sqrt(a * a + b * b)) * 2 * projectile.explosionMultiplier
         character.takeDamage(projectile.damage, force, angle)
+        return true
       })
     } catch (e) {
 

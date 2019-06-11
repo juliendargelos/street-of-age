@@ -32,6 +32,7 @@ export const CharacterKindTeams: { [P in TeamKind]: CharacterKind[] } = {
 export interface SerializedCharacter extends SerializedObject {
   id: string
   kind: CharacterKind
+  health: number
   x?: number
   y?: number
   velocityX?: number
@@ -47,6 +48,7 @@ export class Character extends Entity implements Serializable<SerializedCharacte
   @observable public readonly kind: CharacterKind
   @observable public x: number
   @observable public y: number
+  @observable public health: number = 4
   @observable public velocityX: number
   @observable public velocityY: number
 
@@ -75,6 +77,7 @@ export class Character extends Entity implements Serializable<SerializedCharacte
     return {
       id: this.id,
       kind: this.kind,
+      health: this.health,
       x: this.x,
       y: this.y,
       velocityX: this.velocityX,

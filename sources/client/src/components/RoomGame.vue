@@ -87,6 +87,10 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
       this.scene.moveCharacter(character)
     },
 
+    [GameEvents.GameCharacterDied] (character: SerializedCharacter) {
+      this.scene.removeCharacter(character.id)
+    },
+
     [GameEvents.GameCharacterShooted] (shoot: Shoot) {
       this.scene.shoot(shoot)
     },
@@ -101,13 +105,20 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
         return
       }
 
-      const character = this.scene.characters.get(game.currentCharacter.id) as Character
-      this.scene.setCurrentCharacter(character)
+      if (game.currentCharacter) {
+        const character = this.scene.characters.get(game.currentCharacter.id) as Character
+        this.scene.setCurrentCharacter(character)
 
-      this.currentPlayer = game.currentPlayer
-      this.currentCharacter = game.currentCharacter
-      if (this.isCurrentPlayer) this.scene.enableControls(character)
-      else this.scene.disableControls()
+        this.currentPlayer = game.currentPlayer
+        this.currentCharacter = game.currentCharacter
+        if (this.isCurrentPlayer) this.scene.enableControls(character)
+        else this.scene.disableControls()
+      }
+    },
+
+    [GameEvents.GameCharacterTookDamage] (character: SerializedCharacter) {
+      const localCharacter = this.scene.characters.get(character.id) as Character
+      localCharacter.health = character.health
     }
   },
   mounted () {
@@ -132,6 +143,12 @@ const throttle = (method: (...args: any) => void, limit: number, always: (...arg
       characterDied: (character: SerializedCharacter) => {
         if (this.isCurrentPlayer) {
           this.$socket.emit(GameEvents.GameCharacterDie, character)
+        }
+      },
+
+      characterTookDamage: (damage: { id: string, damage: number }) => {
+        if (this.isCurrentPlayer) {
+          this.$socket.emit(GameEvents.GameCharacterTakeDamage, damage)
         }
       }
     })

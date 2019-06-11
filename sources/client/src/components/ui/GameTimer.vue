@@ -67,7 +67,7 @@ const GAME_TURN_DURATION = 15000
   }
 })
 export default class GameTimer extends Vue {
-  @Prop({ type: String, required: true }) readonly color!: PlayerColor
+  // @Prop({ type: String, required: true }) readonly color!: PlayerColor
   @Prop({ type: Object, required: false }) readonly currentPlayer!: SerializedPlayer
 
   private rafId: number | null = null
@@ -165,7 +165,7 @@ export default class GameTimer extends Vue {
 
   get style () {
     return {
-      '--color': this.color
+      '--color': this.currentPlayer.color
     }
   }
 }

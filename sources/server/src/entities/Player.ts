@@ -9,6 +9,7 @@ export interface SerializedPlayer extends SerializedObject {
   id: string
   teamKind: TeamKind
   ready: boolean
+  color: string
   numberOfKills: number
   numberOfDeaths: number
   characters: SerializedCharacter[]
@@ -23,6 +24,7 @@ export class Player extends Entity {
 
   @observable public teamKind?: TeamKind
   @observable public ready: boolean = false
+  @observable public color: string = ''
   @observable public numberOfKills: number = 0
   @observable public numberOfDeaths: number = 0
   public readonly characters: Collection<Character> = Character.collection()
@@ -47,6 +49,7 @@ export class Player extends Entity {
     return {
       id: this.id,
       teamKind: this.teamKind,
+      color: this.color,
       numberOfKills: this.numberOfKills,
       numberOfDeaths: this.numberOfDeaths,
       ready: this.ready,
