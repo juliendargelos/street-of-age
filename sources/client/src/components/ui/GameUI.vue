@@ -4,7 +4,7 @@
     <template v-if="!paused">
       <PlayerHealth v-if="currentCharacter" :health="currentCharacter.health" :kind="currentCharacter.kind" :color="currentPlayer.color"/>
       <virtual-joystick v-if="mobile && isCurrentPlayer"/>
-      <img v-if="mobile && isCurrentPlayer" ref="jump" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
+      <img v-show="mobile && isCurrentPlayer" ref="jump" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
     </template>
     <transition name="slide-fade" mode="out-in">
@@ -71,13 +71,17 @@ import { SerializedPlayer } from '@street-of-age/shared/entities/player'
 @Component<GameUI>({
   components: { GameTimer, PlayerHealth, VirtualJoystick, GamePauseUI },
   mounted (): void {
-    this.$refs.jump.addEventListener('touchstart', this.onJumpButtonClick)
+    if (this.$refs.jump) {
+      this.$refs.jump.addEventListener('touchstart', this.onJumpButtonClick)
+    }
     this.intervalId = setInterval(() => {
       this.countdown--
     }, 1000)
   },
   beforeDestroy (): void {
-    this.$refs.jump.removeEventListener('touchstart', this.onJumpButtonClick)
+    if (this.$refs.jump) {
+      this.$refs.jump.removeEventListener('touchstart', this.onJumpButtonClick)
+    }
   }
 })
 export default class GameUI extends Vue {
