@@ -32,18 +32,24 @@ export class GameController extends Controller {
 
   [GameEvents.GameCreate](id: string) {
     const room = Room.all.get(id)
+
+    if (!room) return
+
     this.game = Game.all.get(id)
 
     if (!this.game) {
       this.game = Game.all.add(new Game(id, room.players))
       this.game.nextTurn()
-      this.io.in(room.id).emit(GameEvents.GameCreated, this.game.serialize())
 
       reaction(() => this.game.turn, () => {
         this.io.in(this.game.id).emit(GameEvents.GameTurnChanged, this.game.serialize())
       })
+    }
 
+    if (this.game.playersLoaded++ >= this.game.players.length - 1 && !this.game.created) {
+      this.game.created = true
       this.game.enableInterval()
+      this.io.in(room.id).emit(GameEvents.GameCreated, this.game.serialize())
     }
   }
 
