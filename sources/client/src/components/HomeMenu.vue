@@ -18,14 +18,6 @@
         Rejoindre une partie
       </AppButton>
     </div>
-    <AppButton
-      class="home-menu__button home-menu__button--debug"
-      secondary
-      block
-      :to="{ name: 'debug-game' }"
-    >
-      Debug
-    </AppButton>
   </div>
 </template>
 
@@ -36,10 +28,6 @@
       left: auto
       right: auto
     max-width: 240px
-    &--debug.app-button
-      position: absolute
-      bottom: 20px
-      right: 20px
     & .app-button__content
       height: 50px
 

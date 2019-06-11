@@ -1,1 +1,1005 @@
-{"title":"SmallStreet","width":3699,"height":1115,"background":{"from":"#4C86B0","to":"#2F1C66"},"layers":{"Farground":{"options":{"speed":0.5,"depth":1},"colliders":[],"sprites":[{"id":"level/backgrounds/buildings_group_blurred","x":854,"y":579,"texture":"level","frame":"level/backgrounds/buildings_group_blurred","width":455,"height":285,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group_blurred","x":507,"y":610,"texture":"level","frame":"level/backgrounds/buildings_group_blurred","width":455,"height":285,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group_blurred","x":2135,"y":681,"texture":"level","frame":"level/backgrounds/buildings_group_blurred","width":455,"height":285,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group_blurred","x":2639,"y":677,"texture":"level","frame":"level/backgrounds/buildings_group_blurred","width":455,"height":285,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group_blurred","x":137,"y":700,"texture":"level","frame":"level/backgrounds/buildings_group_blurred","width":455,"height":285,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group_blurred","x":1384,"y":573,"texture":"level","frame":"level/backgrounds/buildings_group_blurred","width":455,"height":285,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group_blurred","x":1887,"y":677,"texture":"level","frame":"level/backgrounds/buildings_group_blurred","width":455,"height":285,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group_blurred","x":3171,"y":700,"texture":"level","frame":"level/backgrounds/buildings_group_blurred","width":455,"height":285,"pivot":{"x":0,"y":0}}]},"Background":{"options":{"speed":0.75,"depth":2},"colliders":[],"sprites":[{"id":"level/backgrounds/buildings_group","x":899,"y":584,"texture":"level","frame":"level/backgrounds/buildings_group","width":556,"height":305,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group","x":601,"y":607,"texture":"level","frame":"level/backgrounds/buildings_group","width":556,"height":305,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group","x":2049,"y":647,"texture":"level","frame":"level/backgrounds/buildings_group","width":556,"height":305,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group","x":2599,"y":657,"texture":"level","frame":"level/backgrounds/buildings_group","width":556,"height":305,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group","x":87,"y":680,"texture":"level","frame":"level/backgrounds/buildings_group","width":556,"height":305,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group","x":1307,"y":592,"texture":"level","frame":"level/backgrounds/buildings_group","width":556,"height":305,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group","x":1827,"y":653,"texture":"level","frame":"level/backgrounds/buildings_group","width":556,"height":305,"pivot":{"x":0,"y":0}},{"id":"level/backgrounds/buildings_group","x":3121,"y":680,"texture":"level","frame":"level/backgrounds/buildings_group","width":556,"height":305,"pivot":{"x":0,"y":0}}]},"Buildings":{"options":{"speed":1,"depth":3},"colliders":[{"x":3036.5,"y":808.5,"width":530,"height":12,"pivot":{"x":0,"y":0}},{"x":3022.5,"y":528.5,"width":544,"height":14,"pivot":{"x":0,"y":0}},{"x":3022.5,"y":677.5,"width":544,"height":9,"pivot":{"x":0,"y":0}},{"x":2418.5,"y":788.5,"width":279,"height":19,"pivot":{"x":0,"y":0}},{"x":2698.5,"y":747.5,"width":343,"height":19,"pivot":{"x":0,"y":0}},{"x":2467.5,"y":600.5,"width":218,"height":8,"pivot":{"x":0,"y":0}},{"x":2083.5,"y":782.5,"width":341,"height":12,"pivot":{"x":0,"y":0}},{"x":2083.5,"y":655.5,"width":341,"height":12,"pivot":{"x":0,"y":0}},{"x":160.5,"y":782.5,"width":368,"height":12,"pivot":{"x":0,"y":0}},{"x":160.5,"y":655.5,"width":368,"height":12,"pivot":{"x":0,"y":0}},{"x":476.5,"y":600.5,"width":467,"height":12,"pivot":{"x":0,"y":0}},{"x":1263.5,"y":814.5,"width":382,"height":14,"pivot":{"x":0,"y":0}},{"x":1574.5,"y":704.5,"width":516,"height":14,"pivot":{"x":0,"y":0}}],"sprites":[{"id":"level/buildings/building_8","x":2924,"y":298,"texture":"level","frame":"level/buildings/building_8","width":740,"height":658,"pivot":{"x":0,"y":0}},{"id":"level/buildings/building_7","x":2628,"y":667,"texture":"level","frame":"level/buildings/building_7","width":481,"height":289,"pivot":{"x":0,"y":0}},{"id":"level/buildings/building_6","x":2317,"y":308,"texture":"level","frame":"level/buildings/building_6","width":464,"height":649,"pivot":{"x":0,"y":0}},{"id":"level/buildings/building_1","x":1963,"y":537,"texture":"level","frame":"level/buildings/building_1","width":555,"height":419,"pivot":{"x":0,"y":0}},{"id":"level/buildings/building_5","x":1475,"y":451,"texture":"level","frame":"level/buildings/building_5","width":714,"height":506,"pivot":{"x":0,"y":0}},{"id":"level/buildings/building_4","x":1210,"y":763,"texture":"level","frame":"level/buildings/building_4","width":482,"height":202,"pivot":{"x":0,"y":0}},{"id":"level/buildings/building_3","x":890,"y":568,"texture":"level","frame":"level/buildings/building_3","width":392,"height":388,"pivot":{"x":0,"y":0}},{"id":"level/buildings/building_2","x":375,"y":473,"texture":"level","frame":"level/buildings/building_2","width":675,"height":483,"pivot":{"x":0,"y":0}},{"id":"level/buildings/building_1","x":67,"y":537,"texture":"level","frame":"level/buildings/building_1","width":555,"height":419,"pivot":{"x":0,"y":0}}]},"Foreground":{"options":{"speed":1,"depth":4},"colliders":[],"sprites":[{"id":"level/props/car","x":1599,"y":870,"texture":"level","frame":"level/props/car","width":363,"height":88,"pivot":{"x":0,"y":0}},{"id":"level/props/floorlamp","x":362,"y":701,"texture":"level","frame":"level/props/floorlamp","width":63,"height":257,"pivot":{"x":0,"y":0}},{"id":"level/props/floorlamp","x":2313,"y":700,"texture":"level","frame":"level/props/floorlamp","width":63,"height":257,"pivot":{"x":0,"y":0}},{"id":"level/props/floorlamp","x":3183,"y":700,"texture":"level","frame":"level/props/floorlamp","width":63,"height":257,"pivot":{"x":0,"y":0}},{"id":"level/props/floorlamp","x":1295,"y":701,"texture":"level","frame":"level/props/floorlamp","width":63,"height":257,"pivot":{"x":0,"y":0}},{"id":"level/props/trash","x":1953,"y":900,"texture":"level","frame":"level/props/trash","width":60,"height":56,"pivot":{"x":0,"y":0}},{"id":"level/props/fire_hydrant","x":602,"y":904,"texture":"level","frame":"level/props/fire_hydrant","width":30,"height":52,"pivot":{"x":0,"y":0}},{"id":"level/props/fire_hydrant","x":3368,"y":905,"texture":"level","frame":"level/props/fire_hydrant","width":30,"height":52,"pivot":{"x":0,"y":0}},{"id":"level/props/stop","x":658,"y":801,"texture":"level","frame":"level/props/stop","width":43,"height":155,"pivot":{"x":0,"y":0}},{"id":"level/props/forbidden","x":2468,"y":844,"texture":"level","frame":"level/props/forbidden","width":28,"height":112,"pivot":{"x":0,"y":0}}]},"Lights":{"options":{"speed":1,"depth":5},"colliders":[],"sprites":[{"id":"level/lights/floorlamp","x":54,"y":241,"texture":"level","frame":"level/lights/floorlamp","width":712,"height":712,"pivot":{"x":0,"y":0}},{"id":"level/lights/floorlamp","x":2005,"y":240,"texture":"level","frame":"level/lights/floorlamp","width":712,"height":712,"pivot":{"x":0,"y":0}},{"id":"level/lights/floorlamp","x":2875,"y":240,"texture":"level","frame":"level/lights/floorlamp","width":712,"height":712,"pivot":{"x":0,"y":0}},{"id":"level/lights/floorlamp","x":987,"y":241,"texture":"level","frame":"level/lights/floorlamp","width":712,"height":712,"pivot":{"x":0,"y":0}},{"id":"lights/red","x":431,"y":158,"texture":"lights","frame":"lights/red","width":802,"height":801,"pivot":{"x":0,"y":0}},{"id":"lights/red","x":1730,"y":300,"texture":"lights","frame":"lights/red","width":802,"height":801,"pivot":{"x":0,"y":0}},{"id":"lights/red","x":982,"y":300,"texture":"lights","frame":"lights/red","width":802,"height":801,"pivot":{"x":0,"y":0}},{"id":"lights/red","x":2982,"y":157,"texture":"lights","frame":"lights/red","width":802,"height":801,"pivot":{"x":0,"y":0}},{"id":"lights/blue","x":1321,"y":224,"texture":"lights","frame":"lights/blue","width":926,"height":926,"pivot":{"x":0,"y":0}},{"id":"lights/blue","x":2457,"y":180,"texture":"lights","frame":"lights/blue","width":926,"height":926,"pivot":{"x":0,"y":0}},{"id":"lights/blue","x":2131,"y":26,"texture":"lights","frame":"lights/blue","width":926,"height":926,"pivot":{"x":0,"y":0}},{"id":"lights/blue","x":1567,"y":50,"texture":"lights","frame":"lights/blue","width":926,"height":926,"pivot":{"x":0,"y":0}},{"id":"lights/blue","x":-292,"y":174,"texture":"lights","frame":"lights/blue","width":926,"height":926,"pivot":{"x":0,"y":0}},{"id":"lights/blue","x":3168,"y":-83,"texture":"lights","frame":"lights/blue","width":926,"height":926,"pivot":{"x":0,"y":0}},{"id":"lights/blue","x":3124,"y":237,"texture":"lights","frame":"lights/blue","width":926,"height":926,"pivot":{"x":0,"y":0}},{"id":"lights/blue","x":-32,"y":380,"texture":"lights","frame":"lights/blue","width":926,"height":926,"pivot":{"x":0,"y":0}}]},"Colliders":{"options":{"speed":1,"depth":6},"colliders":[{"x":0.5,"y":0.5,"width":26,"height":953,"pivot":{"x":0,"y":0}},{"x":3667.5,"y":0.5,"width":31,"height":953,"pivot":{"x":0,"y":0}}],"sprites":[]}},"floors":[{"x":2945,"y":955,"width":754,"height":160,"color":262928,"pivot":{"x":0,"y":0}},{"x":2161,"y":955,"width":676,"height":160,"color":262928,"pivot":{"x":0,"y":0}},{"x":1220,"y":955,"width":794,"height":160,"color":262928,"pivot":{"x":0,"y":0}},{"x":0,"y":955,"width":696,"height":160,"color":262928,"pivot":{"x":0,"y":0}},{"x":789,"y":955,"width":338,"height":160,"color":262928,"pivot":{"x":0,"y":0}}],"holes":[{"x":696,"y":955,"width":93,"height":160,"color":2433857,"pivot":{"x":0,"y":0}},{"x":1127,"y":955,"width":93,"height":160,"color":2433857,"pivot":{"x":0,"y":0}},{"x":2014,"y":955,"width":150,"height":160,"color":2433857,"pivot":{"x":0,"y":0}},{"x":2837,"y":955,"width":108,"height":160,"color":2433857,"pivot":{"x":0,"y":0}}]}
+{
+  "title": "SmallStreet",
+  "width": 4663,
+  "height": 1115,
+  "background": {
+    "from": "#4C86B0",
+    "to": "#2F1C66"
+  },
+  "layers": {
+    "Farground": {
+      "options": {
+        "speed": 0.5,
+        "depth": 1
+      },
+      "colliders": [],
+      "sprites": [
+        {
+          "id": "level/backgrounds/buildings_group_blurred",
+          "x": 1180,
+          "y": 637,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group_blurred",
+          "width": 455,
+          "height": 285,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group_blurred",
+          "x": 833,
+          "y": 668,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group_blurred",
+          "width": 455,
+          "height": 285,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group_blurred",
+          "x": 2461,
+          "y": 739,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group_blurred",
+          "width": 455,
+          "height": 285,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group_blurred",
+          "x": 2960,
+          "y": 849,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group_blurred",
+          "width": 455,
+          "height": 285,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group_blurred",
+          "x": 463,
+          "y": 758,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group_blurred",
+          "width": 455,
+          "height": 285,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group_blurred",
+          "x": 1710,
+          "y": 631,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group_blurred",
+          "width": 455,
+          "height": 285,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group_blurred",
+          "x": 2213,
+          "y": 735,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group_blurred",
+          "width": 455,
+          "height": 285,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group_blurred",
+          "x": 3891,
+          "y": 842,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group_blurred",
+          "width": 455,
+          "height": 285,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group_blurred",
+          "x": 3497,
+          "y": 844,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group_blurred",
+          "width": 455,
+          "height": 285,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ]
+    },
+    "Background": {
+      "options": {
+        "speed": 0.75,
+        "depth": 2
+      },
+      "colliders": [],
+      "sprites": [
+        {
+          "id": "level/backgrounds/buildings_group",
+          "x": 1225,
+          "y": 642,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group",
+          "width": 556,
+          "height": 305,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group",
+          "x": 927,
+          "y": 665,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group",
+          "width": 556,
+          "height": 305,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group",
+          "x": 2377,
+          "y": 823,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group",
+          "width": 556,
+          "height": 305,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group",
+          "x": 2924,
+          "y": 820,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group",
+          "width": 556,
+          "height": 305,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group",
+          "x": 3879,
+          "y": 858,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group",
+          "width": 556,
+          "height": 305,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group",
+          "x": 413,
+          "y": 738,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group",
+          "width": 556,
+          "height": 305,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group",
+          "x": 1633,
+          "y": 650,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group",
+          "width": 556,
+          "height": 305,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group",
+          "x": 2153,
+          "y": 711,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group",
+          "width": 556,
+          "height": 305,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/backgrounds/buildings_group",
+          "x": 3443,
+          "y": 819,
+          "texture": "level",
+          "frame": "level/backgrounds/buildings_group",
+          "width": 556,
+          "height": 305,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ]
+    },
+    "Buildings": {
+      "options": {
+        "speed": 1,
+        "depth": 3
+      },
+      "colliders": [
+        {
+          "x": 3362.5,
+          "y": 866.5,
+          "width": 530,
+          "height": 12,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 3348.5,
+          "y": 586.5,
+          "width": 544,
+          "height": 14,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 3348.5,
+          "y": 735.5,
+          "width": 544,
+          "height": 9,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 2744.5,
+          "y": 846.5,
+          "width": 279,
+          "height": 19,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 3024.5,
+          "y": 805.5,
+          "width": 343,
+          "height": 19,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 2793.5,
+          "y": 658.5,
+          "width": 218,
+          "height": 8,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 2409.5,
+          "y": 840.5,
+          "width": 341,
+          "height": 12,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 2409.5,
+          "y": 713.5,
+          "width": 341,
+          "height": 12,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 486.5,
+          "y": 840.5,
+          "width": 368,
+          "height": 12,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 486.5,
+          "y": 713.5,
+          "width": 368,
+          "height": 12,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 802.5,
+          "y": 658.5,
+          "width": 467,
+          "height": 12,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 1589.5,
+          "y": 872.5,
+          "width": 382,
+          "height": 14,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "x": 1900.5,
+          "y": 762.5,
+          "width": 516,
+          "height": 14,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ],
+      "sprites": [
+        {
+          "id": "level/buildings/building_8",
+          "x": 3250,
+          "y": 356,
+          "texture": "level",
+          "frame": "level/buildings/building_8",
+          "width": 740,
+          "height": 658,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/buildings/building_7",
+          "x": 2954,
+          "y": 725,
+          "texture": "level",
+          "frame": "level/buildings/building_7",
+          "width": 481,
+          "height": 289,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/buildings/building_6",
+          "x": 2643,
+          "y": 366,
+          "texture": "level",
+          "frame": "level/buildings/building_6",
+          "width": 464,
+          "height": 649,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/buildings/building_1",
+          "x": 2289,
+          "y": 595,
+          "texture": "level",
+          "frame": "level/buildings/building_1",
+          "width": 555,
+          "height": 419,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/buildings/building_5",
+          "x": 1801,
+          "y": 509,
+          "texture": "level",
+          "frame": "level/buildings/building_5",
+          "width": 714,
+          "height": 506,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/buildings/building_4",
+          "x": 1536,
+          "y": 821,
+          "texture": "level",
+          "frame": "level/buildings/building_4",
+          "width": 482,
+          "height": 202,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/buildings/building_3",
+          "x": 1216,
+          "y": 626,
+          "texture": "level",
+          "frame": "level/buildings/building_3",
+          "width": 392,
+          "height": 388,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/buildings/building_2",
+          "x": 701,
+          "y": 531,
+          "texture": "level",
+          "frame": "level/buildings/building_2",
+          "width": 675,
+          "height": 483,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/buildings/building_1",
+          "x": 393,
+          "y": 595,
+          "texture": "level",
+          "frame": "level/buildings/building_1",
+          "width": 555,
+          "height": 419,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ]
+    },
+    "Foreground": {
+      "options": {
+        "speed": 1,
+        "depth": 4
+      },
+      "colliders": [],
+      "sprites": [
+        {
+          "id": "level/props/car",
+          "x": 1925,
+          "y": 928,
+          "texture": "level",
+          "frame": "level/props/car",
+          "width": 363,
+          "height": 88,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/floorlamp",
+          "x": 688,
+          "y": 759,
+          "texture": "level",
+          "frame": "level/props/floorlamp",
+          "width": 63,
+          "height": 257,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/floorlamp",
+          "x": 2639,
+          "y": 758,
+          "texture": "level",
+          "frame": "level/props/floorlamp",
+          "width": 63,
+          "height": 257,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/floorlamp",
+          "x": 3509,
+          "y": 758,
+          "texture": "level",
+          "frame": "level/props/floorlamp",
+          "width": 63,
+          "height": 257,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/floorlamp",
+          "x": 1621,
+          "y": 759,
+          "texture": "level",
+          "frame": "level/props/floorlamp",
+          "width": 63,
+          "height": 257,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/trash",
+          "x": 2279,
+          "y": 958,
+          "texture": "level",
+          "frame": "level/props/trash",
+          "width": 60,
+          "height": 56,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/fire_hydrant",
+          "x": 928,
+          "y": 962,
+          "texture": "level",
+          "frame": "level/props/fire_hydrant",
+          "width": 30,
+          "height": 52,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/fire_hydrant",
+          "x": 3694,
+          "y": 963,
+          "texture": "level",
+          "frame": "level/props/fire_hydrant",
+          "width": 30,
+          "height": 52,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/stop",
+          "x": 984,
+          "y": 859,
+          "texture": "level",
+          "frame": "level/props/stop",
+          "width": 43,
+          "height": 155,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/forbidden",
+          "x": 2794,
+          "y": 902,
+          "texture": "level",
+          "frame": "level/props/forbidden",
+          "width": 28,
+          "height": 112,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/barrier",
+          "x": 367,
+          "y": 966,
+          "texture": "level",
+          "frame": "level/props/barrier",
+          "width": 399,
+          "height": 44,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/props/barrier",
+          "x": 3773,
+          "y": 966,
+          "texture": "level",
+          "frame": "level/props/barrier",
+          "width": 399,
+          "height": 44,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ]
+    },
+    "Lights": {
+      "options": {
+        "speed": 1,
+        "depth": 5
+      },
+      "colliders": [],
+      "sprites": [
+        {
+          "id": "level/lights/floorlamp",
+          "x": 379,
+          "y": 442,
+          "texture": "level",
+          "frame": "level/lights/floorlamp",
+          "width": 712,
+          "height": 712,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/lights/floorlamp",
+          "x": 2330,
+          "y": 441,
+          "texture": "level",
+          "frame": "level/lights/floorlamp",
+          "width": 712,
+          "height": 712,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/lights/floorlamp",
+          "x": 3200,
+          "y": 441,
+          "texture": "level",
+          "frame": "level/lights/floorlamp",
+          "width": 712,
+          "height": 712,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "level/lights/floorlamp",
+          "x": 1312,
+          "y": 442,
+          "texture": "level",
+          "frame": "level/lights/floorlamp",
+          "width": 712,
+          "height": 712,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/red",
+          "x": 756,
+          "y": 359,
+          "texture": "lights",
+          "frame": "lights/red",
+          "width": 802,
+          "height": 801,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/red",
+          "x": 2055,
+          "y": 501,
+          "texture": "lights",
+          "frame": "lights/red",
+          "width": 802,
+          "height": 801,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/red",
+          "x": 1307,
+          "y": 501,
+          "texture": "lights",
+          "frame": "lights/red",
+          "width": 802,
+          "height": 801,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/red",
+          "x": 3307,
+          "y": 358,
+          "texture": "lights",
+          "frame": "lights/red",
+          "width": 802,
+          "height": 801,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 1646,
+          "y": 425,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 2782,
+          "y": 381,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 2456,
+          "y": 227,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 1892,
+          "y": 251,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 33,
+          "y": 375,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 3493,
+          "y": 118,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 3449,
+          "y": 438,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        },
+        {
+          "id": "lights/blue",
+          "x": 293,
+          "y": 581,
+          "texture": "lights",
+          "frame": "lights/blue",
+          "width": 926,
+          "height": 926,
+          "pivot": {
+            "x": 0,
+            "y": 0
+          }
+        }
+      ]
+    }
+  },
+  "floors": [
+    {
+      "x": 3271,
+      "y": 1009,
+      "width": 927,
+      "height": 106,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 2487,
+      "y": 1009,
+      "width": 676,
+      "height": 106,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 1546,
+      "y": 1009,
+      "width": 794,
+      "height": 106,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 326,
+      "y": 1009,
+      "width": 696,
+      "height": 106,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 1115,
+      "y": 1009,
+      "width": 338,
+      "height": 106,
+      "color": 262928,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "holes": [
+    {
+      "x": 1022,
+      "y": 1009,
+      "width": 93,
+      "height": 106,
+      "color": 2433857,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 1453,
+      "y": 1009,
+      "width": 93,
+      "height": 106,
+      "color": 2433857,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 2340,
+      "y": 1009,
+      "width": 150,
+      "height": 106,
+      "color": 2433857,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "x": 3163,
+      "y": 1009,
+      "width": 108,
+      "height": 106,
+      "color": 2433857,
+      "pivot": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ]
+}
