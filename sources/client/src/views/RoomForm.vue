@@ -4,6 +4,7 @@
       <BackButton :to="{ name: 'home' }"/>
     </AppNav>
     <AppPanel class="room-form__content">
+      <p class="label">Nom de la partie</p>
       <input type="text" required class="room-form__name" v-model="settings.name" placeholder="Entrez le nom de la partie"/>
       <AppPicker
         label="Nombre de joueurs"
@@ -33,9 +34,12 @@
   .room-form
     height: 100%
     display: flex
+    p.label
+      width: 80%
+      margin: 0 auto 12px auto
 
     &__content
-      width: 80%
+      width: 57%
       max-width: 400px
       margin: auto
 
@@ -51,13 +55,14 @@
       align-self: center
       width: 70%
       height: 14px
-      line-height: 14
+      line-height: 16px
+      font-size: 16px
       &::placeholder
         color: rgba($white, .6)
         line-height: 14
 
     &__actions
-      margin-top: 20px
+      margin-top: 30px
       display: flex
       justify-content: space-evenly
 </style>

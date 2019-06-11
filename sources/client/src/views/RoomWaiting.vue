@@ -49,7 +49,7 @@
     display: flex
     justify-content: center
     > *
-      margin: 0 8px
+      margin: 0 5px
       &:first-of-type
         margin-left: 0
       &:last-of-type
@@ -57,10 +57,12 @@
     &--old
       flex: 2
       top: -3px
+      justify-content: flex-end
     &--young
       flex: 2
       align-self: flex-end
       bottom: -3px
+      justify-content: flex-start
       & .character-card__metadata
         bottom: unset
         top: -30px

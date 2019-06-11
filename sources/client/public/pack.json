@@ -89,6 +89,51 @@
           "sounds/sfx/start.ogg",
           "sounds/sfx/start.m4a"
         ]
+      },
+      {
+        "type": "audio",
+        "key": "melee_geek_sfx",
+        "url": [
+          "sounds/sfx/melee/geek.mp3",
+          "sounds/sfx/melee/geek.m4a",
+          "sounds/sfx/melee/geek.ogg"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "melee_egocentric_sfx",
+        "url": [
+          "sounds/sfx/melee/egocentric.mp3",
+          "sounds/sfx/melee/egocentric.ogg",
+          "sounds/sfx/melee/egocentric.m4a"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "melee_lapdog_woman_sfx",
+        "url": [
+          "sounds/sfx/melee/lapdog_woman.mp3",
+          "sounds/sfx/melee/lapdog_woman.ogg",
+          "sounds/sfx/melee/lapdog_woman.m4a"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "switch",
+        "url": [
+          "sounds/sfx/switch.mp3",
+          "sounds/sfx/switch.ogg",
+          "sounds/sfx/switch.m4a"
+        ]
+      },
+      {
+        "type": "audio",
+        "key": "switch_back",
+        "url": [
+          "sounds/sfx/switch_back.mp3",
+          "sounds/sfx/switch_back.ogg",
+          "sounds/sfx/switch_back.m4a"
+        ]
       }
     ]
   }

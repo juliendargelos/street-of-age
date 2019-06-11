@@ -34,6 +34,7 @@ import level from '@/assets/levels/SmallStreet.level.json'
 import GameManager from '@/game/manager/GameManager'
 import GameUI from '@/components/ui/GameUI.vue'
 import AppModule from '@/store/modules/app'
+import PhaserUpdatePlugin from 'phaser-plugin-update'
 
 @Component<RoomGame>({
   components: { GameUI },
@@ -86,6 +87,13 @@ export default class RoomGame extends Vue {
             gravity: { y: 0 }
           },
           default: 'arcade'
+        },
+        plugins: {
+          scene: [
+            {
+              key: 'updatePlugin', plugin: PhaserUpdatePlugin, mapping: 'updates'
+            }
+          ]
         },
         disableContextMenu: true,
         scene: GameScene

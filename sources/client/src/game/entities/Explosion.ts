@@ -1,4 +1,5 @@
 import { PLAYER_DEPTH } from '@/constants'
+import AudioManager from '@/game/manager/AudioManager'
 
 interface Constructor {
   scene: Phaser.Scene,
@@ -15,5 +16,7 @@ export default class Explosion extends Phaser.GameObjects.Sprite {
     this.anims.play(params.explosion).once('animationcomplete', () => {
       this.destroy()
     })
+    params.scene.cameras.main.shake(300, 0.05)
+    AudioManager.playSfx('explosion', { volume: 0.35 })
   }
 }

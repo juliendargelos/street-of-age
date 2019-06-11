@@ -46,11 +46,11 @@
 .character-card
   box-sizing: border-box
   font-weight: 700
-  width: 140px
-  height: 280px
-  transform: skew(-4deg)
+  width: 120px
+  height: 250px
+  transform: skew(-7deg)
   position: relative
-  background: $light-blue
+  background: $astronaut
   outline: none
   border: none
   padding: 0
@@ -61,34 +61,34 @@
     background: $pale-blue
     height: 30px
     line-height: 30px
-    width: 120px
-    left: 10px
+    width: 105px
+    left: 8px
     bottom: 26px
   &__add-button, &__remove-button
       & .app-button__content
         line-height: 20px
         min-width: unset
         position: absolute
-        transform: skew(-4deg)
-        width: 128px
-        top: 126px
+        transform: skew(0deg)
+        width: 110px
+        top: 112px
         padding: 2px 20px
         font-family: 'Futura', 'Helvetica Neue', 'Arial', sans-serif
         font-size: 14px
         text-transform: none
   &__add-button
     & .app-button__content
-      left: 6px
+      left: 5px
   &__remove-button
     & .app-button__content
       width: 30px
       padding: 4px 10px
       font-weight: 700
-      left: 56px
+      left: 46px
   h2
     text-transform: uppercase
     font-family: 'Dead Jim', sans-serif
-    font-size: 14px
+    font-size: 16px
     font-weight: 300
     text-align: left
     &.character-card--placeholder
@@ -101,7 +101,6 @@
     align-items: center
     justify-content: center
   &:disabled
-    filter: grayscale(90%)
     cursor: not-allowed
   &.placeholder, &__metadata
     font-family: 'Dead Jim', sans-serif
@@ -116,7 +115,7 @@
   &__informations
     position: absolute
     bottom: 0
-    height: 45%
+    height: 46%
     left: 0
     right: 0
     background: linear-gradient(90deg, #3c2380 6%, transparent 160%)
@@ -133,6 +132,7 @@
         &.ability
           font-family: 'Futura', sans-serif
           font-weight: 400
+          font-size: 10px
           text-align: left
         &.level
           & .progress-inner

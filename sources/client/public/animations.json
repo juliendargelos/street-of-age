@@ -789,7 +789,7 @@
       "frames": {
         "key": "main",
         "typeOfGeneration": "generateFrameNames",
-        "start": 17,
+        "start": 15,
         "end": 30,
         "zeroPad": 5,
         "prefix": "main/characters/geek/walking_"
@@ -1171,6 +1171,20 @@
         "end": 40,
         "zeroPad": 5,
         "prefix": "melee/fusty-grandpa/14_"
+      },
+      "showOnStart": true,
+      "repeat": 0,
+      "frameRate": 21
+    },
+    {
+      "key": "geek_melee_attack",
+      "frames": {
+        "key": "melee",
+        "typeOfGeneration": "generateFrameNames",
+        "start": 0,
+        "end": 19,
+        "zeroPad": 5,
+        "prefix": "melee/geek/16_"
       },
       "showOnStart": true,
       "repeat": 0,

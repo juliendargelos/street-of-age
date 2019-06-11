@@ -5,16 +5,18 @@
       <img v-if="mobile" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
     </template>
-    <GamePauseUI @close="pauseToggle" v-if="paused"/>
-<!--    <transition name="fade" mode="out-in">-->
-<!--      <div v-if="countdown > 0" class="game-ui__starting">-->
-<!--        <transition-group name="zoom-out" mode="out-in">-->
-<!--          <h1 :key="n" v-for="n in countdown" v-if="countdown === n" class="road-rage">-->
-<!--            {{ n - 1 > 0 ? n - 1 : 'Fight!' }}-->
-<!--          </h1>-->
-<!--        </transition-group>-->
-<!--      </div>-->
-<!--    </transition>-->
+    <transition name="slide-fade" mode="out-in">
+      <GamePauseUI @close="pauseToggle" v-if="paused"/>
+    </transition>
+    <transition name="fade" mode="out-in">
+      <div v-if="countdown > 0" class="game-ui__starting">
+        <transition-group name="zoom-out" mode="out-in">
+          <h1 :key="n" v-for="n in countdown" v-if="countdown === n" class="road-rage">
+            {{ n - 1 > 0 ? n - 1 : 'Fight!' }}
+          </h1>
+        </transition-group>
+      </div>
+    </transition>
   </div>
 </template>
 

@@ -6,7 +6,7 @@ import { ProjectileLaunchEventHandler, ProjectileMoveEventHandler } from '@/game
 import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/game/events'
 import { CharacterKind } from '@/store/modules/app'
-import characters from '@/assets/characters'
+import characters, { MOVE_ABILITY_ID } from '@/assets/characters'
 import MeleeAttack from '@/game/entities/MeleeAttack'
 import { ClientCharacterAsset } from '@/@types'
 import { gameWait } from '@/utils/functions'
@@ -15,7 +15,7 @@ import AudioManager from '@/game/manager/AudioManager'
 const MASS = 1
 const JUMP_FORCE = 1.7
 const BOUNCE = 0
-const SPEED = 32
+const SPEED = 45
 
 const GROUNDED_ANIMATIONS = ['melee', 'launch']
 
@@ -70,7 +70,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
     this
       .setInteractive()
-      .setDragX(400)
+      .setDragX(200 * (4 * this.characterAsset.stats[MOVE_ABILITY_ID].level))
       .setDepth(PLAYER_DEPTH)
       .setSize(width, height)
       .setBounce(BOUNCE)
@@ -114,6 +114,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   public takeDamage (damage: number, force: number, angle: number): void {
+    AudioManager.playUniqueSfx('melee', { volume: 0.5 })
     this.damaged = true
     this.health -= damage
     this.body.velocity.x += Math.cos(angle) * force
@@ -209,8 +210,12 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private onPlayerTap = (): void => {
     this.projectileDir.clear()
+    if (this.weaponType === WeaponType.Distance) {
+      AudioManager.playUniqueSfx('switch', { volume: 0.8 })
+    } else {
+      AudioManager.playUniqueSfx('switch_back', { volume: 0.8 })
+    }
     this.weaponType = this.weaponType === WeaponType.Distance ? WeaponType.Melee : WeaponType.Distance
-    console.log('player tapped')
     console.log(this.weaponType)
   }
 
@@ -224,7 +229,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private handleMobileMovements = () => {
     if (this.local) {
-      const velocity = InputManager.getAxis('horizontal') * SPEED
+      const velocity = InputManager.getAxis('horizontal') * SPEED * this.characterAsset.stats[MOVE_ABILITY_ID].level
       if (this.cursorKeys.space!.isDown) {
         this.jump()
       }

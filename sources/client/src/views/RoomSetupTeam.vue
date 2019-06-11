@@ -4,13 +4,13 @@
       <BackButton/>
     </AppNav>
     <div class="team__block team__block--old">
-      <div class="team__picker">
+      <div class="team__picker" :class="{disabled: disabledTeams.includes('old')}">
         <h2 class="team__picker__title">Choisi</h2>
         <AppButton :disabled="disabledTeams.includes('old')" secondary alternate block class="team__picker__button" @click="chooseTeam('old')">Les anciens</AppButton>
       </div>
     </div>
     <div class="team__block team__block--young">
-      <div class="team__picker">
+      <div class="team__picker" :class="{disabled: disabledTeams.includes('young')}">
         <h2 class="team__picker__title">Choisi</h2>
         <AppButton :disabled="disabledTeams.includes('young')" secondary alternate block class="team__picker__button" @click="chooseTeam('young')">Les jeunes</AppButton>
       </div>
@@ -30,9 +30,12 @@
     & .team__picker
       position: absolute
       bottom: 33px
+      &.disabled
+        opacity: 0.5
       &__title
         font-family: 'Dead Jim', sans-serif
         text-align: center
+        font-size: 20px
         margin-bottom: 6px
       &__button .app-button__content
         font-size: 24px
@@ -40,11 +43,17 @@
         width: 260px
     &--young .team__picker
       right: 0
+      &__title
+        position: relative
+        left: 8px
       &__button
         position: relative
         right: -8px
     &--old .team__picker
       left: 0
+      &__title
+        position: relative
+        left: -8px
       &__button
         position: relative
         left: -8px
