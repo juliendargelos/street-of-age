@@ -6,7 +6,7 @@
     <div class="team__block team__block--old">
       <div class="team__picker" :class="{disabled: disabledTeams.includes('old')}">
         <h2 class="team__picker__title">Choisi</h2>
-        <AppButton :disabled="disabledTeams.includes('old')" secondary alternate block class="team__picker__button" @click="chooseTeam('old')">Les ansiens</AppButton>
+        <AppButton :disabled="disabledTeams.includes('old')" secondary alternate block class="team__picker__button" @click="chooseTeam('old')">Les anciens</AppButton>
       </div>
     </div>
     <div class="team__block team__block--young">
