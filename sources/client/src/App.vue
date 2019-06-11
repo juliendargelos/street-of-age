@@ -98,10 +98,10 @@ export default class App extends Vue {
       this.orientation = window.screen.orientation.type.includes('landscape')
         ? 'landscape' : 'portrait'
       if (this.canPlay) {
-        fscreen.requestFullscreen(this.$el)
+        // fscreen.requestFullscreen(this.$el)
       } else {
         if (fscreen.fullscreenElement !== null) {
-          fscreen.exitFullscreen()
+          // fscreen.exitFullscreen()
         }
       }
     } else {

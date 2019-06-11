@@ -19,6 +19,7 @@
       </AppButton>
     </div>
     <AppButton
+      v-if="false"
       class="home-menu__button home-menu__button--debug"
       secondary
       block

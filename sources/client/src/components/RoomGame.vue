@@ -187,7 +187,7 @@ export default class RoomGame extends Vue {
         },
         physics: {
           arcade: {
-            debug: this.debug,
+            debug: false,
             gravity: { y: 0 }
           },
           default: 'arcade'
