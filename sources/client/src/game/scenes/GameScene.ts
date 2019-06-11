@@ -1,9 +1,9 @@
 import BaseScene from '@/game/scenes/BaseScene'
-import { Character, SerializedCharacter, WeaponType } from '@/game/entities/Character'
-import { PostProcessing } from '@/game/PostProcessing'
-import { Emitter } from '@/main'
-import { GameEvents } from '@street-of-age/shared/game/events'
-import { CharacterProjectile } from '@/assets/characters'
+import {Character, SerializedCharacter, WeaponType} from '@/game/entities/Character'
+import {PostProcessing} from '@/game/PostProcessing'
+import {Emitter} from '@/main'
+import {GameEvents} from '@street-of-age/shared/game/events'
+import {CharacterProjectile} from '@/assets/characters'
 import AudioManager from '@/game/manager/AudioManager'
 
 const HEIGHT_CAMERA_OFFSET = 800
