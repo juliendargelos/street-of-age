@@ -79,7 +79,7 @@ import { SerializedPlayer } from '@street-of-age/shared/entities/player'
 export default class GameUI extends Vue {
   public paused: boolean = false
   public countdown: number = 4
-  private intervalId!: NodeJS.Timer
+  private intervalId!: number
   @Prop({ type: Boolean, default: false }) readonly mobile!: boolean
   @Prop({ type: Boolean, default: false }) readonly isCurrentPlayer!: boolean
   @Prop({ type: Object, default: null }) readonly currentCharacter!: SerializedCharacter
