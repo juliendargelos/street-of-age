@@ -1,7 +1,7 @@
 <template>
   <div id="app" :class="{ playing }">
-    <router-view v-if="canPlay" :key="$route.fullPath"/>
-    <div class="message-container" v-else>
+    <router-view v-show="canPlay" :key="$route.fullPath"/>
+    <div class="message-container" v-if="!canPlay">
       <div v-if="!isMobile">
         <img :src="require('@/assets/mobile.png')" alt="">
         <h1 class="road-rage-colors">Accessible sur mobile uniquement</h1>

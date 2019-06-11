@@ -37,8 +37,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-
-@Component
+import CharacterCard from '@/components/CharacterCard.vue'
+@Component({
+  components: {CharacterCard}
+})
 export default class HomeMenu extends Vue {
 
 }

@@ -73,7 +73,7 @@
         width: 110px
         top: 112px
         padding: 2px 20px
-        font-family: 'Futura', 'Helvetica Neue', 'Arial', sans-serif
+        font-family: 'Futura Bk', 'Helvetica Neue', 'Arial', sans-serif
         font-size: 14px
         text-transform: none
   &__add-button
@@ -130,7 +130,7 @@
         display: block
         margin: 0.3rem 0
         &.ability
-          font-family: 'Futura', sans-serif
+          font-family: 'Futura Bk', sans-serif
           font-weight: 400
           font-size: 10px
           text-align: left

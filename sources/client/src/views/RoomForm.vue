@@ -47,11 +47,15 @@
       align-self: center
       width: 80%
 
+    & .app-picker__item
+      font-family: 'Futura Bk', sans-serif
+
     &__mapsize
       align-self: center
       width: 80%
 
     &__name
+      font-family: 'Futura Bk', sans-serif
       align-self: center
       width: 70%
       height: 14px
