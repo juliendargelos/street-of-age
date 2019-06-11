@@ -198,7 +198,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.controlsEnabled = false
   }
 
-  public async launchProjectile(shoot: Shoot) {
+  public async launchProjectile (shoot: Shoot) {
     this.weaponType = shoot.weaponType
     this.scaleX = shoot.scaleX
     this.x = shoot.characterX

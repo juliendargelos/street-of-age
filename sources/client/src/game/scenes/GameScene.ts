@@ -1,16 +1,10 @@
 import BaseScene from '@/game/scenes/BaseScene'
 import { Character, SerializedCharacter, WeaponType } from '@/game/entities/Character'
-import { CharacterKind } from '@/store/modules/app'
 import { PostProcessing } from '@/game/PostProcessing'
-import { Socket } from 'socket.io'
 import { Emitter } from '@/main'
 import { GameEvents } from '@street-of-age/shared/game/events'
-import AppModule from '@/store/modules/app'
 import { CharacterProjectile } from '@/assets/characters'
 import AudioManager from '@/game/manager/AudioManager'
-import { gameWait } from '@/utils/functions'
-import { Socket } from 'socket.io'
-import AppModule from '@/store/modules/app'
 
 const HEIGHT_CAMERA_OFFSET = 800
 export const WORLD_Y_LIMIT = 600
@@ -55,7 +49,7 @@ export class GameScene extends BaseScene {
     })
   }
 
-  public get charactersArray() {
+  public get charactersArray () {
     return [...this.characters].map(([_, character]) => character)
   }
 
@@ -63,20 +57,6 @@ export class GameScene extends BaseScene {
     super.create()
 
     AudioManager.playBg()
-    this.socket.on(GameEvents.GameUpdated, (game: { characters: SerializedCharacter[] }) => {
-      this.setCharacters(game.characters)
-    })
-
-    this.socket.on(GameEvents.GameTurnChanged, (game: { currentCharacter: SerializedCharacter, currentPlayer: { id: string } }) => {
-      const character = this.characters.get(game.currentCharacter.id) as Character
-      this.setCurrentCharacter(character)
-
-      if (game.currentPlayer.id === this.socket.id) this.enableControls(character)
-      else this.disableControls()
-    })
-
-    this.socket.emit(GameEvents.GameUpdate)
-
     this.cameras.main.setRoundPixels(true)
     const { width } = this.level.bounds
     this.cameras.main.setBounds(0, -HEIGHT_CAMERA_OFFSET, width, window.innerHeight + HEIGHT_CAMERA_OFFSET)
@@ -86,7 +66,7 @@ export class GameScene extends BaseScene {
     this.listeners.created()
   }
 
-  public setCurrentCharacter(character: Character) {
+  public setCurrentCharacter (character: Character) {
     this.cameras.main.stopFollow()
     this.cameras.main.startFollow(character, false, 0.1, 0.1)
   }
@@ -103,7 +83,7 @@ export class GameScene extends BaseScene {
     this.controlledCharacter = null
   }
 
-  public moveCharacter(attributes: SerializedCharacter) {
+  public moveCharacter (attributes: SerializedCharacter) {
     const character = this.characters.get(attributes.id) as Character
     character.x = attributes.x as number
     character.y = attributes.y as number
@@ -111,7 +91,7 @@ export class GameScene extends BaseScene {
     character.setVelocityY(attributes.velocityY as number)
   }
 
-  public createCharacter(attributes: SerializedCharacter) {
+  public createCharacter (attributes: SerializedCharacter) {
     const character = new Character({
       id: attributes.id,
       scene: this,
@@ -133,7 +113,7 @@ export class GameScene extends BaseScene {
     return character
   }
 
-  public removeCharacter(id: string) {
+  public removeCharacter (id: string) {
     const character = this.characters.get(id)
 
     if (character) {
@@ -145,21 +125,21 @@ export class GameScene extends BaseScene {
     }
   }
 
-  public resetVelocity() {
+  public resetVelocity () {
     this.characters.forEach(character => {
       character.setVelocityX(0)
       character.setVelocityY(0)
     })
   }
 
-  public setCharacters(characters: SerializedCharacter[]) {
+  public setCharacters (characters: SerializedCharacter[]) {
     this.characters.forEach((_, id) => this.removeCharacter(id))
     characters.forEach(character => this.createCharacter(character))
     // alert('ok')
     // console.log(this.characters)
   }
 
-  public shoot(shoot: Shoot) {
+  public shoot (shoot: Shoot) {
     const character = this.characters.get(shoot.id) as Character
     character.launchProjectile(shoot)
   }
