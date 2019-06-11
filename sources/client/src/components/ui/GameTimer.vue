@@ -21,26 +21,26 @@
     position: absolute
     left: 0
     bottom: 0
-    width: 4px
+    width: 6px
     height: 100%
   &--bottom
     position: absolute
     bottom: 0
     right: 0
     width: 100%
-    height: 4px
+    height: 6px
   &--right
     position: absolute
     right: 0
     top: 0
-    width: 4px
+    width: 6px
     height: 100%
   &--top
     position: absolute
     top: 0
     left: 0
     width: 100%
-    height: 4px
+    height: 6px
 </style>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'

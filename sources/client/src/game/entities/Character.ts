@@ -204,6 +204,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   public enableControls () {
     // InputManager.touch.addEventListener('tap', this.jump)
+    this.projectileDirFront.setVisible(false)
     InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
     InputManager.touch.addEventListener('player:untap', this.onPlayerUntap)
     InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
@@ -213,6 +214,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   public disableControls () {
+    this.projectileDirFront.setVisible(false)
     InputManager.touch.removeEventListeners()
     Emitter.off(UIEvents.Jump, this.jump)
     this.controlsEnabled = false

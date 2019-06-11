@@ -1,6 +1,5 @@
 <template>
   <div class="player__health" :style="rootStyle">
-    <PlayerHealthTimer/>
     <img class="player__health__picture" :src="picture" alt="">
     <div class="player__health--outer">
       <div class="player__health--inner" :style="style">
@@ -14,13 +13,13 @@
 .player__health
   position: fixed
   left: 20px
-  top: 20px
-  padding-left: 30px
+  top: 30px
+  padding-left: 20px
   &__picture
     position: absolute
     z-index: 1
     bottom: 0
-    left: 40px
+    left: 30px
   &--outer
     width: 200px
     height: 30px
