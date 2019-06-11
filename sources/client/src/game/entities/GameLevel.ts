@@ -50,7 +50,7 @@ export default class GameLevel {
     console.log(`INITIALIZING ${this.title}`)
     const layers = Object.entries(this.layers)
       .map(value => value[1])
-    const offset = window.innerHeight - this.height
+    const offset = 375 - this.height
     // const gradient = createPhaserGradient(scene, {
     //   width: this.bounds.width + 500,
     //   height: this.bounds.height - offset,

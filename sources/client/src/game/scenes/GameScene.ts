@@ -59,8 +59,8 @@ export class GameScene extends BaseScene {
 
     AudioManager.playBg()
     this.cameras.main.setRoundPixels(true)
-    const { width } = this.level.bounds
-    this.cameras.main.setBounds(0, -HEIGHT_CAMERA_OFFSET, width, window.innerHeight + HEIGHT_CAMERA_OFFSET)
+    const { width, height } = this.level.bounds
+    this.cameras.main.setBounds(0, -window.innerHeight - 375, width, height)
     this.postprocessing = (this.game.renderer as Phaser.Renderer.WebGL.WebGLRenderer).addPipeline('PostProcessing', new PostProcessing(this.game)) as PostProcessing
     this.cameras.main.setRenderToTexture(this.postprocessing)
     Emitter.on(GameEvents.ProjectileExploded, this.onProjectileExploded)
