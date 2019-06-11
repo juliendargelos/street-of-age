@@ -75,12 +75,16 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 
   public onDestroy (): void {
     Emitter.emit(GameEvents.ProjectileExploded, { x: this.x, y: this.y, ...this.character.projectile })
-    const explosion = new Explosion({
-      scene: this.scene,
-      x: this.x,
-      y: this.y,
-      explosion: 'explosions_first'
-    })
+
+    if (this.scene) {
+      const explosion = new Explosion({
+        scene: this.scene,
+        x: this.x,
+        y: this.y,
+        explosion: 'explosions_first'
+      })
+    }
+
     this.destroy()
   }
 

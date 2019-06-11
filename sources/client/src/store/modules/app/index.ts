@@ -29,7 +29,7 @@ export interface AppState {
 class AppStore extends VuexModule implements AppState {
   public hasPlayedIntroduction: boolean = false
   public isPlaying: boolean = false
-  public player: Player = { id: '', color: '', isLocal: true, characterKinds: [], team: null, ready: false }
+  public player: Player = { id: '', color: '', isLocal: true, numberOfKills: 0, numberOfDeaths: 0, characterKinds: [], teamKind: null, ready: false }
 
   @Mutation public setIsPlaying (isPlaying: boolean) {
     this.isPlaying = isPlaying
@@ -43,8 +43,8 @@ class AppStore extends VuexModule implements AppState {
     this.player.id = playerId
   }
 
-  @Mutation public changePlayerCharacterTeam (team: PlayerTeam | string | null) {
-    this.player.team = team
+  @Mutation public changePlayerCharacterTeam (teamKind: PlayerTeam | string | null) {
+    this.player.teamKind = teamKind
   }
 
   @Mutation public setPlayerCharacterColor (color: PlayerColor) {

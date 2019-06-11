@@ -11,6 +11,7 @@ import MeleeAttack from '@/game/entities/MeleeAttack'
 import { ClientCharacterAsset } from '@/@types'
 import { gameWait } from '@/utils/functions'
 import AudioManager from '@/game/manager/AudioManager'
+import { Shoot } from '../scenes/GameScene'
 
 const MASS = 1
 const JUMP_FORCE = 1.7
@@ -26,20 +27,35 @@ enum State {
   Falling = 'Falling',
 }
 
-enum WeaponType {
+export interface SerializedCharacter extends Serialized {
+  id: string
+  kind: CharacterKind
+  x?: number
+  y?: number
+  velocityX?: number
+  velocityY?: number
+}
+
+export enum WeaponType {
   Distance = 'Distance',
   Melee = 'Melee',
 }
 
 export class Character extends Phaser.Physics.Arcade.Sprite {
   private _state: State = State.Falling
-  private local: boolean = false
   private cursorKeys!: Phaser.Types.Input.Keyboard.CursorKeys
+  private controlsEnabled: boolean = false
   public damaged: boolean = false
-  private weaponType: WeaponType = WeaponType.Distance
+  public weaponType: WeaponType = WeaponType.Distance
   public projectileDir: Phaser.GameObjects.Graphics
+  public id: string
+  public projectileDirFront: Phaser.GameObjects.Sprite
   public kind: CharacterKind
   public health: number = 4
+  private previousX: number = 0
+  private previousY: number = 0
+  private previousVelocityX: number = 0
+  private previousVelocityY: number = 0
 
   get state (): State {
     return this._state
@@ -58,13 +74,15 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   constructor (params: CharacterConstructor) {
     super(params.scene, params.x, params.y, 'main')
+    this.id = params.id
+    console.log(params.x, params.y)
     this.kind = params.kind
-    if (params.local) {
-      this.local = params.local
-    }
     this.setData('tag', 'character')
     params.scene.physics.world.enable(this)
     this.projectileDir = params.scene.add.graphics().setDepth(10)
+    this.projectileDirFront = params.scene.add.sprite(this.x, this.y + 100, 'main', 'main/projectile_aim')
+      .setDepth(PLAYER_DEPTH)
+      .setVisible(false)
 
     const { width, height, offsetX, offsetY } = this.characterAsset.body
 
@@ -82,29 +100,56 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.body.checkCollision.left = false
     this.body.checkCollision.right = false
 
-    this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
+    this.setVelocityX(params.velocityX)
+    this.setVelocityY(params.velocityY)
 
-    this.initListeners()
+    this.cursorKeys = this.scene.input.keyboard.createCursorKeys()
 
     params.scene.add.existing(this)
   }
 
-  private initListeners () {
-    if (this.local) {
-      InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
-      InputManager.touch.addEventListener('player:untap', () => this.projectileDir.clear())
-      InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
-      InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
-    }
+  // private initListeners () {
+  //   if (this.local) {
+  //     InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
+  //     InputManager.touch.addEventListener('player:untap', () => {
+  //       this.projectileDir.clear()
+  //       this.projectileDirFront.setVisible(false)
+  //     })
+  //     InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
+  //     InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
+  //   }
 
-    Emitter.on(UIEvents.Jump, this.jump)
-  }
+  //   Emitter.on(UIEvents.Jump, this.jump)
+  // }
 
   public update = () => {
     this.setGravityY(GRAVITY)
-    this.handleMovements()
+
+    if (this.body.velocity.x < 0) {
+      this.turn('left')
+    } else if (this.body.velocity.x > 0) {
+      this.turn('right')
+    }
+
+    if (this.controlsEnabled) this.handleMovements()
     this.updateState()
     this.handleAnimations()
+
+    if (
+      this.x !== this.previousX ||
+      this.y !== this.previousY
+    ) {
+      this.previousX = this.x
+      this.previousY = this.y
+
+      this.emit('moved', {
+        id: this.id,
+        x: this.x,
+        y: this.y,
+        velocityX: this.body.velocity.x,
+        velocityY: this.body.velocity.y
+      })
+    }
   }
 
   public destroy (fromScene?: boolean): void {
@@ -122,6 +167,8 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.scene.time.delayedCall(800, () => {
       this.damaged = false
     }, [], null)
+
+    this.emit('tookDamage', { id: this.id, damage })
   }
 
   private onChangeState (newState: State) {
@@ -155,47 +202,109 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
   }
 
-  private onProjectileLaunch: ProjectileLaunchEventHandler = async (evt) => {
-    if (this.weaponType === WeaponType.Distance) {
-      this.anims.play(`${this.kind}_launch`, true).once('animationcomplete', () => {
-        this.anims.play(`${this.kind}_idle`)
-      })
-      await gameWait(this.scene.time, 500)
-      const { distance, angle, position } = evt.detail
-      const projectile = new Projectile({
-        scene: this.scene,
-        character: this.characterAsset,
-        angle,
-        distance,
-        x: this.x,
-        y: this.y,
-        offsetX: this.characterAsset.projectile.offsetX,
-        offsetY: this.characterAsset.projectile.offsetY,
-        direction: this.scaleX
-      })
-      const { x, y } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
-      projectile.launch(Phaser.Math.Clamp(distance / 10, 20, 50), { x: -x, y: -y })
-    } else if (this.weaponType === WeaponType.Melee) {
-      this.anims.play(`${this.kind}_melee`, true).once('animationcomplete', () => {
-        this.anims.play(`${this.kind}_idle`)
-      })
-      const melee = new MeleeAttack({
-        scene: this.scene,
-        x: this.x,
-        y: this.y,
-        origin: this,
-        kind: this.characterAsset.kind,
-        modifiers: this.characterAsset.melee,
-        scaleX: this.scaleX
-      })
+  public enableControls () {
+    // InputManager.touch.addEventListener('tap', this.jump)
+    this.projectileDirFront.setVisible(false)
+    this.projectileDir.clear()
+    InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
+    InputManager.touch.addEventListener('player:untap', this.onPlayerUntap)
+    InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
+    InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
+    Emitter.on(UIEvents.Jump, this.jump)
+    this.controlsEnabled = true
+  }
+
+  public disableControls () {
+    this.projectileDirFront.setVisible(false)
+    this.projectileDir.clear()
+    InputManager.touch.removeEventListeners()
+    Emitter.off(UIEvents.Jump, this.jump)
+    this.controlsEnabled = false
+  }
+
+  public async launchProjectile (shoot: Shoot) {
+    this.weaponType = shoot.weaponType
+    this.scaleX = shoot.scaleX
+    this.x = shoot.characterX
+    this.y = shoot.characterY
+
+    switch (this.weaponType) {
+      case WeaponType.Distance:
+        this.projectileDirFront.setVisible(false)
+        this.anims.play(`${this.kind}_launch`, true).once('animationcomplete', () => {
+          this.anims.play(`${this.kind}_idle`)
+        })
+        await gameWait(this.scene.time, 500)
+        const { distance, angle, x, y } = shoot
+        const projectile = new Projectile({
+          scene: this.scene,
+          character: this.characterAsset,
+          angle: angle!,
+          distance: distance!,
+          x: this.x,
+          y: this.y,
+          offsetX: this.characterAsset.projectile.offsetX,
+          offsetY: this.characterAsset.projectile.offsetY,
+          direction: this.scaleX
+        })
+
+        const position = new Phaser.Math.Vector2(x, y)
+          .subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
+          .multiply(new Phaser.Math.Vector2(-1, -1))
+
+        this.scene.cameras.main.startFollow(projectile, false, 0.1, 0.1)
+
+        projectile.launch(Phaser.Math.Clamp(distance! / 10, 20, 50), position)
+        break
+
+      case WeaponType.Melee:
+        this.anims.play(`${this.kind}_melee`, true).once('animationcomplete', () => {
+          this.anims.play(`${this.kind}_idle`)
+        })
+        const melee = new MeleeAttack({
+          scene: this.scene,
+          x: this.x,
+          y: this.y,
+          origin: this,
+          kind: this.characterAsset.kind,
+          modifiers: this.characterAsset.melee,
+          scaleX: this.scaleX
+        })
+        break
     }
+  }
+
+  public onProjectileLaunch: ProjectileLaunchEventHandler = async (evt) => {
+    if (!this.controlsEnabled) return
+
+    const shoot: Shoot = {
+      id: this.id,
+      weaponType: this.weaponType,
+      scaleX: this.scaleX,
+      characterX: this.x,
+      characterY: this.y,
+      ...(this.weaponType === WeaponType.Distance
+        ? { angle: evt.detail.angle, distance: evt.detail.distance, x: evt.detail.position.x, y: evt.detail.position.y }
+        : null
+      )
+    }
+
+    this.emit('shooted', shoot)
+    await this.launchProjectile(shoot)
   }
 
   private onProjectileMove: ProjectileMoveEventHandler = (evt): void => {
     const position = new Phaser.Math.Vector2(evt.detail.pointer.worldX, evt.detail.pointer.worldY)
+    let distance = position.clone().distance(new Phaser.Math.Vector2(this.x, this.y))
     this.projectileDir.clear()
-    this.projectileDir.lineStyle(4, 0xff0000)
+    this.projectileDir.lineStyle(4, 0x32ffce, 0.5)
     this.projectileDir.lineBetween(this.x, this.y, evt.detail.pointer.worldX, evt.detail.pointer.worldY)
+    const rotation = Math.atan((evt.detail.pointer.worldY - this.y) / (evt.detail.pointer.worldX - this.x)) + (Math.PI * (evt.detail.pointer.worldX - this.x > 0 ? 1 : 2))
+    this.projectileDirFront
+      .setOrigin(0, 0.5)
+      .setPosition(this.x, this.y)
+      .setRotation(rotation)
+      .setVisible(true)
     const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
     x < 0 ? this.turn('right') : this.turn('left')
     const force = Math.round(scale(
@@ -210,6 +319,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private onPlayerTap = (): void => {
     this.projectileDir.clear()
+    this.projectileDirFront.setVisible(false)
     if (this.weaponType === WeaponType.Distance) {
       AudioManager.playUniqueSfx('switch', { volume: 0.8 })
     } else {
@@ -217,6 +327,10 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     }
     this.weaponType = this.weaponType === WeaponType.Distance ? WeaponType.Melee : WeaponType.Distance
     console.log(this.weaponType)
+  }
+
+  private onPlayerUntap = (): void => {
+    this.projectileDir.clear()
   }
 
   private handleMovements = () => {
@@ -228,19 +342,11 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   }
 
   private handleMobileMovements = () => {
-    if (this.local) {
-      const velocity = InputManager.getAxis('horizontal') * SPEED * this.characterAsset.stats[MOVE_ABILITY_ID].level
-      if (this.cursorKeys.space!.isDown) {
-        this.jump()
-      }
-      if (velocity < 0) {
-        this.turn('left')
-        this.setVelocityX(velocity)
-      } else if (velocity > 0) {
-        this.turn('right')
-        this.setVelocityX(velocity)
-      }
+    const velocity = InputManager.getAxis('horizontal') * SPEED * this.characterAsset.stats[MOVE_ABILITY_ID].level
+    if (this.cursorKeys.space!.isDown) {
+      this.jump()
     }
+    this.setVelocityX(velocity)
   }
 
   private turn = (direction: 'left' | 'right') => {

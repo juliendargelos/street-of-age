@@ -1,8 +1,10 @@
 <template>
   <div class="game-ui">
+    <GameTimer v-if="currentPlayer" :current-player="currentPlayer"/>
     <template v-if="!paused">
-      <virtual-joystick v-if="mobile"/>
-      <img v-if="mobile" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
+      <PlayerHealth v-if="currentCharacter" :health="currentCharacter.health" :kind="currentCharacter.kind" :color="currentPlayer.color"/>
+      <virtual-joystick v-if="mobile && isCurrentPlayer"/>
+      <img v-if="mobile && isCurrentPlayer" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
     </template>
     <transition name="slide-fade" mode="out-in">
@@ -42,7 +44,7 @@
     background: transparentize($black, 0.5)
     pointer-events: all
     h1
-      font-size: 72px
+      font-size: 140px
   & .button
     pointer-events: all
     position: absolute
@@ -60,10 +62,14 @@ import { Emitter } from '@/main'
 import { UIEvents } from '@street-of-age/shared/src/game/events'
 import GamePauseUI from '@/components/ui/GamePauseUI.vue'
 import VirtualJoystick from '@/components/VirtualJoystick.vue'
+import PlayerHealth from '@/components/ui/PlayerHealth.vue'
 import AudioManager from '@/game/manager/AudioManager'
+import { SerializedCharacter } from '@street-of-age/shared/game/character'
+import GameTimer from '@/components/ui/GameTimer.vue'
+import { SerializedPlayer } from '@street-of-age/shared/entities/player'
 
 @Component<GameUI>({
-  components: { VirtualJoystick, GamePauseUI },
+  components: { GameTimer, PlayerHealth, VirtualJoystick, GamePauseUI },
   mounted (): void {
     this.intervalId = setInterval(() => {
       this.countdown--
@@ -75,11 +81,15 @@ export default class GameUI extends Vue {
   public countdown: number = 4
   private intervalId!: number
   @Prop({ type: Boolean, default: false }) readonly mobile!: boolean
+  @Prop({ type: Boolean, default: false }) readonly isCurrentPlayer!: boolean
+  @Prop({ type: Object, default: null }) readonly currentCharacter!: SerializedCharacter
+  @Prop({ type: Object, default: null }) readonly currentPlayer!: SerializedPlayer
 
   @Watch('countdown')
   private onCountdownChange (countdown: number) {
     if (countdown <= 0) {
       clearInterval(this.intervalId)
+      Emitter.emit(UIEvents.ResumeTimer)
     }
   }
 

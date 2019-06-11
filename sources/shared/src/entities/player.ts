@@ -22,10 +22,12 @@ export const PlayerTeamKinds: { [P in PlayerTeam]: CharacterKind[] } = {
 }
 
 export interface SerializedPlayer extends Serialized {
-  id: string,
-  ready: boolean,
+  id: string
+  ready: boolean
   color: PlayerColor
-  team: PlayerTeam | string | null
+  numberOfKills: number
+  numberOfDeaths: number
+  teamKind: PlayerTeam | string | null
   characterKinds: CharacterKind[] | string[]
 }
 
@@ -33,27 +35,32 @@ export type PlayerColor = '#f64afe' | '#0be5fe' | '#50fbd7' | '#e6ff5d' | '#ff4f
 
 export class Player<Character extends BaseCharacter = BaseCharacter> implements Serializable<SerializedPlayer> {
   public readonly id: string
-  public team: PlayerTeam | string | null
+  public teamKind: PlayerTeam | string | null
   public ready: boolean
   public characterKinds: CharacterKind[] | string[]
   public room: Room
-  public characters: Character[] = []
   public color: PlayerColor
+  public numberOfKills: number
+  public numberOfDeaths: number
 
 
   constructor(attributes: SerializedPlayer) {
     this.id = attributes.id
-    this.team = attributes.team
+    this.teamKind = attributes.teamKind
     this.characterKinds = attributes.characterKinds
     this.ready = attributes.ready
+    this.numberOfKills = attributes.numberOfKills || 0
+    this.numberOfDeaths = attributes.numberOfDeatsh || 0
   }
 
   public serialize(): SerializedPlayer {
     return {
       id: this.id,
-      team: this.team,
+      teamKind: this.teamKind,
       ready: this.ready,
       color: this.color,
+      numberOfKills: this.numberOfKills,
+      numberOfDeaths: this.numberOfDeaths,
       characterKinds: this.characterKinds
     }
   }

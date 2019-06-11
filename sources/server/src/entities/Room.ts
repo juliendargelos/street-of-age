@@ -1,74 +1,71 @@
-import { randomBytes } from 'crypto'
-import { action, autorun, observable, decorate } from 'mobx'
-import { RoomEvents } from '@street-of-age/shared/socket/events'
-import {Room as BaseRoom, RoomSettings, SerializedRoom} from '@street-of-age/shared/entities/room'
-import { Player } from './Player'
-import RoomManager from '../managers/RoomManager'
-import Logger, { red } from '../services/Logger'
+import { observable, computed, autorun, reaction } from 'mobx'
+import { computedFn } from '../utils'
+import { Entity, Collection } from '../core'
+import { Player, SerializedPlayer } from './Player'
 
-class Room extends BaseRoom<Player> {
-  constructor(private readonly owner: Player, settings: RoomSettings) {
-    super({ id: randomBytes(20).toString('hex'), settings })
+const PLAYER_COLORS = [
+  '#f64afe',
+  '#0be5fe',
+  '#50fbd7',
+  '#e6ff5d',
+  '#ff4f73',
+  '#ff3dad'
+]
 
-    owner.io.sockets.emit(RoomEvents.RoomCreated, this.serialize())
-
-    Logger.success(`created ${this} with owner ${owner}`)
-
-    this.addPlayer(owner).then(() => {
-      Logger.info(`setup autorun for ${this}`)
-
-      autorun(() => {
-        if (this.players.length === 0) {
-          Logger.info(`deleting ${this} because all players left`)
-          RoomManager.deleteRoom(this)
-        }
-      })
-    })
-  }
-
-  get io() {
-    return this.owner.socket.server
-  }
-
-  public toString(): string {
-    return `Room(id: ${red(this.id)})`
-  }
-
-  @action public async addPlayer(player: Player): Promise<Player> {
-    player.socket.leaveAll()
-
-    return new Promise(resolve => player.socket.join(this.id, () => {
-      super.addPlayer(player).then(() => {
-        player.io.sockets.in(this.id).emit(RoomEvents.RoomJoined, this.serialize())
-        player.io.sockets.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
-        Logger.success(`${player} joined ${this}`)
-        resolve(player)
-      })
-    }))
-  }
-
-
-  @action public async removePlayer(player: Player): Promise<Player> {
-    return new Promise(resolve => player.socket.leave(this.id, () => {
-      super.removePlayer(player).then(() => {
-        player.io.sockets.in(this.id).emit(RoomEvents.RoomLeft, {room: this.serialize(), player: player.serialize()})
-        player.io.sockets.emit(RoomEvents.RoomRefresh, RoomManager.serializedRooms)
-        Logger.info(`${player.toString()} left ${this}`)
-        resolve(player)
-      })
-    }))
-  }
-
-  @action public async removeAllPlayers() {
-    return Promise.all(this.players.map((player: Player) => this.removePlayer(player)))
-  }
+export interface RoomSettings extends SerializedObject {
+  name: string
+  numberOfPlayers: 2 | 4 | 6
+  mapSize: 'small' | 'medium' | 'large'
 }
 
-decorate(Room, {
-  players: observable
-})
+export interface SerializedRoom extends SerializedObject {
+  id: string
+  players: SerializedPlayer[]
+  settings: RoomSettings
+  ready: boolean
+}
 
-export {
-  Room,
-  SerializedRoom
+const all = new Collection<Room>()
+
+export class Room extends Entity {
+  public static all = all
+  public static collection = all.collection
+
+  public readonly players: Collection<Player> = Player.collection()
+
+  constructor(
+    public readonly owner: Player,
+    public settings: RoomSettings
+  ) {
+    super(owner.id)
+
+    reaction(() => this.players.length, () => {
+      const usedColors = this.players.map(player => player.color).filter(Boolean)
+      const colors = PLAYER_COLORS.filter(color => !usedColors.includes(color))
+
+      this.players.forEach(player => {
+        if (player.color) return
+        player.color = colors[0]
+        colors.splice(0, 1)
+      })
+    })
+
+    this.players.add(owner)
+  }
+
+  @computed get ready() {
+    return (
+      this.players.length === this.settings.numberOfPlayers &&
+      this.players.every(player => player.ready)
+    )
+  }
+
+  @computedFn public serialize(): SerializedRoom {
+    return {
+      id: this.id,
+      players: this.players.map(player => player.serialize()),
+      settings: this.settings,
+      ready: this.ready
+    }
+  }
 }

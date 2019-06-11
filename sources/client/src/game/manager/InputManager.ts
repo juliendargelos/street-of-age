@@ -6,7 +6,7 @@ const DEFAULTS: JoystickManagerOptions = {
   lockX: true,
   mode: 'static',
   position: { left: '80px', bottom: '80px' },
-  color: 'red'
+  color: 'white'
 }
 
 export type JoystickMoveEvent = CustomEvent<{

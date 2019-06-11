@@ -7,12 +7,16 @@
         <RoomFinishPlayerRow v-for="player in players.get('old')"
              :player="player"
              :player-number="getNumberForPlayer(player)"
+             :death="player.numberOfDeaths"
+             :kill="player.numberOfKills"
              :key="player.id" class="leaderboard__column__row"
              :class="{'is-local': isPlayerLocal(player)}"/>
       </div>
       <div class="leaderboard__column leaderboard__column--young">
         <RoomFinishPlayerRow v-for="player in players.get('young')"
              :player="player"
+             :death="player.numberOfDeaths"
+             :kill="player.numberOfKills"
              :player-number="getNumberForPlayer(player)"
              :key="player.id" class="leaderboard__column__row"
              :class="{'is-local': isPlayerLocal(player)}"/>
@@ -119,7 +123,7 @@ export default class RoomFinish extends Vue {
     return this.room.players.indexOf(player) + 1
   }
   get players (): Map<string, SerializedPlayer[]> {
-    return groupBy(this.room.players, player => player.team)
+    return groupBy(this.room.players, player => player.teamKind)
   }
 }
 </script>

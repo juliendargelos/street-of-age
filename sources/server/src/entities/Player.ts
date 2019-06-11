@@ -1,38 +1,68 @@
-import { Socket } from 'socket.io'
-import { Player as BasePlayer, SerializedPlayer, PlayerTeam } from '@street-of-age/shared/entities/player'
-import { Character, CharacterKind } from '../game/Character'
-import { red } from '../services/Logger'
+import { observable, autorun, computed } from 'mobx'
+import { computedFn } from '../utils'
+import { Entity, Collection } from '../core'
+import { CHARACTERS_PER_PLAYER } from '../constants'
+import { Character, SerializedCharacter, CharacterKind } from './Character'
+import { TeamKind } from './Team'
 
-class Player extends BasePlayer<Character> {
-  public characters: Character[] = []
-  public team: PlayerTeam | null
-  public characterKinds: CharacterKind[]
+export interface SerializedPlayer extends SerializedObject {
+  id: string
+  teamKind: TeamKind
+  ready: boolean
+  color: string
+  numberOfKills: number
+  numberOfDeaths: number
+  characters: SerializedCharacter[]
+  characterKinds: CharacterKind[]
+}
 
-  constructor(
-    public readonly socket: Socket,
-    team: PlayerTeam | null,
-    characterKinds: CharacterKind[]
-   ) {
-    super({
-      id: socket.id,
-      team,
-      color: '',
-      characterKinds,
-      ready: false
+const all = new Collection<Player>()
+
+export class Player extends Entity {
+  public static all = all
+  public static collection = all.collection
+
+  @observable public teamKind?: TeamKind
+  @observable public ready: boolean = false
+  @observable public color: string = ''
+  @observable public numberOfKills: number = 0
+  @observable public numberOfDeaths: number = 0
+  public readonly characters: Collection<Character> = Character.collection()
+
+  constructor(id: string) {
+    super(id)
+
+    autorun(() => {
+      this.teamKind && this.characters.forEach(character => {
+        if (!character.belongsTo(this.teamKind)) {
+          throw new Error(`Invalid character "${character.kind}" for ${this}'s team "${this.teamKind}"`)
+        }
+      })
     })
   }
 
-  get io() {
-    return this.socket.server
+  @computed get lose(): boolean {
+    return this.numberOfDeaths === CHARACTERS_PER_PLAYER
   }
 
-  public toString(): string {
-    return `Player(id: ${red(this.id)})`
+  @computedFn public serialize(): SerializedPlayer {
+    return {
+      id: this.id,
+      teamKind: this.teamKind,
+      color: this.color,
+      numberOfKills: this.numberOfKills,
+      numberOfDeaths: this.numberOfDeaths,
+      ready: this.ready,
+      characters: this.characters.serialize() as SerializedCharacter[],
+      characterKinds: this.characterKinds
+    }
   }
-}
 
-export {
-  Player,
-  SerializedPlayer,
-  PlayerTeam
+  // @computed get ready(): boolean {
+  //   return !!this.teamKind && this.characters.length === CHARACTERS_PER_PLAYER
+  // }
+
+  @computed get characterKinds(): CharacterKind[] {
+    return this.characters.map(({ kind }) => kind)
+  }
 }
