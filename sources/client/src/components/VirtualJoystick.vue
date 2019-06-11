@@ -13,6 +13,7 @@
   width: 100%
   height: 100%
   z-index: 10
+  opacity: 0
   .nipple
     pointer-events: all
 </style>

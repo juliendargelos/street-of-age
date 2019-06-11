@@ -94,19 +94,19 @@ const Egocentric: CharacterAsset = {
     offsetY: 15
   },
   melee: {
-    force: 0.80,
+    force: 2,
     delay: 500,
     sound: {
       key: 'melee_egocentric_sfx',
       volume: 0.6
     },
-    distance: 40,
+    distance: 70,
     damage: 1
   },
   projectile: {
     damage: 2,
-    radiusDamage: 300,
-    explosionMultiplier: 3,
+    radiusDamage: 200,
+    explosionMultiplier: 2.8,
     bounceTtl: null,
     ttl: 4000,
     bulletLike: false,
@@ -128,7 +128,7 @@ const Egocentric: CharacterAsset = {
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 0.65
+      level: 0.8
     }
   }
 }
@@ -144,7 +144,7 @@ const DotingGranny: CharacterAsset = {
     offsetY: 25
   },
   melee: {
-    force: 2,
+    force: 3,
     delay: 300,
     distance: 40,
     damage: 2
@@ -190,21 +190,21 @@ const Fattie: CharacterAsset = {
     offsetY: 15
   },
   melee: {
-    force: 2,
+    force: 2.8,
     delay: 500,
-    distance: 40,
+    distance: 60,
     damage: 2
   },
   projectile: {
     damage: 1,
     radiusDamage: 120,
     explosionMultiplier: 1,
-    bounceTtl: 5,
+    bounceTtl: 7,
     ttl: null,
     bulletLike: false,
     mass: 1,
     bounciness: 0.9,
-    deceleration: 100
+    deceleration: 30
   },
   stats: {
     [CAC_ABILITY_ID]: {
@@ -236,7 +236,7 @@ const FustyGrandpa: CharacterAsset = {
     offsetY: 20
   },
   melee: {
-    force: 0.7,
+    force: 1,
     delay: 750,
     distance: 230,
     hitDelay: 250,
@@ -248,7 +248,7 @@ const FustyGrandpa: CharacterAsset = {
     damage: 1,
     radiusDamage: 300,
     explosionMultiplier: 1,
-    bounceTtl: 5,
+    bounceTtl: 7,
     ttl: null,
     bulletLike: false,
     mass: 1,
@@ -287,7 +287,7 @@ const Geek: CharacterAsset = {
     offsetY: 5
   },
   melee: {
-    force: 0.75,
+    force: 1.8,
     delay: 500,
     hitDelay: 400,
     sound: {
@@ -300,13 +300,13 @@ const Geek: CharacterAsset = {
   },
   projectile: {
     damage: 2,
-    radiusDamage: 180,
+    radiusDamage: 140,
     explosionMultiplier: 2.5,
     bounceTtl: 1,
     ttl: null,
     bulletLike: false,
     mass: 1.1,
-    bounciness: 0.3,
+    bounciness: 0.4,
     deceleration: 100
   },
   stats: {
@@ -339,7 +339,7 @@ const Hippie: CharacterAsset = {
     offsetY: 5
   },
   melee: {
-    force: 0.5,
+    force: 1,
     delay: 500,
     hitDelay: 200,
     distance: 280,
@@ -348,9 +348,9 @@ const Hippie: CharacterAsset = {
   },
   projectile: {
     damage: 1,
-    radiusDamage: 150,
-    explosionMultiplier: 1.5,
-    bounceTtl: 3,
+    radiusDamage: 180,
+    explosionMultiplier: 1.8,
+    bounceTtl: 7,
     ttl: null,
     bulletLike: false,
     mass: 1,
@@ -371,7 +371,7 @@ const Hippie: CharacterAsset = {
     [MOVE_ABILITY_ID]: {
       id: MOVE_ABILITY_ID,
       name: MOVE_ABILITY,
-      level: 0.25
+      level: 0.33
     }
   }
 }
@@ -387,7 +387,7 @@ const LapdogWoman: CharacterAsset = {
     offsetY: 12
   },
   melee: {
-    force: 1.5,
+    force: 2.1,
     delay: 800,
     sound: {
       key: 'melee_lapdog_woman_sfx',
@@ -399,7 +399,7 @@ const LapdogWoman: CharacterAsset = {
   projectile: {
     damage: 2,
     radiusDamage: 160,
-    explosionMultiplier: 2,
+    explosionMultiplier: 2.5,
     bounceTtl: 1,
     ttl: null,
     bulletLike: false,
@@ -437,20 +437,20 @@ const MrMuscle: CharacterAsset = {
     offsetY: 5
   },
   melee: {
-    force: 2.5,
+    force: 2.8,
     delay: 500,
     distance: 40,
     damage: 2
   },
   projectile: {
     damage: 1,
-    radiusDamage: 120,
-    explosionMultiplier: 1.5,
-    bounceTtl: 5,
+    radiusDamage: 150,
+    explosionMultiplier: 2,
+    bounceTtl: 1,
     ttl: null,
     bulletLike: false,
     mass: 0.75,
-    bounciness: 0.6,
+    bounciness: 1,
     deceleration: 100
   },
   stats: {
