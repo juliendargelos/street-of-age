@@ -48,7 +48,7 @@ import { PlayerTeam, SerializedPlayer } from '@street-of-age/shared/entities/pla
 
 const throttle = (method: (...args: any) => void, limit: number, always: (...args: any) => boolean = () => false): (...args: any) => void => {
   let inThrottle: boolean = false
-  let timeout: NodeJS.Timer
+  let timeout: number
 
   return (...args: any) => {
     if (!inThrottle || always(...args)) {
