@@ -38,6 +38,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   public damaged: boolean = false
   private weaponType: WeaponType = WeaponType.Distance
   public projectileDir: Phaser.GameObjects.Graphics
+  public projectileDirFront: Phaser.GameObjects.Sprite
   public kind: CharacterKind
   public health: number = 4
 
@@ -65,6 +66,9 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
     this.setData('tag', 'character')
     params.scene.physics.world.enable(this)
     this.projectileDir = params.scene.add.graphics().setDepth(10)
+    this.projectileDirFront = params.scene.add.sprite(this.x, this.y + 100, 'main', 'main/projectile_aim')
+      .setDepth(PLAYER_DEPTH)
+      .setVisible(false)
 
     const { width, height, offsetX, offsetY } = this.characterAsset.body
 
@@ -92,7 +96,10 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
   private initListeners () {
     if (this.local) {
       InputManager.touch.addEventListener('player:tap', this.onPlayerTap)
-      InputManager.touch.addEventListener('player:untap', () => this.projectileDir.clear())
+      InputManager.touch.addEventListener('player:untap', () => {
+        this.projectileDir.clear()
+        this.projectileDirFront.setVisible(false)
+      })
       InputManager.touch.addEventListener('projectile:move', this.onProjectileMove)
       InputManager.touch.addEventListener('projectile:launch', this.onProjectileLaunch)
     }
@@ -157,6 +164,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private onProjectileLaunch: ProjectileLaunchEventHandler = async (evt) => {
     if (this.weaponType === WeaponType.Distance) {
+      this.projectileDirFront.setVisible(false)
       this.anims.play(`${this.kind}_launch`, true).once('animationcomplete', () => {
         this.anims.play(`${this.kind}_idle`)
       })
@@ -193,9 +201,16 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private onProjectileMove: ProjectileMoveEventHandler = (evt): void => {
     const position = new Phaser.Math.Vector2(evt.detail.pointer.worldX, evt.detail.pointer.worldY)
+    let distance = position.clone().distance(new Phaser.Math.Vector2(this.x, this.y))
     this.projectileDir.clear()
-    this.projectileDir.lineStyle(4, 0xff0000)
+    this.projectileDir.lineStyle(4, 0x32ffce, 0.5)
     this.projectileDir.lineBetween(this.x, this.y, evt.detail.pointer.worldX, evt.detail.pointer.worldY)
+    const rotation = Math.atan((evt.detail.pointer.worldY - this.y) / (evt.detail.pointer.worldX - this.x)) + (Math.PI * (evt.detail.pointer.worldX - this.x > 0 ? 1 : 2))
+    this.projectileDirFront
+      .setOrigin(0, 0.5)
+      .setPosition(this.x, this.y)
+      .setRotation(rotation)
+      .setVisible(true)
     const { x } = position.subtract(new Phaser.Math.Vector2({ x: this.x, y: this.y }))
     x < 0 ? this.turn('right') : this.turn('left')
     const force = Math.round(scale(
@@ -210,6 +225,7 @@ export class Character extends Phaser.Physics.Arcade.Sprite {
 
   private onPlayerTap = (): void => {
     this.projectileDir.clear()
+    this.projectileDirFront.setVisible(false)
     if (this.weaponType === WeaponType.Distance) {
       AudioManager.playUniqueSfx('switch', { volume: 0.8 })
     } else {
