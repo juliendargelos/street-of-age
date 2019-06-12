@@ -28,6 +28,7 @@ export class Player extends Entity {
   @observable public numberOfKills: number = 0
   @observable public numberOfDeaths: number = 0
   public readonly characters: Collection<Character> = Character.collection()
+  private _characters: Character[] = []
 
   constructor(id: string) {
     super(id)
@@ -64,5 +65,19 @@ export class Player extends Entity {
 
   @computed get characterKinds(): CharacterKind[] {
     return this.characters.map(({ kind }) => kind)
+  }
+
+  saveCharacters() {
+    this._characters = this.characters.array
+  }
+
+  restoreCharacters() {
+    this.characters.set(this._characters)
+    this._characters = []
+  }
+
+  clearCharacters() {
+    this.characters.clear()
+    this._characters = []
   }
 }
