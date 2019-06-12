@@ -1,6 +1,6 @@
 <template>
   <div class="room-finish">
-    <h1 class="road-rage">Victoire</h1>
+    <h1 class="road-rage">{{ winner ? 'Victoire' : 'Défaite' }}</h1>
     <div class="duration">04:43</div>
     <div class="leaderboard">
       <div class="leaderboard__column leaderboard__column--old">
@@ -114,14 +114,33 @@ import RoomModule from '@/store/modules/room'
 })
 export default class RoomFinish extends Vue {
   get room (): Room {
-    return RoomModule.rooms.find(r => r.id === this.$route.params.id)!
+    return RoomModule.rooms.find(r => r.id === this.$route.params.id) as Room
   }
+
+  get winnerTeamKind (): string {
+    let winnerTeamKind = ''
+
+    this.players.forEach((players, teamKind) => {
+      if (players.some(player => player.numberOfDeaths !== 3)) {
+        winnerTeamKind = teamKind
+      }
+    })
+
+    return winnerTeamKind
+  }
+
+  get winner (): boolean {
+    return AppModule.player.teamKind === this.winnerTeamKind
+  }
+
   public isPlayerLocal (player: SerializedPlayer): boolean {
     return player.id === AppModule.player.id
   }
+
   public getNumberForPlayer (player: SerializedPlayer): number {
     return this.room.players.indexOf(player) + 1
   }
+
   get players (): Map<string, SerializedPlayer[]> {
     return groupBy(this.room.players, player => player.teamKind)
   }

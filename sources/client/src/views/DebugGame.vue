@@ -68,8 +68,8 @@ import GameUI from '@/components/ui/GameUI.vue'
         }))
 
         this.scene.setCharacters(characters as SerializedCharacter[])
-        this.scene.setCurrentCharacter(this.scene.characters.get('egocentric')!)
-        this.scene.enableControls(this.scene.characters.get('egocentric')!)
+        this.scene.setCurrentCharacter(this.scene.characters.get('geek')!)
+        this.scene.enableControls(this.scene.characters.get('geek')!)
       },
 
       characterShooted: () => {
