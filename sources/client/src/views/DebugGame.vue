@@ -61,8 +61,10 @@ import GameUI from '@/components/ui/GameUI.vue'
         ].map(kind => ({
           id: kind,
           kind,
-          x: Math.random()*1000 + 500,
-          y: Math.random()*-500
+          x: 800,
+          y: 0
+          // x: Math.random()*1000 + 500,
+          // y: Math.random()*-500
         }))
 
         this.scene.setCharacters(characters as SerializedCharacter[])
@@ -76,16 +78,19 @@ import GameUI from '@/components/ui/GameUI.vue'
         }, 4000)
       },
 
-      characterDied: (character: SerializedCharacter) => {
-        if (character.id === this.scene.controlledCharacter!.id) {
-          const length = this.scene.characters.size
-          const id = length.toString()
-          const [_, character] = [...this.scene.characters][~~(Math.random()*length)]
-          this.scene.createCharacter({ ...character, id })
-          this.scene.setCurrentCharacter(this.scene.characters.get(id)!)
-          this.scene.enableControls(this.scene.characters.get(id)!)
+      characterMoved: (character: SerializedCharacter) => {
+        if (character.y! >= 600) {
+          character = this.scene.characters.get(character.id)
+          this.scene.removeCharacter(character.id)
+          this.scene.createCharacter({
+            id: character.id,
+            kind: character.kind,
+            x: Math.random()*1000 + 500,
+            y: Math.random()*-500
+          })
+          this.switchCharacter()
         }
-      },
+      }
     })
 
     this.game = new Phaser.Game(this.config)
@@ -93,53 +98,70 @@ import GameUI from '@/components/ui/GameUI.vue'
     this.game.registry.set(REGISTRY_LEVEL_KEY, level)
     this.mobile = !this.game.device.os.desktop &&
       (this.game.device.os.android || this.game.device.os.iOS || this.game.device.os.windowsPhone)
+
+    addEventListener('keydown', this.onKeydown)
   },
 
   beforeDestroy () {
+    removeEventListener('keydown', this.onKeydown)
     this.game.destroy(false)
     GameManager.destroy()
     delete this.game
   }
 })
 export default class DebugGame extends Vue {
-    $el!: HTMLDivElement
-    private game!: Phaser.Game
-    private scene!: GameScene
-    private mobile: boolean = false
-    @Prop({ type: Boolean, default: process.env.NODE_ENV === 'development' }) readonly debug!: boolean
+  $el!: HTMLDivElement
+  private game!: Phaser.Game
+  private scene!: GameScene
+  private mobile: boolean = false
+  private characterIndex: number = 0
+  @Prop({ type: Boolean, default: process.env.NODE_ENV === 'development' }) readonly debug!: boolean
 
-    get config (): Phaser.Types.Core.GameConfig {
-      return {
-        parent: this.$el,
-        scale: {
-          mode: Phaser.Scale.FIT,
-          autoCenter: Phaser.Scale.CENTER_BOTH,
-          width: Math.max(window.innerWidth, window.innerHeight),
-          height: Math.min(window.innerWidth, window.innerHeight)
+  get config (): Phaser.Types.Core.GameConfig {
+    return {
+      parent: this.$el,
+      scale: {
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+        width: Math.max(window.innerWidth, window.innerHeight),
+        height: Math.min(window.innerWidth, window.innerHeight)
+      },
+      input: {
+        gamepad: false,
+        keyboard: true,
+        mouse: true,
+        touch: true
+      },
+      physics: {
+        arcade: {
+          debug: this.debug,
+          gravity: { y: 0 }
         },
-        input: {
-          gamepad: false,
-          keyboard: true,
-          mouse: true,
-          touch: true
-        },
-        physics: {
-          arcade: {
-            debug: this.debug,
-            gravity: { y: 0 }
-          },
-          default: 'arcade'
-        },
-        plugins: {
-          scene: [
-            {
-              key: 'updatePlugin', plugin: PhaserUpdatePlugin, mapping: 'updates'
-            }
-          ]
-        },
-        disableContextMenu: true,
-        scene: this.scene
-      }
+        default: 'arcade'
+      },
+      plugins: {
+        scene: [
+          {
+            key: 'updatePlugin', plugin: PhaserUpdatePlugin, mapping: 'updates'
+          }
+        ]
+      },
+      disableContextMenu: true,
+      scene: this.scene
     }
+  }
+
+  private onKeydown = ({ key }) => {
+    key === 's' && this.switchCharacter()
+  }
+
+  public switchCharacter () {
+    const characterIndex = (this.characterIndex + 1)%this.scene.characters.size
+    const character = [...this.scene.characters][characterIndex][1]
+    this.characterIndex = characterIndex
+
+    this.scene.setCurrentCharacter(character)
+    this.scene.enableControls(character)
+  }
 }
 </script>
