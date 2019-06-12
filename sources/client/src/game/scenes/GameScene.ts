@@ -22,11 +22,11 @@ export interface Shoot {
 }
 
 interface GameSceneListeners {
-  created: () => void
-  characterMoved: (character: SerializedCharacter) => void
-  characterDied: (character: SerializedCharacter) => void
-  characterShooted: (shoot: Shoot) => void
-  characterTookDamage: (damage: { id: string, damage: number }) => void
+  created?: () => void
+  characterMoved?: (character: SerializedCharacter) => void
+  characterDied?: (character: SerializedCharacter) => void
+  characterShooted?: (shoot: Shoot) => void
+  characterTookDamage?: (damage: { id: string, damage: number }) => void
 }
 
 // this.weaponType WeaponType.Distance WeaponType.Melee
@@ -42,7 +42,7 @@ interface GameSceneListeners {
 export class GameScene extends BaseScene {
   private postprocessing!: PostProcessing
   public characters: Map<string, Character> = new Map()
-  private controlledCharacter: Character | null = null
+  public controlledCharacter: Character | null = null
 
   constructor (private listeners: GameSceneListeners) {
     super({
@@ -64,7 +64,7 @@ export class GameScene extends BaseScene {
     this.postprocessing = (this.game.renderer as Phaser.Renderer.WebGL.WebGLRenderer).addPipeline('PostProcessing', new PostProcessing(this.game)) as PostProcessing
     this.cameras.main.setRenderToTexture(this.postprocessing)
     Emitter.on(GameEvents.ProjectileExploded, this.onProjectileExploded)
-    this.listeners.created()
+    this.listeners.created && this.listeners.created()
   }
 
   public setCurrentCharacter (character: Character) {
@@ -113,9 +113,9 @@ export class GameScene extends BaseScene {
 
     this.characters.set(attributes.id, character)
 
-    character.on('moved', this.listeners.characterMoved)
-    character.on('shooted', this.listeners.characterShooted)
-    character.on('tookDamage', this.listeners.characterTookDamage)
+    this.listeners.characterMoved && character.on('moved', this.listeners.characterMoved)
+    this.listeners.characterShooted && character.on('shooted', this.listeners.characterShooted)
+    this.listeners.characterTookDamage && character.on('tookDamage', this.listeners.characterTookDamage)
 
     return character
   }
@@ -125,10 +125,10 @@ export class GameScene extends BaseScene {
 
     if (character) {
       character.destroy()
-      character.off('moved', this.listeners.characterMoved)
-      character.off('shooted', this.listeners.characterShooted)
+      this.listeners.characterMoved && character.off('moved', this.listeners.characterMoved)
+      this.listeners.characterShooted && character.off('shooted', this.listeners.characterShooted)
       this.characters.delete(id)
-      this.listeners.characterDied(character)
+      this.listeners.characterDied && this.listeners.characterDied(character)
     }
   }
 
@@ -164,6 +164,7 @@ export class GameScene extends BaseScene {
 
   private onProjectileExploded = (projectile: CharacterProjectile & { x: number, y: number }) => {
     try {
+      this.postprocessing.glitch()
       const area = new Phaser.Geom.Circle(projectile.x, projectile.y, projectile.radiusDamage)
       this.characters.forEach(character => {
         if (!Phaser.Geom.Circle.Contains(area, character.x, character.y)) return
