@@ -91,9 +91,9 @@
           &--life:after
             background: url(~@/assets/icons/life.png) no-repeat center center / contain
           &--death:after
-            background: url(~@/assets/icons/death.png) no-repeat center center / contain
-          &--fall:after
             background: url(~@/assets/icons/fall.png) no-repeat center center / contain
+          &--kill:after
+            background: url(~@/assets/icons/death.png) no-repeat center center / contain
 
 </style>
 
