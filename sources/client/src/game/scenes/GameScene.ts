@@ -1,3 +1,4 @@
+import anime from 'animejs'
 import BaseScene from '@/game/scenes/BaseScene'
 import {Character, SerializedCharacter, WeaponType} from '@/game/entities/Character'
 import {PostProcessing} from '@/game/PostProcessing'
@@ -43,6 +44,7 @@ export class GameScene extends BaseScene {
   private postprocessing!: PostProcessing
   public characters: Map<string, Character> = new Map()
   public controlledCharacter: Character | null = null
+  private cameraAnimation!: anime.AnimeInstance | null
 
   constructor (private listeners: GameSceneListeners) {
     super({
@@ -69,7 +71,33 @@ export class GameScene extends BaseScene {
 
   public setCurrentCharacter (character: Character) {
     this.cameras.main.stopFollow()
-    if (character) this.cameras.main.startFollow(character, false, 0.1, 0.1)
+    if (!character) return
+
+    if (this.cameraAnimation) this.cameraAnimation.pause()
+
+    const progress = { value: 0 }
+    const destination = character.getCenter()
+    const originX = this.cameras.main.scrollX + this.postprocessing.width/2
+    const originY = this.cameras.main.scrollY + this.postprocessing.height/2
+    const deltaX = destination.x - originX
+    const deltaY = destination.y - originY
+
+    this.cameraAnimation = anime({
+      targets: progress,
+      value: 1,
+      duration: 600,
+      easing: 'easeInOutQuint',
+      update: () => {
+        this.cameras.main.centerOn(
+          originX + deltaX*progress.value,
+          originY + deltaY*progress.value,
+        )
+      },
+      complete: () => {
+        this.cameraAnimation = null
+        this.cameras.main.startFollow(character, false, 0.1, 0.1)
+      }
+    })
   }
 
   public enableControls (character: Character) {
