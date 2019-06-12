@@ -40,6 +40,7 @@ import PhaserUpdatePlugin from 'phaser-plugin-update'
 import GameLoader from '@/components/ui/GameLoader.vue'
 import { SerializedCharacter } from '@street-of-age/shared/game/character'
 import GameUI from '@/components/ui/GameUI.vue'
+const RANDOMS_X = [420, 720, 580, 830, 1200, 1260, 1370, 1400, 1640, 1720, 1780, 1860, 1900, 2000, 2200, 2700, 2850, 3400, 3600]
 
 @Component<DebugGame>({
   components: {
@@ -61,7 +62,7 @@ import GameUI from '@/components/ui/GameUI.vue'
         ].map(kind => ({
           id: kind,
           kind,
-          x: Math.random()*1000 + 500,
+          x: RANDOMS_X[Math.floor(Math.random() * RANDOMS_X.length)],
           y: Math.random()*-500
         }))
 

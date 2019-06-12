@@ -3,6 +3,8 @@ import { Entity, Collection } from '../core'
 import { computedFn } from '../utils'
 import { TeamKind } from './Team'
 
+const RANDOMS_X = [420, 720, 580, 830, 1200, 1260, 1370, 1400, 1640, 1720, 1780, 1860, 1900, 2000, 2200, 2700, 2850, 3400, 3600 ]
+
 export enum CharacterKind {
   Egocentric = 'egocentric',
   Geek = 'geek',
@@ -68,7 +70,7 @@ export class Character extends Entity implements Serializable<SerializedCharacte
   }
 
   public randomizePosition(): this {
-    this.x = ~~(Math.random()*2000)
+    this.x = RANDOMS_X[Math.floor(Math.random() * RANDOMS_X.length)]
     this.y = ~~(Math.random()*-500)
     return this
   }
