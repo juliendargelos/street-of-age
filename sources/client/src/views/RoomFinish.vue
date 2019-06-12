@@ -1,7 +1,6 @@
 <template>
   <div class="room-finish">
     <h1 class="road-rage">{{ winner ? 'Victoire' : 'Défaite' }}</h1>
-    <div class="duration">04:43</div>
     <div class="leaderboard">
       <div class="leaderboard__column leaderboard__column--old">
         <RoomFinishPlayerRow v-for="player in players.get('old')"
@@ -74,13 +73,15 @@
     display: flex
     margin-top: 40px
     padding: 0 20px
+    flex: 1
+    align-items: center
     .leaderboard__column
       flex: 1
       &:first-of-type
         margin-right: 10px
       .player__row:first-of-type
         .player__row__metric
-          &--life:after,&--death:after,&--fall:after
+          &--life:after,&--death:after,&--kill:after
             content: ''
             position: absolute
             top: -25px

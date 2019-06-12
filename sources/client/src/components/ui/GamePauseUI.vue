@@ -6,9 +6,6 @@
         <li class="actions__start" @click="$emit('close')">Reprendre</li>
         <li class="actions__quit disabled">Quitter</li>
       </ul>
-      <div class="remaining">
-        04:43
-      </div>
     </nav>
     <main>
       <TabList defaultTab="credits">
