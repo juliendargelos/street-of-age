@@ -73,16 +73,16 @@ export class Game extends Entity implements Serializable<SerializedGame> {
   }
 
   @action public nextTurn() {
-    if (this.losingTeamKind) return this.disableInterval()
-
     ++this.turn
+
+    if (this.losingTeamKind) this.disableInterval()
 
     this.currentTeamIndex = (this.currentTeamIndex + 1)%this.teams.length
 
     if (this.turn%this.teams.length === 0) {
       this.currentPlayerIndex = (this.currentPlayerIndex + 1)%this.currentTeam.players.length
 
-      while (!this.currentPlayer.characters.length) {
+      for (var i = 1; i <= 3 && !this.currentPlayer.characters.length; ++i) {
         this.currentPlayerIndex = (this.currentPlayerIndex + 1)%this.currentTeam.players.length
       }
     }

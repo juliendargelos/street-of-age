@@ -35,6 +35,7 @@ export class RoomController extends Controller {
 
    [RoomEvents.RoomPlayerReady]() {
       this.player.ready = true
+      this.player.saveCharacters()
       this.io.sockets.emit(RoomEvents.RoomRefresh, Room.all.serialize())
       // Logger.info(player.toString() + ' in ' + player.room.toString() + ' is now ready')
       if (this.room.ready) {
@@ -59,6 +60,7 @@ export class RoomController extends Controller {
 
   [RoomEvents.RoomLeave]() {
     if (this.room) {
+      this.player.clearCharacters()
       this.room.players.remove(this.player)
       this.room = null
     }
