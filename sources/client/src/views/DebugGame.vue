@@ -78,9 +78,9 @@ import GameUI from '@/components/ui/GameUI.vue'
         }, 4000)
       },
 
-      characterMoved: (character: SerializedCharacter) => {
-        if (character.y! >= 600) {
-          character = this.scene.characters.get(character.id)
+      characterMoved: (attributes: SerializedCharacter) => {
+        if (attributes.y! >= 600) {
+          let character = this.scene.characters.get(attributes.id)!
           this.scene.removeCharacter(character.id)
           this.scene.createCharacter({
             id: character.id,
@@ -88,7 +88,12 @@ import GameUI from '@/components/ui/GameUI.vue'
             x: Math.random()*1000 + 500,
             y: Math.random()*-500
           })
-          this.switchCharacter()
+
+          character = this.scene.characters.get(attributes.id)!
+
+          this.scene.setCurrentCharacter(character)
+          this.scene.enableControls(character)
+          this.characterIndex = this.scene.characters.size - 1
         }
       }
     })
@@ -151,8 +156,8 @@ export default class DebugGame extends Vue {
     }
   }
 
-  private onKeydown = ({ key }) => {
-    key === 's' && this.switchCharacter()
+  private onKeydown = (event: KeyboardEvent) => {
+    event.key === 's' && this.switchCharacter()
   }
 
   public switchCharacter () {
