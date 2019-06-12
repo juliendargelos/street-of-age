@@ -4,7 +4,7 @@
     <template v-if="!paused">
       <PlayerHealth v-if="currentCharacter" :health="currentCharacter.health" :kind="currentCharacter.kind" :color="currentPlayer.color"/>
       <virtual-joystick v-if="mobile && isCurrentPlayer"/>
-      <img v-if="mobile && isCurrentPlayer" @click="onJumpButtonClick" class="button button--jump" :src="require('@/assets/ui/jump.svg')" alt="">
+      <JumpButton v-show="mobile && isCurrentPlayer" @onJump="onJumpButtonClick"/>
       <img @click="pauseToggle" class="button button--pause" :src="require('@/assets/ui/pause.svg')" alt="">
     </template>
     <transition name="slide-fade" mode="out-in">
@@ -48,9 +48,6 @@
   & .button
     pointer-events: all
     position: absolute
-    &--jump
-      bottom: 40px
-      right: 40px
     &--pause
       top: 20px
       right: 20px
@@ -67,9 +64,10 @@ import AudioManager from '@/game/manager/AudioManager'
 import { SerializedCharacter } from '@street-of-age/shared/game/character'
 import GameTimer from '@/components/ui/GameTimer.vue'
 import { SerializedPlayer } from '@street-of-age/shared/entities/player'
+import JumpButton from '@/components/ui/JumpButton.vue'
 
 @Component<GameUI>({
-  components: { GameTimer, PlayerHealth, VirtualJoystick, GamePauseUI },
+  components: { JumpButton, GameTimer, PlayerHealth, VirtualJoystick, GamePauseUI },
   mounted (): void {
     this.intervalId = setInterval(() => {
       this.countdown--
@@ -96,6 +94,7 @@ export default class GameUI extends Vue {
   public onJumpButtonClick () {
     Emitter.emit(UIEvents.Jump)
   }
+
   public pauseToggle () {
     AudioManager.playSfx('start', { volume: 0.15 })
     this.paused = !this.paused
