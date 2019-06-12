@@ -10,7 +10,7 @@ export class PostProcessing extends Phaser.Renderer.WebGL.Pipelines.TextureTintP
       game,
       renderer: game.renderer,
       fragShader:`
-        precision mediump float;
+        precision highp float;
 
         // change these values to 0.0 to turn off individual effects
         #define VERT_JERK 0.
