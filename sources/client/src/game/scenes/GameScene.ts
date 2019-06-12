@@ -164,6 +164,7 @@ export class GameScene extends BaseScene {
 
   private onProjectileExploded = (projectile: CharacterProjectile & { x: number, y: number }) => {
     try {
+      this.postprocessing.glitch()
       const area = new Phaser.Geom.Circle(projectile.x, projectile.y, projectile.radiusDamage)
       this.characters.forEach(character => {
         if (!Phaser.Geom.Circle.Contains(area, character.x, character.y)) return

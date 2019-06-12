@@ -1,6 +1,10 @@
 import * as Phaser from 'phaser'
+import anime from 'animejs'
 
 export class PostProcessing extends Phaser.Renderer.WebGL.Pipelines.TextureTintPipeline {
+  private _rgbOffset: number = 0.2
+  private _horzFuzz: number = 0.1
+
   constructor (game: Phaser.Game) {
     super({
       game,
@@ -13,8 +17,8 @@ export class PostProcessing extends Phaser.Renderer.WebGL.Pipelines.TextureTintP
         #define VERT_MOVEMENT 0.
         #define BOTTOM_STATIC 0.
         #define SCALINES .4
-        #define RGB_OFFSET .2
-        #define HORZ_FUZZ .1
+        // #define RGB_OFFSET .2
+        // #define HORZ_FUZZ .1
         #define RAND_NOISE .1
         #define FISHEYE -.014
         #define ZOOM .96
@@ -27,6 +31,8 @@ export class PostProcessing extends Phaser.Renderer.WebGL.Pipelines.TextureTintP
         uniform vec2 resolution;
         uniform float time;
         uniform vec2 mouse;
+        uniform float rgb_offset;
+        uniform float horz_fuzz;
 
         // Noise generation functions borrowed from:
         // https://github.com/ashima/webgl-noise/blob/master/src/noise2D.glsl
@@ -131,7 +137,7 @@ export class PostProcessing extends Phaser.Renderer.WebGL.Pipelines.TextureTintP
           float vertJerk2 = (1.0-step(snoise(vec2(time*5.5,5.0)),0.2))*VERT_JERK;
           float yOffset = abs(sin(time)*4.0)*vertMovementOn+vertJerk*vertJerk2*0.3;
           float y = mod(computedCoords.y+yOffset,1.0);
-          float xOffset = (fuzzOffset + largeFuzzOffset) * HORZ_FUZZ;
+          float xOffset = (fuzzOffset + largeFuzzOffset) * horz_fuzz;
           float staticVal = 0.0;
 
           for (float y = -1.0; y <= 1.0; y += 1.0) {
@@ -147,9 +153,9 @@ export class PostProcessing extends Phaser.Renderer.WebGL.Pipelines.TextureTintP
           float b = 0.;
 
           if (computedCoords.y <= 0.) {
-            r = texture2D(uSampler, vec2(computedCoords.x + xOffset -0.01*RGB_OFFSET, y)).r + staticVal;
+            r = texture2D(uSampler, vec2(computedCoords.x + xOffset -0.01*rgb_offset, y)).r + staticVal;
             g = texture2D(uSampler, vec2(computedCoords.x + xOffset,                  y)).g + staticVal;
-            b = texture2D(uSampler, vec2(computedCoords.x + xOffset +0.01*RGB_OFFSET, y)).b + staticVal;
+            b = texture2D(uSampler, vec2(computedCoords.x + xOffset +0.01*rgb_offset, y)).b + staticVal;
           }
 
           vec3 color = vec3(r, g, b);
@@ -162,10 +168,42 @@ export class PostProcessing extends Phaser.Renderer.WebGL.Pipelines.TextureTintP
         }
       `
     })
+
+    this.setFloat1('rgb_offset', this.rgbOffset)
+    this.setFloat1('horz_fuzz', this.horzFuzz)
   }
 
   update(time: number, delta: number) {
     this.setFloat1('time', time)
     this.setFloat2('resolution', this.renderer.width, this.renderer.height)
+  }
+
+  get rgbOffset(): number {
+    return this._rgbOffset
+  }
+
+  set rgbOffset(v: number) {
+    this._rgbOffset = v
+    this.setFloat1('rgb_offset', v)
+  }
+
+  get horzFuzz(): number {
+    return this._horzFuzz
+  }
+
+  set horzFuzz(v: number) {
+    this._horzFuzz = v
+    this.setFloat1('horz_fuzz', v)
+  }
+
+  public glitch() {
+    anime({
+      targets: this,
+      rgbOffset: [.2, 2],
+      horzFuzz: [.1, 3],
+      duration: 300,
+      direction: 'alternate',
+      easing: 'easeOutQuint'
+    })
   }
 }
